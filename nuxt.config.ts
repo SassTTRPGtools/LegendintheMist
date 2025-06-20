@@ -7,14 +7,6 @@ export default defineNuxtConfig({
   // 確保包含 Tailwind CSS
   css: ['~/assets/css/main.css'],
   
-  // 明確的 Tailwind CSS 配置
-  tailwindcss: {
-    exposeConfig: true,
-    viewer: false,
-    configPath: './tailwind.config.js',
-    cssPath: '~/assets/css/main.css'
-  },
-  
   // GitHub Pages 部署配置 
   app: {
     baseURL: '/LegendintheMist/',
@@ -26,14 +18,20 @@ export default defineNuxtConfig({
     }
   },
   
-  // SPA 模式，避免 SSR 相關問題
+  // SPA 模式，完全避免 SSR
   ssr: false,
   
-  // GitHub Pages 建構配置
+  // Nitro 配置 - 關閉預渲染
   nitro: {
     preset: 'static',
     prerender: {
-      routes: ['/']
+      crawlLinks: false,
+      routes: []
     }
+  },
+  
+  // 關閉可能造成問題的功能
+  experimental: {
+    payloadExtraction: false
   }
 })
