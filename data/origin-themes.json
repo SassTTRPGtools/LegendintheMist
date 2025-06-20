@@ -549,24 +549,6 @@
       ]
     }
   },
-  "templates": {
-    "character_profile": {
-      "basic_info": {
-        "name": "",
-        "type": "circumstance",
-        "social_status": "",
-        "current_situation": ""
-      },
-      "answers": {
-        "background_questions": {},
-        "ability_tags": {},
-        "weakness_tags": {}
-      },
-      "selected_mission": "",
-      "custom_mission": "",
-      "notes": ""
-    }
-  },  
   "examples": {
     "sample_characters": [
       {

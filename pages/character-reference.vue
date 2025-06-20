@@ -341,12 +341,12 @@ const loadSampleCharacters = () => {
   } else if (selectedSystem.value === 'adventure') {
     // Adventure 主題：根據 adventure_type 欄位過濾
     samples = data.examples?.sample_adventurers?.filter(char => 
-      char.adventure_type === selectedTheme.value.toLowerCase()
+      char.type === selectedTheme.value.toLowerCase()
     ) || []
   } else if (selectedSystem.value === 'greatness') {
     // Greatness 主題：根據 greatness_type 欄位過濾
     samples = data.examples?.sample_heroes?.filter(char => 
-      char.greatness_type === selectedTheme.value.toLowerCase()
+      char.type === selectedTheme.value.toLowerCase()
     ) || []
   }
   
