@@ -37,15 +37,51 @@ jobs:
       
       - name: Build with Nuxt (manual workaround)
         run: |
+          echo "Starting build process..."
           npm run build || echo "Build failed but continuing with manual process..."
-          mkdir -p .output/public
-          cp -r .nuxt/dist/client/* .output/public/
-          cp public/favicon.ico .output/public/
           
-          echo "Listing files to debug..."
+          echo "Creating output directory..."
+          mkdir -p .output/public
+          
+          echo "Copying client files..."
+          if [ -d ".nuxt/dist/client" ]; then
+            cp -r .nuxt/dist/client/* .output/public/
+            echo "Client files copied successfully"
+          else
+            echo "ERROR: .nuxt/dist/client directory not found!"
+            exit 1
+          fi
+          
+          echo "Copying favicon..."
+          if [ -f "public/favicon.ico" ]; then
+            cp public/favicon.ico .output/public/
+            echo "Favicon copied successfully"
+          else
+            echo "WARNING: favicon.ico not found in public/"
+          fi
+          
+          echo "Listing all files in .nuxt/dist/client/_nuxt/..."
+          ls -la .nuxt/dist/client/_nuxt/
+          
+          echo "Listing all files in .output/public/_nuxt/..."
           ls -la .output/public/_nuxt/
           
-          # Create simple index.html with known file names
+          echo "Verifying specific files exist..."
+          if [ -f ".output/public/_nuxt/entry.B1goDtUc.css" ]; then
+            echo "✓ CSS file exists"
+          else
+            echo "✗ CSS file missing!"
+            ls -la .output/public/_nuxt/*.css || echo "No CSS files found"
+          fi
+          
+          if [ -f ".output/public/_nuxt/C52IU5KB.js" ]; then
+            echo "✓ JS file exists"
+          else
+            echo "✗ JS file missing!"
+            ls -la .output/public/_nuxt/*.js || echo "No JS files found"
+          fi
+          
+          echo "Creating index.html..."
           cat > .output/public/index.html << 'EOF'
           <!DOCTYPE html>
           <html>
@@ -62,6 +98,9 @@ jobs:
           </body>
           </html>
           EOF
+          
+          echo "Verifying index.html content..."
+          cat .output/public/index.html
         env:
           NUXT_APP_BASE_URL: /LegendintheMist/
       
@@ -77,6 +116,34 @@ jobs:
       
       - name: List output directory
         run: ls -la .output/public/
+      
+      - name: Final verification before upload
+        run: |
+          echo "=== FINAL VERIFICATION ==="
+          echo "Checking if critical files exist before upload..."
+          
+          if [ -f ".output/public/index.html" ]; then
+            echo "✓ index.html exists"
+          else
+            echo "✗ index.html missing!"
+            exit 1
+          fi
+          
+          if [ -f ".output/public/_nuxt/entry.B1goDtUc.css" ]; then
+            echo "✓ CSS file exists ($(wc -c < .output/public/_nuxt/entry.B1goDtUc.css) bytes)"
+          else
+            echo "✗ CSS file missing!"
+            exit 1
+          fi
+          
+          if [ -f ".output/public/_nuxt/C52IU5KB.js" ]; then
+            echo "✓ JS file exists ($(wc -c < .output/public/_nuxt/C52IU5KB.js) bytes)"
+          else
+            echo "✗ JS file missing!"
+            exit 1
+          fi
+          
+          echo "All critical files verified. Proceeding with upload..."
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
