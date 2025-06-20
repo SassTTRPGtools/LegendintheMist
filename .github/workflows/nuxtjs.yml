@@ -43,6 +43,13 @@ jobs:
       - name: Add .nojekyll file
         run: touch .output/public/.nojekyll
       
+      - name: Check for CSS files
+        run: |
+          echo "Checking for CSS files..."
+          find .output/public -name "*.css" -type f
+          echo "Checking _nuxt directory..."
+          ls -la .output/public/_nuxt/ || echo "No _nuxt directory found"
+      
       - name: List output directory
         run: ls -la .output/public/
       
