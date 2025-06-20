@@ -1,40 +1,87 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 pb-8">
-    <!-- Header -->
+  <div class="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 pb-8">    <!-- Header -->
     <div class="bg-white shadow-sm border-b">
       <div class="px-4 py-6">
         <div class="flex items-center justify-between">
           <NuxtLink to="/" class="text-gray-600 hover:text-gray-800 transition-colors">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-            </svg>
+            <Icon name="lucide:arrow-left" class="w-6 h-6" />
           </NuxtLink>
-          <h1 class="text-xl font-bold text-gray-900">角色創建參考</h1>
+          <h1 class="text-xl font-bold text-gray-900 flex items-center">
+            <Icon name="lucide:scroll-text" class="w-5 h-5 mr-2" />
+            角色創建參考
+          </h1>
           <div class="w-6"></div> <!-- Spacer -->
         </div>
       </div>
     </div>
 
     <!-- Main Content -->
-    <div class="px-4 py-6 max-w-md mx-auto">
-      <!-- Theme System Selector -->
+    <div class="px-4 py-6 max-w-md mx-auto">      <!-- Theme System Selector -->
       <div class="bg-white rounded-xl shadow-sm border p-4 mb-6">
-        <label class="block text-sm font-medium text-gray-700 mb-3">選擇主題</label>
-        <select 
-          v-model="selectedSystem" 
-          @change="onSystemChange"
-          class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white"
-        >
-          <option value="">請選擇主題</option>
-          <option value="origin">起源主題</option>
-          <option value="adventure">冒險主題</option>
-          <option value="greatness">偉業主題</option>
-        </select>
-      </div>
-
-      <!-- Theme Type Selector -->
+        <label class="block text-sm font-medium text-gray-700 mb-3 flex items-center">
+          <Icon name="lucide:layers" class="w-4 h-4 mr-2" />
+          選擇主題
+        </label>
+        <div class="relative">
+          <button 
+            @click="showThemeDropdown = !showThemeDropdown"
+            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-left flex items-center justify-between"
+          >            
+            <span class="flex items-center">
+              <Icon 
+                v-if="selectedSystem === 'origin'" 
+                name="material-symbols:eco" class="w-5 h-5 mr-2 text-green-600"
+              />
+              <Icon 
+                v-else-if="selectedSystem === 'adventure'" 
+                name="game-icons:crossed-swords" class="w-5 h-5 mr-2 text-red-600"
+              />
+              <Icon 
+                v-else-if="selectedSystem === 'greatness'" 
+                name="material-symbols:crown" class="w-5 h-5 mr-2 text-purple-600"
+              />
+              {{ getSystemDisplayName(selectedSystem) || '請選擇主題' }}
+            </span>
+          </button>
+          <div 
+            v-if="showThemeDropdown" 
+            class="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg"
+          >
+            <button
+              @click="selectSystem('')"
+              class="w-full p-3 text-left hover:bg-gray-50 first:rounded-t-lg"
+            >
+              請選擇主題
+            </button>            
+            <button
+              @click="selectSystem('origin')"
+              class="w-full p-3 text-left hover:bg-gray-50 flex items-center"
+            >
+              <Icon name="material-symbols:eco" class="w-5 h-5 mr-2 text-green-600" />
+              起源主題
+            </button>
+            <button
+              @click="selectSystem('adventure')"
+              class="w-full p-3 text-left hover:bg-gray-50 flex items-center"
+            >
+              <Icon name="game-icons:crossed-swords" class="w-5 h-5 mr-2 text-red-600" />
+              冒險主題
+            </button>
+            <button
+              @click="selectSystem('greatness')"
+              class="w-full p-3 text-left hover:bg-gray-50 flex items-center last:rounded-b-lg"
+            >
+              <Icon name="material-symbols:crown" class="w-5 h-5 mr-2 text-purple-600" />
+              偉業主題
+            </button>
+          </div>
+        </div>
+      </div><!-- Theme Type Selector -->
       <div v-if="selectedSystem && availableThemes.length > 0" class="bg-white rounded-xl shadow-sm border p-4 mb-6">
-        <label class="block text-sm font-medium text-gray-700 mb-3">選擇主題類型</label>
+        <label class="block text-sm font-medium text-gray-700 mb-3 flex items-center">
+          <Icon name="lucide:tag" class="w-4 h-4 mr-2" />
+          選擇主題類型
+        </label>
         <select 
           v-model="selectedTheme" 
           @change="onThemeChange"
@@ -50,23 +97,49 @@
       <!-- Theme Details -->
       <div v-if="selectedThemeData" class="space-y-6">
         <!-- Theme Overview -->
-        <div class="bg-white rounded-xl shadow-sm border overflow-hidden">
-          <div class="bg-gradient-to-r from-blue-500 to-purple-600 p-4">
-            <h2 class="text-xl font-bold text-white">{{ selectedThemeData.theme }}</h2>
-            <p class="text-blue-100 text-sm mt-1">{{ selectedThemeData.title }}</p>
+        <div class="bg-white rounded-xl shadow-sm border overflow-hidden">          <div 
+            :class="{
+              'bg-gradient-to-r from-green-500 to-emerald-600': selectedSystem === 'origin',
+              'bg-gradient-to-r from-amber-600 to-orange-800': selectedSystem === 'adventure', 
+              'bg-gradient-to-r from-slate-600 to-gray-800': selectedSystem === 'greatness',
+              'bg-gradient-to-r from-blue-500 to-purple-600': !selectedSystem
+            }"
+            class="p-4"
+          ><h2 class="text-xl font-bold text-white flex items-center">
+              <Icon 
+                v-if="selectedSystem === 'origin'" 
+                name="material-symbols:eco" 
+                class="w-5 h-5 mr-2 text-white" 
+              />
+              <Icon 
+                v-else-if="selectedSystem === 'adventure'" 
+                name="game-icons:crossed-swords" 
+                class="w-5 h-5 mr-2 text-white" 
+              />
+              <Icon 
+                v-else-if="selectedSystem === 'greatness'" 
+                name="material-symbols:crown" 
+                class="w-5 h-5 mr-2 text-white" 
+              />
+              {{ selectedThemeData.theme }}
+            </h2>            <p 
+              :class="{
+                'text-green-100': selectedSystem === 'origin',
+                'text-orange-100': selectedSystem === 'adventure',
+                'text-gray-200': selectedSystem === 'greatness',
+                'text-blue-100': !selectedSystem
+              }"
+              class="text-sm mt-1"
+            >{{ selectedThemeData.title }}</p>
           </div>
           <div class="p-4">
             <p class="text-gray-700 leading-relaxed">{{ selectedThemeData.concept }}</p>
           </div>
-        </div>
-
-        <!-- Background Questions -->
+        </div>        <!-- Background Questions -->
         <div class="bg-white rounded-xl shadow-sm border overflow-hidden">
           <div class="bg-gray-50 px-4 py-3 border-b">
             <h3 class="font-semibold text-gray-900 flex items-center">
-              <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-              </svg>
+              <Icon name="lucide:help-circle" class="w-5 h-5 mr-2 text-blue-500" />
               背景問題
             </h3>
           </div>
@@ -76,61 +149,47 @@
               <p class="text-gray-800">{{ question }}</p>
             </div>
           </div>
-        </div>
-
-        <!-- Ability Tags -->
+        </div>        <!-- Ability Tags -->
         <div class="bg-white rounded-xl shadow-sm border overflow-hidden">
           <div class="bg-gray-50 px-4 py-3 border-b">
             <h3 class="font-semibold text-gray-900 flex items-center">
-              <svg class="w-5 h-5 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-              </svg>
+              <Icon name="lucide:zap" class="w-5 h-5 mr-2 text-green-500" />
               能力標籤
             </h3>
           </div>
           <div class="p-4 space-y-3">
             <div v-for="tag in selectedThemeData.questions.ability_tags" :key="tag.id" 
-                 class="p-3 bg-green-50 rounded-lg border-l-4 border-green-400">
-              <div class="flex items-start">
-                <span class="inline-flex items-center justify-center w-6 h-6 bg-green-500 text-white text-xs font-bold rounded-full mr-3 mt-0.5 flex-shrink-0">
+                 class="p-3 bg-green-50 rounded-lg border-l-4 border-green-400">              <div class="flex items-center">
+                <span class="inline-flex items-center justify-center w-6 h-6 bg-green-500 text-white text-xs font-bold rounded-full mr-3 flex-shrink-0">
                   {{ tag.id }}
                 </span>
                 <p class="text-gray-800">{{ tag.question }}</p>
               </div>
             </div>
           </div>
-        </div>
-
-        <!-- Weakness Tags -->
+        </div>        <!-- Weakness Tags -->
         <div class="bg-white rounded-xl shadow-sm border overflow-hidden">
           <div class="bg-gray-50 px-4 py-3 border-b">
             <h3 class="font-semibold text-gray-900 flex items-center">
-              <svg class="w-5 h-5 mr-2 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16c-.77.833.192 2.5 1.732 2.5z"></path>
-              </svg>
+              <Icon name="lucide:alert-triangle" class="w-5 h-5 mr-2 text-red-500" />
               弱點標籤
             </h3>
           </div>
           <div class="p-4 space-y-3">
             <div v-for="tag in selectedThemeData.questions.weakness_tags" :key="tag.id" 
-                 class="p-3 bg-red-50 rounded-lg border-l-4 border-red-400">
-              <div class="flex items-start">
-                <span class="inline-flex items-center justify-center w-6 h-6 bg-red-500 text-white text-xs font-bold rounded-full mr-3 mt-0.5 flex-shrink-0">
+                 class="p-3 bg-red-50 rounded-lg border-l-4 border-red-400">              <div class="flex items-center">
+                <span class="inline-flex items-center justify-center w-6 h-6 bg-red-500 text-white text-xs font-bold rounded-full mr-3 flex-shrink-0">
                   {{ tag.id }}
                 </span>
                 <p class="text-gray-800">{{ tag.question }}</p>
               </div>
             </div>
           </div>
-        </div>
-
-        <!-- Mission Concepts -->
+        </div>        <!-- Mission Concepts -->
         <div class="bg-white rounded-xl shadow-sm border overflow-hidden">
           <div class="bg-gray-50 px-4 py-3 border-b">
             <h3 class="font-semibold text-gray-900 flex items-center">
-              <svg class="w-5 h-5 mr-2 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-              </svg>
+              <Icon name="lucide:target" class="w-5 h-5 mr-2 text-purple-500" />
               使命構想
             </h3>
           </div>
@@ -140,18 +199,14 @@
               <p class="text-gray-800">{{ mission }}</p>
             </div>
           </div>
-        </div>
-
-        <!-- Sample Characters/Heroes -->
+        </div>        <!-- Sample Characters/Heroes -->
         <div v-if="sampleCharacters.length > 0" class="bg-white rounded-xl shadow-sm border overflow-hidden">
           <div class="bg-gray-50 px-4 py-3 border-b">
             <h3 class="font-semibold text-gray-900 flex items-center">
-              <svg class="w-5 h-5 mr-2 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-              </svg>
+              <Icon name="lucide:users" class="w-5 h-5 mr-2 text-amber-500" />
               範例角色
             </h3>
-          </div>          
+          </div>
           <div class="p-4 space-y-4">            
             <div v-for="character in sampleCharacters" :key="character.name" 
                  class="p-4 bg-amber-50 rounded-lg border border-amber-200">
@@ -227,6 +282,7 @@ const selectedThemeData = ref<SelectedThemeData | null>(null)
 const availableThemes = ref<AvailableTheme[]>([])
 const sampleCharacters = ref<SampleCharacter[]>([])
 const isLoading = ref<boolean>(false)
+const showThemeDropdown = ref<boolean>(false)
 
 // 系統數據
 const systemData = ref<SystemData>({
@@ -237,7 +293,7 @@ const systemData = ref<SystemData>({
 
 // 頁面標題
 useHead({
-  title: '角色創建參考 - Legend in the Mist'
+  title: '角色創建參考 - 迷霧傳奇'
 })
 
 // 載入所有系統數據
@@ -262,6 +318,39 @@ onMounted(async () => {
   } finally {
     isLoading.value = false
   }
+})
+
+// 選擇系統的方法
+const selectSystem = (system: SystemType | '') => {
+  selectedSystem.value = system
+  showThemeDropdown.value = false
+  onSystemChange()
+}
+
+// 獲取系統顯示名稱
+const getSystemDisplayName = (system: SystemType | '') => {
+  switch (system) {
+    case 'origin': return '起源主題'
+    case 'adventure': return '冒險主題'
+    case 'greatness': return '偉業主題'
+    default: return ''
+  }
+}
+
+// 點擊外部關閉下拉選單
+const closeDropdown = (event: Event) => {
+  const target = event.target as Element
+  if (!target.closest('.relative')) {
+    showThemeDropdown.value = false
+  }
+}
+
+onMounted(() => {
+  document.addEventListener('click', closeDropdown)
+})
+
+onUnmounted(() => {
+  document.removeEventListener('click', closeDropdown)
 })
 
 // 當系統選擇改變時
