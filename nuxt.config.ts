@@ -29,6 +29,9 @@ export default defineNuxtConfig({
   
   // GitHub Pages 建構配置
   nitro: {
-    preset: 'static'
+    preset: 'static',
+    prerender: {
+      routes: ['/']
+    }
   }
 })

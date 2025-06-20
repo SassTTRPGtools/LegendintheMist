@@ -36,9 +36,15 @@ jobs:
         run: npm ci
       
       - name: Build with Nuxt
-        run: npm run build
+        run: npm run generate
         env:
           NUXT_APP_BASE_URL: /LegendintheMist/
+      
+      - name: Add .nojekyll file
+        run: touch .output/public/.nojekyll
+      
+      - name: List output directory
+        run: ls -la .output/public/
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
