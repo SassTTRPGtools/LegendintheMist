@@ -7,7 +7,8 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "deploy": "nuxt generate && gh-pages -d .output/public"
   },
   "dependencies": {
     "@nuxt/icon": "^1.14.0",
@@ -20,6 +21,7 @@
     "@iconify-json/fluent-emoji-high-contrast": "^1.2.3",
     "@iconify-json/game-icons": "^1.2.3",
     "@iconify-json/lucide": "^1.2.51",
-    "@iconify-json/material-symbols": "^1.2.27"
+    "@iconify-json/material-symbols": "^1.2.27",
+    "gh-pages": "^6.3.0"
   }
 }
