@@ -130,15 +130,40 @@ jobs:
                       config: {
                           app: {
                               baseURL: '/LegendintheMist/',
-                              buildAssetsDir: '/_nuxt/'
+                              buildAssetsDir: '/_nuxt/',
+                              cdnURL: null
                           },
                           public: {
                               baseURL: '/LegendintheMist/'
                           }
                       },
                       data: {},
-                      state: {}
+                      state: {},
+                      // 禁用 app manifest
+                      $config: {
+                          app: {
+                              baseURL: '/LegendintheMist/',
+                              buildAssetsDir: '/_nuxt/'
+                          }
+                      },
+                      // 防止載入 manifest
+                      ssrContext: null,
+                      payload: {
+                          serverRendered: false,
+                          config: {
+                              app: {
+                                  baseURL: '/LegendintheMist/'
+                              }
+                          }
+                      }
                   };
+                  
+                  // 防止 Nuxt 嘗試載入 app manifest
+                  if (window.nuxtAppManifest) {
+                      window.nuxtAppManifest = null;
+                  }
+                  
+                  console.log('Runtime config injected:', window.__NUXT__);
               </script>
           </head>
           <body>

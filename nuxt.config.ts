@@ -31,6 +31,12 @@ export default defineNuxtConfig({
   // SPA 模式，完全避免 SSR
   ssr: false,
   
+  // 關閉 app manifest 功能
+  experimental: {
+    payloadExtraction: false,
+    appManifest: false
+  },
+  
   // Nitro 配置 - 關閉預渲染
   nitro: {
     preset: 'static',
@@ -38,10 +44,5 @@ export default defineNuxtConfig({
       crawlLinks: false,
       routes: []
     }
-  },
-  
-  // 關閉可能造成問題的功能
-  experimental: {
-    payloadExtraction: false
   }
 })
