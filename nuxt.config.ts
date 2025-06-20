@@ -18,6 +18,16 @@ export default defineNuxtConfig({
     }
   },
   
+  // 確保運行時配置可用
+  runtimeConfig: {
+    app: {
+      baseURL: '/LegendintheMist/'
+    },
+    public: {
+      baseURL: '/LegendintheMist/'
+    }
+  },
+  
   // SPA 模式，完全避免 SSR
   ssr: false,
   

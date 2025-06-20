@@ -115,22 +115,42 @@ jobs:
           fi
           
           echo "Creating index.html with dynamic asset names..."
-          cat > .output/public/index.html << EOF
+          cat > .output/public/index.html << 'EOF'
           <!DOCTYPE html>
           <html>
           <head>
-            <meta charset="utf-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1">
-            <title>Legend in the Mist</title>
-            <link rel="icon" type="image/x-icon" href="/LegendintheMist/favicon.ico">
-            <link rel="stylesheet" href="/LegendintheMist/_nuxt/$CSS_NAME">
+              <meta charset="utf-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1">
+              <title>Legend in the Mist</title>
+              <link rel="icon" type="image/x-icon" href="/LegendintheMist/favicon.ico">
+              <link rel="stylesheet" href="/LegendintheMist/_nuxt/$CSS_NAME">
+              <script>
+                  // 注入完整的 Nuxt runtime config
+                  window.__NUXT__ = {
+                      config: {
+                          app: {
+                              baseURL: '/LegendintheMist/',
+                              buildAssetsDir: '/_nuxt/'
+                          },
+                          public: {
+                              baseURL: '/LegendintheMist/'
+                          }
+                      },
+                      data: {},
+                      state: {}
+                  };
+              </script>
           </head>
           <body>
-            <div id="__nuxt"></div>
-            <script type="module" src="/LegendintheMist/_nuxt/$JS_NAME"></script>
+              <div id="__nuxt"></div>
+              <script type="module" src="/LegendintheMist/_nuxt/$JS_NAME"></script>
           </body>
           </html>
           EOF
+          
+          # Replace placeholders with actual values
+          sed -i "s/\$CSS_NAME/$CSS_NAME/g" .output/public/index.html
+          sed -i "s/\$JS_NAME/$JS_NAME/g" .output/public/index.html
           
           echo "Generated index.html:"
           cat .output/public/index.html
