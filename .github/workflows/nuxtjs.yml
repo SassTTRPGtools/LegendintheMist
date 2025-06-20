@@ -41,20 +41,28 @@ jobs:
           mkdir -p .output/public
           cp -r .nuxt/dist/client/* .output/public/
           cp public/favicon.ico .output/public/
-          echo '<!DOCTYPE html>
+          
+          CSS_FILE=$(find .output/public/_nuxt -name "entry.*.css" | head -1 | xargs basename)
+          JS_FILE=$(find .output/public/_nuxt -name "*.js" | xargs ls -la | sort -k5 -nr | head -1 | awk '{print $9}' | xargs basename)
+          
+          echo "Found files: CSS=$CSS_FILE, JS=$JS_FILE"
+          
+          cat > .output/public/index.html << EOF
+          <!DOCTYPE html>
           <html>
           <head>
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <title>Legend in the Mist</title>
             <link rel="icon" type="image/x-icon" href="/LegendintheMist/favicon.ico">
-            <link rel="stylesheet" href="/LegendintheMist/_nuxt/entry.B1goDtUc.css">
+            <link rel="stylesheet" href="/LegendintheMist/_nuxt/$CSS_FILE">
           </head>
           <body>
             <div id="__nuxt"></div>
-            <script type="module" src="/LegendintheMist/_nuxt/C52IU5KB.js"></script>
+            <script type="module" src="/LegendintheMist/_nuxt/$JS_FILE"></script>
           </body>
-          </html>' > .output/public/index.html
+          </html>
+          EOF
         env:
           NUXT_APP_BASE_URL: /LegendintheMist/
       

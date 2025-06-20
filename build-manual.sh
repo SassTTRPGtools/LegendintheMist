@@ -16,7 +16,7 @@ cp public/favicon.ico .output/public/
 
 echo "取得動態檔案名稱..."
 CSS_FILE=$(find .output/public/_nuxt -name "entry.*.css" | head -1 | xargs basename)
-JS_FILE=$(find .output/public/_nuxt -name "*.js" | grep -v entry | head -1 | xargs basename)
+JS_FILE=$(find .output/public/_nuxt -name "*.js" | xargs ls -la | sort -k5 -nr | head -1 | awk '{print $9}' | xargs basename)
 
 echo "找到的檔案:"
 echo "CSS: $CSS_FILE"
