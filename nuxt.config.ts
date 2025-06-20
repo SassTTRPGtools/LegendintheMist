@@ -10,5 +10,10 @@ export default defineNuxtConfig({
   },
   
   // SPA 模式，避免 SSR 相關問題
-  ssr: false
+  ssr: false,
+  
+  // GitHub Pages 建構配置
+  nitro: {
+    preset: 'github-pages'
+  }
 })
