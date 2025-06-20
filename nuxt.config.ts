@@ -10,7 +10,12 @@ export default defineNuxtConfig({
   // GitHub Pages 部署配置 
   app: {
     baseURL: '/LegendintheMist/',
-    buildAssetsDir: '/_nuxt/'
+    buildAssetsDir: '/_nuxt/',
+    head: {
+      link: [
+        { rel: 'icon', type: 'image/x-icon', href: '/LegendintheMist/favicon.ico' }
+      ]
+    }
   },
   
   // SPA 模式，避免 SSR 相關問題
