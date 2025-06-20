@@ -9,7 +9,7 @@ export default defineNuxtConfig({
   
   // GitHub Pages 部署配置
   app: {
-    baseURL: process.env.NODE_ENV === 'production' ? '/LegendintheMist/' : '/',
+    baseURL: '/LegendintheMist/' ,
     buildAssetsDir: '/_nuxt/',
     head: {
       link: [
