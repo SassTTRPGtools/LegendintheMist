@@ -38,19 +38,44 @@ jobs:
       - name: Build with Nuxt (manual workaround)
         run: |
           echo "Starting build process..."
-          npm run build || echo "Build failed but continuing with manual process..."
+          
+          # Try building, but continue even if it fails
+          if npm run build; then
+            echo "✓ npm run build succeeded"
+          else
+            echo "⚠ npm run build failed, but client files might still be available"
+          fi
+          
+          echo "Checking what was actually built..."
+          if [ -d ".nuxt" ]; then
+            echo "✓ .nuxt directory exists"
+            find .nuxt -name "*.css" -o -name "*.js" | head -10
+          else
+            echo "✗ .nuxt directory missing!"
+            exit 1
+          fi
+          
+          if [ -d ".nuxt/dist" ]; then
+            echo "✓ .nuxt/dist exists"
+          else
+            echo "✗ .nuxt/dist missing!"
+            exit 1
+          fi
+          
+          if [ -d ".nuxt/dist/client" ]; then
+            echo "✓ .nuxt/dist/client exists"
+            ls -la .nuxt/dist/client/
+          else
+            echo "✗ .nuxt/dist/client missing!"
+            exit 1
+          fi
           
           echo "Creating output directory..."
           mkdir -p .output/public
           
           echo "Copying client files..."
-          if [ -d ".nuxt/dist/client" ]; then
-            cp -r .nuxt/dist/client/* .output/public/
-            echo "Client files copied successfully"
-          else
-            echo "ERROR: .nuxt/dist/client directory not found!"
-            exit 1
-          fi
+          cp -r .nuxt/dist/client/* .output/public/
+          echo "Client files copied successfully"
           
           echo "Copying favicon..."
           if [ -f "public/favicon.ico" ]; then
@@ -66,19 +91,38 @@ jobs:
           echo "Listing all files in .output/public/_nuxt/..."
           ls -la .output/public/_nuxt/
           
-          echo "Verifying specific files exist..."
-          if [ -f ".output/public/_nuxt/entry.B1goDtUc.css" ]; then
-            echo "✓ CSS file exists"
+          echo "Verifying specific files exist in source..."
+          if [ -f ".nuxt/dist/client/_nuxt/entry.B1goDtUc.css" ]; then
+            echo "✓ Source CSS file exists ($(wc -c < .nuxt/dist/client/_nuxt/entry.B1goDtUc.css) bytes)"
           else
-            echo "✗ CSS file missing!"
-            ls -la .output/public/_nuxt/*.css || echo "No CSS files found"
+            echo "✗ Source CSS file missing!"
+            echo "Available CSS files in source:"
+            find .nuxt/dist/client -name "*.css"
+          fi
+          
+          if [ -f ".nuxt/dist/client/_nuxt/C52IU5KB.js" ]; then
+            echo "✓ Source JS file exists ($(wc -c < .nuxt/dist/client/_nuxt/C52IU5KB.js) bytes)"
+          else
+            echo "✗ Source JS file missing!"
+            echo "Available JS files in source:"
+            find .nuxt/dist/client -name "*.js" | head -5
+          fi
+          
+          echo "Verifying copied files exist..."
+          if [ -f ".output/public/_nuxt/entry.B1goDtUc.css" ]; then
+            echo "✓ Copied CSS file exists ($(wc -c < .output/public/_nuxt/entry.B1goDtUc.css) bytes)"
+          else
+            echo "✗ Copied CSS file missing!"
+            echo "Available CSS files in destination:"
+            find .output/public -name "*.css"
           fi
           
           if [ -f ".output/public/_nuxt/C52IU5KB.js" ]; then
-            echo "✓ JS file exists"
+            echo "✓ Copied JS file exists ($(wc -c < .output/public/_nuxt/C52IU5KB.js) bytes)"
           else
-            echo "✗ JS file missing!"
-            ls -la .output/public/_nuxt/*.js || echo "No JS files found"
+            echo "✗ Copied JS file missing!"
+            echo "Available JS files in destination:"
+            find .output/public -name "*.js" | head -5
           fi
           
           echo "Creating index.html..."
@@ -129,19 +173,50 @@ jobs:
             exit 1
           fi
           
-          if [ -f ".output/public/_nuxt/entry.B1goDtUc.css" ]; then
-            echo "✓ CSS file exists ($(wc -c < .output/public/_nuxt/entry.B1goDtUc.css) bytes)"
+          # Check for CSS file with flexible naming
+          CSS_FILE=$(find .output/public/_nuxt -name "entry.*.css" | head -1)
+          if [ -n "$CSS_FILE" ] && [ -f "$CSS_FILE" ]; then
+            echo "✓ CSS file exists: $(basename $CSS_FILE) ($(wc -c < $CSS_FILE) bytes)"
           else
-            echo "✗ CSS file missing!"
+            echo "✗ Entry CSS file missing!"
+            echo "Available CSS files:"
+            find .output/public -name "*.css" -type f || echo "No CSS files found"
             exit 1
           fi
           
-          if [ -f ".output/public/_nuxt/C52IU5KB.js" ]; then
-            echo "✓ JS file exists ($(wc -c < .output/public/_nuxt/C52IU5KB.js) bytes)"
+          # Check for main JS file (largest one)
+          JS_FILE=$(find .output/public/_nuxt -name "*.js" -exec ls -la {} \; | sort -k5 -nr | head -1 | awk '{print $9}')
+          if [ -n "$JS_FILE" ] && [ -f "$JS_FILE" ]; then
+            echo "✓ Main JS file exists: $(basename $JS_FILE) ($(wc -c < $JS_FILE) bytes)"
           else
-            echo "✗ JS file missing!"
+            echo "✗ Main JS file missing!"
+            echo "Available JS files:"
+            find .output/public -name "*.js" -type f | head -5 || echo "No JS files found"
             exit 1
           fi
+          
+          # Update index.html with actual file names if they differ
+          ACTUAL_CSS=$(basename $CSS_FILE)
+          ACTUAL_JS=$(basename $JS_FILE)
+          
+          echo "Updating index.html with actual file names: CSS=$ACTUAL_CSS, JS=$ACTUAL_JS"
+          
+          cat > .output/public/index.html << EOF
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <title>Legend in the Mist</title>
+            <link rel="icon" type="image/x-icon" href="/LegendintheMist/favicon.ico">
+            <link rel="stylesheet" href="/LegendintheMist/_nuxt/$ACTUAL_CSS">
+          </head>
+          <body>
+            <div id="__nuxt"></div>
+            <script type="module" src="/LegendintheMist/_nuxt/$ACTUAL_JS"></script>
+          </body>
+          </html>
+          EOF
           
           echo "All critical files verified. Proceeding with upload..."
       
