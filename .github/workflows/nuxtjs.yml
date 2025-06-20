@@ -1,8 +1,8 @@
-name: Deploy Nuxt site to Pages
+name: Deploy Nuxt 3 to GitHub Pages
 
 on:
   push:
-    branches: ["master"]
+    branches: [ master ]
   workflow_dispatch:
 
 permissions:
@@ -21,11 +21,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       
-      - name: Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "18"
-          cache: "npm"
+          node-version: '18'
+          cache: 'npm'
       
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -35,195 +35,59 @@ jobs:
       - name: Install dependencies
         run: npm ci
       
-      - name: Build with Nuxt (manual workaround)
+      - name: Build Nuxt project
         run: |
-          echo "Starting build process..."
-          
-          # Build the project
+          echo "Building for production..."
           npm run build
           
-          echo "Checking what was actually built..."
-          if [ ! -d ".nuxt/dist/client" ]; then
-            echo "✗ .nuxt/dist/client missing!"
-            exit 1
-          fi
-          
-          echo "=== SOURCE FILES BEFORE COPY ==="
-          echo "Source directory structure:"
-          find .nuxt/dist/client -type f | head -20
-          
-          echo "Source CSS files:"
-          find .nuxt/dist/client -name "*.css" -type f
-          
-          echo "Source JS files (top 10):"
-          find .nuxt/dist/client -name "*.js" -type f | head -10
-          
-          echo "Creating output directory..."
+          echo "Setting up output directory..."
           mkdir -p .output/public
           
           echo "Copying client files..."
           cp -r .nuxt/dist/client/* .output/public/
           
           echo "Copying favicon..."
-          if [ -f "public/favicon.ico" ]; then
-            cp public/favicon.ico .output/public/
-            echo "Favicon copied successfully"
-          fi
+          cp public/favicon.ico .output/public/
           
-          echo "=== COPIED FILES VERIFICATION ==="
-          echo "Destination directory structure:"
-          find .output/public -type f | head -20
-          
-          echo "Destination CSS files:"
-          find .output/public -name "*.css" -type f
-          
-          echo "Destination JS files (top 10):"
-          find .output/public -name "*.js" -type f | head -10
-          
-          # Find actual CSS and JS files dynamically
-          echo "=== FINDING MAIN ASSETS ==="
-          ENTRY_CSS=$(find .output/public/_nuxt -name "entry.*.css" | head -1)
-          MAIN_JS=$(find .output/public/_nuxt -name "*.js" -exec ls -la {} \; | sort -k5 -nr | head -1 | awk '{print $9}')
-          
-          if [ -z "$ENTRY_CSS" ]; then
-            echo "✗ No entry CSS file found! Looking for alternatives..."
-            # Try to find any main CSS file
-            ENTRY_CSS=$(find .output/public/_nuxt -name "*.css" -exec ls -la {} \; | sort -k5 -nr | head -1 | awk '{print $9}')
-          fi
-          
-          if [ -z "$MAIN_JS" ]; then
-            echo "✗ No main JS file found!"
-            exit 1
-          fi
-          
-          if [ -n "$ENTRY_CSS" ] && [ -f "$ENTRY_CSS" ]; then
-            CSS_NAME=$(basename "$ENTRY_CSS")
-            CSS_SIZE=$(wc -c < "$ENTRY_CSS")
-            echo "✓ Found CSS file: $CSS_NAME ($CSS_SIZE bytes)"
-          else
-            echo "✗ No valid CSS file found!"
-            exit 1
-          fi
-          
-          if [ -n "$MAIN_JS" ] && [ -f "$MAIN_JS" ]; then
-            JS_NAME=$(basename "$MAIN_JS")
-            JS_SIZE=$(wc -c < "$MAIN_JS")
-            echo "✓ Found JS file: $JS_NAME ($JS_SIZE bytes)"
-          else
-            echo "✗ No valid JS file found!"
-            exit 1
-          fi
-          
-          echo "Creating index.html with dynamic asset names..."
+          echo "Creating index.html..."
           cat > .output/public/index.html << 'EOF'
           <!DOCTYPE html>
-          <html>
+          <html lang="en">
           <head>
               <meta charset="utf-8">
               <meta name="viewport" content="width=device-width, initial-scale=1">
               <title>Legend in the Mist</title>
               <link rel="icon" type="image/x-icon" href="/LegendintheMist/favicon.ico">
-              <link rel="stylesheet" href="/LegendintheMist/_nuxt/$CSS_NAME">
-              <script>
-                  // 注入完整的 Nuxt runtime config
-                  window.__NUXT__ = {
-                      config: {
-                          app: {
-                              baseURL: '/LegendintheMist/',
-                              buildAssetsDir: '/_nuxt/',
-                              cdnURL: null
-                          },
-                          public: {
-                              baseURL: '/LegendintheMist/'
-                          }
-                      },
-                      data: {},
-                      state: {},
-                      // 禁用 app manifest
-                      $config: {
-                          app: {
-                              baseURL: '/LegendintheMist/',
-                              buildAssetsDir: '/_nuxt/'
-                          }
-                      },
-                      // 防止載入 manifest
-                      ssrContext: null,
-                      payload: {
-                          serverRendered: false,
-                          config: {
-                              app: {
-                                  baseURL: '/LegendintheMist/'
-                              }
-                          }
-                      }
-                  };
-                  
-                  // 防止 Nuxt 嘗試載入 app manifest
-                  if (window.nuxtAppManifest) {
-                      window.nuxtAppManifest = null;
-                  }
-                  
-                  console.log('Runtime config injected:', window.__NUXT__);
-              </script>
+              <link rel="stylesheet" href="/LegendintheMist/_nuxt/entry.css">
           </head>
           <body>
               <div id="__nuxt"></div>
-              <script type="module" src="/LegendintheMist/_nuxt/$JS_NAME"></script>
+              <script type="module" src="/LegendintheMist/_nuxt/app.js"></script>
           </body>
           </html>
           EOF
           
-          # Replace placeholders with actual values
-          sed -i "s/\$CSS_NAME/$CSS_NAME/g" .output/public/index.html
-          sed -i "s/\$JS_NAME/$JS_NAME/g" .output/public/index.html
+          echo "Finding actual asset files..."
+          CSS_FILE=$(find .output/public/_nuxt -name "*.css" -exec ls -la {} \; | sort -k5 -nr | head -1 | awk '{print $9}')
+          JS_FILE=$(find .output/public/_nuxt -name "*.js" -exec ls -la {} \; | sort -k5 -nr | head -1 | awk '{print $9}')
           
-          echo "Generated index.html:"
-          cat .output/public/index.html
+          if [ -n "$CSS_FILE" ] && [ -n "$JS_FILE" ]; then
+            CSS_NAME=$(basename "$CSS_FILE")
+            JS_NAME=$(basename "$JS_FILE")
+            
+            echo "Updating index.html with actual file names: $CSS_NAME, $JS_NAME"
+            
+            sed -i "s|entry\.css|$CSS_NAME|g" .output/public/index.html
+            sed -i "s|app\.js|$JS_NAME|g" .output/public/index.html
+          fi
+          
+          echo "Generated files:"
+          find .output/public -type f | head -10
         env:
-          NUXT_APP_BASE_URL: /LegendintheMist/
+          NODE_ENV: production
       
-      - name: Add .nojekyll file
+      - name: Add .nojekyll
         run: touch .output/public/.nojekyll
-      
-      - name: Check for CSS files
-        run: |
-          echo "Checking for CSS files..."
-          find .output/public -name "*.css" -type f
-          echo "Checking _nuxt directory..."
-          ls -la .output/public/_nuxt/ || echo "No _nuxt directory found"
-      
-      - name: List output directory
-        run: ls -la .output/public/
-      
-      - name: Final verification before upload
-        run: |
-          echo "=== FINAL VERIFICATION ==="
-          
-          if [ ! -f ".output/public/index.html" ]; then
-            echo "✗ index.html missing!"
-            exit 1
-          fi
-          
-          echo "✓ index.html exists"
-          echo "Content preview:"
-          head -10 .output/public/index.html
-          
-          CSS_COUNT=$(find .output/public/_nuxt -name "*.css" | wc -l)
-          JS_COUNT=$(find .output/public/_nuxt -name "*.js" | wc -l)
-          
-          echo "Found $CSS_COUNT CSS files and $JS_COUNT JS files"
-          
-          if [ $CSS_COUNT -eq 0 ]; then
-            echo "✗ No CSS files found!"
-            exit 1
-          fi
-          
-          if [ $JS_COUNT -eq 0 ]; then
-            echo "✗ No JS files found!"
-            exit 1
-          fi
-          
-          echo "✓ All critical files verified. Ready for deployment."
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

@@ -7,42 +7,31 @@ export default defineNuxtConfig({
   // 確保包含 Tailwind CSS
   css: ['~/assets/css/main.css'],
   
-  // GitHub Pages 部署配置 
+  // GitHub Pages 部署配置
   app: {
-    baseURL: '/LegendintheMist/',
+    baseURL: process.env.NODE_ENV === 'production' ? '/LegendintheMist/' : '/',
     buildAssetsDir: '/_nuxt/',
     head: {
       link: [
-        { rel: 'icon', type: 'image/x-icon', href: '/LegendintheMist/favicon.ico' }
+        { rel: 'icon', type: 'image/x-icon', href: process.env.NODE_ENV === 'production' ? '/LegendintheMist/favicon.ico' : '/favicon.ico' }
       ]
     }
   },
   
-  // 確保運行時配置可用
-  runtimeConfig: {
-    app: {
-      baseURL: '/LegendintheMist/'
-    },
-    public: {
-      baseURL: '/LegendintheMist/'
-    }
-  },
-  
-  // SPA 模式，完全避免 SSR
+  // SPA 模式避免預渲染問題
   ssr: false,
   
-  // 關閉 app manifest 功能
-  experimental: {
-    payloadExtraction: false,
-    appManifest: false
-  },
-  
-  // Nitro 配置 - 關閉預渲染
+  // 靜態生成配置 - 改用 static preset
   nitro: {
     preset: 'static',
     prerender: {
-      crawlLinks: false,
-      routes: []
+      routes: ['/'],
+      crawlLinks: false
     }
+  },
+  
+  // 實驗性功能
+  experimental: {
+    payloadExtraction: false
   }
 })

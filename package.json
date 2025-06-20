@@ -8,7 +8,8 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "deploy": "nuxt generate && gh-pages -d .output/public"
+    "deploy": "nuxt generate && gh-pages -d .output/public",
+    "build:github": "NODE_ENV=production NITRO_PRESET=github-pages nuxt generate"
   },
   "dependencies": {
     "@nuxt/icon": "^1.14.0",
