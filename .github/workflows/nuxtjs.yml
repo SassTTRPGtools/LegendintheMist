@@ -37,64 +37,49 @@ jobs:
           node-version: "20"
       - name: Install dependencies
         run: npm ci --prefer-offline
-      - name: Build Nuxt
+      - name: Generate Nuxt
         run: |
-          echo "Building Nuxt project..."
-          npm run build
+          echo "Generating Nuxt project for static deployment..."
+          npm run generate
           
-          echo "Checking build output..."
-          ls -la .nuxt/dist/client/
+          echo "Checking generated output..."
+          echo "Output directory contents:"
+          ls -la .output/public/
           
-          echo "Creating output directory..."
-          mkdir -p .output/public
-          
-          echo "Copying client files to output..."
-          cp -r .nuxt/dist/client/* .output/public/
-          
-          echo "Copying public files..."
-          if [ -d "public" ]; then
-            cp -r public/* .output/public/
-          fi
-          
-          echo "Verifying _nuxt directory..."
-          ls -la .output/public/_nuxt/
-          
-          echo "Creating index.html..."
-          # Find the main JS and CSS files
-          MAIN_JS=$(find .output/public/_nuxt -name "*.js" -exec ls -la {} \; | sort -k5 -nr | head -1 | awk '{print $9}')
-          MAIN_CSS=$(find .output/public/_nuxt -name "*.css" -exec ls -la {} \; | sort -k5 -nr | head -1 | awk '{print $9}')
-          
-          if [ -n "$MAIN_JS" ] && [ -n "$MAIN_CSS" ]; then
-            JS_NAME=$(basename "$MAIN_JS")
-            CSS_NAME=$(basename "$MAIN_CSS")
-            
-            echo "Main files found: JS=$JS_NAME, CSS=$CSS_NAME"
-            
-            cat > .output/public/index.html << EOF
-          <!DOCTYPE html>
-          <html>
-          <head>
-              <meta charset="utf-8">
-              <meta name="viewport" content="width=device-width, initial-scale=1">
-              <title>Legend in the Mist</title>
-              <link rel="icon" type="image/x-icon" href="/LegendintheMist/favicon.ico">
-              <link rel="stylesheet" href="/LegendintheMist/_nuxt/$CSS_NAME">
-          </head>
-          <body>
-              <div id="__nuxt"></div>
-              <script type="module" src="/LegendintheMist/_nuxt/$JS_NAME"></script>
-          </body>
-          </html>
-          EOF
+          echo "Checking _nuxt directory:"
+          if [ -d ".output/public/_nuxt" ]; then
+            ls -la .output/public/_nuxt/
           else
-            echo "Warning: Could not find main JS or CSS files"
-            echo "Available files:"
-            find .output/public -type f | head -20
+            echo "ERROR: _nuxt directory not found!"
+            exit 1
           fi
           
-          echo "Final verification:"
-          echo "Files in .output/public:"
-          find .output/public -type f | head -20
+          echo "Verifying important files:"
+          if [ -f ".output/public/index.html" ]; then
+            echo "✓ index.html exists"
+            echo "index.html content:"
+            head -20 .output/public/index.html
+          else
+            echo "ERROR: index.html not found!"
+            exit 1
+          fi
+          
+          echo "Checking for JavaScript files:"
+          JS_FILES=$(find .output/public/_nuxt -name "*.js" | wc -l)
+          echo "Found $JS_FILES JavaScript files"
+          
+          echo "Checking for CSS files:"
+          CSS_FILES=$(find .output/public/_nuxt -name "*.css" | wc -l)
+          echo "Found $CSS_FILES CSS files"
+          
+          if [ $JS_FILES -eq 0 ]; then
+            echo "ERROR: No JavaScript files found!"
+            exit 1
+          fi
+          
+          echo "All files generated successfully!"
+          echo "Final file count:"
+          find .output/public -type f | wc -l
       - name: Add .nojekyll
         run: |
           touch .output/public/.nojekyll

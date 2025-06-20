@@ -13,8 +13,14 @@ export default defineNuxtConfig({
     buildAssetsDir: '/_nuxt/',
   },
   
-  // 確保正確的建構設定
+  // 靜態生成設定
   nitro: {
-    preset: 'static'
-  }
+    preset: 'github-pages',
+    prerender: {
+      routes: ['/']
+    }
+  },
+  
+  // 確保 SPA 模式用於 GitHub Pages
+  ssr: false
 })
