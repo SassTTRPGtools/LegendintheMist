@@ -42,12 +42,11 @@ jobs:
           cp -r .nuxt/dist/client/* .output/public/
           cp public/favicon.ico .output/public/
           
-          CSS_FILE=$(find .output/public/_nuxt -name "entry.*.css" | head -1 | xargs basename)
-          JS_FILE=$(find .output/public/_nuxt -name "*.js" | xargs ls -la | sort -k5 -nr | head -1 | awk '{print $9}' | xargs basename)
+          echo "Listing files to debug..."
+          ls -la .output/public/_nuxt/
           
-          echo "Found files: CSS=$CSS_FILE, JS=$JS_FILE"
-          
-          cat > .output/public/index.html << EOF
+          # Create simple index.html with known file names
+          cat > .output/public/index.html << 'EOF'
           <!DOCTYPE html>
           <html>
           <head>
@@ -55,11 +54,11 @@ jobs:
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <title>Legend in the Mist</title>
             <link rel="icon" type="image/x-icon" href="/LegendintheMist/favicon.ico">
-            <link rel="stylesheet" href="/LegendintheMist/_nuxt/$CSS_FILE">
+            <link rel="stylesheet" href="/LegendintheMist/_nuxt/entry.B1goDtUc.css">
           </head>
           <body>
             <div id="__nuxt"></div>
-            <script type="module" src="/LegendintheMist/_nuxt/$JS_FILE"></script>
+            <script type="module" src="/LegendintheMist/_nuxt/C52IU5KB.js"></script>
           </body>
           </html>
           EOF
