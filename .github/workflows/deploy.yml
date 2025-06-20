@@ -3,16 +3,27 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [ master ]
-  pull_request:
-    branches: [ master ]
+
+# 設定權限以允許 GitHub Actions 寫入 Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 確保只有一個部署任務在執行
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-
+    
     steps:
     - name: Checkout
       uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
 
     - name: Setup Node.js
       uses: actions/setup-node@v4
@@ -26,9 +37,14 @@ jobs:
     - name: Build application
       run: npm run generate
 
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
-      if: github.ref == 'refs/heads/master'
+    - name: Setup Pages
+      uses: actions/configure-pages@v4
+
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v3
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./.output/public
+        path: ./.output/public
+
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4
