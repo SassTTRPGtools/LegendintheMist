@@ -4,6 +4,12 @@
       <div class="mt-12 space-y-4">
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
           <NuxtLink 
+            to="/character-creation-guide"
+            class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-8 rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl inline-block"
+          >
+            角色創建指南
+          </NuxtLink>
+          <NuxtLink 
             to="/character-reference"
             class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-8 rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl inline-block"
           >
