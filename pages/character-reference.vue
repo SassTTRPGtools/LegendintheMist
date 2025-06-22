@@ -186,13 +186,17 @@
               能力標籤
             </h3>
           </div>
-          <div class="p-4 space-y-3">
-            <div v-for="tag in selectedThemeData.questions.ability_tags" :key="tag.id" 
-                 class="p-3 bg-green-50 rounded-lg border-l-4 border-green-400">              <div class="flex items-center">
+          <div class="p-4 space-y-3">            <div v-for="tag in selectedThemeData.questions.ability_tags" :key="tag.id" 
+                 class="p-3 bg-green-50 rounded-lg border-l-4 border-green-400">              
+                 <div class="flex items-center">
                 <span class="inline-flex items-center justify-center w-6 h-6 bg-green-500 text-white text-xs font-bold rounded-full mr-3 flex-shrink-0">
                   {{ tag.id }}
                 </span>
-                <p class="text-gray-800">{{ tag.question }}</p>
+                <p class="text-gray-800">
+                  <span v-if="tag.id === 'A'" class="font-bold">{{ tag.question }}</span>
+                  <span v-else>{{ tag.question }}</span>
+                  <span v-if="tag.id === 'A'" class="text-red-600 text-sm ml-2">（必答）</span>
+                </p>
               </div>
             </div>
           </div>
