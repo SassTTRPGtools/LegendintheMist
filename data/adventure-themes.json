@@ -6,7 +6,7 @@
     "created": "2025-06-20",
     "language": "zh-TW"
   },
-  "adventure_origins": {
+  "themes": {
     "Duty": {
       "theme": "職責",
       "title": "誓言・宏大或艱鉅的任務・承擔・責任",
@@ -477,7 +477,7 @@
     }
   },
   "examples": {
-    "sample_adventurers": [
+    "sample_characters": [
       {
         "name": "黑暗中的聖光",
         "type": "duty",

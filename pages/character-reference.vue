@@ -35,10 +35,13 @@
               <Icon 
                 v-else-if="selectedSystem === 'adventure'" 
                 name="game-icons:crossed-swords" class="w-5 h-5 mr-2 text-red-600"
-              />
-              <Icon 
+              />              <Icon 
                 v-else-if="selectedSystem === 'greatness'" 
                 name="material-symbols:crown" class="w-5 h-5 mr-2 text-purple-600"
+              />
+              <Icon 
+                v-else-if="selectedSystem === 'other'" 
+                name="lucide:sparkles" class="w-5 h-5 mr-2 text-indigo-600"
               />
               {{ getSystemDisplayName(selectedSystem) || '請選擇主題' }}
             </span>
@@ -66,13 +69,19 @@
             >
               <Icon name="game-icons:crossed-swords" class="w-5 h-5 mr-2 text-red-600" />
               冒險主題
-            </button>
-            <button
+            </button>            <button
               @click="selectSystem('greatness')"
-              class="w-full p-3 text-left hover:bg-gray-50 flex items-center last:rounded-b-lg"
+              class="w-full p-3 text-left hover:bg-gray-50 flex items-center"
             >
               <Icon name="material-symbols:crown" class="w-5 h-5 mr-2 text-purple-600" />
               偉業主題
+            </button>
+            <button
+              @click="selectSystem('other')"
+              class="w-full p-3 text-left hover:bg-gray-50 flex items-center last:rounded-b-lg"
+            >
+              <Icon name="lucide:sparkles" class="w-5 h-5 mr-2 text-indigo-600" />
+              其他主題
             </button>
           </div>
         </div>
@@ -102,11 +111,11 @@
               'bg-gradient-to-r from-green-500 to-emerald-600': selectedSystem === 'origin',
               'bg-gradient-to-r from-amber-600 to-orange-800': selectedSystem === 'adventure', 
               'bg-gradient-to-r from-slate-600 to-gray-800': selectedSystem === 'greatness',
+              'bg-gradient-to-r from-indigo-500 to-purple-600': selectedSystem === 'other',
               'bg-gradient-to-r from-blue-500 to-purple-600': !selectedSystem
             }"
             class="p-4"
-          ><h2 class="text-xl font-bold text-white flex items-center">
-              <Icon 
+          ><h2 class="text-xl font-bold text-white flex items-center">              <Icon 
                 v-if="selectedSystem === 'origin'" 
                 name="material-symbols:eco" 
                 class="w-5 h-5 mr-2 text-white" 
@@ -121,19 +130,39 @@
                 name="material-symbols:crown" 
                 class="w-5 h-5 mr-2 text-white" 
               />
+              <Icon 
+                v-else-if="selectedSystem === 'other'" 
+                name="lucide:sparkles" 
+                class="w-5 h-5 mr-2 text-white" 
+              />
               {{ selectedThemeData.theme }}
-            </h2>            <p 
+            </h2>              <p 
               :class="{
                 'text-green-100': selectedSystem === 'origin',
                 'text-orange-100': selectedSystem === 'adventure',
                 'text-gray-200': selectedSystem === 'greatness',
+                'text-indigo-100': selectedSystem === 'other',
                 'text-blue-100': !selectedSystem
               }"
               class="text-sm mt-1"
             >{{ selectedThemeData.title }}</p>
-          </div>
-          <div class="p-4">
-            <p class="text-gray-700 leading-relaxed">{{ selectedThemeData.concept }}</p>
+          </div>          <div class="p-4">
+            <div class="text-gray-700 leading-relaxed">
+              <div v-if="selectedThemeData.concept && selectedThemeData.concept.includes('威能強度：')">
+                <!-- 如果包含威能強度，則分段顯示 -->
+                <div v-for="(part, index) in selectedThemeData.concept.split('威能強度：')" :key="index">
+                  <p v-if="index === 0" class="mb-4">{{ part.trim() }}</p>
+                  <div v-else class="mt-4 p-3 bg-yellow-50 rounded-lg border-l-4 border-yellow-400">
+                    <h4 class="font-semibold text-yellow-800 mb-2 flex items-center">
+                      <Icon name="lucide:zap" class="w-4 h-4 mr-2" />
+                      威能強度
+                    </h4>
+                    <p class="text-yellow-900">{{ part.trim() }}</p>
+                  </div>
+                </div>
+              </div>
+              <p v-else>{{ selectedThemeData.concept }}</p>
+            </div>
           </div>
         </div>        <!-- Background Questions -->
         <div class="bg-white rounded-xl shadow-sm border overflow-hidden">
@@ -263,32 +292,22 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import type { 
-  SystemData, 
-  SystemType, 
-  AvailableTheme, 
-  SelectedThemeData, 
-  SampleCharacter,
-  OriginThemeData,
-  AdventureThemeData,
-  GreatnessThemeData
-} from '~/types/theme-systems'
-
+<script setup>
 // 響應式數據
-const selectedSystem = ref<SystemType | ''>('')
-const selectedTheme = ref<string>('')
-const selectedThemeData = ref<SelectedThemeData | null>(null)
-const availableThemes = ref<AvailableTheme[]>([])
-const sampleCharacters = ref<SampleCharacter[]>([])
-const isLoading = ref<boolean>(false)
-const showThemeDropdown = ref<boolean>(false)
+const selectedSystem = ref('')
+const selectedTheme = ref('')
+const selectedThemeData = ref(null)
+const availableThemes = ref([])
+const sampleCharacters = ref([])
+const isLoading = ref(false)
+const showThemeDropdown = ref(false)
 
 // 系統數據
-const systemData = ref<SystemData>({
+const systemData = ref({
   origin: null,
   adventure: null,
-  greatness: null
+  greatness: null,
+  other: null
 })
 
 // 頁面標題
@@ -296,50 +315,68 @@ useHead({
   title: '角色創建參考 - 迷霧傳奇'
 })
 
+// 載入 JSON 資料的方法
+const loadJsonData = async (filename) => {
+  try {
+    console.log(`正在載入: /data/${filename}`)
+    const data = await $fetch(`/data/${filename}`)
+    console.log(`成功載入 ${filename}:`, data)
+    return data
+  } catch (error) {
+    console.error(`載入 ${filename} 失敗:`, error)
+    throw error
+  }
+}
+
 // 載入所有系統數據
 onMounted(async () => {
   try {
     isLoading.value = true
-    
-    // 並行載入三個 JSON 文件
-    const [originData, adventureData, greatnessData] = await Promise.all([
-      $fetch('/data/origin-themes.json'),
-      $fetch('/data/adventure-themes.json'),
-      $fetch('/data/greatness-themes.json')
+    console.log('開始載入所有系統資料...')
+      // 並行載入四個 JSON 文件
+    const [originData, adventureData, greatnessData, otherData] = await Promise.all([
+      loadJsonData('origin-themes.json'),
+      loadJsonData('adventure-themes.json'),
+      loadJsonData('greatness-themes.json'),
+      loadJsonData('other-themes.json')
     ])
     
     systemData.value = {
       origin: originData,
       adventure: adventureData,
-      greatness: greatnessData
+      greatness: greatnessData,
+      other: otherData
     }
+    
+    console.log('所有系統資料載入完成:', systemData.value)
   } catch (error) {
-    console.error('Failed to load system data:', error)
+    console.error('載入系統資料失敗:', error)
   } finally {
     isLoading.value = false
   }
 })
 
 // 選擇系統的方法
-const selectSystem = (system: SystemType | '') => {
+const selectSystem = (system) => {
   selectedSystem.value = system
   showThemeDropdown.value = false
   onSystemChange()
 }
 
 // 獲取系統顯示名稱
-const getSystemDisplayName = (system: SystemType | '') => {
+const getSystemDisplayName = (system) => {
   switch (system) {
     case 'origin': return '起源主題'
     case 'adventure': return '冒險主題'
     case 'greatness': return '偉業主題'
+    case 'other': return '其他主題'
     default: return ''
   }
 }
 
 // 點擊外部關閉下拉選單
-const closeDropdown = (event: Event) => {
-  const target = event.target as Element
+const closeDropdown = (event) => {
+  const target = event.target
   if (!target.closest('.relative')) {
     showThemeDropdown.value = false
   }
@@ -367,23 +404,17 @@ const onSystemChange = () => {
   const data = systemData.value[selectedSystem.value]
   let themes = []
   
-  if (selectedSystem.value === 'origin') {
-    themes = Object.entries(data.origins).map(([key, value]) => ({
+  // 所有系統都使用 themes 屬性
+  if (data.themes) {
+    themes = Object.entries(data.themes).map(([key, value]) => ({
       key,
-      ...value
-    }))
-  } else if (selectedSystem.value === 'adventure') {
-    themes = Object.entries(data.adventure_origins).map(([key, value]) => ({
-      key,
-      ...value
-    }))
-  } else if (selectedSystem.value === 'greatness') {
-    themes = Object.entries(data.greatness_themes).map(([key, value]) => ({
-      key,
+      theme: value.theme || key,
+      title: value.title || '',
       ...value
     }))
   }
   
+  console.log(`載入 ${selectedSystem.value} 主題:`, themes)
   availableThemes.value = themes
 }
 
@@ -398,14 +429,12 @@ const onThemeChange = () => {
   const data = systemData.value[selectedSystem.value]
   let themeData = null
   
-  if (selectedSystem.value === 'origin') {
-    themeData = data.origins[selectedTheme.value]
-  } else if (selectedSystem.value === 'adventure') {
-    themeData = data.adventure_origins[selectedTheme.value]
-  } else if (selectedSystem.value === 'greatness') {
-    themeData = data.greatness_themes[selectedTheme.value]
+  // 所有系統都使用 themes 屬性
+  if (data.themes && data.themes[selectedTheme.value]) {
+    themeData = data.themes[selectedTheme.value]
   }
   
+  console.log('選擇的主題資料:', themeData)
   selectedThemeData.value = themeData
   
   // 載入範例角色
@@ -422,23 +451,18 @@ const loadSampleCharacters = () => {
   const data = systemData.value[selectedSystem.value]
   let samples = []
   
-  if (selectedSystem.value === 'origin') {
-    // Origin 主題：根據 type 欄位過濾（目前都是 circumstance）
-    samples = data.examples?.sample_characters?.filter(char => 
-      char.type === selectedTheme.value.toLowerCase()
-    ) || []
-  } else if (selectedSystem.value === 'adventure') {
-    // Adventure 主題：根據 adventure_type 欄位過濾
-    samples = data.examples?.sample_adventurers?.filter(char => 
-      char.type === selectedTheme.value.toLowerCase()
-    ) || []
-  } else if (selectedSystem.value === 'greatness') {
-    // Greatness 主題：根據 greatness_type 欄位過濾
-    samples = data.examples?.sample_heroes?.filter(char => 
-      char.type === selectedTheme.value.toLowerCase()
-    ) || []
+  // 從 examples.sample_characters 中尋找對應的角色
+  if (data.examples && data.examples.sample_characters) {
+    samples = data.examples.sample_characters.filter(char => {
+      // 檢查角色的 type 是否符合選擇的主題
+      return char.type === selectedTheme.value || 
+             char.type === selectedTheme.value.toLowerCase() ||
+             char.theme === selectedTheme.value ||
+             char.theme === selectedTheme.value.toLowerCase()
+    })
   }
   
+  console.log('找到範例角色:', samples)
   sampleCharacters.value = samples
 }
 </script>

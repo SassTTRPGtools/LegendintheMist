@@ -6,7 +6,7 @@
     "created": "2025-06-20",
     "language": "zh-TW"
   },
-  "greatness_themes": {
+  "themes": {
     "Destiny": {
       "theme": "天命",
       "title": "預言・命定之途・天選之人・終極宿命",
@@ -318,7 +318,7 @@
     }
   },  
   "examples": {
-    "sample_heroes": [
+    "sample_characters": [
       {
         "name": "登上王座",
         "type": "destiny",

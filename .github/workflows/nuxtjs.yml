@@ -42,6 +42,19 @@ jobs:
           echo "Generating Nuxt project for static deployment..."
           npm run generate
           
+          echo "Ensuring data directory exists in public output..."
+          mkdir -p .output/public/data
+          
+          echo "Copying data files to public directory..."
+          if [ -d "data" ]; then
+            cp -r data/* .output/public/data/
+            echo "✓ Data files copied successfully"
+            echo "Data files in output:"
+            ls -la .output/public/data/
+          else
+            echo "WARNING: No data directory found in source"
+          fi
+          
           echo "Checking generated output..."
           echo "Output directory contents:"
           ls -la .output/public/
