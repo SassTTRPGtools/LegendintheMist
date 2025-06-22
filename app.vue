@@ -8,9 +8,11 @@
         <div class="flex justify-between items-center py-6">
           <NuxtLink to="/" class="text-3xl font-bold text-gray-900 hover:text-blue-600 transition-colors">
             迷霧傳奇
-          </NuxtLink>          <nav class="hidden md:flex space-x-8">
+          </NuxtLink>            
+          <nav class="hidden md:flex space-x-8">
             <NuxtLink to="/" class="text-gray-500 hover:text-gray-900 transition-colors">首頁</NuxtLink>
             <NuxtLink to="/character-reference" class="text-gray-500 hover:text-gray-900 transition-colors">角色參考</NuxtLink>
+            <NuxtLink to="/how-to-play" class="text-gray-500 hover:text-gray-900 transition-colors">如何遊玩</NuxtLink>
             <a href="#" class="text-gray-500 hover:text-gray-900 transition-colors">關於</a>
           </nav>
         </div>
