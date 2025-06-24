@@ -3,8 +3,7 @@
     <!-- Header -->
     <div class="bg-white shadow-sm border-b">
       <div class="px-4 py-6">
-        <div class="flex items-center justify-between">
-          <NuxtLink to="/" class="text-gray-600 hover:text-gray-800 transition-colors">
+        <div class="flex items-center justify-between">          <NuxtLink to="/LitM" class="text-gray-600 hover:text-gray-800 transition-colors">
             <Icon name="lucide:arrow-left" class="w-6 h-6" />
           </NuxtLink>
           <h1 class="text-xl font-bold text-gray-900 flex items-center">
@@ -302,8 +301,7 @@
                 相關資源
               </h2>
             </div>
-            <div class="p-4 space-y-2">
-              <NuxtLink to="/character-reference" 
+            <div class="p-4 space-y-2">              <NuxtLink to="/LitM/character-reference" 
                 class="block p-2 bg-blue-50 rounded hover:bg-blue-100 transition-colors">
                 <div class="flex items-center text-blue-700">
                   <Icon name="lucide:scroll-text" class="w-4 h-4 mr-2" />
@@ -312,7 +310,7 @@
                 <p class="text-blue-600 text-xs mt-1">查看主題書問題與範例</p>
               </NuxtLink>
               
-              <NuxtLink to="/how-to-play" 
+              <NuxtLink to="/LitM/how-to-play" 
                 class="block p-2 bg-green-50 rounded hover:bg-green-100 transition-colors">
                 <div class="flex items-center text-green-700">
                   <Icon name="lucide:book-open" class="w-4 h-4 mr-2" />
@@ -488,8 +486,7 @@
               相關資源
             </h2>
           </div>
-          <div class="p-4 space-y-3">
-            <NuxtLink to="/character-reference" 
+          <div class="p-4 space-y-3">            <NuxtLink to="/LitM/character-reference" 
               class="block p-3 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors">
               <div class="flex items-center text-blue-700 mb-1">
                 <Icon name="lucide:scroll-text" class="w-4 h-4 mr-2" />
@@ -498,7 +495,7 @@
               <p class="text-blue-600 text-sm">查看主題書問題與範例</p>
             </NuxtLink>
             
-            <NuxtLink to="/how-to-play" 
+            <NuxtLink to="/LitM/how-to-play" 
               class="block p-3 bg-green-50 rounded-lg hover:bg-green-100 transition-colors">
               <div class="flex items-center text-green-700 mb-1">
                 <Icon name="lucide:book-open" class="w-4 h-4 mr-2" />

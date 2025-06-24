@@ -3,8 +3,7 @@
     <!-- Header -->
     <div class="bg-white shadow-sm border-b">
       <div class="px-4 py-6">
-        <div class="flex items-center justify-between">
-          <NuxtLink to="/" class="text-gray-600 hover:text-gray-800 transition-colors">
+        <div class="flex items-center justify-between">          <NuxtLink to="/LitM" class="text-gray-600 hover:text-gray-800 transition-colors">
             <Icon name="lucide:arrow-left" class="w-6 h-6" />
           </NuxtLink>
           <h1 class="text-xl font-bold text-gray-900 flex items-center">

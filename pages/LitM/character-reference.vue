@@ -2,10 +2,9 @@
   <div class="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 pb-8">    <!-- Header -->
     <div class="bg-white shadow-sm border-b">
       <div class="px-4 py-6">
-        <div class="flex items-center justify-between">
-          <NuxtLink to="/" class="text-gray-600 hover:text-gray-800 transition-colors">
-            <Icon name="lucide:arrow-left" class="w-6 h-6" />
-          </NuxtLink>
+        <div class="flex items-center justify-between">        <NuxtLink to="/LitM" class="text-gray-600 hover:text-gray-800 transition-colors">
+          <Icon name="lucide:arrow-left" class="w-6 h-6" />
+        </NuxtLink>
           <h1 class="text-xl font-bold text-gray-900 flex items-center">
             <Icon name="lucide:scroll-text" class="w-5 h-5 mr-2" />
             角色創建參考
@@ -322,13 +321,30 @@ useHead({
 // 載入 JSON 資料的方法
 const loadJsonData = async (filename) => {
   try {
-    console.log(`正在載入: /data/${filename}`)
-    const data = await $fetch(`/data/${filename}`)
-    console.log(`成功載入 ${filename}:`, data)
-    return data
+    console.log(`正在載入: /data/LitM/${filename}`)
+    
+    // 使用 $fetch 從 public 目錄載入 JSON
+    const response = await $fetch(`/data/LitM/${filename}`, {
+      parseResponse: JSON.parse
+    })
+    
+    console.log(`成功載入 ${filename}:`, response)
+    return response
   } catch (error) {
     console.error(`載入 ${filename} 失敗:`, error)
-    throw error
+    
+    // 嘗試備用路徑
+    try {
+      console.log(`嘗試備用路徑: /LegendintheMist/data/LitM/${filename}`)
+      const backupResponse = await $fetch(`/LegendintheMist/data/LitM/${filename}`, {
+        parseResponse: JSON.parse
+      })
+      console.log(`備用路徑成功載入 ${filename}:`, backupResponse)
+      return backupResponse
+    } catch (backupError) {
+      console.error(`備用路徑也載入失敗:`, backupError)
+      throw new Error(`無法載入 ${filename}: ${error.message}`)
+    }
   }
 }
 
@@ -337,7 +353,8 @@ onMounted(async () => {
   try {
     isLoading.value = true
     console.log('開始載入所有系統資料...')
-      // 並行載入四個 JSON 文件
+    
+    // 並行載入四個 JSON 文件
     const [originData, adventureData, greatnessData, otherData] = await Promise.all([
       loadJsonData('origin-themes.json'),
       loadJsonData('adventure-themes.json'),
@@ -355,6 +372,8 @@ onMounted(async () => {
     console.log('所有系統資料載入完成:', systemData.value)
   } catch (error) {
     console.error('載入系統資料失敗:', error)
+    // 顯示更友善的錯誤訊息
+    alert('無法載入主題資料，請檢查網路連線或重新整理頁面')
   } finally {
     isLoading.value = false
   }
