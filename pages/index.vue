@@ -48,79 +48,134 @@
                 進入迷霧傳奇
               </NuxtLink>
             </div>
-          </div>
-
-          <!-- Coming Soon Card -->
-          <div class="bg-white rounded-2xl shadow-xl overflow-hidden opacity-75">
-            <div class="bg-gradient-to-r from-gray-500 to-gray-600 p-6">
-              <h2 class="text-2xl font-bold text-white mb-2">其他系統</h2>
-              <p class="text-gray-200">More Systems Coming</p>
+          </div>          <!-- MO Card -->
+          <div class="bg-gray-900 rounded-2xl shadow-xl overflow-hidden transform hover:scale-105 transition-all duration-300 border border-cyan-500/30">
+            <div class="bg-gradient-to-r from-cyan-600 via-blue-600 to-purple-600 p-6 relative overflow-hidden">
+              <!-- 賽博龐克網格背景 -->
+              <div class="absolute inset-0 opacity-20">
+                <div class="absolute inset-0" style="background-image: linear-gradient(cyan 1px, transparent 1px), linear-gradient(90deg, cyan 1px, transparent 1px); background-size: 20px 20px;"></div>
+              </div>
+              <div class="relative z-10">
+                <h2 class="text-2xl font-bold text-white mb-2 flex items-center">
+                  <Icon name="lucide:cpu" class="w-6 h-6 mr-2" />
+                  都市異景
+                </h2>
+                <p class="text-cyan-100">Metro :Otherscape</p>
+              </div>
             </div>
-            <div class="p-6">
-              <p class="text-gray-600 mb-6">
-                更多精彩的角色扮演遊戲系統正在規劃中，敬請期待！
+            <div class="p-6 bg-gray-900">
+              <p class="text-gray-300 mb-6">
+                在霓虹閃爍的賽博龐克都市中，探索科技與人性的邊界。駭客、改造人、企業特工在這個數位迷宮中追尋真相與自由。
               </p>
               <div class="space-y-3 mb-6">
-                <div class="flex items-center text-sm text-gray-400">
-                  <Icon name="lucide:clock" class="w-4 h-4 mr-2" />
-                  正在開發中
+                <div class="flex items-center text-sm text-cyan-400">
+                  <Icon name="lucide:check-circle" class="w-4 h-4 mr-2 text-cyan-500" />
+                  賽博龐克世界觀
                 </div>
-                <div class="flex items-center text-sm text-gray-400">
-                  <Icon name="lucide:star" class="w-4 h-4 mr-2" />
-                  敬請期待
+                <div class="flex items-center text-sm text-cyan-400">
+                  <Icon name="lucide:check-circle" class="w-4 h-4 mr-2 text-cyan-500" />
+                  科技強化角色
                 </div>
-                <div class="flex items-center text-sm text-gray-400">
-                  <Icon name="lucide:heart" class="w-4 h-4 mr-2" />
-                  更多驚喜
+                <div class="flex items-center text-sm text-cyan-400">
+                  <Icon name="lucide:check-circle" class="w-4 h-4 mr-2 text-cyan-500" />
+                  企業陰謀劇情
                 </div>
               </div>
-              <button 
-                disabled
-                class="block w-full bg-gray-400 text-white font-bold py-3 px-6 rounded-lg cursor-not-allowed text-center"
+              <NuxtLink 
+                to="/MO"
+                class="block w-full bg-gradient-to-r from-cyan-600 to-purple-600 hover:from-cyan-700 hover:to-purple-700 text-white font-bold py-3 px-6 rounded-lg transition-all duration-200 text-center shadow-lg hover:shadow-cyan-500/25"
               >
-                即將推出
-              </button>
+                進入都市異景
+              </NuxtLink>
             </div>
           </div>
         </div>
-      </div>
-
-      <!-- Quick Access -->
+      </div>      <!-- Quick Access -->
       <div class="max-w-4xl mx-auto px-4">
         <h3 class="text-2xl font-bold text-gray-800 mb-6">快速導覽</h3>
-        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          <NuxtLink 
-            to="/LitM/character-creation-guide"
-            class="bg-emerald-100 hover:bg-emerald-200 p-4 rounded-lg transition-colors duration-200 group"
-          >
-            <div class="flex items-center text-emerald-700 group-hover:text-emerald-800">
-              <Icon name="lucide:user-plus" class="w-5 h-5 mr-2" />
-              <span class="font-medium">角色創建指南</span>
-            </div>
-            <p class="text-emerald-600 text-sm mt-1">學習如何創建英雄</p>
-          </NuxtLink>
+        
+        <!-- LitM Links -->
+        <div class="mb-8">
+          <h4 class="text-lg font-semibold text-purple-700 mb-4 flex items-center">
+            <Icon name="lucide:sparkles" class="w-5 h-5 mr-2" />
+            迷霧傳奇
+          </h4>
+          <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <NuxtLink 
+              to="/LitM/character-creation-guide"
+              class="bg-emerald-100 hover:bg-emerald-200 p-4 rounded-lg transition-colors duration-200 group"
+            >
+              <div class="flex items-center text-emerald-700 group-hover:text-emerald-800">
+                <Icon name="lucide:user-plus" class="w-5 h-5 mr-2" />
+                <span class="font-medium">角色創建指南</span>
+              </div>
+              <p class="text-emerald-600 text-sm mt-1">學習如何創建英雄</p>
+            </NuxtLink>
 
-          <NuxtLink 
-            to="/LitM/character-reference"
-            class="bg-purple-100 hover:bg-purple-200 p-4 rounded-lg transition-colors duration-200 group"
-          >
-            <div class="flex items-center text-purple-700 group-hover:text-purple-800">
-              <Icon name="lucide:scroll-text" class="w-5 h-5 mr-2" />
-              <span class="font-medium">角色創建參考</span>
-            </div>
-            <p class="text-purple-600 text-sm mt-1">查看主題與範例</p>
-          </NuxtLink>
+            <NuxtLink 
+              to="/LitM/character-reference"
+              class="bg-purple-100 hover:bg-purple-200 p-4 rounded-lg transition-colors duration-200 group"
+            >
+              <div class="flex items-center text-purple-700 group-hover:text-purple-800">
+                <Icon name="lucide:scroll-text" class="w-5 h-5 mr-2" />
+                <span class="font-medium">角色創建參考</span>
+              </div>
+              <p class="text-purple-600 text-sm mt-1">查看主題與範例</p>
+            </NuxtLink>
 
-          <NuxtLink 
-            to="/LitM/how-to-play"
-            class="bg-blue-100 hover:bg-blue-200 p-4 rounded-lg transition-colors duration-200 group"
-          >
-            <div class="flex items-center text-blue-700 group-hover:text-blue-800">
-              <Icon name="lucide:book-open" class="w-5 h-5 mr-2" />
-              <span class="font-medium">如何遊玩</span>
-            </div>
-            <p class="text-blue-600 text-sm mt-1">了解遊戲規則</p>
-          </NuxtLink>
+            <NuxtLink 
+              to="/LitM/how-to-play"
+              class="bg-blue-100 hover:bg-blue-200 p-4 rounded-lg transition-colors duration-200 group"
+            >
+              <div class="flex items-center text-blue-700 group-hover:text-blue-800">
+                <Icon name="lucide:book-open" class="w-5 h-5 mr-2" />
+                <span class="font-medium">如何遊玩</span>
+              </div>
+              <p class="text-blue-600 text-sm mt-1">了解遊戲規則</p>
+            </NuxtLink>
+          </div>
+        </div>
+
+        <!-- MO Links -->
+        <div>
+          <h4 class="text-lg font-semibold text-cyan-400 mb-4 flex items-center">
+            <Icon name="lucide:cpu" class="w-5 h-5 mr-2" />
+            都市異景
+          </h4>
+          <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <NuxtLink 
+              to="/MO/character-creation-guide"
+              class="bg-gray-800 hover:bg-gray-700 p-4 rounded-lg transition-colors duration-200 group border border-cyan-500/30"
+            >
+              <div class="flex items-center text-cyan-300 group-hover:text-cyan-200">
+                <Icon name="lucide:user-plus" class="w-5 h-5 mr-2" />
+                <span class="font-medium">角色創建指南</span>
+              </div>
+              <p class="text-cyan-400 text-sm mt-1">打造賽博角色</p>
+            </NuxtLink>
+
+            <NuxtLink 
+              to="/MO/character-reference"
+              class="bg-gray-800 hover:bg-gray-700 p-4 rounded-lg transition-colors duration-200 group border border-purple-500/30"
+            >
+              <div class="flex items-center text-purple-300 group-hover:text-purple-200">
+                <Icon name="lucide:microchip" class="w-5 h-5 mr-2" />
+                <span class="font-medium">角色創建參考</span>
+              </div>
+              <p class="text-purple-400 text-sm mt-1">賽博龐克主題</p>
+            </NuxtLink>
+
+            <NuxtLink 
+              to="/MO/how-to-play"
+              class="bg-gray-800 hover:bg-gray-700 p-4 rounded-lg transition-colors duration-200 group border border-blue-500/30"
+            >
+              <div class="flex items-center text-blue-300 group-hover:text-blue-200">
+                <Icon name="lucide:terminal" class="w-5 h-5 mr-2" />
+                <span class="font-medium">如何遊玩</span>
+              </div>
+              <p class="text-blue-400 text-sm mt-1">都市異景規則</p>
+            </NuxtLink>
+          </div>
         </div>
       </div>
     </div>
