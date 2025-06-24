@@ -390,39 +390,38 @@
       </div>
 
       <!-- Mobile Layout -->
-      <div class="lg:hidden max-w-md mx-auto space-y-6">
-        <!-- 核心概念手機版 -->
-        <div class="bg-gray-800 rounded-xl shadow-lg border border-blue-500/30 overflow-hidden">
-          <div class="bg-gradient-to-r from-blue-600 to-purple-600 p-4">
+      <div class="lg:hidden max-w-md mx-auto space-y-6">        <!-- 核心概念手機版 -->
+        <div class="bg-black/80 backdrop-blur-sm rounded-xl shadow-2xl border border-cyan-500/30 overflow-hidden">
+          <div class="bg-gradient-to-r from-cyan-600 via-blue-600 to-purple-600 p-4">
             <h2 class="text-xl font-bold text-white flex items-center">
-              <Icon name="lucide:book" class="w-5 h-5 mr-2" />
+              <Icon name="lucide:cpu" class="w-5 h-5 mr-2" />
               核心概念
             </h2>
           </div>
           <div class="p-4 space-y-4">
             <!-- 標籤系統 -->
             <div>
-              <h3 class="font-semibold text-gray-200 mb-2 flex items-center">
+              <h3 class="font-semibold text-cyan-200 mb-2 flex items-center">
                 <Icon name="lucide:tag" class="w-4 h-4 mr-2 text-cyan-400" />
                 標籤系統
               </h3>
-              <p class="text-gray-300 text-sm mb-2">
+              <p class="text-cyan-300 text-sm mb-2">
                 標籤是簡短描述，說明角色的現狀，並在行動時提供力度影響力。
               </p>
               <div class="bg-cyan-900/30 p-2 rounded text-sm text-cyan-300 border border-cyan-500/30">
-                例如：英俊、沉睡咒語、↡舊傷、被魅惑
+                例如：增強義肢、網路成癮、↡系統不穩定、被監控
               </div>
             </div>
 
-            <hr class="border-gray-600">
+            <hr class="border-cyan-500/30">
 
             <!-- 主題 -->
             <div>
-              <h3 class="font-semibold text-gray-200 mb-2 flex items-center">
+              <h3 class="font-semibold text-purple-200 mb-2 flex items-center">
                 <Icon name="lucide:circuit-board" class="w-4 h-4 mr-2 text-purple-400" />
                 主題
               </h3>
-              <p class="text-gray-300 text-sm mb-3">每位角色有四個主題，每個主題包含：</p>
+              <p class="text-purple-300 text-sm mb-3">每位角色有四個主題，每個主題包含：</p>
               
               <div class="space-y-2">
                 <div class="p-2 bg-cyan-900/30 rounded-lg border-l-3 border-cyan-400">
@@ -443,8 +442,8 @@
         </div>
 
         <!-- 遊戲機制手機版 -->
-        <div class="bg-white rounded-xl shadow-sm border overflow-hidden">
-          <div class="bg-gradient-to-r from-red-500 to-pink-600 p-4">
+        <div class="bg-black/80 backdrop-blur-sm rounded-xl shadow-2xl border border-orange-500/30 overflow-hidden">
+          <div class="bg-gradient-to-r from-orange-600 to-red-600 p-4">
             <h2 class="text-xl font-bold text-white flex items-center">
               <Icon name="lucide:cog" class="w-5 h-5 mr-2" />
               遊戲機制
@@ -453,43 +452,43 @@
           <div class="p-4 space-y-4">
             <!-- 狀態 -->
             <div>
-              <h3 class="font-semibold text-gray-900 mb-2 flex items-center">
-                <Icon name="lucide:heart" class="w-4 h-4 mr-2 text-red-500" />
+              <h3 class="font-semibold text-red-300 mb-2 flex items-center">
+                <Icon name="lucide:activity" class="w-4 h-4 mr-2 text-red-400" />
                 狀態
               </h3>
-              <p class="text-gray-700 text-sm mb-2">
+              <p class="text-red-300 text-sm mb-2">
                 描述身體／精神狀況的標籤，有等級 1（輕微）至 6（致命）
               </p>
-              <div class="bg-red-50 p-2 rounded text-sm text-red-800 mb-2">
-                例如：受傷-3、欣喜-2
+              <div class="bg-red-900/30 p-2 rounded text-sm text-red-300 border border-red-500/30 mb-2">
+                例如：系統過載-3、賽博精神病-2
               </div>
-              <div class="text-xs text-gray-600 space-y-1">
+              <div class="text-xs text-red-400 space-y-1">
                 <div><strong>堆疊：</strong>若再次獲得相同狀態，將等級升高</div>
                 <div><strong>減弱：</strong>將所有標記向左移（降級）</div>
-                <div><strong>閾值：</strong>達5即為極限，6則被擊倒</div>
+                <div><strong>閾值：</strong>達5即為極限，6則被擊倒、死亡或轉化</div>
               </div>
             </div>
 
-            <hr class="border-gray-200">
+            <hr class="border-orange-500/30">
 
             <!-- 角色成長 -->
             <div>
-              <h3 class="font-semibold text-gray-900 mb-2 flex items-center">
-                <Icon name="lucide:trending-up" class="w-4 h-4 mr-2 text-indigo-500" />
+              <h3 class="font-semibold text-blue-300 mb-2 flex items-center">
+                <Icon name="lucide:trending-up" class="w-4 h-4 mr-2 text-blue-400" />
                 角色成長
               </h3>
               <div class="space-y-2 text-xs">
-                <div class="p-2 bg-blue-50 rounded">
-                  <span class="font-semibold text-blue-800">成長：</span>
-                  <span class="text-blue-700">使用弱點標籤時標記，累計3次獲得新能力標籤</span>
+                <div class="p-2 bg-blue-900/30 rounded border border-blue-500/30">
+                  <span class="font-semibold text-blue-300">成長：</span>
+                  <span class="text-blue-400">使用弱點標籤時標記，累計3次獲得新能力標籤</span>
                 </div>
-                <div class="p-2 bg-orange-50 rounded">
-                  <span class="font-semibold text-orange-800">捨棄：</span>
-                  <span class="text-orange-700">違背使命時標記，累計3次主題被替換</span>
+                <div class="p-2 bg-orange-900/30 rounded border border-orange-500/30">
+                  <span class="font-semibold text-orange-300">捨棄：</span>
+                  <span class="text-orange-400">違背使命時標記，累計3次主題被替換</span>
                 </div>
-                <div class="p-2 bg-green-50 rounded">
-                  <span class="font-semibold text-green-800">里程碑：</span>
-                  <span class="text-green-700">達成關鍵目標時標記，累計3次主題進化</span>
+                <div class="p-2 bg-green-900/30 rounded border border-green-500/30">
+                  <span class="font-semibold text-green-300">里程碑：</span>
+                  <span class="text-green-400">達成關鍵目標時標記，累計3次主題進化</span>
                 </div>
               </div>
             </div>
@@ -497,8 +496,7 @@
         </div>
 
         <!-- 遊戲流程手機版 -->
-        <div class="bg-white rounded-xl shadow-sm border overflow-hidden">
-          <div class="bg-gradient-to-r from-purple-500 to-indigo-600 p-4">
+        <div class="bg-black/80 backdrop-blur-sm rounded-xl shadow-2xl border border-purple-500/30 overflow-hidden">          <div class="bg-gradient-to-r from-purple-600 to-indigo-600 p-4">
             <h2 class="text-xl font-bold text-white flex items-center">
               <Icon name="lucide:play" class="w-5 h-5 mr-2" />
               遊戲流程
@@ -507,8 +505,8 @@
           <div class="p-4 space-y-4">
             <!-- 場景循環 -->
             <div>
-              <div class="bg-purple-50 p-3 rounded-lg mb-3">
-                <div class="flex items-center justify-center space-x-2 text-purple-800 font-semibold text-sm">
+              <div class="bg-purple-900/30 p-3 rounded-lg mb-3 border border-purple-500/30">
+                <div class="flex items-center justify-center space-x-2 text-purple-300 font-semibold text-sm">
                   <span>設定</span>
                   <Icon name="lucide:arrow-right" class="w-3 h-3" />
                   <span>行動</span>
@@ -517,167 +515,169 @@
                 </div>
               </div>
                 <div class="space-y-3">
-                <div class="p-3 bg-gray-50 rounded-lg">
-                  <h4 class="font-semibold text-gray-800 text-sm mb-1">設定</h4>
-                  <p class="text-gray-600 text-xs mb-2">敘事者執行，內容包含：</p>
-                  <ul class="text-gray-600 text-xs space-y-1">
-                    <li>• 描述場景、突出重要性</li>
-                    <li>• 引入挑戰、引發威脅</li>
+                <div class="p-3 bg-gray-800/50 rounded-lg border border-gray-600/30">
+                  <h4 class="font-semibold text-gray-200 text-sm mb-1">設定</h4>
+                  <p class="text-gray-300 text-xs mb-2">敘事者執行，內容包含：</p>
+                  <ul class="text-gray-400 text-xs space-y-1">
+                    <li>• 描述都市場景、突出數位重要性</li>
+                    <li>• 引入企業威脅、系統挑戰</li>
                     <li>• 讓某位角色進入聚光燈焦點</li>
                   </ul>
                 </div>
-                <div class="p-3 bg-orange-50 rounded-lg">
-                  <h4 class="font-semibold text-orange-800 text-sm mb-1">行動</h4>
-                  <p class="text-orange-600 text-xs mb-2">角色描述行動，敘事者決定處理方式：</p>
+                <div class="p-3 bg-orange-900/30 rounded-lg border border-orange-500/30">
+                  <h4 class="font-semibold text-orange-300 text-sm mb-1">行動</h4>
+                  <p class="text-orange-400 text-xs mb-2">角色描述行動，敘事者決定處理方式：</p>
                   <div class="space-y-1">
                     <div class="text-xs">
-                      <span class="font-semibold text-green-700">簡單：</span>
-                      <span class="text-green-600">敘事者決定</span>
+                      <span class="font-semibold text-green-400">簡單：</span>
+                      <span class="text-green-500">敘事者決定</span>
                     </div>
                     <div class="text-xs">
-                      <span class="font-semibold text-yellow-700">快速：</span>
-                      <span class="text-yellow-600">骰子檢定</span>
+                      <span class="font-semibold text-yellow-400">快速：</span>
+                      <span class="text-yellow-500">骰子檢定</span>
                     </div>
                     <div class="text-xs">
-                      <span class="font-semibold text-red-700">詳細：</span>
-                      <span class="text-red-600">骰子＋花費力度</span>
+                      <span class="font-semibold text-red-400">詳細：</span>
+                      <span class="text-red-500">骰子＋花費力度</span>
                     </div>
                   </div>
                 </div>
-                <div class="p-3 bg-yellow-50 rounded-lg">
-                  <h4 class="font-semibold text-yellow-800 text-sm mb-1">結果</h4>
-                  <p class="text-yellow-600 text-xs mb-2">敘事者根據情況帶來後果：</p>
-                  <ul class="text-yellow-600 text-xs space-y-1">
-                    <li>• 威脅被忽視（挑戰行動成真）</li>
-                    <li>• 角色行動造成後果</li>
+                <div class="p-3 bg-yellow-900/30 rounded-lg border border-yellow-500/30">
+                  <h4 class="font-semibold text-yellow-300 text-sm mb-1">結果</h4>
+                  <p class="text-yellow-400 text-xs mb-2">敘事者根據情況帶來後果：</p>
+                  <ul class="text-yellow-400 text-xs space-y-1">
+                    <li>• 系統威脅被忽視（挑戰行動成真）</li>
+                    <li>• 角色行動造成數位後果</li>
                     <li>• 觸發弱點標籤（標記成長）</li>
                   </ul>
-                  <div class="mt-2 p-2 bg-yellow-100 rounded text-xs">
-                    <span class="font-semibold text-yellow-800">後果形式：</span>
-                    <span class="text-yellow-700">敘事描述、標籤變化、狀態變化，角色可反應</span>
+                  <div class="mt-2 p-2 bg-yellow-900/40 rounded text-xs border border-yellow-500/30">
+                    <span class="font-semibold text-yellow-300">後果形式：</span>
+                    <span class="text-yellow-400">敘事描述、標籤變化、狀態變化，角色可反應</span>
                   </div>
                 </div>
               </div>
-            </div>            <hr class="border-gray-200">
+            </div>            <hr class="border-cyan-500/30">
 
             <!-- 故事標籤 -->
             <div>
-              <h3 class="font-semibold text-gray-900 mb-2 flex items-center">
-                <Icon name="lucide:scroll" class="w-4 h-4 mr-2 text-yellow-500" />
+              <h3 class="font-semibold text-yellow-300 mb-2 flex items-center">
+                <Icon name="lucide:file-text" class="w-4 h-4 mr-2 text-yellow-400" />
                 故事標籤
               </h3>
-              <p class="text-gray-700 text-sm mb-2">暫時性標籤，可正面或負面</p>
-              <div class="bg-yellow-50 p-2 rounded text-sm text-yellow-800 mb-2">
-                例如：士兵 或 有利地形
+              <p class="text-yellow-400 text-sm mb-2">暫時性標籤，可正面或負面</p>
+              <div class="bg-yellow-900/30 p-2 rounded text-sm text-yellow-300 border border-yellow-500/30 mb-2">
+                例如：駭客 或 有利網路位置
               </div>
-              <div class="text-xs text-gray-600 space-y-1">
+              <div class="text-xs text-yellow-400 space-y-1">
                 <div>• 用完後會被刪劃///</div>
                 <div>• 隨時間過期</div>
                 <div>• 記錄於背包或追蹤卡上</div>
               </div>            </div>
 
-            <hr class="border-gray-200">
+            <hr class="border-cyan-500/30">
 
             <!-- 挑戰 -->
             <div>
-              <h3 class="font-semibold text-gray-900 mb-2 flex items-center">
-                <Icon name="lucide:shield" class="w-4 h-4 mr-2 text-red-500" />
+              <h3 class="font-semibold text-red-300 mb-2 flex items-center">
+                <Icon name="lucide:shield" class="w-4 h-4 mr-2 text-red-400" />
                 挑戰
               </h3>
-              <p class="text-gray-700 text-sm mb-2">敵人、障礙、危機——這些會阻撓角色或其目標</p>
+              <p class="text-red-400 text-sm mb-2">企業特工、防火牆、系統崩潰——這些會阻撓角色或其目標</p>
               <div class="space-y-1 text-xs">
-                <div class="p-2 bg-red-50 rounded">
-                  <span class="font-semibold text-red-800">克服方式：</span>
-                  <span class="text-red-700">擲骰成功或累積狀態讓挑戰達到閾值</span>
+                <div class="p-2 bg-red-900/30 rounded border border-red-500/30">
+                  <span class="font-semibold text-red-300">克服方式：</span>
+                  <span class="text-red-400">擲骰成功或累積狀態讓挑戰達到閾值</span>
                 </div>
-                <div class="p-2 bg-yellow-50 rounded">
-                  <span class="font-semibold text-yellow-800">威脅：</span>
-                  <span class="text-yellow-700">挑戰會在設定中提出威脅，在行動中造成後果</span>
+                <div class="p-2 bg-yellow-900/30 rounded border border-yellow-500/30">
+                  <span class="font-semibold text-yellow-300">威脅：</span>
+                  <span class="text-yellow-400">挑戰會在設定中提出威脅，在行動中造成後果</span>
                 </div>
               </div>
             </div>
 
-            <hr class="border-gray-200">            <!-- 擲骰檢定 -->
-            <div>
-              <h3 class="font-semibold text-gray-900 mb-2 flex items-center">
-                <Icon name="lucide:dice-6" class="w-4 h-4 mr-2 text-blue-500" />
+            <hr class="border-cyan-500/30">            <!-- 擲骰檢定 -->            <div>
+              <h3 class="font-semibold text-blue-300 mb-2 flex items-center">
+                <Icon name="lucide:dice-6" class="w-4 h-4 mr-2 text-blue-400" />
                 擲骰檢定
               </h3>
               <div class="space-y-2 text-xs">
-                <div class="bg-blue-50 p-2 rounded">
-                  <div class="font-semibold text-blue-800 mb-1">計算力度：</div>
-                  <ul class="text-blue-700 space-y-1">
+                <div class="bg-blue-900/30 p-2 rounded border border-blue-500/30">
+                  <div class="font-semibold text-blue-300 mb-1">計算力度：</div>
+                  <ul class="text-blue-400 space-y-1">
                     <li>• 正面／負面標籤：+/-1 力度</li>
                     <li>• 燃燒標籤：+3 力度（使用後劃掉）</li>
                     <li>• 最佳／最差狀態等級：+/- 該等級</li>
                     <li>• 得勢／失勢：+3/-3（極端：+/-6）</li>
                   </ul>
-                  <p class="text-blue-700 mt-2">每使用一個弱點標籤，就標記一次成長</p>
+                  <p class="text-blue-400 mt-2">每使用一個弱點標籤，就標記一次成長</p>
                 </div>
-                <div class="bg-green-50 p-2 rounded">
-                  <div class="font-semibold text-green-800 mb-1">擲兩顆六面骰（2d6）+ 力度</div>
-                  <ul class="text-green-700 space-y-1">
+                <div class="bg-green-900/30 p-2 rounded border border-green-500/30">
+                  <div class="font-semibold text-green-300 mb-1">擲兩顆六面骰（2d6）+ 力度</div>
+                  <ul class="text-green-400 space-y-1">
                     <li>• 10+：成功</li>
                     <li>• 7-9：成功，但有後果</li>
                     <li>• 6-：失敗，有後果</li>
                   </ul>
                 </div>
               </div>
-            </div><hr class="border-gray-200">
+            </div>
+
+            <hr class="border-cyan-500/30">
 
             <!-- 消耗力度 -->
             <div>
-              <h3 class="font-semibold text-gray-900 mb-2 flex items-center">
-                <Icon name="lucide:zap" class="w-4 h-4 mr-2 text-orange-500" />
+              <h3 class="font-semibold text-orange-300 mb-2 flex items-center">
+                <Icon name="lucide:zap" class="w-4 h-4 mr-2 text-orange-400" />
                 消耗力度
               </h3>
-              <p class="text-gray-700 text-sm mb-2">行動成功後，使用力度來造成以下效果：</p>
+              <p class="text-orange-400 text-sm mb-2">行動成功後，使用力度來造成以下效果：</p>
               <div class="space-y-1 text-xs">
-                <div class="p-2 bg-orange-50 rounded">
-                  <span class="font-semibold text-orange-800">增加、刪除、恢復標籤：</span>
-                  <span class="text-orange-700">2 力度</span>
+                <div class="p-2 bg-orange-900/30 rounded border border-orange-500/30">
+                  <span class="font-semibold text-orange-300">增加、刪除、恢復標籤：</span>
+                  <span class="text-orange-400">2 力度</span>
                 </div>
-                <div class="p-2 bg-red-50 rounded">
-                  <span class="font-semibold text-red-800">賦予或減少狀態：</span>
-                  <span class="text-red-700">1 力度／每等級</span>
+                <div class="p-2 bg-red-900/30 rounded border border-red-500/30">
+                  <span class="font-semibold text-red-300">賦予或減少狀態：</span>
+                  <span class="text-red-400">1 力度／每等級</span>
                 </div>
-                <div class="p-2 bg-blue-50 rounded">
-                  <span class="font-semibold text-blue-800">揭示資訊或附加效果：</span>
-                  <span class="text-blue-700">1 力度</span>
+                <div class="p-2 bg-blue-900/30 rounded border border-blue-500/30">
+                  <span class="font-semibold text-blue-300">揭示資訊或附加效果：</span>
+                  <span class="text-blue-400">1 力度</span>
                 </div>
-                <div class="p-2 bg-purple-50 rounded">
-                  <span class="font-semibold text-purple-800">建立單次性故事標籤：</span>
-                  <span class="text-purple-700">至少1力度</span>
+                <div class="p-2 bg-purple-900/30 rounded border border-purple-500/30">
+                  <span class="font-semibold text-purple-300">建立單次性故事標籤：</span>
+                  <span class="text-purple-400">至少1力度</span>
                 </div>
               </div>
             </div>
 
-            <hr class="border-gray-200">
+            <hr class="border-cyan-500/30">
 
             <!-- 反應 -->
             <div>
-              <h3 class="font-semibold text-gray-900 mb-2 flex items-center">
-                <Icon name="lucide:shield-check" class="w-4 h-4 mr-2 text-indigo-500" />
+              <h3 class="font-semibold text-indigo-300 mb-2 flex items-center">
+                <Icon name="lucide:shield-check" class="w-4 h-4 mr-2 text-indigo-400" />
                 反應
               </h3>
-              <p class="text-gray-700 text-sm mb-2">如果敘事者允許，角色可在承受後果前使用反應：</p>
+              <p class="text-indigo-400 text-sm mb-2">如果敘事者允許，角色可在承受後果前使用反應：</p>
               <div class="space-y-2 text-xs">
-                <div class="bg-indigo-50 p-2 rounded">
-                  <div class="font-semibold text-indigo-800 mb-1">力度消耗：</div>
-                  <ul class="text-indigo-700 space-y-1">
+                <div class="bg-indigo-900/30 p-2 rounded border border-indigo-500/30">
+                  <div class="font-semibold text-indigo-300 mb-1">力度消耗：</div>
+                  <ul class="text-indigo-400 space-y-1">
                     <li>• 每 1 力度減少後果 1 等級</li>
                     <li>• 燃燒標籤需花費 2 力度</li>
                   </ul>
                 </div>
-                <div class="bg-blue-50 p-2 rounded">
-                  <div class="font-semibold text-blue-800 mb-1">描述動作後擲骰：</div>
-                  <ul class="text-blue-700 space-y-1">
+                <div class="bg-blue-900/30 p-2 rounded border border-blue-500/30">
+                  <div class="font-semibold text-blue-300 mb-1">描述動作後擲骰：</div>
+                  <ul class="text-blue-400 space-y-1">
                     <li>• 10+：可額外獲得 1 點力度</li>
                     <li>• 7-9：僅花費現有力度</li>
                     <li>• 6-：完全承受後果</li>
                   </ul>
                 </div>
-              </div>            </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -688,7 +688,7 @@
 <script setup>
 // 頁面標題
 useHead({
-  title: '如何遊玩 - 迷霧傳奇'
+  title: '如何遊玩 - 都市異景'
 })
 </script>
 
@@ -699,26 +699,26 @@ useHead({
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #1f2937;
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #c1c1c1;
+  background: #06b6d4;
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #a1a1a1;
+  background: #0891b2;
 }
 
 /* 卡片懸停效果 */
-.bg-white {
+.bg-black {
   transition: all 0.2s ease-in-out;
 }
 
-.bg-white:hover {
+.bg-black:hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 12px rgba(6, 182, 212, 0.2);
 }
 </style>

@@ -10,8 +10,6 @@
           </NuxtLink>              
           <nav class="hidden md:flex space-x-8">
             <NuxtLink to="/" class="text-gray-500 hover:text-gray-900 transition-colors">首頁</NuxtLink>
-            <NuxtLink to="/LitM" class="text-gray-500 hover:text-gray-900 transition-colors">迷霧傳奇</NuxtLink>
-            <NuxtLink to="/coming-soon" class="text-gray-500 hover:text-gray-900 transition-colors">其他系統</NuxtLink>
           </nav>
         </div>
       </div>

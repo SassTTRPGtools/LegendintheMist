@@ -45,8 +45,8 @@
                 <h3 class="font-semibold text-blue-200 mb-2">每個角色需要</h3>
                 <ul class="text-blue-300 text-sm space-y-1">
                   <li>• 四個主題</li>
-                  <li>• 每個主題包含：能力標籤、弱點標籤、使命</li>
-                  <li>• 一個背包標籤</li>
+                  <li>• 每個主題包含：能力標籤、弱點標籤</li>
+                  <li>• 一個裝備標籤</li>
                 </ul>
               </div>
 
@@ -122,7 +122,7 @@
                 </div>
                 <div class="flex items-start space-x-3">
                   <span class="inline-flex items-center justify-center w-6 h-6 bg-green-500 text-white text-xs font-bold rounded-full flex-shrink-0">4</span>
-                  <p class="text-gray-300 text-sm">創建一個背包標籤</p>
+                  <p class="text-gray-300 text-sm">創建一個裝備標籤</p>
                 </div>
               </div>
             </div>
@@ -164,32 +164,13 @@
                 </div>
                 <div class="flex items-start space-x-3">
                   <span class="inline-flex items-center justify-center w-6 h-6 bg-purple-500 text-white text-xs font-bold rounded-full flex-shrink-0">6</span>
-                  <p class="text-gray-300 text-sm">選擇適合賽博龐克世界的背包標籤</p>
+                  <p class="text-gray-300 text-sm">選擇適合賽博龐克世界的裝備標籤</p>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- 混合使用 -->
-          <div class="bg-gray-800 rounded-xl shadow-lg border border-orange-500/30 overflow-hidden">
-            <div class="bg-gradient-to-r from-orange-600 to-red-600 p-4">
-              <h2 class="text-lg font-bold text-white flex items-center">
-                <Icon name="lucide:shuffle" class="w-4 h-4 mr-2" />
-                混合使用
-              </h2>
-            </div>
-            <div class="p-4">
-              <p class="text-gray-300 text-sm mb-3">你也可以混合使用以上方法，舉例來說：</p>
-              <div class="space-y-2">
-                <div class="p-2 bg-orange-900/30 rounded border-l-3 border-orange-400">
-                  <p class="text-orange-300 text-sm">使用典型賽博角色起手，但改用主題問題創造標籤</p>
-                </div>
-                <div class="p-2 bg-red-900/30 rounded border-l-3 border-red-400">
-                  <p class="text-red-300 text-sm">或混用主題工具和主題問題來創造標籤</p>
-                </div>
-              </div>
-            </div>
-          </div>
+
         </div>
 
         <!-- 第三欄：檢查清單與指引 -->
@@ -230,22 +211,6 @@
                 </div>
               </div>
 
-              <div class="p-3 bg-purple-900/30 rounded-lg border-l-4 border-purple-400">
-                <h4 class="font-semibold text-purple-200 mb-2 flex items-center">
-                  <Icon name="lucide:target" class="w-4 h-4 mr-2" />
-                  使命應該明確
-                </h4>
-                <div class="text-purple-300 text-sm space-y-1">
-                  <p>大多數的使命會落入以下類型：</p>
-                  <div class="text-xs space-y-1 ml-2">
-                    <div>• <span class="font-semibold">願望：</span>你渴望或追求的目標</div>
-                    <div>• <span class="font-semibold">信念：</span>你所相信並努力維護的真理</div>
-                    <div>• <span class="font-semibold">家園：</span>你致力守護或維繫的地方或人</div>
-                    <div>• <span class="font-semibold">問題：</span>你渴望了解的一個大哉問</div>
-                  </div>
-                </div>
-              </div>
-
               <div class="p-3 bg-yellow-900/30 rounded-lg border-l-4 border-yellow-400">
                 <h4 class="font-semibold text-yellow-200 mb-2 flex items-center">
                   <Icon name="lucide:users" class="w-4 h-4 mr-2" />
@@ -274,53 +239,7 @@
             </div>
           </div>
 
-          <!-- 使命指引 -->
-          <div class="bg-gray-800 rounded-xl shadow-lg border border-amber-500/30 overflow-hidden">
-            <div class="bg-gradient-to-r from-amber-600 to-orange-600 p-4">
-              <h2 class="text-lg font-bold text-white flex items-center">
-                <Icon name="lucide:compass" class="w-4 h-4 mr-2" />
-                你的使命是你的旅程
-              </h2>
-            </div>
-            <div class="p-4">
-              <p class="text-gray-300 text-sm mb-3">
-                在遊戲中，說書人會挑戰你的使命，並為你提供成長機會，迫使你的角色做出抉擇、捨棄或成長。
-              </p>
-              <div class="bg-amber-900/30 p-3 rounded-lg border border-amber-500/30">
-                <p class="text-amber-300 text-sm">
-                  你選擇的使命會決定你希望探索哪些故事路線。
-                </p>
-              </div>
-            </div>
-          </div>
 
-          <!-- 快速連結 -->
-          <div class="bg-gray-800 rounded-xl shadow-lg border border-gray-600/30 overflow-hidden">
-            <div class="bg-gradient-to-r from-gray-500 to-slate-600 p-4">
-              <h2 class="text-lg font-bold text-white flex items-center">
-                <Icon name="lucide:external-link" class="w-4 h-4 mr-2" />
-                相關資源
-              </h2>
-            </div>
-            <div class="p-4 space-y-2">              <NuxtLink to="/LitM/character-reference" 
-                class="block p-2 bg-blue-50 rounded hover:bg-blue-100 transition-colors">
-                <div class="flex items-center text-blue-700">
-                  <Icon name="lucide:scroll-text" class="w-4 h-4 mr-2" />
-                  <span class="text-sm font-medium">角色創建參考</span>
-                </div>
-                <p class="text-blue-600 text-xs mt-1">查看主題書問題與範例</p>
-              </NuxtLink>
-              
-              <NuxtLink to="/LitM/how-to-play" 
-                class="block p-2 bg-green-50 rounded hover:bg-green-100 transition-colors">
-                <div class="flex items-center text-green-700">
-                  <Icon name="lucide:book-open" class="w-4 h-4 mr-2" />
-                  <span class="text-sm font-medium">如何遊玩</span>
-                </div>
-                <p class="text-green-600 text-xs mt-1">了解遊戲規則與機制</p>
-              </NuxtLink>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -346,7 +265,7 @@
               <ul class="text-blue-700 text-sm space-y-1">
                 <li>• 四個主題（Themes）</li>
                 <li>• 每個主題：能力標籤、弱點標籤、使命</li>
-                <li>• 一個背包標籤</li>
+                <li>• 一個裝備標籤</li>
               </ul>
             </div>
           </div>
@@ -382,7 +301,7 @@
                 </div>
                 <div class="flex items-start space-x-2">
                   <span class="inline-flex items-center justify-center w-5 h-5 bg-green-500 text-white text-xs font-bold rounded-full flex-shrink-0">4</span>
-                  <p class="text-gray-700">創建背包標籤</p>
+                  <p class="text-gray-700">創建裝備標籤</p>
                 </div>
               </div>
             </div>
@@ -479,33 +398,6 @@
           </div>
         </div>
 
-        <!-- 相關資源手機版 -->
-        <div class="bg-white rounded-xl shadow-sm border overflow-hidden">
-          <div class="bg-gradient-to-r from-gray-500 to-slate-600 p-4">
-            <h2 class="text-xl font-bold text-white flex items-center">
-              <Icon name="lucide:external-link" class="w-5 h-5 mr-2" />
-              相關資源
-            </h2>
-          </div>
-          <div class="p-4 space-y-3">            <NuxtLink to="/LitM/character-reference" 
-              class="block p-3 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors">
-              <div class="flex items-center text-blue-700 mb-1">
-                <Icon name="lucide:scroll-text" class="w-4 h-4 mr-2" />
-                <span class="font-medium">角色創建參考</span>
-              </div>
-              <p class="text-blue-600 text-sm">查看主題書問題與範例</p>
-            </NuxtLink>
-            
-            <NuxtLink to="/LitM/how-to-play" 
-              class="block p-3 bg-green-50 rounded-lg hover:bg-green-100 transition-colors">
-              <div class="flex items-center text-green-700 mb-1">
-                <Icon name="lucide:book-open" class="w-4 h-4 mr-2" />
-                <span class="font-medium">如何遊玩</span>
-              </div>
-              <p class="text-green-600 text-sm">了解遊戲規則與機制</p>
-            </NuxtLink>
-          </div>
-        </div>
       </div>
     </div>
   </div>

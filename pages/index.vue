@@ -1,17 +1,20 @@
 <template>
   <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
-    <div class="text-center py-20">
-      <!-- Hero Section -->
+    <div class="text-center py-20">      <!-- Hero Section -->
       <div class="max-w-4xl mx-auto px-4">
         <h1 class="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-          迷霧引擎
+          <span class="block text-2xl md:text-3xl font-normal text-gray-600 mt-2">數位輔助工具</span>
         </h1>
-        <p class="text-xl md:text-2xl text-gray-600 mb-8">
+        <p class="text-xl md:text-2xl text-gray-600 mb-4">
           探索多元的角色扮演遊戲世界
         </p>
-        <p class="text-lg text-gray-500 mb-12">
+        <p class="text-lg text-gray-500 mb-6">
           選擇你喜愛的遊戲系統，開始你的傳奇冒險
         </p>
+        <div class="text-sm text-gray-500 mb-12">
+          <Icon name="lucide:info" class="w-4 h-4 inline mr-1" />
+          基於 <a href="https://sonofoak.com/" target="_blank">Son of Oak Game Studio</a> 的迷霧引擎系統製作
+        </div>
       </div>
 
       <!-- System Cards -->
@@ -56,8 +59,7 @@
                 <div class="absolute inset-0" style="background-image: linear-gradient(cyan 1px, transparent 1px), linear-gradient(90deg, cyan 1px, transparent 1px); background-size: 20px 20px;"></div>
               </div>
               <div class="relative z-10">
-                <h2 class="text-2xl font-bold text-white mb-2 flex items-center">
-                  <Icon name="lucide:cpu" class="w-6 h-6 mr-2" />
+                <h2 class="text-2xl font-bold text-white mb-2">
                   都市異景
                 </h2>
                 <p class="text-cyan-100">Metro :Otherscape</p>
@@ -89,107 +91,11 @@
               </NuxtLink>
             </div>
           </div>
-        </div>
-      </div>      <!-- Quick Access -->
-      <div class="max-w-4xl mx-auto px-4">
-        <h3 class="text-2xl font-bold text-gray-800 mb-6">快速導覽</h3>
-        
-        <!-- LitM Links -->
-        <div class="mb-8">
-          <h4 class="text-lg font-semibold text-purple-700 mb-4 flex items-center">
-            <Icon name="lucide:sparkles" class="w-5 h-5 mr-2" />
-            迷霧傳奇
-          </h4>
-          <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            <NuxtLink 
-              to="/LitM/character-creation-guide"
-              class="bg-emerald-100 hover:bg-emerald-200 p-4 rounded-lg transition-colors duration-200 group"
-            >
-              <div class="flex items-center text-emerald-700 group-hover:text-emerald-800">
-                <Icon name="lucide:user-plus" class="w-5 h-5 mr-2" />
-                <span class="font-medium">角色創建指南</span>
-              </div>
-              <p class="text-emerald-600 text-sm mt-1">學習如何創建英雄</p>
-            </NuxtLink>
-
-            <NuxtLink 
-              to="/LitM/character-reference"
-              class="bg-purple-100 hover:bg-purple-200 p-4 rounded-lg transition-colors duration-200 group"
-            >
-              <div class="flex items-center text-purple-700 group-hover:text-purple-800">
-                <Icon name="lucide:scroll-text" class="w-5 h-5 mr-2" />
-                <span class="font-medium">角色創建參考</span>
-              </div>
-              <p class="text-purple-600 text-sm mt-1">查看主題與範例</p>
-            </NuxtLink>
-
-            <NuxtLink 
-              to="/LitM/how-to-play"
-              class="bg-blue-100 hover:bg-blue-200 p-4 rounded-lg transition-colors duration-200 group"
-            >
-              <div class="flex items-center text-blue-700 group-hover:text-blue-800">
-                <Icon name="lucide:book-open" class="w-5 h-5 mr-2" />
-                <span class="font-medium">如何遊玩</span>
-              </div>
-              <p class="text-blue-600 text-sm mt-1">了解遊戲規則</p>
-            </NuxtLink>
-          </div>
-        </div>
-
-        <!-- MO Links -->
-        <div>
-          <h4 class="text-lg font-semibold text-cyan-400 mb-4 flex items-center">
-            <Icon name="lucide:cpu" class="w-5 h-5 mr-2" />
-            都市異景
-          </h4>
-          <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            <NuxtLink 
-              to="/MO/character-creation-guide"
-              class="bg-gray-800 hover:bg-gray-700 p-4 rounded-lg transition-colors duration-200 group border border-cyan-500/30"
-            >
-              <div class="flex items-center text-cyan-300 group-hover:text-cyan-200">
-                <Icon name="lucide:user-plus" class="w-5 h-5 mr-2" />
-                <span class="font-medium">角色創建指南</span>
-              </div>
-              <p class="text-cyan-400 text-sm mt-1">打造賽博角色</p>
-            </NuxtLink>
-
-            <NuxtLink 
-              to="/MO/character-reference"
-              class="bg-gray-800 hover:bg-gray-700 p-4 rounded-lg transition-colors duration-200 group border border-purple-500/30"
-            >
-              <div class="flex items-center text-purple-300 group-hover:text-purple-200">
-                <Icon name="lucide:microchip" class="w-5 h-5 mr-2" />
-                <span class="font-medium">角色創建參考</span>
-              </div>
-              <p class="text-purple-400 text-sm mt-1">賽博龐克主題</p>
-            </NuxtLink>
-
-            <NuxtLink 
-              to="/MO/how-to-play"
-              class="bg-gray-800 hover:bg-gray-700 p-4 rounded-lg transition-colors duration-200 group border border-blue-500/30"
-            >
-              <div class="flex items-center text-blue-300 group-hover:text-blue-200">
-                <Icon name="lucide:terminal" class="w-5 h-5 mr-2" />
-                <span class="font-medium">如何遊玩</span>
-              </div>
-              <p class="text-blue-400 text-sm mt-1">都市異景規則</p>
-            </NuxtLink>
-          </div>
-        </div>
+        </div>      
       </div>
     </div>
   </div>
 </template>
-
-<script setup>
-useHead({
-  title: '迷霧引擎 - 角色扮演遊戲平台',
-  meta: [
-    { name: 'description', content: '探索多元的角色扮演遊戲世界，從迷霧傳奇開始你的冒險旅程' }
-  ]
-})
-</script>
 
 <style scoped>
 /* 卡片懸停效果 */
