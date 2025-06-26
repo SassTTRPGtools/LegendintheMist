@@ -45,8 +45,8 @@
                 <h3 class="font-semibold text-blue-200 mb-2">每個角色需要</h3>
                 <ul class="text-blue-300 text-sm space-y-1">
                   <li>• 四個主題</li>
-                  <li>• 每個主題包含：能力標籤、弱點標籤</li>
-                  <li>• 一個裝備標籤</li>
+                  <li>• 每個主題包含：能力標籤、弱點標籤、動機（身分、儀式、癢處）</li>
+                  <li>• 裝備標籤</li>
                 </ul>
               </div>
 
@@ -61,37 +61,6 @@
             </div>
           </div>
 
-
-          <!-- 賽博龐克角色建議 -->
-          <div class="bg-gray-800 rounded-xl shadow-lg border border-purple-500/30 overflow-hidden">
-            <div class="bg-gradient-to-r from-purple-600 to-indigo-600 p-4">
-              <h2 class="text-lg font-bold text-white flex items-center">
-                <Icon name="lucide:cpu" class="w-4 h-4 mr-2" />
-                賽博龐克角色建議
-              </h2>
-            </div>
-            <div class="p-4">
-              <p class="text-gray-300 text-sm mb-3">在都市異景中，你可以從以下選擇四個主題：</p>
-              <div class="space-y-2 text-sm">
-                <div class="p-2 bg-purple-900/30 rounded border border-purple-500/30">
-                  <span class="font-semibold text-purple-200">增強改造：</span>
-                  <span class="text-purple-300">你的身體或心智改造</span>
-                </div>
-                <div class="p-2 bg-blue-900/30 rounded border border-blue-500/30">
-                  <span class="font-semibold text-blue-200">前沿科技：</span>
-                  <span class="text-blue-300">你掌握的高科技裝備</span>
-                </div>
-                <div class="p-2 bg-cyan-900/30 rounded border border-cyan-500/30">
-                  <span class="font-semibold text-cyan-200">賽博空間：</span>
-                  <span class="text-cyan-300">你在虛擬世界的能力</span>
-                </div>
-                <div class="p-2 bg-orange-900/30 rounded border border-orange-500/30">
-                  <span class="font-semibold text-orange-200">無人機群：</span>
-                  <span class="text-orange-300">你控制的自動化裝置</span>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
 
         <!-- 第二欄：兩種主要方法 -->
@@ -110,19 +79,19 @@
               <div class="space-y-3">
                 <div class="flex items-start space-x-3">
                   <span class="inline-flex items-center justify-center w-6 h-6 bg-green-500 text-white text-xs font-bold rounded-full flex-shrink-0">1</span>
-                  <p class="text-gray-300 text-sm">想好你的四個主題，並為每個主題寫下一個能力標籤</p>
+                  <p class="text-gray-300 text-sm">想好你的四個主題，並為每個主題寫下第一個能力標籤作為標題</p>
                 </div>
                 <div class="flex items-start space-x-3">
                   <span class="inline-flex items-center justify-center w-6 h-6 bg-green-500 text-white text-xs font-bold rounded-full flex-shrink-0">2</span>
-                  <p class="text-gray-300 text-sm">為每個主題再加上兩個能力標籤與一個弱點標籤</p>
+                  <p class="text-gray-300 text-sm">接著為每個主題再加上2個能力與1個弱點標籤</p>
                 </div>
                 <div class="flex items-start space-x-3">
                   <span class="inline-flex items-center justify-center w-6 h-6 bg-green-500 text-white text-xs font-bold rounded-full flex-shrink-0">3</span>
-                  <p class="text-gray-300 text-sm">為每個主題寫下一項使命，並選擇一個主題類型</p>
+                  <p class="text-gray-300 text-sm">根據每個主題設定動機（身分、儀式、癢處）</p>
                 </div>
                 <div class="flex items-start space-x-3">
                   <span class="inline-flex items-center justify-center w-6 h-6 bg-green-500 text-white text-xs font-bold rounded-full flex-shrink-0">4</span>
-                  <p class="text-gray-300 text-sm">創建一個裝備標籤</p>
+                  <p class="text-gray-300 text-sm">從街頭目錄中挑選適合的裝備（並填上3個能力與1個弱點標籤）</p>
                 </div>
               </div>
             </div>
@@ -160,11 +129,11 @@
                 </div>
                 <div class="flex items-start space-x-3">
                   <span class="inline-flex items-center justify-center w-6 h-6 bg-purple-500 text-white text-xs font-bold rounded-full flex-shrink-0">5</span>
-                  <p class="text-gray-300 text-sm">使用主題內建建議與指引來寫下該主題的使命</p>
+                  <p class="text-gray-300 text-sm">根據每個主題設定動機（身分、儀式、癢處）</p>
                 </div>
                 <div class="flex items-start space-x-3">
                   <span class="inline-flex items-center justify-center w-6 h-6 bg-purple-500 text-white text-xs font-bold rounded-full flex-shrink-0">6</span>
-                  <p class="text-gray-300 text-sm">選擇適合賽博龐克世界的裝備標籤</p>
+                  <p class="text-gray-300 text-sm">從街頭目錄中挑選適合的裝備（並填上3個能力與1個弱點標籤）</p>
                 </div>
               </div>
             </div>
@@ -190,6 +159,7 @@
                   能力標籤應該有用
                 </h4>
                 <p class="text-green-300 text-sm">請自問：「這個標籤可以支援哪些行動？」</p>
+                <p class="text-green-300 text-sm">並且，所有主題中只能有一個廣泛標籤（適合多數情況）。</p>
               </div>
 
               <div class="p-3 bg-red-900/30 rounded-lg border-l-4 border-red-400">
@@ -246,112 +216,99 @@
       <!-- Mobile Layout -->
       <div class="lg:hidden max-w-md mx-auto space-y-6">
         <!-- 核心概念手機版 -->
-        <div class="bg-white rounded-xl shadow-sm border overflow-hidden">
-          <div class="bg-gradient-to-r from-emerald-500 to-green-600 p-4">
+        <div class="bg-black/80 backdrop-blur-sm rounded-xl shadow-2xl border border-cyan-500/30 overflow-hidden">
+          <div class="bg-gradient-to-r from-cyan-600 to-purple-600 p-4">
             <h2 class="text-xl font-bold text-white flex items-center">
               <Icon name="lucide:lightbulb" class="w-5 h-5 mr-2" />
               角色創建核心
             </h2>
           </div>
           <div class="p-4 space-y-4">
-            <div class="bg-emerald-50 p-3 rounded-lg border-l-4 border-emerald-400">
-              <p class="text-emerald-700 text-sm">
-                你可以創造出任何你能想像的角色，方法是：用標籤（tags）來描述他們。
+            <div class="bg-cyan-900/30 p-3 rounded-lg border-l-4 border-cyan-400">
+              <p class="text-cyan-300 text-sm">
+                你可以創造出任何你能想像的賽博龐克角色，方法是：用標籤來描述他們的改造、技能與弱點。
               </p>
             </div>
             
-            <div class="bg-blue-50 p-3 rounded-lg border-l-4 border-blue-400">
-              <h4 class="font-semibold text-blue-800 mb-2">每個角色需要</h4>
-              <ul class="text-blue-700 text-sm space-y-1">
-                <li>• 四個主題（Themes）</li>
-                <li>• 每個主題：能力標籤、弱點標籤、使命</li>
-                <li>• 一個裝備標籤</li>
+            <div class="bg-blue-900/30 p-3 rounded-lg border-l-4 border-blue-400">
+              <h4 class="font-semibold text-blue-200 mb-2">每個角色需要</h4>
+              <ul class="text-blue-300 text-sm space-y-1">
+                <li>• 四個主題（賽博龐克類型）</li>
+                <li>• 每個主題：能力標籤、弱點標籤、動機（身分、儀式、癢處）</li>
+                <li>• 街頭裝備標籤</li>
               </ul>
             </div>
           </div>
         </div>
 
         <!-- 三種創建方法手機版 -->
-        <div class="bg-white rounded-xl shadow-sm border overflow-hidden">
-          <div class="bg-gradient-to-r from-blue-500 to-purple-600 p-4">
+        <div class="bg-black/80 backdrop-blur-sm rounded-xl shadow-2xl border border-purple-500/30 overflow-hidden">
+          <div class="bg-gradient-to-r from-purple-600 to-pink-600 p-4">
             <h2 class="text-xl font-bold text-white flex items-center">
               <Icon name="lucide:layers" class="w-5 h-5 mr-2" />
-              三種創建方法
+              兩種創建方法
             </h2>
           </div>
           <div class="p-4 space-y-4">
             <!-- 最簡單 -->
             <div>
-              <h3 class="font-semibold text-gray-900 mb-2 flex items-center">
-                <Icon name="lucide:zap" class="w-4 h-4 mr-2 text-green-500" />
+              <h3 class="font-semibold text-green-300 mb-2 flex items-center">
+                <Icon name="lucide:zap" class="w-4 h-4 mr-2 text-green-400" />
                 最簡單：直接寫下來
               </h3>
               <div class="space-y-2 text-sm">
                 <div class="flex items-start space-x-2">
                   <span class="inline-flex items-center justify-center w-5 h-5 bg-green-500 text-white text-xs font-bold rounded-full flex-shrink-0">1</span>
-                  <p class="text-gray-700">想好四個主題，每個寫下一個能力標籤</p>
+                  <p class="text-green-400">想好四個賽博龐克主題，每個寫下第一個能力標籤作為標題</p>
                 </div>
                 <div class="flex items-start space-x-2">
                   <span class="inline-flex items-center justify-center w-5 h-5 bg-green-500 text-white text-xs font-bold rounded-full flex-shrink-0">2</span>
-                  <p class="text-gray-700">每個主題再加兩個能力標籤與一個弱點標籤</p>
+                  <p class="text-green-400">每個主題再加兩個能力標籤與一個弱點標籤</p>
                 </div>
                 <div class="flex items-start space-x-2">
                   <span class="inline-flex items-center justify-center w-5 h-5 bg-green-500 text-white text-xs font-bold rounded-full flex-shrink-0">3</span>
-                  <p class="text-gray-700">為每個主題寫下使命，選擇主題類型</p>
+                  <p class="text-green-400">根據每個主題設定動機（身分、儀式、癢處）</p>
                 </div>
                 <div class="flex items-start space-x-2">
                   <span class="inline-flex items-center justify-center w-5 h-5 bg-green-500 text-white text-xs font-bold rounded-full flex-shrink-0">4</span>
-                  <p class="text-gray-700">創建裝備標籤</p>
+                  <p class="text-green-400">從街頭目錄中挑選適合的裝備（並填上3個能力與1個弱點標籤）</p>
                 </div>
               </div>
             </div>
 
-            <hr class="border-gray-200">
-
-            <!-- 最快速 -->
-            <div>
-              <h3 class="font-semibold text-gray-900 mb-2 flex items-center">
-                <Icon name="lucide:rocket" class="w-4 h-4 mr-2 text-blue-500" />
-                最快速：選典型角色
-              </h3>
-              <p class="text-gray-600 text-sm mb-2">典型角色就像角色食譜</p>
-              <div class="space-y-2 text-sm">
-                <div class="flex items-start space-x-2">
-                  <span class="inline-flex items-center justify-center w-5 h-5 bg-blue-500 text-white text-xs font-bold rounded-full flex-shrink-0">1</span>
-                  <p class="text-gray-700">選擇典型角色，寫下三個主題</p>
-                </div>
-                <div class="flex items-start space-x-2">
-                  <span class="inline-flex items-center justify-center w-5 h-5 bg-blue-500 text-white text-xs font-bold rounded-full flex-shrink-0">2</span>
-                  <p class="text-gray-700">從清單挑選第四個主題</p>
-                </div>
-                <div class="flex items-start space-x-2">
-                  <span class="inline-flex items-center justify-center w-5 h-5 bg-blue-500 text-white text-xs font-bold rounded-full flex-shrink-0">3</span>
-                  <p class="text-gray-700">使用主題工具選標籤與使命</p>
-                </div>
-              </div>
-            </div>
-
-            <hr class="border-gray-200">
+            <hr class="border-cyan-500/30">
 
             <!-- 最細緻 -->
             <div>
-              <h3 class="font-semibold text-gray-900 mb-2 flex items-center">
-                <Icon name="lucide:book-open" class="w-4 h-4 mr-2 text-purple-500" />
-                最細緻：回答主題書問題
+              <h3 class="font-semibold text-purple-300 mb-2 flex items-center">
+                <Icon name="lucide:book-open" class="w-4 h-4 mr-2 text-purple-400" />
+                最細緻：回答主題問題
               </h3>
-              <p class="text-gray-600 text-sm mb-2">問題引導建立主題概念</p>
+              <p class="text-purple-400 text-sm mb-2">賽博龐克主題包含一組引導問題，幫助你一步步建立角色的概念與內容。</p>
               <div class="space-y-2 text-sm">
                 <div class="flex items-start space-x-2">
                   <span class="inline-flex items-center justify-center w-5 h-5 bg-purple-500 text-white text-xs font-bold rounded-full flex-shrink-0">1</span>
-                  <p class="text-gray-700">選擇四種主題類型</p>
+                  <p class="text-purple-400">選擇四種主題類型（可以重複選擇同一類型）</p>
                 </div>
                 <div class="flex items-start space-x-2">
                   <span class="inline-flex items-center justify-center w-5 h-5 bg-purple-500 text-white text-xs font-bold rounded-full flex-shrink-0">2</span>
-                  <p class="text-gray-700">回答問題創建標籤</p>
+                  <p class="text-purple-400">回答每個主題中的問題，來創建標籤</p>
                 </div>
                 <div class="flex items-start space-x-2">
                   <span class="inline-flex items-center justify-center w-5 h-5 bg-purple-500 text-white text-xs font-bold rounded-full flex-shrink-0">3</span>
-                  <p class="text-gray-700">第一題（粗體）<span class="text-red-600 font-semibold">必答</span></p>
+                  <p class="text-purple-400">第一題（粗體）<span class="text-red-400 font-semibold">必答</span>，然後選擇其中任兩題來建立能力標籤</p>
+                </div>
+                <div class="flex items-start space-x-2">
+                  <span class="inline-flex items-center justify-center w-5 h-5 bg-purple-500 text-white text-xs font-bold rounded-full flex-shrink-0">4</span>
+                  <p class="text-purple-400">額外選擇一題弱點標籤問題來建立該主題的弱點標籤</p>
+                </div>
+                <div class="flex items-start space-x-2">
+                  <span class="inline-flex items-center justify-center w-5 h-5 bg-purple-500 text-white text-xs font-bold rounded-full flex-shrink-0">5</span>
+                  <p class="text-purple-400">根據每個主題設定動機（身分、儀式、癢處）</p>
+                </div>
+                <div class="flex items-start space-x-2">
+                  <span class="inline-flex items-center justify-center w-5 h-5 bg-purple-500 text-white text-xs font-bold rounded-full flex-shrink-0">6</span>
+                  <p class="text-purple-400">從街頭目錄中挑選適合的裝備（並填上3個能力與1個弱點標籤）</p>
                 </div>
               </div>
             </div>
@@ -359,41 +316,52 @@
         </div>
 
         <!-- 檢查清單手機版 -->
-        <div class="bg-white rounded-xl shadow-sm border overflow-hidden">
-          <div class="bg-gradient-to-r from-red-500 to-pink-600 p-4">
+        <div class="bg-black/80 backdrop-blur-sm rounded-xl shadow-2xl border border-red-500/30 overflow-hidden">
+          <div class="bg-gradient-to-r from-red-600 to-pink-600 p-4">
             <h2 class="text-xl font-bold text-white flex items-center">
               <Icon name="lucide:check-square" class="w-5 h-5 mr-2" />
               創建檢查清單
             </h2>
           </div>
           <div class="p-4 space-y-3">
-            <div class="p-2 bg-green-50 rounded-lg border-l-3 border-green-400">
-              <h4 class="font-semibold text-green-800 text-sm mb-1">能力標籤應該有用</h4>
-              <p class="text-green-700 text-xs">自問：這個標籤可以支援哪些行動？</p>
+            <div class="p-2 bg-green-900/30 rounded-lg border-l-3 border-green-400">
+              <h4 class="font-semibold text-green-300 text-sm mb-1">能力標籤應該有用</h4>
+              <p class="text-green-400 text-xs">自問：這個標籤可以支援哪些行動？</p>
+              <p class="text-green-400 text-xs">所有主題中只能有一個廣泛標籤（適合多數情況）。</p>
             </div>
 
-            <div class="p-2 bg-red-50 rounded-lg border-l-3 border-red-400">
-              <h4 class="font-semibold text-red-800 text-sm mb-1">弱點標籤應該具有限制性</h4>
-              <p class="text-red-700 text-xs">自問：這個標籤會妨礙哪些行動？</p>
+            <div class="p-2 bg-red-900/30 rounded-lg border-l-3 border-red-400">
+              <h4 class="font-semibold text-red-300 text-sm mb-1">弱點標籤應該具有限制性</h4>
+              <p class="text-red-400 text-xs">自問：這個標籤會妨礙哪些行動？或什麼時候會讓角色陷入麻煩？</p>
             </div>
 
-            <div class="p-2 bg-blue-50 rounded-lg border-l-3 border-blue-400">
-              <h4 class="font-semibold text-blue-800 text-sm mb-1">標籤應該與主題威能相符</h4>
+            <div class="p-2 bg-cyan-900/30 rounded-lg border-l-3 border-cyan-400">
+              <h4 class="font-semibold text-cyan-300 text-sm mb-1">標籤應該符合賽博龐克風格</h4>
               <div class="text-xs space-y-1">
-                <div><span class="font-semibold text-purple-700">偉業：</span>宏大氣魄</div>
-                <div><span class="font-semibold text-orange-700">冒險：</span>超凡脫俗</div>
-                <div><span class="font-semibold text-green-700">起源：</span>平凡寫實</div>
+                <div><span class="font-semibold text-cyan-400">增強改造：</span><span class="text-cyan-500">身體或心智的科技強化</span></div>
+                <div><span class="font-semibold text-purple-400">前沿科技：</span><span class="text-purple-500">高科技裝備與工具</span></div>
+                <div><span class="font-semibold text-blue-400">賽博空間：</span><span class="text-blue-500">虛擬世界的能力</span></div>
+                <div><span class="font-semibold text-orange-400">無人機群：</span><span class="text-orange-500">自動化裝置控制</span></div>
               </div>
             </div>
 
-            <div class="p-2 bg-purple-50 rounded-lg border-l-3 border-purple-400">
-              <h4 class="font-semibold text-purple-800 text-sm mb-1">使命應該明確</h4>
-              <p class="text-purple-700 text-xs">願望、信念、家園、問題</p>
+            <div class="p-2 bg-indigo-900/30 rounded-lg border-l-3 border-indigo-400">
+              <h4 class="font-semibold text-indigo-300 text-sm mb-1">標記標籤的廣度</h4>
+              <div class="text-indigo-400 text-xs space-y-1">
+                <div>
+                  <span class="font-semibold">廣泛標籤：</span>如「駭客」、「改造人」、「企業特工」
+                  <p class="text-xs text-indigo-500">適用範圍大，但通常需要額外檢定</p>
+                </div>
+                <div>
+                  <span class="font-semibold">具體標籤：</span>如「神經插槽」、「光學迷彩」
+                  <p class="text-xs text-indigo-500">可直接使用，但只能在特定情境中發揮</p>
+                </div>
+              </div>
             </div>
 
-            <div class="p-2 bg-yellow-50 rounded-lg border-l-3 border-yellow-400">
-              <h4 class="font-semibold text-yellow-800 text-sm mb-1">與說書人達成共識</h4>
-              <p class="text-yellow-700 text-xs">討論標籤意義與使用方式</p>
+            <div class="p-2 bg-yellow-900/30 rounded-lg border-l-3 border-yellow-400">
+              <h4 class="font-semibold text-yellow-300 text-sm mb-1">與說書人達成共識</h4>
+              <p class="text-yellow-400 text-xs">討論每個標籤的意義與使用方式，事先約定好什麼時候可以使用它們。</p>
             </div>
           </div>
         </div>
@@ -406,7 +374,7 @@
 <script setup>
 // 頁面標題
 useHead({
-  title: '角色創建指南 - 迷霧傳奇'
+  title: '角色創建指南 - 都市異景'
 })
 </script>
 
@@ -417,27 +385,27 @@ useHead({
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #1f2937;
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #c1c1c1;
+  background: #06b6d4;
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #a1a1a1;
+  background: #0891b2;
 }
 
 /* 卡片懸停效果 */
-.bg-white {
+.bg-black {
   transition: all 0.2s ease-in-out;
 }
 
-.bg-white:hover {
+.bg-black:hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 12px rgba(6, 182, 212, 0.2);
 }
 
 /* 連結懸停效果 */

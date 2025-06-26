@@ -38,7 +38,7 @@
               </p>
               <div class="bg-cyan-900/30 p-3 rounded-lg border border-cyan-500/30">
                 <p class="text-cyan-300 text-sm">
-                  <strong>例如：</strong>英俊、沉睡咒語、↡舊傷、被魅惑
+                  <strong>例如：</strong>敏銳感官、驅靈術、↡不被信任
                 </p>
               </div>
             </div>
@@ -67,15 +67,26 @@
                   <h4 class="font-semibold text-red-200 mb-2">↡弱點標籤</h4>
                   <ul class="text-red-300 text-sm space-y-1">
                     <li>• 負面標籤，會降低行動強度</li>
-                    <li>• 使用後可讓主題獲得「成長」</li>
+                    <li>• 使用後可讓主題獲得「改進」</li>
                   </ul>
                 </div>
 
                 <div class="p-3 bg-purple-900/30 rounded-lg border-l-4 border-purple-400">
-                  <h4 class="font-semibold text-purple-200 mb-2">使命</h4>
-                  <p class="text-purple-300 text-sm">
-                    為主題提供一個目標或動機，是你想捍衛或實現的理想
-                  </p>
+                  <h4 class="font-semibold text-purple-200 mb-2">動機</h4>
+                  <div class="text-purple-300 text-sm space-y-1">
+                  <div>
+                    <span class="font-semibold text-purple-100">自我：</span>
+                    <span>深信不疑的信念（身分）</span>
+                  </div>
+                  <div>
+                    <span class="font-semibold text-purple-100">神話：</span>
+                    <span>必須遵守的超自然要求（儀式）</span>
+                  </div>
+                  <div>
+                    <span class="font-semibold text-purple-100">癢處：</span>
+                    <span>強迫性的行為模式（癢處）</span>
+                  </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -152,11 +163,8 @@
                   <li>• 每個正面／負面標籤：+/-1 力度</li>
                   <li>• 燃燒標籤：+3 力度（使用後劃掉）</li>
                   <li>• 最佳狀態與最差狀態等級：+/- 該等級</li>
-                  <li>• 如果「得勢／失勢」，力度會 +3/-3（極端情況是 +/-6）</li>
+                  <li>• 規模：+4/-4（+/- 規模差額的力度或狀態層數）</li>
                 </ul>
-                <p class="text-blue-300 text-sm mt-2 font-semibold">
-                  每使用一個弱點標籤，就標記一次成長
-                </p>
               </div>
               <div class="p-3 bg-cyan-900/30 rounded-lg border-l-4 border-cyan-400">
                 <h4 class="font-semibold text-cyan-200 mb-2">擲兩顆六面骰（2d6）並加上力度</h4>
@@ -270,7 +278,8 @@
                     <span class="text-yellow-300 text-sm">僅花費現有力度</span>
                   </div>
                   <div class="p-2 bg-red-900/40 rounded border border-red-500/30">
-                    <span class="font-semibold text-red-800">6-：</span>                    <span class="text-red-300 text-sm">完全承受後果</span>
+                    <span class="font-semibold text-red-200">6-：</span>
+                    <span class="text-red-300 text-sm">完全承受後果</span>
                   </div>
                 </div>
               </div>
@@ -368,20 +377,20 @@
             </div>
             <div class="p-4 space-y-4">
               <div class="p-3 bg-blue-900/30 rounded-lg border-l-4 border-blue-400">
-                <h4 class="font-semibold text-blue-200 mb-2">成長</h4>
-                <p class="text-blue-300 text-sm">當使用弱點標籤時，標記一次成長。累計3次後，該主題可獲得一項「新能力標籤」</p>
+                <h4 class="font-semibold text-blue-200 mb-2">改進</h4>
+                <p class="text-blue-300 text-sm">當使用弱點標籤時，標記一次改進。累計3次後，該主題可獲得一項「新能力標籤」或「主題專長」</p>
               </div>
               <div class="p-3 bg-orange-900/30 rounded-lg border-l-4 border-orange-400">
-                <h4 class="font-semibold text-orange-200 mb-2">捨棄</h4>
-                <p class="text-orange-300 text-sm">當違背或放棄使命時，標記一次捨棄。累計3次後，該主題會被替換</p>
+                <h4 class="font-semibold text-orange-200 mb-2">衰變</h4>
+                <p class="text-orange-300 text-sm">當「動機」身份、儀式、癢處被違反時，標記一次衰變。累計3次後，該主題會被替換</p>
               </div>
               <div class="p-3 bg-green-900/30 rounded-lg border-l-4 border-green-400">
-                <h4 class="font-semibold text-green-200 mb-2">里程碑</h4>
-                <p class="text-green-300 text-sm">達成任務關鍵目標時，標記一次里程碑。累計3次後，該主題會進化</p>
+                <h4 class="font-semibold text-green-200 mb-2">演化</h4>
+                <p class="text-green-300 text-sm">當獲得//改進以及失去//「主題」、前三個「能力標籤」任一、額外「弱點標籤」、「主題專長」時，都能夠標記一點演化。</p>
               </div>
               <div class="p-3 bg-purple-900/30 rounded-lg border border-purple-500/30">
                 <p class="text-purple-300 text-sm">
-                  <strong>承諾：</strong>主題被取代或進化後，會獲得承諾，可用於啟動「圓滿時刻」
+                  <strong>演化時刻：</strong>當演化累積滿5點時，可進行「演化時刻」。
                 </p>
               </div>
             </div>
@@ -433,8 +442,21 @@
                   <p class="text-red-300 text-xs">負面標籤，會降低行動強度</p>
                 </div>
                 <div class="p-2 bg-purple-900/30 rounded-lg border-l-3 border-purple-400">
-                  <span class="font-semibold text-purple-200 text-sm">使命</span>
-                  <p class="text-purple-300 text-xs">為主題提供目標或動機</p>
+                    <span class="font-semibold text-purple-200 text-sm">動機</span>
+                    <ul class="text-purple-300 text-xs space-y-1 mt-1">
+                    <li>
+                      <span class="font-semibold text-purple-100">自我：</span>
+                      <span>深信不疑的信念（身分）</span>
+                    </li>
+                    <li>
+                      <span class="font-semibold text-purple-100">神話：</span>
+                      <span>必須遵守的超自然要求（儀式）</span>
+                    </li>
+                    <li>
+                      <span class="font-semibold text-purple-100">癢處：</span>
+                      <span>強迫性的行為模式（癢處）</span>
+                    </li>
+                    </ul>
                 </div>
               </div>
             </div>
@@ -479,16 +501,16 @@
               </h3>
               <div class="space-y-2 text-xs">
                 <div class="p-2 bg-blue-900/30 rounded border border-blue-500/30">
-                  <span class="font-semibold text-blue-300">成長：</span>
-                  <span class="text-blue-400">使用弱點標籤時標記，累計3次獲得新能力標籤</span>
+                  <span class="font-semibold text-blue-300">改進：</span>
+                  <span class="text-blue-400">使用弱點標籤時標記，累計3次獲得新能力標籤或主題專長</span>
                 </div>
                 <div class="p-2 bg-orange-900/30 rounded border border-orange-500/30">
-                  <span class="font-semibold text-orange-300">捨棄：</span>
-                  <span class="text-orange-400">違背使命時標記，累計3次主題被替換</span>
+                  <span class="font-semibold text-orange-300">衰變：</span>
+                  <span class="text-orange-400">違背動機時標記，累計3次主題被替換</span>
                 </div>
                 <div class="p-2 bg-green-900/30 rounded border border-green-500/30">
-                  <span class="font-semibold text-green-300">里程碑：</span>
-                  <span class="text-green-400">達成關鍵目標時標記，累計3次主題進化</span>
+                  <span class="font-semibold text-green-300">演化：</span>
+                  <span class="text-green-400">獲得改進或失去主題要素時標記，累計5次可進行演化時刻</span>
                 </div>
               </div>
             </div>
@@ -607,9 +629,8 @@
                     <li>• 正面／負面標籤：+/-1 力度</li>
                     <li>• 燃燒標籤：+3 力度（使用後劃掉）</li>
                     <li>• 最佳／最差狀態等級：+/- 該等級</li>
-                    <li>• 得勢／失勢：+3/-3（極端：+/-6）</li>
+                    <li>• 規模：+4/-4（+/- 規模差額的力度或狀態層數）</li>
                   </ul>
-                  <p class="text-blue-400 mt-2">每使用一個弱點標籤，就標記一次成長</p>
                 </div>
                 <div class="bg-green-900/30 p-2 rounded border border-green-500/30">
                   <div class="font-semibold text-green-300 mb-1">擲兩顆六面骰（2d6）+ 力度</div>
