@@ -1,0 +1,243 @@
+  {
+    "sample_characters": [
+      {
+        "ori_name": "Animalistic Modifications",
+        "source": "Metro",
+        "name": "野性改造",
+        "type": "Augmentation",
+        "ability_tags": [
+          "卓越生理",
+          "敏銳感官",
+          "自然武器",
+          "攀爬肢體",
+          "動物本能",
+          "拒絕社交規範",
+          "生物工程",
+          "愛動物者",
+          "費洛蒙誘惑"
+        ],
+        "weakness_tags": [
+          "免疫系統脆弱",
+          "戰逃本能",
+          "體力消耗快",
+          "被當怪胎嘲笑"
+        ],
+        "itch": "以動物的方式體驗這個世界。"
+      },
+      {
+        "ori_name": "Boosted Mental Capacity",
+        "source": "Metro",
+        "name": "強化心智",
+        "type": "Augmentation",
+        "ability_tags": [
+          "快速回憶資訊",
+          "攝影記憶",
+          "戰術輔助軟體",
+          "環境分析",
+          "替代路徑運算",
+          "冷靜理智",
+          "神經潤滑劑",
+          "極速辯論者",
+          "人臉資料庫"
+        ],
+        "weakness_tags": [
+          "磁場干擾",
+          "記憶洪流",
+          "語速過快",
+          "不被信任"
+        ],
+        "itch": "不斷突破我的心智運算與記憶極限。"
+      },
+      {
+        "ori_name": "Armored Juggernaut",
+        "source": "Metro",
+        "name": "裝甲猛襲者",
+        "type": "Augmentation",
+        "ability_tags": [
+          "蠻力猛攻",
+          "防穿板甲",
+          "巨型武器",
+          "強力跳躍",
+          "撞破牆面",
+          "嶄新自信",
+          "焊接裝置",
+          "軍工技改",
+          "威懾體態"
+        ],
+        "weakness_tags": [
+          "笨重",
+          "伺服電機卡頓",
+          "遇水生鏽",
+          "被當成無腦暴力者"
+        ],
+        "itch": "打穿所有阻礙。"
+      },
+      {
+        "ori_name": "Chipped Weapon Mastery",
+        "source": "Metro",
+        "name": "晶片武器精通",
+        "type": "Augmentation",
+        "ability_tags": [
+          "整合瞄準系統",
+          "望遠視覺",
+          "武器連結",
+          "花式射擊",
+          "穿牆近空標定",
+          "先發制人",
+          "武器保養",
+          "議價技能",
+          "技驚四座"
+        ],
+        "weakness_tags": [
+          "後座力關節炎",
+          "手臂被 App 控制",
+          "視線不佳時失效",
+          "不是真正的大師"
+        ],
+        "itch": "精通一切武器。"
+      },
+      {
+        "ori_name": "Enhanced Senses",
+        "source": "Metro",
+        "name": "改造感官",
+        "type": "Augmentation",
+        "ability_tags": [
+          "穿透掩蔽",
+          "化學分析",
+          "預知先機",
+          "接收無線通訊",
+          "聽心跳",
+          "細節鑑賞",
+          "冥想修復模式",
+          "偵探直覺",
+          "測謊儀"
+        ],
+        "weakness_tags": [
+          "失眠",
+          "感官超載",
+          "瞬時斷片",
+          "間諜嫌疑"
+        ],
+        "itch": "看見一切，聽見一切。"
+      },
+      {
+        "ori_name": "Impossibly Good Looks",
+        "source": "Metro",
+        "name": "無懈外貌",
+        "type": "Augmentation",
+        "ability_tags": [
+          "眩目吸睛",
+          "替換面貌",
+          "迷人外型",
+          "精密身體控制",
+          "誘惑能力",
+          "自我暗示技術",
+          "隨叫整形師",
+          "時尚模特兒",
+          "眾所矚目"
+        ],
+        "weakness_tags": [
+          "易損脆弱",
+          "手術之痛",
+          "需頻繁更新",
+          "激發嫉妒"
+        ],
+        "itch": "讓更多人看見我，欣賞這副由我打造的藝術品。"
+      },
+      {
+        "ori_name": "Hidden Gadgets",
+        "source": "Metro",
+        "name": "隱匿裝置",
+        "type": "Augmentation",
+        "ability_tags": [
+          "掃描與診斷工具",
+          "祕密藏艙",
+          "飛刀發射器",
+          "止痛注射器",
+          "指紋開鎖器",
+          "應變機智",
+          "擷取新模組",
+          "雙面人生",
+          "全像面具"
+        ],
+        "weakness_tags": [
+          "重心不均",
+          "多裝難管",
+          "艙門故障",
+          "不能重複驚喜"
+        ],
+        "itch": "用新把戲讓他們大吃一驚。"
+      },      {
+        "ori_name": "Reflex Booster Implants",
+        "source": "Metro",
+        "name": "反應強化植體",
+        "type": "Augmentation",
+        "ability_tags": [
+          "加速反應",
+          "腎上腺激增",
+          "爆發力",
+          "緩代謝",
+          "排毒能力",
+          "清明激素",
+          "極限運動",
+          "注射他人",
+          "生化工具包"
+        ],
+        "weakness_tags": [
+          "生理難以自調",
+          "戒斷症狀",
+          "血流已滿",
+          "被視為藥癮者"
+        ],
+        "itch": "將我的身體推向極限。"
+      },
+      {
+        "ori_name": "Enhanced Clone",
+        "source": "Tokyo",
+        "name": "強化複製人",
+        "type": "Augmentation",
+        "ability_tags": [
+          "完美的身體狀態",
+          "極致的身體控制",
+          "閃電般反應",
+          "長相與原主無異",
+          "進入休眠狀態",
+          "精心構建的人格",
+          "生命系統備份",
+          "超人體能",
+          "人格切換"
+        ],
+        "weakness_tags": [
+          "仰賴昂貴藥物",
+          "突發閃回",
+          "情感表現受限",
+          "因為「更優秀」而被仇恨"
+        ],
+        "itch": "在每方面都超越原主。"
+      },
+      {
+        "ori_name": "Eye-Catching Projections",
+        "source": "Tokyo",
+        "name": "奪目投影",
+        "type": "Augmentation",
+        "ability_tags": [
+          "創造繽紛影像",
+          "全像偽裝",
+          "混淆視覺",
+          "致盲光束",
+          "製造混亂",
+          "空間感知",
+          "3D 全像攝影機",
+          "吸引目光專家",
+          "無法忽視"
+        ],
+        "weakness_tags": [
+          "分不清真實與幻象",
+          "自我目眩",
+          "怕曬",
+          "看起來像企業的工具人"
+        ],
+        "itch": "吸引所有人的注意，操弄他們的情緒。"
+      }
+    ]
+  }
