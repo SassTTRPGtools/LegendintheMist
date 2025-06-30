@@ -1,0 +1,220 @@
+  {
+    "sample_characters": [
+      {
+        "ori_name": "Disaster Survivor",
+        "source": "Metro", 
+        "name": "災厄倖存者",
+        "type": "TroubledPast",
+        "ability_tags": [
+          "承受惡劣天候",
+          "擠過狹窄縫隙",
+          "果斷取捨",
+          "謹慎步伐",
+          "與急救人員有默契",
+          "氧氣面罩",
+          "保持冷靜",
+          "災難警覺",
+          "環保激進分子"
+        ],
+        "weakness_tags": [
+          "懼怕（火焰、水、懸崖等）",
+          "呼吸困難",
+          "過度謹慎",
+          "極端環境條件"
+        ],
+        "primary_goal": "大自然值得敬畏與恐懼。"
+      },
+      {
+        "ori_name": "Tragic Loss",
+        "source": "Metro", 
+        "name": "慘痛失去",
+        "type": "TroubledPast",
+        "ability_tags": [
+          "世上再無更深的痛",
+          "悲憫的仁慈",
+          "報仇使者",
+          "以我之身守護他人",
+          "重組的家庭",
+          "遺留武器",
+          "緬懷美好時光",
+          "家族祕辛",
+          "故意讓自己成為目標"
+        ],
+        "weakness_tags": [
+          "痛苦的思念",
+          "死者幽魂糾纏（字面意義）",
+          "魯莽衝動",
+          "結束他人生命"
+        ],
+        "primary_goal": "我再也無法像那時那樣感受愛了。"
+      },
+      {
+        "ori_name": "Escaped Servitude",
+        "source": "Metro", 
+        "name": "逃離奴役",
+        "type": "TroubledPast",
+        "ability_tags": [
+          "堅韌不屈",
+          "繞過安保系統",
+          "自製武器",
+          "勞工之力",
+          "與被壓迫者並肩",
+          "舊日枷鎖",
+          "敢言真相",
+          "看穿權力結構",
+          "解放他人"
+        ],
+        "weakness_tags": [
+          "賞金獵人",
+          "雷射圍欄灼傷",
+          "不信任領袖",
+          "被束縛"
+        ],
+        "primary_goal": "我要活得自由。"
+      },
+      {
+        "ori_name": "Raised in Cyberspace",
+        "source": "Metro", 
+        "name": "網路空間中成長",
+        "type": "TroubledPast",
+        "ability_tags": [
+          "多工大師",
+          "永遠在線",
+          "網路空間鬥士",
+          "微型傳輸植體",
+          "群體共享虛擬介面",
+          "百萬虛擬外觀",
+          "勇於嘗新",
+          "在資料旋渦中導航",
+          "抵抗神經衝動"
+        ],
+        "weakness_tags": [
+          "他們用AR來呼喚我",
+          "肉身暈眩",
+          "注意力渙散",
+          "看見別人接入網路"
+        ],
+        "primary_goal": "我只認識虛擬中的自己。"
+      },
+      {
+        "ori_name": "Science Experiment",
+        "source": "Metro", 
+        "name": "科研實驗體",
+        "type": "TroubledPast",
+        "ability_tags": [
+          "耐痛體質",
+          "為［某目的］而設計",
+          "心靈衝擊",
+          "賽博義體（選擇肢體或器官）",
+          "異類邊緣人",
+          "過去的影像",
+          "釋放怒火",
+          "身體改造技術",
+          "救援任務"
+        ],
+        "weakness_tags": [
+          "遭企業追捕",
+          "為某用途編寫程序",
+          "懼怕自身之力",
+          "臨床空間"
+        ],
+        "primary_goal": "我是怪物，是畸形，是錯誤。"
+      },
+      {
+        "ori_name": "Target of the Government",
+        "source": "Metro", 
+        "name": "政府通緝",
+        "type": "TroubledPast",
+        "ability_tags": [
+          "熟知官僚體系",
+          "小心翼翼地使用網路空間",
+          "鋌而走險",
+          "整容重塑",
+          "低處朋友",
+          "政府機密",
+          "抽菸時間",
+          "把柄在手",
+          "隱匿身份"
+        ],
+        "weakness_tags": [
+          "遭人追捕",
+          "神經性抽搐",
+          "不信任權威",
+          "車輛追逐"
+        ],
+        "primary_goal": "我只是個行屍走肉。"
+      },
+      {
+        "ori_name": "Survived the Streets",
+        "source": "Metro", 
+        "name": "街頭求生者",
+        "type": "TroubledPast",
+        "ability_tags": [
+          "情勢感知",
+          "談判高手",
+          "扒竊",
+          "逼急會反咬",
+          "非法改造（選擇義體部位）",
+          "黑街導師",
+          "臉上傷疤",
+          "笑著化解衝突",
+          "幫派政治"
+        ],
+        "weakness_tags": [
+          "幫派要我回去",
+          "義體零件失靈",
+          "打死不退",
+          "重返舊街區"
+        ],
+        "primary_goal": "命很賤——得學著活下去。"
+      },
+      {
+        "ori_name": "Victim of Otherworldly Forces",
+        "source": "Metro", 
+        "name": "受異界侵蝕",
+        "type": "TroubledPast",
+        "ability_tags": [
+          "見怪不怪",
+          "識得異類",
+          "直擊牠們弱點",
+          "結界符文覆身",
+          "驅魔儀式",
+          "獵魔者盟友",
+          "妖王之指",
+          "自我意志堅定",
+          "知曉秘法"
+        ],
+        "weakness_tags": [
+          "霉運詛咒",
+          "無法癒合的傷",
+          "迷信",
+          "牠們奪走我的那個存在"
+        ],
+        "primary_goal": "那些怪物，該被清除。"
+      },
+      {
+        "ori_name": "Nanite Veteran",
+        "source": "Tokyo", 
+        "name": "奈米戰災老兵",
+        "type": "TroubledPast",
+        "ability_tags": [
+          "抵抗肉體變異",
+          "現地即興應變",
+          "操作高端科技",
+          "快速移動",
+          "奈米部隊聯絡",
+          "個人反奈米力場",
+          "紀律嚴明",
+          "黑市交易",
+          "破解奈米群體"
+        ],
+        "weakness_tags": [
+          "僵化指令",
+          "鈣化臉部",
+          "奈米偏執",
+          "化學反應感知"
+        ],
+        "primary_goal": "奈米就是惡魔；與其交易者亦是惡魔。"
+      }
+    ]
+  }

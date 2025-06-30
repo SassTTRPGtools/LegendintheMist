@@ -1,0 +1,243 @@
+  {
+    "sample_characters": [
+      {
+        "ori_name": "Covert Agent",
+        "source": "Metro",
+        "name": "祕密特工",
+        "type": "Expertise",
+        "ability_tags": [
+          "察言觀色",
+          "開鎖裝置",
+          "情報擷取",
+          "備用掩護",
+          "情報資料庫通行權",
+          "高級許可權",
+          "情感切割",
+          "偽裝術",
+          "監控接管裝置"
+        ],
+        "weakness_tags": [
+          "多疑",
+          "脫稿演出",
+          "私人情感牽絆",
+          "被人出賣"
+        ],
+        "primary_goal": "別產生依附感。"
+      },
+      {
+        "ori_name": "CImpressive Physique",
+        "source": "Metro",
+        "name": "強健體格",
+        "type": "Expertise",
+        "ability_tags": [
+          "強壯肌力",
+          "貼身戰衣",
+          "人類極限耐力",
+          "避免受傷",
+          "專屬健身房",
+          "金牌得主",
+          "無痛無得",
+          "訓練日程表",
+          "生化增肌植入"
+        ],
+        "weakness_tags": [
+          "自尊脆弱",
+          "站不穩",
+          "審美壓力",
+          "力量反遭利用"
+        ],
+        "primary_goal": "我的身體是我的神殿。"
+      },
+      {
+        "ori_name": "Gunslinger",
+        "source": "Metro",
+        "name": "神槍手",
+        "type": "Expertise",
+        "ability_tags": [
+          "快拔",
+          "可靠副槍",
+          "花式射擊",
+          "壓制射擊",
+          "軍火商人",
+          "傳奇名聲",
+          "隨身攜槍",
+          "目標研究",
+          "智慧武器"
+        ],
+        "weakness_tags": [
+          "過於好戰",
+          "無視線視角",
+          "不夠火力",
+          "別太靠近我"
+        ],
+        "primary_goal": "我要成為這一行最強的人。"
+      },
+      {
+        "ori_name": "Investigator",
+        "source": "Metro",
+        "name": "調查員",
+        "type": "Expertise",
+        "ability_tags": [
+          "洞察細節",
+          "語音分析軟體",
+          "觀察肢體語言",
+          "獨來獨往",
+          "收買街頭線人",
+          "私家偵探執照",
+          "直覺推理",
+          "調查嫌疑人",
+          "大腦分析擴充"
+        ],
+        "weakness_tags": [
+          "厭世",
+          "官僚流程",
+          "容易被賣慘騙",
+          "好奇心太重"
+        ],
+        "primary_goal": "每個人都是老鼠，只要你知道怎麼擠。"
+      },
+      {
+        "ori_name": "Med Techie",
+        "source": "Metro",
+        "name": "街頭醫技師",
+        "type": "Expertise",
+        "ability_tags": [
+          "穩定傷患",
+          "高科技醫療包",
+          "心肺復甦",
+          "壓力中依然冷靜",
+          "黑巷診所",
+          "醫療通行證",
+          "現場辨症",
+          "藥品囤貨",
+          "3D 器官列印機"
+        ],
+        "weakness_tags": [
+          "忽略危險",
+          "病患太多",
+          "草率縫合",
+          "病人動手"
+        ],
+        "primary_goal": "只有訂閱用戶才有醫療服務！"
+      },
+      {
+        "ori_name": "Tinkerer",
+        "source": "Metro",
+        "name": "技術修補匠",
+        "type": "Expertise",
+        "ability_tags": [
+          "改裝裝置",
+          "工具箱",
+          "逆向工程",
+          "備品備件",
+          "科技供應鏈",
+          "認證技師",
+          "萬物可修",
+          "研究一件科技",
+          "奈米電路重構噴劑"
+        ],
+        "weakness_tags": [
+          "科技上癮",
+          "工具太少",
+          "修壞好東西",
+          "意外副作用"
+        ],
+        "primary_goal": "交給我處理，保證搞定。"
+      },
+      {
+        "ori_name": "Ruthless Executive",
+        "source": "Metro",
+        "name": "無情高層",
+        "type": "Expertise",
+        "ability_tags": [
+          "商業直覺",
+          "防彈西裝",
+          "投射自信",
+          "轉嫁責任",
+          "股東人脈",
+          "企業福利",
+          "操作槓桿",
+          "專注強化藥物",
+          "惡意併購"
+        ],
+        "weakness_tags": [
+          "功利導向",
+          "上司監控",
+          "小看對手",
+          "被下層社會厭惡"
+        ],
+        "primary_goal": "別讓眼光離開收益底線。"
+      },
+      {
+        "ori_name": "Trained Killer",
+        "source": "Metro",
+        "name": "受訓殺手",
+        "type": "Expertise",
+        "ability_tags": [
+          "潛行襲擊",
+          "愛用武器",
+          "乾淨俐落",
+          "解除武裝攻擊",
+          "組織犯罪人脈",
+          "職業聲望",
+          "確實收尾",
+          "精準瞄準",
+          "AR 幽影炸彈"
+        ],
+        "weakness_tags": [
+          "虛無主義",
+          "目標戒備森嚴",
+          "輕忽波及傷害",
+          "不死之敵"        ],
+        "primary_goal": "依契約而動，一字不差。"
+      },
+      {
+        "ori_name": "Yōkai Slayer",
+        "source": "Tokyo",
+        "name": "妖怪獵人",
+        "type": "Expertise",
+        "ability_tags": [
+          "追蹤超自然",
+          "可靠武器",
+          "識破弱點",
+          "神道驅邪手段",
+          "獵人同盟",
+          "斬殺數十種妖怪",
+          "恐懼是武器",
+          "備妥妖怪對策",
+          "審問怪物"
+        ],
+        "weakness_tags": [
+          "懷疑每一人",
+          "被陰陽師登記在案",
+          "附帶破壞",
+          "異常聰明的妖怪"
+        ],
+        "primary_goal": "這些怪物根本不該存在於世上。"
+      },
+      {
+        "ori_name": "Kenjutsu",
+        "source": "Tokyo",
+        "name": "劍術",
+        "type": "Expertise",
+        "ability_tags": [
+          "居合先制一擊",
+          "上好刀鋒",
+          "肢解一擊",
+          "精妙招架",
+          "武器買賣人脈",
+          "聲譽卓著",
+          "戰場感知",
+          "戰前冥想",
+          "無敵劍旋"
+        ],
+        "weakness_tags": [
+          "只重視戰技",
+          "捲入門派糾紛",
+          "招式有破綻",
+          "對高科技裝甲無力"
+        ],
+        "primary_goal": "只要我拔劍，就不能停手。"
+      }
+    ]
+  }
