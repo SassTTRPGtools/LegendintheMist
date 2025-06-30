@@ -1,0 +1,122 @@
+[
+  {
+    "type": "平民倖存者",
+    "title": "毀滅系街頭狂",
+    "description": "你曾經只是個帶著怒火在街頭遊蕩的少年，痛恨這個世界爛透了。現在，你手中握有祕源或某件能在巨城中引發災厄的武器。沒有猶豫，沒有後悔——你就是破壞的代名詞。",
+"theme_tools": [
+  "Rebel Without A Cause (PERSONALITY)",
+  "Street Gang (AFFILIATION)",
+  "Survived the Streets (TROUBLED PAST)"
+],
+"choose_one": [
+  "Advanced Railgun (CUTTING EDGE)",
+  "Hero’s Sword (ARTIFACT)",
+  "Trained Monsters (COMPANION)"
+],
+    "starting_gear": [
+      "偷來的火器",
+      "本地黑市商人（應對企業警力）",
+      "改裝狂飆車"
+    ]
+  },
+  {
+    "type": "平民倖存者",
+    "title": "記憶資料快遞",
+    "description": "你腦容量雖小，但你硬是往裡塞了滿滿危險資料，這就是你的飯碗。當資料無法線傳時，你靠大腦、車速與膽識把它送到客戶手中。常常要在敵方特工或時間追殺下奔命，但你要不是熱愛刺激，也不會幹這行。",
+"theme_tools": [
+  "Boosted Mental Capacity (AUGMENTATION)",
+  "Motorcycle (ASSETS)",
+  "Thrillseeker (PERSONALITY)"
+],
+"choose_one": [
+  "Angelic Wings (EXPOSURE)",
+  "Criminal Syndicate (AFFILIATION)",
+  "Synthetic Guard Dog (DRONES)"
+],
+    "starting_gear": [
+      "防彈背心（部分覆蓋）",
+      "一疊現金",
+      "追蹤干擾器"
+    ]
+  },
+  {
+    "type": "平民倖存者",
+    "title": "熱血街頭醫者",
+    "description": "巨城街頭越是冷酷，你越覺得需要救人。你受過正規訓練，不只救人，也用古老技術與新科技賦予困苦者新生。不管是扎針還是駭客，你都願意付出一切，只為守住那條命。",
+"theme_tools": [
+  "Caregiver (PERSONALITY)",
+  "Med Techie (EXPERTISE)",
+  "Live Honorably (HORIZON)"
+],
+"choose_one": [
+  "Med Wagon (DRONES)",
+  "Potion Craft (ESOTERICA)",
+  "Self-Healing (CUTTING EDGE)"
+],
+    "starting_gear": [
+      "高壓電擊槍",
+      "彈出式個人護盾（重型）",
+      "額外醫療配件"
+    ]
+  },
+  {
+    "type": "平民倖存者",
+    "title": "厭世上班族",
+    "description": "你早就受夠高層那些混帳了。經歷了一連串失敗與辦公室鬥爭後，你開始相信財閥才是萬惡根源。現在你準備引爆一切，哪怕是與它同歸於盡也不惜。你將動用手邊所有資源，只為復仇、重塑自我。",
+"theme_tools": [
+  "Break the System (HORIZON)",
+  "Corporate Citizenship (AFFILIATION)",
+  "Rebel Without a Cause (PERSONALITY)"
+],
+"choose_one": [
+  "Briefcase Weapon (CUTTING EDGE)",
+  "Budō Practitioner (EXPERTISE)",
+  "Kitsune Charm of Trickery (ARTIFACT)"
+],
+    "starting_gear": [
+      "不起眼的西裝",
+      "安控通關憑證",
+      "香菸"
+    ]
+  },
+  {
+    "type": "平民倖存者",
+    "title": "無意間操控奈米技術者",
+    "description": "你只是個在街頭尋寶的倒楣蛋，或者只是單純打零工補貼生活。你沒想到自己會打開那罐標記奇怪的罐頭，從此被奈米雲綁定。這些微機不聽你的話，但它們已經認你為主，你只能學著駕馭數十億個奈米夥伴。",
+"theme_tools": [
+  "Cloud of Nanites (CUTTING EDGE)",
+  "Target of the Government (TROUBLED PAST)",
+  "Tinkerer (EXPERTISE)"
+],
+"choose_one": [
+  "Bushi Aspirant (HORIZON)",
+  "Motorcycle (ASSETS)",
+  "Tough As Nails (PERSONALITY)"
+],
+    "starting_gear": [
+      "帽T",
+      "假ID隱形隱形隱形眼鏡（可能已掉）",
+      "奈米武士通訊器"
+    ]
+  },
+  {
+    "type": "平民倖存者",
+    "title": "復仇的妖怪獵人",
+    "description": "你在年幼時便被妖怪奪走一切，燒毀、撕裂、毀滅了你的人生。現在你走上街頭獵殺超自然怪物，只為不讓他人再重蹈覆轍。沒有人比你懂黑暗，但也許你會選擇沉入那黑暗，只為終結它。",
+"theme_tools": [
+  "Exact Revenge (HORIZON)",
+  "Victim of Otherworldly Forces (TROUBLED PAST)",
+  "Yōkai Slayer (EXPERTISE)"
+],
+"choose_one": [
+  "Figurine of Corruption (ARTIFACT)",
+  "Warding Signs (ESOTERICA)",
+  "Weapon Witching (ESOTERICA)"
+],
+    "starting_gear": [
+      "淨化鹽包",
+      "祈禱符紙（大多完好）",
+      "自動霰彈槍"
+    ]
+  }
+]

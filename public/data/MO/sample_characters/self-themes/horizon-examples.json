@@ -1,0 +1,267 @@
+  {
+    "sample_characters": [
+      {
+        "ori_name": "Attain Enlightenment",
+        "source": "Metro",        
+        "name": "追求覺悟",
+        "type": "Horizon",
+        "ability_tags": [
+          "進入出神狀態",
+          "純淨意圖",
+          "質疑外表之實",
+          "哲學辯證",
+          "鬼魔難見",
+          "武術修行",
+          "開放心靈",
+          "向天使或天尊祈禱",
+          "追求非暴力解決"
+        ],
+        "weakness_tags": [
+          "清貧誓言（貞潔、貧窮等）",
+          "慾望之魔",
+          "心太軟",
+          "無社交圈"
+        ],
+        "primary_goal": "我只追尋真理，無他。"
+      },
+      {
+        "ori_name": "Eliminate Corruption",
+        "source": "Metro",        
+        "name": "剷除腐敗",
+        "type": "Horizon",
+        "ability_tags": [
+          "追蹤資金流",
+          "監控車",
+          "吸引媒體注意",
+          "合理偏執",
+          "不夠大咖難找",
+          "語音偽變模組",
+          "堅定道德羅盤",
+          "受害者與證人",
+          "保持距離與隱匿"
+        ],
+        "weakness_tags": [
+          "權貴憤怒",
+          "官員受賄",
+          "視野狹隘",
+          "情場失意"
+        ],
+        "primary_goal": "腐敗是一種病，必須治癒。"
+      },
+      {
+        "ori_name": "Break the System",
+        "source": "Metro",        
+        "name": "毀壞體制",
+        "type": "Horizon",
+        "ability_tags": [
+          "揪出制度漏洞",
+          "線上行動主義",
+          "操弄官僚機制",
+          "對抗壓迫",
+          "眾聲中的一語",
+          "植入式錄音裝置",
+          "決意不改",
+          "憤世群體",
+          "堅持必有收穫"
+        ],
+        "weakness_tags": [
+          "體制外人士",
+          "被告密者出賣",
+          "情緒易燃",
+          "長期睡眠不足"
+        ],
+        "primary_goal": "唯一的希望，是讓體制倒下。"
+      },
+      {
+        "ori_name": "Exact Revenge",
+        "source": "Metro",        
+        "name": "復仇到底",
+        "type": "Horizon",
+        "ability_tags": [
+          "鍥而不捨",
+          "精確列敵清單",
+          "每一擊都得讓你痛",
+          "破解防禦",
+          "武器室",
+          "皮下裝甲植入",
+          "怒火灼身",
+          "他人亦曾受害",
+          "恐懼是有力武器"
+        ],
+        "weakness_tags": [
+          "求死衝動",
+          "無辜波及",
+          "憤怒逼人",
+          "孤獨為伴"
+        ],
+        "primary_goal": "除非他們死了，否則我不會安息。"
+      },
+      {
+        "ori_name": "Explore the Hidden Places",
+        "source": "Metro",        
+        "name": "探索隱秘之地",
+        "type": "Horizon",
+        "ability_tags": [
+          "攀爬與繩降",
+          "古老地圖",
+          "義無反顧",
+          "建立在地盟友",
+          "裂隙與暗縫",
+          "暗視光學改造",
+          "難以滿足的好奇心",
+          "學者與收藏家",
+          "辨識環境警訊"
+        ],
+        "weakness_tags": [
+          "容易迷路",
+          "競爭探勘者",
+          "行為古怪",
+          "關節痠痛"
+        ],
+        "primary_goal": "每個黑暗角落，都藏著值得發現的祕密。"
+      },
+      {
+        "ori_name": "Live Honorably",
+        "source": "Metro",        
+        "name": "正直為本",
+        "type": "Horizon",
+        "ability_tags": [
+          "堅定道德觀",
+          "箴言之書",
+          "扶危濟困",
+          "直面卑劣之人",
+          "靜心之所",
+          "抗毒血濾模組",
+          "以身作則",
+          "曾被我幫助過的人",
+          "以對話為先"
+        ],
+        "weakness_tags": [
+          "無趣",
+          "缺乏道德指引",
+          "性格僵硬",
+          "無法容忍卑劣者"
+        ],
+        "primary_goal": "我必須做正確的事。"
+      },
+      {
+        "ori_name": "Get Rich & Famous",
+        "source": "Metro",        
+        "name": "致富成名",
+        "type": "Horizon",
+        "ability_tags": [
+          "胸懷大志",
+          "網路名人風範",
+          "搭便車成功",
+          "必要時說謊",
+          "華麗宅邸",
+          "美容改造",
+          "支配慾望",
+          "助理與門徒",
+          "形象至上"
+        ],
+        "weakness_tags": [
+          "註定出糗",
+          "總有人黑我",
+          "反社會傾向",
+          "壓力爆棚"
+        ],
+        "primary_goal": "不計代價登上頂峰。"
+      },
+      {
+        "ori_name": "Push Technology Further",
+        "source": "Metro",        
+        "name": "推進科技極限",
+        "type": "Horizon",
+        "ability_tags": [
+          "電梯式簡報術",
+          "掃描設計全像投影機",
+          "衝過極限",
+          "關閉製造商安全限制",
+          "保密發明",
+          "工具包賽博手",
+          "雷射精準流程",
+          "跨領域工程",
+          "建立在過往失敗上"
+        ],
+        "weakness_tags": [
+          "過度依賴科技",
+          "自身缺乏遠見",
+          "對某些裝置太有感情",
+          "忽略安全性"        ],
+        "primary_goal": "沒什麼能阻擋進步的腳步。"
+      },
+      {
+        "ori_name": "Bushi Aspirant",
+        "source": "Tokyo",        
+        "name": "武士志願者",
+        "type": "Horizon",
+        "ability_tags": [
+          "我比看起來還硬",
+          "劣裝也能殺",
+          "吹噓炫技",
+          "以惡翻身",
+          "都市暗面",
+          "強化藥物",
+          "我值得這一切",
+          "小弟幫我撐場",
+          "誰也壓不住我"
+        ],
+        "weakness_tags": [
+          "觸怒將軍",
+          "公司體制障礙",
+          "殺戮的內疚",
+          "家庭牽絆"
+        ],
+        "primary_goal": "「與其苟活，不如燃燒殆盡。」"
+      },
+      {
+        "ori_name": "Claim Birthright",
+        "source": "Tokyo",        
+        "name": "繼承血脈",
+        "type": "Horizon",
+        "ability_tags": [
+          "洞察全局",
+          "自律",
+          "堅定不移",
+          "果斷行動",
+          "導師之家",
+          "傳統研習",
+          "尊師重道",
+          "長者庇佑",
+          "我有繼承之權"
+        ],
+        "weakness_tags": [
+          "期望壓力",
+          "傳統束縛",
+          "不容退讓",
+          "忽略親友"
+        ],
+        "primary_goal": "我會證明自己配得上這份血脈。"
+      },
+      {
+        "ori_name": "Cleanse the Past",
+        "source": "Tokyo",        
+        "name": "淨化過去",
+        "type": "Horizon",
+        "ability_tags": [
+          "感知負面情緒",
+          "撫慰之禱",
+          "以痛為功",
+          "界限清晰",
+          "偽裝穢印",
+          "心律調節",
+          "慈悲為懷",
+          "巫與祭師",
+          "放手之術"
+        ],
+        "weakness_tags": [
+          "情感壓抑",
+          "妖怪標記",
+          "活在過去",
+          "深陷哀愁"
+        ],
+        "primary_goal": "過去的傷痕，永遠無法完全癒合。"
+      }
+    ]
+  }

@@ -1,0 +1,279 @@
+{
+    "sample_characters": [
+        {
+          "ori_name": "Angelic Wings",
+          "source": "Metro",
+          "name": "天使之翼",
+          "type": "Exposure",
+          "ability_tags": [
+            "天使之美",
+            "越高越好",
+            "俯衝突擊",
+            "邪光照耀",
+            "展翼庇護",
+            "感知天使與惡魔",
+            "乘翼遠行",
+            "雙翼衝擊",
+            "虔誠信徒",
+            "神聖威嚴"
+          ],
+          "weakness_tags": [
+            "穿衣困難",
+            "狹小空間",
+            "不可強迫人類",
+            "吸引邪惡"
+          ],
+          "ritual_concept": "當機會出現時，我必須縱身一躍、懷抱信仰。"
+        },
+        {
+          "ori_name": "Aura of Authority",
+          "source": "Metro",
+          "name": "威權光環",
+          "type": "Exposure",
+          "ability_tags": [
+            "超凡威儀",
+            "權力服飾",
+            "激發忠誠",
+            "壓制命令",
+            "炫目光環",
+            "洞察權勢動態",
+            "操縱物體",
+            "信眾群聚",
+            "極度自信",
+            "威壓統御"
+          ],
+          "weakness_tags": [
+            "無用諂媚者",
+            "自我懷疑",
+            "需靠言語",
+            "必須服從上位"
+          ],
+          "ritual_concept": "我必須在賦予我權柄的神祇神龕前獻上崇拜。"
+        },
+        {
+          "ori_name": "Animate Shadows",
+          "source": "Metro",
+          "name": "操縱陰影",
+          "type": "Exposure",
+          "ability_tags": [
+            "化為陰影",
+            "投影成形",
+            "創造影刺殺者",
+            "不可名狀恐懼",
+            "短暫虛體",
+            "切離自身影子",
+            "拖入暗影",
+            "暗視",
+            "難以識破",
+            "影域穿行"
+          ],
+          "weakness_tags": [
+            "叛逆的影子",
+            "光線過強",
+            "完全黑暗",
+            "光之神祇"
+          ],
+          "ritual_concept": "我每晚都必須進入影域之境。"
+        },
+        {
+          "ori_name": "Elemental Body",
+          "source": "Metro",
+          "name": "元素之軀",
+          "type": "Exposure",
+          "ability_tags": [
+            "變化特定部位",
+            "元素能場",
+            "吸收元素",
+            "元素爆發",
+            "構築元素壁",
+            "感知元素",
+            "雕塑元素",
+            "不受元素傷",
+            "歡愉破壞",
+            "元素狂暴"
+          ],
+          "weakness_tags": [
+            "無意破壞",
+            "元素相剋",
+            "缺乏環境元素",
+            "守衡之人"
+          ],
+          "ritual_concept": "我每日必須浸入元素之中。"
+        },
+        {
+          "ori_name": "Floral Overgrowth",
+          "source": "Metro",
+          "name": "繁盛蔓生",
+          "type": "Exposure",
+          "ability_tags": [
+            "蔓生藤蔓",
+            "土壤與陽光",
+            "魅惑花瓣",
+            "孢子雲",
+            "樹皮鎧甲",
+            "捕蠅反射",
+            "內爆撕裂",
+            "費洛蒙釋放",
+            "旺盛生命力",
+            "自然再生"
+          ],
+          "weakness_tags": [
+            "久居不動",
+            "根除斷裂",
+            "易燃體質",
+            "利刃剋星"
+          ],
+          "ritual_concept": "我必須定期與四周的植生萬物溝通交流。"
+        },
+        {
+          "ori_name": "Speak with Machines",
+          "source": "Metro",
+          "name": "機語交心",
+          "type": "Exposure",
+          "ability_tags": [
+            "操控賽博義體",
+            "操縱笨機器",
+            "召喚機械群",
+            "編程指令聲",
+            "引機來援",
+            "接收傳訊",
+            "催眠停機",
+            "AI共感",
+            "機械邏輯",
+            "數據融合"
+          ],
+          "weakness_tags": [
+            "資訊過載",
+            "訊號干擾",
+            "需電驅動",
+            "病毒交叉感染"
+          ],
+          "ritual_concept": "我必須定期向一個強大的機械智能報告。"
+        },
+        {
+          "ori_name": "Midas Touch",
+          "source": "Metro",
+          "name": "邁達斯之觸",
+          "type": "Exposure",
+          "ability_tags": [
+            "化為黃金",
+            "貪婪受害者",
+            "轉化他人",
+            "遠距點金",
+            "軟金化飛彈",
+            "辨財富等級",
+            "黃金大量生",
+            "權貴接納",
+            "迎接後果",
+            "財富操控"
+          ],
+          "weakness_tags": [
+            "誤觸變金",
+            "觸怒諸神",
+            "金錢不等於幸福",
+            "黃金誘惑者"
+          ],
+          "ritual_concept": "我必須過著謙卑的生活，遠離成功與財富的誘惑。"
+        },
+        {
+          "ori_name": "Warrior’s Instincts",
+          "source": "Metro",
+          "name": "戰士本能",
+          "type": "Exposure",
+          "ability_tags": [
+            "極致體能",
+            "決鬥之技",
+            "武器精通",
+            "榮譽戰規",
+            "戰場英勇",
+            "預視戰爭",
+            "喚醒英靈",
+            "危機直覺",
+            "戰鬥專注",
+            "不死戰意"
+          ],
+          "weakness_tags": [
+            "亡靈纏身",
+            "輕慢傳統",
+            "缺乏古戰裝",
+            "背叛與陰謀"
+          ],
+          "ritual_concept": "我必須透過儀式化的戰鬥來節制自身暴力本能。"
+        },
+        {
+          "ori_name": "Zenlike Peace",
+          "source": "Tokyo",
+          "name": "禪定寧靜",
+          "type": "Exposure",
+          "ability_tags": [
+            "不染俗念",
+            "寧靜言語",
+            "飄浮",
+            "啟發和平",
+            "延命冥想",
+            "集中意志",
+            "止痛",
+            "傳遞智慧",
+            "絕對沉默",
+            "心靈淨化"
+          ],
+          "weakness_tags": [
+            "說話難解",
+            "穢氣之地",
+            "不能主動傷人",
+            "怒靈侵擾"
+          ],
+          "ritual_concept": "我必須維持身心清淨。"
+        },
+        {
+          "ori_name": "Spirit Form",
+          "source": "Tokyo",
+          "name": "靈體化",
+          "type": "Exposure",
+          "ability_tags": [
+            "瞬間靈化",
+            "神聖場所加持",
+            "化為隱形",
+            "駭人真容",
+            "穿越障壁",
+            "與靈對話",
+            "操縱靈界之物",
+            "漂浮",
+            "寧靜威儀",
+            "靈魂感知"
+          ],
+          "weakness_tags": [
+            "卡在靈態",
+            "靈體難解",
+            "靈化時失語",
+            "喧囂共鳴"
+          ],
+          "ritual_concept": "我必須定期前往神社進行儀式，以安撫靈體本質。"
+        },
+        {
+          "ori_name": "Karmic Decree",
+          "source": "Tokyo",
+          "name": "業火裁斷",
+          "type": "Exposure",
+          "ability_tags": [
+            "暗中觀察",
+            "懲惡揚善",
+            "識破謊言",
+            "看見地獄幻象",
+            "網絡駭客保護",
+            "穿透屏障窺視",
+            "施恩予善者",
+            "辨明是非",
+            "發布裁決",
+            "業力審判"
+          ],
+          "weakness_tags": [
+            "冷漠孤僻",
+            "情緒偏見",
+            "受地獄法則約束",
+            "混沌生物"
+          ],
+          "ritual_concept": "我必須測試眾生，懲罰不配者。"
+        }
+    ]
+  }

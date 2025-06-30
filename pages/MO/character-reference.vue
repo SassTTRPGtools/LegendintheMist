@@ -585,7 +585,7 @@ const onSystemChange = () => {
 }
 
 // 當主題選擇改變時
-const onThemeChange = () => {
+const onThemeChange = async () => {
   if (!selectedTheme.value || !systemData.value[selectedSystem.value]) {
     selectedThemeData.value = null
     sampleCharacters.value = []
@@ -604,29 +604,79 @@ const onThemeChange = () => {
   selectedThemeData.value = themeData
   
   // 載入範例角色
-  loadSampleCharacters()
+  await loadSampleCharacters()
 }
 
 // 載入範例角色
-const loadSampleCharacters = () => {
-  if (!systemData.value[selectedSystem.value]) {
+const loadSampleCharacters = async () => {
+  if (!selectedSystem.value || !selectedTheme.value) {
     sampleCharacters.value = []
     return
   }
   
-  const data = systemData.value[selectedSystem.value]
-  let samples = []
-  
-  // 從 examples.sample_characters 中尋找對應的角色
-  if (data.examples && data.examples.sample_characters) {
-    samples = data.examples.sample_characters.filter(char => {
-      // 檢查角色的 type 是否符合選擇的主題
-      return char.type === selectedTheme.value
-    })
+  try {
+    // 根據系統和主題構建檔案路徑
+    const systemFolder = `${selectedSystem.value}-themes`
+    
+    // 建立主題名稱到檔案名稱的對應
+    const themeToFileMap = {
+      // Mythos themes
+      'Artifact': 'artifact-examples.json',
+      'Companion': 'companion-examples.json',
+      'Esoterica': 'esoterica-examples.json',
+      'Exposure': 'exposure-examples.json',
+      // Self themes  
+      'Affiliation': 'affiliation-examples.json',
+      'Assets': 'assets-examples.json',
+      'Expertise': 'expertises-examples.json',
+      'Horizon': 'horizon-examples.json',
+      'Personality': 'personality-examples.json',
+      'TroubledPast': 'troubledpast-examples.json',
+      // Noise themes
+      'Augmentation': 'augmentation-examples.json',
+      'CuttingEdge': 'cuttingedge-examples.json',
+      'Cyberspace': 'cyberspace-examples.json',
+      'Drones': 'drones-examples.json'
+    }
+    
+    const themeFile = themeToFileMap[selectedTheme.value]
+    
+    if (!themeFile) {
+      console.warn(`未找到主題 ${selectedTheme.value} 對應的範例檔案`)
+      sampleCharacters.value = []
+      return
+    }
+    
+    const filePath = `sample_characters/${systemFolder}/${themeFile}`
+    
+    console.log(`嘗試載入範例角色: /data/MO/${filePath}`)
+    
+    // 載入對應的範例檔案
+    const sampleData = await $fetch(`/data/MO/${filePath}`)
+    
+    console.log('載入的原始資料:', sampleData)
+    
+    // 處理不同的檔案格式
+    let characters = []
+    
+    if (sampleData && sampleData.sample_characters) {
+      // 標準格式：有 sample_characters 屬性
+      characters = sampleData.sample_characters
+    } else if (Array.isArray(sampleData)) {
+      // 陣列格式：直接是角色陣列
+      characters = sampleData
+    } else {
+      console.warn('未識別的檔案格式:', sampleData)
+      characters = []
+    }
+    
+    sampleCharacters.value = characters
+    console.log('成功載入範例角色:', characters)
+    
+  } catch (error) {
+    console.error('載入範例角色失敗:', error)
+    sampleCharacters.value = []
   }
-  
-  console.log('找到範例角色:', samples)
-  sampleCharacters.value = samples
 }
 </script>
 
