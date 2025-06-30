@@ -870,7 +870,7 @@
         "primary_goal": "現成方案是給外行人用的。"
       },
       {
-        "name": "槍械無雙",
+        "name": "火力滿載",
         "type": "Assets",
         "ability_tags": [
           "齊佛突擊步槍",
@@ -1461,7 +1461,7 @@
         "primary_goal": "他們只會看到我想讓他們看到的東西。"
       },
       {
-        "name": "無因之反叛",
+        "name": "無因反叛者",
         "type": "Personality",
         "ability_tags": [
           "我才不在乎",
@@ -1483,7 +1483,7 @@
         "primary_goal": "我絕不再成為體制裡的一顆螺絲釘！"
       },
       {
-        "name": "硬得像釘",
+        "name": "硬派狠角",
         "type": "Personality",
         "ability_tags": [
           "飽經風霜",

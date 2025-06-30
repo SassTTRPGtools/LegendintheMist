@@ -129,6 +129,13 @@
             角色創建指南
           </NuxtLink>
           <NuxtLink 
+            to="/MO/template-creator"
+            class="bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 text-white font-bold py-3 px-8 rounded-lg transition-all duration-200 shadow-lg hover:shadow-emerald-500/25 inline-block border border-emerald-500/30"
+          >
+            <Icon name="lucide:file-plus" class="w-5 h-5 mr-2 inline" />
+            模板創建工具
+          </NuxtLink>
+          <NuxtLink 
             to="/MO/character-reference"
             class="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-3 px-8 rounded-lg transition-all duration-200 shadow-lg hover:shadow-purple-500/25 inline-block border border-purple-500/30"
           >
