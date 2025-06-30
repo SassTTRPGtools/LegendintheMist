@@ -5,7 +5,7 @@
     "description": "你目睹政府與高層的貪腐墮落，深信革命時機已至。你擅長分析社會局勢、點燃民眾怒火，決意喚醒沉睡的群眾，讓他們看清自己活在怎樣的恐懼之中。為此，就算犧牲一切也無所謂——革命，勢必成功。",
     "theme_tools": [
 "Boosted Mental Capacity (AUGMENTATION)",
-"Break The System (HORIZON)",
+"Break the System (HORIZON)",
 "Influencer (CYBERSPACE)"
     ],
     "choose_one": [
@@ -46,10 +46,10 @@
     "theme_tools": [
 "Cybernetic Hijacker (CYBERSPACE)",
 "Performer (PERSONALITY)",
-"Speak With Machines (EXPOSURE)"
+"Speak with Machines (EXPOSURE)"
     ],
     "choose_one": [
-"Android Servants (DRONE)",
+"Android Servants (DRONES)",
 "Attain Enlightenment (HORIZON)",
 "Forbidden Cult (AFFILIATION)"
     ],

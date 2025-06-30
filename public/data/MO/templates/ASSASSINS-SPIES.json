@@ -43,14 +43,14 @@
     "title": "高科技忍者",
     "description": "無論是家族傳承或後天訓練，你來自一個修習忍術的古老門派。隨著時代變遷，你的宗門再度證明了忍術的價值。藉由技術與傳統交融，你成為少數真正能潛入黑暗、施行滲透任務的菁英忍者。",
 "theme_tools": [
-  "Animated Shadows (EXPOSURE)",
+  "Animate Shadows (EXPOSURE)",
   "Heist Gear (ASSETS)",
   "Trained Killer (EXPERTISE)"
 ],
 "choose_one": [
   "Cloaking Jumpsuit (CUTTING EDGE)",
   "Criminal Syndicate (AFFILIATION)",
-  "Hero’s Sword (ARTIFACT)"
+  "Hero's Sword (ARTIFACT)"
 ],
     "starting_gear": [
       "手裡劍",
@@ -88,7 +88,7 @@
   "Intrusion Specialist (CYBERSPACE)"
 ],
 "choose_one": [
-  "Hidden Gadgets (AUGMENTATIONS)",
+  "Hidden Gadgets (AUGMENTATION)",
   "Money to Burn (ASSETS)",
   "Scrying Crystals (ARTIFACT)"
 ],
@@ -104,7 +104,7 @@
     "description": "你在街頭熬出頭，終於被無情的極道家族納入麾下，從小混混升格為正式一員。如今你想往上爬、在幫會中站穩腳步。只要你展現忠誠與實力，不動義體、不碰禁術，便能帶來榮耀。",
 "theme_tools": [
   "Guns & More Guns (ASSETS)",
-  "Survived The Streets (TROUBLED PAST)",
+  "Survived the Streets (TROUBLED PAST)",
   "Yakuza Membership (AFFILIATION)"
 ],
 "choose_one": [

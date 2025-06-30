@@ -25,7 +25,7 @@
     "description": "這裡是污染與災變撕裂的大荒地，一切都想置你於死地。但你撐了下來，因為你知道如何在地獄裡求生。你能在危機降臨前嗅出風向，不論靠直覺還是科技，無論是自保或殺敵，你不需要理由——你下次呼吸就可能是最後一次。",
     "theme_tools": [
 "Disaster Survivor (TROUBLED PAST)",
-"Swarm of Probes (DRONE)",
+"Swarm of Probes (DRONES)",
 "Tough as Nails (PERSONALITY)"
     ],
     "choose_one": [
@@ -64,7 +64,7 @@
     "title": "冥道山伏",
     "description": "你是山中神秘修行的修驗道士，因奈米災變而失去家園。你發現病疫與怨靈的關聯，走遍滿目瘡痍的山野，施行保護與治療，試圖恢復土地的原貌與潔淨。",
     "theme_tools": [
-"Cleanse The Past (HORIZON)",
+"Cleanse the Past (HORIZON)",
 "Nanite Veteran (TROUBLED PAST)",
 "Spirit Summoning (ESOTERICA)"
     ],

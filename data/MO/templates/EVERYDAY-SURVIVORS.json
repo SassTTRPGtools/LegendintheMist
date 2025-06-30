@@ -4,13 +4,13 @@
     "title": "毀滅系街頭狂",
     "description": "你曾經只是個帶著怒火在街頭遊蕩的少年，痛恨這個世界爛透了。現在，你手中握有祕源或某件能在巨城中引發災厄的武器。沒有猶豫，沒有後悔——你就是破壞的代名詞。",
 "theme_tools": [
-  "Rebel Without A Cause (PERSONALITY)",
+  "Rebel Without a Cause (PERSONALITY)",
   "Street Gang (AFFILIATION)",
   "Survived the Streets (TROUBLED PAST)"
 ],
 "choose_one": [
   "Advanced Railgun (CUTTING EDGE)",
-  "Hero’s Sword (ARTIFACT)",
+  "Hero's Sword (ARTIFACT)",
   "Trained Monsters (COMPANION)"
 ],
     "starting_gear": [
@@ -91,7 +91,7 @@
 "choose_one": [
   "Bushi Aspirant (HORIZON)",
   "Motorcycle (ASSETS)",
-  "Tough As Nails (PERSONALITY)"
+  "Tough as Nails (PERSONALITY)"
 ],
     "starting_gear": [
       "帽T",

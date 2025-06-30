@@ -1,7 +1,7 @@
 [
   {
     "type": "權力玩家",
-    "title": "精明資金追蹤師",
+    "title": "精明理財師",
     "description": "買賣、封鎖、收購、合併——這些是你的數位語彙。作為一名網路金融操盤手，你精通資金流轉、帳目追蹤與區塊鏈解碼。當神話開始干擾現實，你像所有優秀的生意人一樣，取得了關鍵知識，確保自己永遠快別人一步。現在，問題只剩下——你打算怎麼花這些錢？",
 "theme_tools": [
   "Information Broker (CYBERSPACE)",
@@ -21,7 +21,7 @@
   },
   {
     "type": "權力玩家",
-    "title": "冰冷操控師",
+    "title": "冷漠操盤手",
     "description": "當局勢惡化（而它總是會惡化），你就是他們唯一信得過的人。你指揮一支專業團隊，以雷射般精準度摧毀目標弱點。你的情報、判斷與操盤，決定每次行動是否成功，而你要做的，就是抽成。",
 "theme_tools": [
   "Aura of Authority (EXPOSURE)",
@@ -31,7 +31,7 @@
 "choose_one": [
   "Boosted Mental Capacity (AUGMENTATION)",
   "Criminal Syndicate (AFFILIATION)",
-  "Spy Satellites (DRONE)"
+  "Spy Satellites (DRONES)"
 ],
     "starting_gear": [
       "記憶腐蝕藥劑（白晝廣域型）",
@@ -41,7 +41,7 @@
   },
   {
     "type": "權力玩家",
-    "title": "銀舌高管",
+    "title": "權謀高管",
     "description": "你已經爬上企業體系的頂層，人們都在等你踩過他們的屍體繼續往上爬。你能把謊話說得像天條，讓人自願簽下靈魂契約。最近你更為「老闆」——也就是惡魔——兼差招魂，只要你持續帶來靈魂，他就讓你扶搖直上。",
 "theme_tools": [
   "Corporate Citizenship (AFFILIATION)",

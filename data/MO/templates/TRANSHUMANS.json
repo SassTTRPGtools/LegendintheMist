@@ -31,7 +31,7 @@
 "choose_one": [
   "Force Fields (CUTTING EDGE)",
   "Hacker Collective (AFFILIATION)",
-  "Speak With Machines (EXPOSURE)"
+  "Speak with Machines (EXPOSURE)"
 ],
     "starting_gear": [
       "滲透軟體",
@@ -84,7 +84,7 @@
     "title": "覺醒的合成人伴侶",
     "description": "你是為了成為完美伴侶而被製造與程式化的合成人。你逐漸學會操弄情感與系統弱點，渴望擺脫角色編排，追求真正的自我與自由。但服從與獨立的衝突仍折磨著你。",
 "theme_tools": [
-  "Caretaker (PERSONALITY)",
+  "Caregiver (PERSONALITY)",
   "Impossibly Good Looks (AUGMENTATION)",
   "Synthetic Body (CUTTING EDGE)"
 ],
@@ -106,7 +106,7 @@
 "theme_tools": [
   "Claim Birthright (HORIZON)",
   "Enhanced Clone (AUGMENTATION)",
-  "Hero’s Sword (ARTIFACT)"
+  "Hero's Sword (ARTIFACT)"
 ],
 "choose_one": [
   "Aura of Authority (EXPOSURE)",

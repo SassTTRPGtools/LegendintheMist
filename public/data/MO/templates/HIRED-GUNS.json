@@ -5,8 +5,8 @@
     "description": "你來自頂尖私人保全訓練場，經歷磨練與儀式洗禮，視野銳利如鷹。保護富人性命是你的生計，但真正讓你致富的，是那股從任何埋伏中活下來並還以顏色的狠勁。你被訓練成不僅是人盾，更是制敵的最後防線。",
     "theme_tools": [
 "Synthetic Guard Dog (DRONES)",
-"Tough As Nails (PERSONALITY)",
-"Warrior’s Instincts (EXPOSURE)"
+"Tough as Nails (PERSONALITY)",
+"Warrior's Instincts (EXPOSURE)"
     ],
     "choose_one": [
 "Criminal Syndicate (AFFILIATION)",
@@ -31,7 +31,7 @@
     "choose_one": [
 "Armored Juggernaut (AUGMENTATION)",
 "Legendary Sidekick (COMPANION)",
-"War God’s Armor (ARTIFACT)"
+"War God's Armor (ARTIFACT)"
     ],
     "starting_gear": [
       "敵人戰利品",
@@ -91,7 +91,7 @@
     "choose_one": [
 "Advanced Railgun (CUTTING EDGE)",
 "Laser-Edged Katana (CUTTING EDGE)",
-"War God’s Armor (ARTIFACT)"
+"War God's Armor (ARTIFACT)"
     ],
     "starting_gear": [
       "手雷腰帶",

@@ -33,7 +33,7 @@
         "primary_goal": "別產生依附感。"
       },
       {
-        "ori_name": "CImpressive Physique",
+        "ori_name": "Impressive Physique",
         "source": "Metro",
         "name": "強健體格",
         "type": "Expertise",
@@ -246,6 +246,30 @@
           "對高科技裝甲無力"
         ],
         "primary_goal": "只要我拔劍，就不能停手。"
+      },
+      {
+        "ori_name": "Budō Practitioner",
+        "source": "Tokyo",
+        "name": "武道修行者",
+        "type": "Expertise",
+        "ability_tags": [
+          "華麗摔技",
+          "我的身體就是武器",
+          "解除武裝",
+          "對威脅高度警覺",
+          "道場根基",
+          "黑帶",
+          "借力使力",
+          "伸展與集中",
+          "招牌高躍動作"
+        ],
+        "weakness_tags": [
+          "過度依賴身體直覺",
+          "非到必要不動手",
+          "穿甲戰鬥難發揮",
+          "難應對非人對手"
+        ],
+        "primary_goal": "跌倒七次，第八次站起來。"
       }
     ]
   }
