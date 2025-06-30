@@ -128,7 +128,7 @@
             <Icon name="lucide:calendar-check" class="w-4 h-4 mt-0.5 text-indigo-400 flex-shrink-0" />
             <div>
               <span class="font-medium text-indigo-400">儀式</span>
-              <span class="ml-2 text-xs bg-indigo-500/20 px-2 py-1 rounded-full text-indigo-300">源質誡律</span>
+              <span class="ml-2 text-xs bg-indigo-500/20 px-2 py-1 rounded-full text-indigo-300">祕源誡律</span>
               <p class="text-gray-300 mt-1">維持力量或能力所必須執行的行動、習慣或條件，忽視將失去相關能力。</p>
             </div>
           </div>
@@ -291,13 +291,13 @@
           </div>
         </div>
 
-        <!-- Ritual Concept (源質誡律 = 儀式) -->
+        <!-- Ritual Concept (祕源誡律 = 儀式) -->
         <div v-if="selectedThemeData.ritual_concept" class="bg-black/60 backdrop-blur-sm rounded-xl shadow-2xl border border-cyan-500/30 overflow-hidden">
           <div class="bg-gray-800/90 px-4 py-3 border-b border-cyan-500/30">
             <h3 class="font-semibold text-cyan-100 flex items-center">
               <Icon name="lucide:calendar-check" class="w-5 h-5 mr-2 text-indigo-400" />
               儀式
-              <span class="ml-2 text-xs bg-indigo-500/20 px-2 py-1 rounded-full text-indigo-300">源質誡律</span>
+              <span class="ml-2 text-xs bg-indigo-500/20 px-2 py-1 rounded-full text-indigo-300">祕源誡律</span>
             </h3>
           </div>
           <div class="p-4">
@@ -392,7 +392,7 @@
                 <div v-if="character.ritual_concept" class="mb-3">
                   <p class="text-xs font-medium text-indigo-400 mb-2">
                     儀式
-                    <span class="ml-2 text-xs bg-indigo-500/20 px-2 py-1 rounded-full text-indigo-300">源質誡律</span>
+                    <span class="ml-2 text-xs bg-indigo-500/20 px-2 py-1 rounded-full text-indigo-300">祕源誡律</span>
                   </p>
                   <p class="text-sm text-indigo-200 italic mb-2">
                     "{{ character.ritual_concept }}"

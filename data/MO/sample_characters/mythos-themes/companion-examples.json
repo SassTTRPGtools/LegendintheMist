@@ -1,0 +1,254 @@
+{
+    "sample_characters": [
+        {
+          "ori_name": "Arcane Construct",
+          "source": "Metro",
+          "name": "奧術構體",
+          "type": "Companion",
+          "ability_tags": [
+            "無比強壯",
+            "重物搬運",
+            "裝甲身軀",
+            "提供庇護",
+            "猛力揮拳",
+            "自我修復",
+            "反魔法力場",
+            "激勵心志",
+            "溫柔巨人",
+            "忠誠守護"
+          ],
+          "weakness_tags": [
+            "指令不清",
+            "看起來像武器",
+            "不穩地形",
+            "無差別破壞"
+          ],
+          "ritual_concept": "我必須餵養我的造物原始魔能。"
+        },
+        {
+          "ori_name": "Legendary Sidekick",
+          "source": "Metro",
+          "name": "傳奇副手",
+          "type": "Companion",
+          "ability_tags": [
+            "無懼冒險",
+            "前行偵查",
+            "不引人注意",
+            "掩護後背",
+            "協同攻擊",
+            "照料裝備",
+            "魔法背包",
+            "傳令使者",
+            "永恆忠誠",
+            "默契配合"
+          ],
+          "weakness_tags": [
+            "陰沉易怒",
+            "讓我丟臉",
+            "分開即虛弱",
+            "過於熱情"
+          ],
+          "ritual_concept": "我們必須一同衝向危機。"
+        },
+        {
+          "ori_name": "Guardian Spirit",
+          "source": "Metro",
+          "name": "守護靈",
+          "type": "Companion",
+          "ability_tags": [
+            "危險警兆",
+            "令人畏懼的存在",
+            "隱形助手",
+            "幽體形態",
+            "詛咒敵人",
+            "療癒修復",
+            "庇護靈氣",
+            "靈界連結",
+            "龐大靈性知識",
+            "死後守護"
+          ],
+          "weakness_tags": [
+            "自卑恐懼",
+            "陰寒氣息",
+            "他靈領域",
+            "過度保護"
+          ],
+          "ritual_concept": "我絕不可忘記每日的供奉。"
+        },
+        {
+          "ori_name": "Magical Guide",
+          "source": "Metro",
+          "name": "魔法導師",
+          "type": "Companion",
+          "ability_tags": [
+            "神秘洞察",
+            "魔法研究",
+            "不為他人察覺",
+            "不為他人聽見",
+            "偏轉咒語",
+            "充盈魔力",
+            "解除詛咒",
+            "施放小法術",
+            "教授新咒語",
+            "異界之門"
+          ],
+          "weakness_tags": [
+            "不服從",
+            "對神祕不信",
+            "容易疲憊",
+            "吹毛求疵"
+          ],
+          "ritual_concept": "我必須遵從這位導師的指示，才能獲得其教誨。"
+        },
+        {
+          "ori_name": "Nature Spirit",
+          "source": "Metro",
+          "name": "自然精魂",
+          "type": "Companion",
+          "ability_tags": [
+            "自然之怒",
+            "捕縛敵人",
+            "元素形態（選擇一種元素）",
+            "摧毀人造物",
+            "自然恩惠",
+            "環境融合",
+            "極端天氣",
+            "啟發和諧",
+            "動植物交談",
+            "大地之力"
+          ],
+          "weakness_tags": [
+            "自然破壞",
+            "掠食氣質",
+            "汙染影響",
+            "不按常理出牌（如天氣）"
+          ],
+          "ritual_concept": "我必須在每次重大決策前與自然進行溝通。"
+        },
+        {
+          "ori_name": "Tech Gremlin",
+          "source": "Metro",
+          "name": "科技小妖",
+          "type": "Companion",
+          "ability_tags": [
+            "干擾機械",
+            "解析裝置",
+            "科技隱形",
+            "武器誤擊",
+            "修理技能",
+            "躲進載具",
+            "電力過載",
+            "惡作劇高手",
+            "孵出兄弟姊妹",
+            "網路穿梭"
+          ],
+          "weakness_tags": [
+            "容易分心",
+            "故障憤怒",
+            "仿生技術",
+            "亂動東西"
+          ],
+          "ritual_concept": "我必須每天至少讓它干擾一台機器。"
+        },
+        {
+          "ori_name": "Supernatural Pet",
+          "source": "Metro",
+          "name": "超自然寵物",
+          "type": "Companion",
+          "ability_tags": [
+            "魔法靈巧",
+            "對敵人咆哮",
+            "適應性擬態",
+            "天然武器",
+            "並肩作戰",
+            "攜獸箱",
+            "惡臭噴霧",
+            "馴獸術",
+            "羨慕關係",
+            "野性本能"
+          ],
+          "weakness_tags": [
+            "無視目標",
+            "盜獵者",
+            "疏於照顧",
+            "不合時宜玩心"
+          ],
+          "ritual_concept": "我必須勤勉地訓練我的寵物。"
+        },
+        {
+          "ori_name": "Trained Monsters",
+          "source": "Metro",
+          "name": "受訓魔獸",
+          "type": "Companion",
+          "ability_tags": [
+            "破壞作亂",
+            "服從命令",
+            "成群出動",
+            "人多勢眾",
+            "角牙利爪",
+            "魔獸巢穴",
+            "變形能力",
+            "群中之首",
+            "合體巨獸",
+            "野性威嚇"
+          ],
+          "weakness_tags": [
+            "挑戰權威",
+            "破壞罰款",
+            "獸群內鬥",
+            "難以管束"
+          ],
+          "ritual_concept": "我必須維持祈禱／誦咒／卷軸，才能將牠們束縛。"
+        },
+        {
+          "ori_name": "Shikigami",
+          "source": "Tokyo",
+          "name": "式神",
+          "type": "Companion",
+          "ability_tags": [
+            "標記攻擊",
+            "幽靈偵查",
+            "感知偽裝",
+            "瞬間靈化",
+            "附身人機",
+            "靈能給予",
+            "滲入網路空間",
+            "守護契主",
+            "機靈吐槽",
+            "靈術加護"
+          ],
+          "weakness_tags": [
+            "驅靈結界",
+            "不安外貌",
+            "鬥嘴不休",
+            "惡作劇成癮"
+          ],
+          "ritual_concept": "我必須餵養我的式神以靈力，維持其存在。"
+        },
+        {
+          "ori_name": "Helpful Ghost",
+          "source": "Tokyo",
+          "name": "助幽靈",
+          "type": "Companion",
+          "ability_tags": [
+            "遠距移物",
+            "驚嚇出現",
+            "靈體狀態",
+            "附身",
+            "祖廟記憶",
+            "寒氣逼人",
+            "樂於助人",
+            "能與幽靈對話",
+            "穿牆而過",
+            "靈界知識"
+          ],
+          "weakness_tags": [
+            "害羞",
+            "嚇到路人",
+            "符咒防護",
+            "擾亂我東西"
+          ],
+          "ritual_concept": "我必須完成牠的心願來維持幽靈的善意。"
+        }
+    ]
+  }
