@@ -1,0 +1,118 @@
+{
+  "metadata": {
+    "title": "ENHANCERS - 強化劑",
+    "description": "各種藥物和化學強化劑，提供暫時性能力增強",
+    "category": "ENHANCERS",
+    "version": "1.0.0",
+    "created": "2025-07-01",
+    "language": "zh-TW"
+  },
+  "general_items": {
+    "category": "GENERAL ITEMS",
+    "description": "這個類別的通用強化劑物品，具有共同的特徵和缺陷",
+    "items": [
+      {
+        "name": "downer",
+        "chinese_name": "鎮靜劑"
+      },
+      {
+        "name": "focuser",
+        "chinese_name": "專注劑"
+      },
+      {
+        "name": "upper",
+        "chinese_name": "興奮劑"
+      }
+    ],
+    "features": [
+      {
+        "name": "heightened reflexes",
+        "chinese_name": "增強反射"
+      },
+      {
+        "name": "numbing",
+        "chinese_name": "麻痺效果"
+      },
+      {
+        "name": "undetectable",
+        "chinese_name": "無法檢測"
+      }
+    ],
+    "flaws": [
+      {
+        "name": "addictive",
+        "chinese_name": "成癮性"
+      },
+      {
+        "name": "illegal",
+        "chinese_name": "非法"
+      },
+      {
+        "name": "trippy",
+        "chinese_name": "致幻"
+      }
+    ]
+  },
+  "equipment": {
+    "Anchor": {
+      "name": "錨定劑",
+      "category": "ENHANCERS",
+      "description": "這種處方藥是為那些患有網路空間譫妄的人開的，這是脫離 VR 太快的人中常見的問題。",
+      "features": [
+        "錨定劑",
+        "此時此地",
+        "重新建立網路空間譫妄",
+        "透過幻覺看清真相"
+      ],
+      "weakness": "成癮性"
+    },
+    "Nitro": {
+      "name": "硝基",
+      "category": "ENHANCERS",
+      "description": "一種常見的街頭藥物，以小罐霓虹黃色彩色出售。當你需要時，它會給你一個刺激，讓你更快、更強壯、更精神振奮。",
+      "features": [
+        "硝基",
+        "消除疲勞",
+        "忽略疼痛",
+        "人工興奮"
+      ],
+      "weakness": "成癮性"
+    },
+    "Rapid healing nanobots": {
+      "name": "快速癒合納米機器人",
+      "category": "ENHANCERS",
+      "description": "許多公司生產注射器或納米機器人貼片，加速宿主的自然癒合。",
+      "features": [
+        "快速癒合納米機器人",
+        "疼痛緩解",
+        "毒素過濾",
+        "健康發光"
+      ],
+      "weakness": "無法處理 Mythos"
+    },
+    "Santos-Krupp 2031 (\"Mindsharp\")": {
+      "name": "Santos-Krupp 2031 (\"心智銳化\")",
+      "category": "ENHANCERS",
+      "description": "一種軍用藥物，使其進入街頭，心智銳化專注於你的感官來凝聚一項任務或在審訊對象上閱讀微表情。",
+      "features": [
+        "心智銳化",
+        "專注於任務",
+        "敏銳感官",
+        "閱讀微表情"
+      ],
+      "weakness": "盲目的"
+    },
+    "Sunspot": {
+      "name": "太陽黑子",
+      "category": "ENHANCERS",
+      "description": "最初是一種銳舞藥物，這種超刺激劑的修改版本被街頭佣兵用來讓自己處於高度警覺和專注的注意力。",
+      "features": [
+        "太陽黑子",
+        "消除疲勞",
+        "長期藥物引起的清醒",
+        "專注注意力"
+      ],
+      "weakness": "反彈疲勞"
+    }
+  }
+}

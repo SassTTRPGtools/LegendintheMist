@@ -1,0 +1,270 @@
+{
+  "metadata": {
+    "title": "BODY ATTACHMENTS & CYBERNETICS - 身體附件與生化改造",
+    "description": "各種身體改造、生化植入物和外骨骼裝備",
+    "category": "BODY ATTACHMENTS & CYBERNETICS",
+    "version": "1.0.0",
+    "created": "2025-07-01",
+    "language": "zh-TW"
+  },
+  "general_items": {
+    "category": "GENERAL ITEMS",
+    "description": "這個類別的通用生化改造物品，具有共同的特徵和缺陷",
+    "items": [
+      {
+        "name": "aesthetic appendage",
+        "chinese_name": "美容附肢"
+      },
+      {
+        "name": "blood toxin filters",
+        "chinese_name": "血液毒素過濾器"
+      },
+      {
+        "name": "boosted nervous system",
+        "chinese_name": "增強神經系統"
+      },
+      {
+        "name": "brain accelerator",
+        "chinese_name": "大腦加速器"
+      },
+      {
+        "name": "built-in Harnessing console",
+        "chinese_name": "內建駕馭控制台"
+      },
+      {
+        "name": "comms implant",
+        "chinese_name": "通訊植入物"
+      },
+      {
+        "name": "cyber ears",
+        "chinese_name": "義耳"
+      },
+      {
+        "name": "cyber eyes",
+        "chinese_name": "義眼"
+      },
+      {
+        "name": "cyber legs",
+        "chinese_name": "義腿"
+      },
+      {
+        "name": "cyber tail",
+        "chinese_name": "義尾"
+      },
+      {
+        "name": "cyber wings",
+        "chinese_name": "義翼"
+      },
+      {
+        "name": "cyberarm",
+        "chinese_name": "義臂"
+      },
+      {
+        "name": "exo-skeleton",
+        "chinese_name": "外骨骼"
+      },
+      {
+        "name": "extra limbs",
+        "chinese_name": "額外肢體"
+      },
+      {
+        "name": "face-altering mesh",
+        "chinese_name": "變臉網格"
+      },
+      {
+        "name": "hand-eye link",
+        "chinese_name": "手眼連結"
+      },
+      {
+        "name": "internal scanner array",
+        "chinese_name": "內建掃描陣列"
+      },
+      {
+        "name": "neural link",
+        "chinese_name": "神經連結"
+      },
+      {
+        "name": "neural visor",
+        "chinese_name": "神經面罩"
+      }
+    ],
+    "features": [
+      {
+        "name": "appears organic",
+        "chinese_name": "看似有機"
+      },
+      {
+        "name": "durable materials",
+        "chinese_name": "耐用材料"
+      },
+      {
+        "name": "EMP shielding",
+        "chinese_name": "電磁脈衝防護"
+      },
+      {
+        "name": "firmware updates",
+        "chinese_name": "韌體更新"
+      },
+      {
+        "name": "high-end software",
+        "chinese_name": "高端軟體"
+      },
+      {
+        "name": "impressive",
+        "chinese_name": "令人印象深刻"
+      },
+      {
+        "name": "internal firewall",
+        "chinese_name": "內建防火牆"
+      },
+      {
+        "name": "long battery life",
+        "chinese_name": "長電池壽命"
+      },
+      {
+        "name": "powerful servo-motors",
+        "chinese_name": "強大伺服馬達"
+      },
+      {
+        "name": "reliable",
+        "chinese_name": "可靠"
+      },
+      {
+        "name": "retractable [weapon or device]",
+        "chinese_name": "可收縮[武器或裝置]"
+      }
+    ],
+    "flaws": [
+      {
+        "name": "draws attention",
+        "chinese_name": "引人注目"
+      },
+      {
+        "name": "glitchy",
+        "chinese_name": "故障頻繁"
+      },
+      {
+        "name": "heavy",
+        "chinese_name": "沉重"
+      },
+      {
+        "name": "neural noise",
+        "chinese_name": "神經噪音"
+      },
+      {
+        "name": "scar tissue",
+        "chinese_name": "疤痕組織"
+      },
+      {
+        "name": "unwieldy",
+        "chinese_name": "笨拙難用"
+      }
+    ]
+  },
+  "equipment": {
+    "Apex CN62 Power Legs": {
+      "name": "Apex CN62 動力腿",
+      "category": "BODY ATTACHMENTS & CYBERNETICS",
+      "description": "這款輕薄的合成外骨骼安裝在腿上，提供改進的跑步、跳躍、踢擊和游泳能力。",
+      "features": [
+        "動力腿",
+        "增強跳躍",
+        "水上和陸地雙重努力",
+        "自信步態"
+      ],
+      "weakness": "疼痛和痛苦"
+    },
+    "Apex VI-50 Platoon Wings": {
+      "name": "Apex VI-50 排翼",
+      "category": "BODY ATTACHMENTS & CYBERNETICS",
+      "description": "這些突出的翅膀從肩胛骨安裝的儲存裝置中展開，具有輕質金屬框架和碳纖維「羽毛」。在尋求刺激者中很受歡迎。",
+      "features": [
+        "可穿戴翅膀",
+        "緩慢滑翔",
+        "緊湊設計",
+        "超級搜尋器"
+      ],
+      "weakness": "風的突然變化"
+    },
+    "Elysian Blades Retractable Quick-Blade": {
+      "name": "Elysian 刀片可收縮快刀",
+      "category": "BODY ATTACHMENTS & CYBERNETICS",
+      "description": "一個平坦的前臂支架，帶有可收縮的刀片，通過肌肉控制釋放或收縮。",
+      "features": [
+        "可收縮快刀",
+        "快速刺擊動作",
+        "隱藏在支架中",
+        "敏捷因子"
+      ],
+      "weakness": "脆弱刀片"
+    },
+    "Epis Cranius Headcomms": {
+      "name": "Epis Cranius 頭部通訊",
+      "category": "BODY ATTACHMENTS & CYBERNETICS",
+      "description": "這個微小的通訊設備植入耳朵並與用戶的植入物整合，用於發送和接收音頻信號。提供亞音訊麥克風用於非常安靜的反應。",
+      "features": [
+        "頭部通訊",
+        "私人網路",
+        "射程增強器",
+        "快速但安靜的討論"
+      ],
+      "weakness": "太多廢話"
+    },
+    "Fenix Corp Carbon Dermal Plating": {
+      "name": "Fenix 企業碳纖維皮膚鍍層",
+      "category": "BODY ATTACHMENTS & CYBERNETICS",
+      "description": "擁抱碳纖維的防護，結合到宿主的皮膚上，可以偏轉武器、子彈、磨損環境等。",
+      "features": [
+        "皮膚鍍層",
+        "完美融合武器",
+        "受保護重要器官"
+      ],
+      "weakness": "易受鈍器創傷"
+    },
+    "Navachar Electronics \"Nazar\" Multispectral Lens": {
+      "name": "Navachar 電子 \"Nazar\" 多光譜鏡頭",
+      "category": "BODY ATTACHMENTS & CYBERNETICS",
+      "description": "新興行業標準，這個接觸鏡頭讓用戶能夠看到可見光、熱成像、紫外線和其他專業波長，包括放大和微距功能。",
+      "features": [
+        "多光譜鏡頭",
+        "縮放和顯微鏡視覺",
+        "視頻錄製"
+      ],
+      "weakness": "視覺過載"
+    },
+    "Osprey Enhanced Carbon Fiber Muscles": {
+      "name": "Osprey 增強碳纖維肌肉",
+      "category": "BODY ATTACHMENTS & CYBERNETICS",
+      "description": "在碳纖維網格上種植的密集、半合成肌肉，為每個肌肉纖維定制，通過手術大大增加體力，但需要大約十二小時的手術。",
+      "features": [
+        "碳纖維肌肉",
+        "增強體力",
+        "推到極限",
+        "不要與我們亂來"
+      ],
+      "weakness": "過度運動和傷害自己"
+    },
+    "Shielded thoracic cover": {
+      "name": "屏蔽胸腔護蓋",
+      "category": "BODY ATTACHMENTS & CYBERNETICS",
+      "description": "在無晶片和其他半合法專業中很受歡迎，這種合成的皮膚隔間是粘合到皮膚上，放置在小物品上以隱藏掃描。",
+      "features": [
+        "屏蔽胸腔護蓋",
+        "避免大多數掃描",
+        "防震吸收記憶泡沫"
+      ],
+      "weakness": "疼痛發作"
+    },
+    "Talonwerks XR-11 High Capacity Neural Overcharger": {
+      "name": "Talonwerks XR-11 高容量神經過充器",
+      "category": "BODY ATTACHMENTS & CYBERNETICS",
+      "description": "Talonwerks 長期設定神經增強標準。這個按鈕尺寸的設備連接到頸部背面，證明反應時間有所改善。",
+      "features": [
+        "神經過充器",
+        "精確運動",
+        "可程式運動"
+      ],
+      "weakness": "肌肉痙攣"
+    }
+  }
+}

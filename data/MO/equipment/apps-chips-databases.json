@@ -1,0 +1,153 @@
+{
+  "metadata": {
+    "title": "APPS, CHIPS & DATABASES - 應用程式、晶片與資料庫",
+    "description": "各種軟體應用程式、神經植入晶片和資料庫訂閱服務",
+    "category": "APPS, CHIPS & DATABASES",
+    "version": "1.0.0",
+    "created": "2025-07-01",
+    "language": "zh-TW"
+  },
+  "general_items": {
+    "category": "GENERAL ITEMS",
+    "description": "這個類別的通用軟體和晶片物品，具有共同的特徵和缺陷",
+    "items": [
+      {
+        "name": "cheap Harnessing app",
+        "chinese_name": "廉價駕馭應用程式"
+      },
+      {
+        "name": "Epis office tools",
+        "chinese_name": "Epis 辦公工具"
+      },
+      {
+        "name": "KOCMOC [mundane skill] chip",
+        "chinese_name": "KOCMOC [日常技能] 晶片"
+      },
+      {
+        "name": "most wanted database",
+        "chinese_name": "通緝犯資料庫"
+      }
+    ],
+    "features": [
+      {
+        "name": "adaptive design",
+        "chinese_name": "適應性設計"
+      },
+      {
+        "name": "insta-loader",
+        "chinese_name": "快速載入"
+      },
+      {
+        "name": "memory saver",
+        "chinese_name": "記憶體節省"
+      },
+      {
+        "name": "smart search",
+        "chinese_name": "智慧搜尋"
+      }
+    ],
+    "flaws": [
+      {
+        "name": "distracting notifications",
+        "chinese_name": "分散注意力的通知"
+      },
+      {
+        "name": "doesn't play well with others",
+        "chinese_name": "不兼容其他程式"
+      },
+      {
+        "name": "glitchy",
+        "chinese_name": "程式錯誤"
+      },
+      {
+        "name": "memory guzzler",
+        "chinese_name": "記憶體消耗大"
+      }
+    ]
+  },
+  "equipment": {
+    "Drone operator HUD": {
+      "name": "無人機操作抬頭顯示器",
+      "category": "APPS, CHIPS & DATABASES",
+      "description": "一個抬頭顯示器，提供無人機性能和反應的詳細讀數，可從各種供應商和各種設備中獲得。",
+      "features": [
+        "無人機操作抬頭顯示器",
+        "無人機安全協議",
+        "自動駕駛程式",
+        "存取感測器資料"
+      ],
+      "weakness": "注意力分散"
+    },
+    "Emotive damper": {
+      "name": "情緒阻尼器",
+      "category": "APPS, CHIPS & DATABASES",
+      "description": "在神經植入物上運行的軟體。覆蓋大腦的情緒中心，暫時中斷其信號。您不會感受到情緒，但您的表情是空白的。",
+      "features": [
+        "情緒阻尼器",
+        "撲克臉",
+        "顯示情緒狀態"
+      ],
+      "weakness": "強烈情緒難以壓制"
+    },
+    "Gorts & Jasper Integrated Weapons Link": {
+      "name": "Gorts & Jasper 整合武器連結",
+      "category": "APPS, CHIPS & DATABASES",
+      "description": "一個配對的武器配件和抬頭顯示器（附加到您的視網膜植入物）。該技術計算最佳射擊角度，並呈現彈藥管理和瞄準線。",
+      "features": [
+        "武器連結",
+        "精確瞄準小目標",
+        "技巧射擊",
+        "運動預測"
+      ],
+      "weakness": "視覺資料過載"
+    },
+    "MentalMap Geographic Database Subscription": {
+      "name": "MentalMap 地理資料庫訂閱",
+      "category": "APPS, CHIPS & DATABASES",
+      "description": "詳細的地圖軟體硬連線到您的大腦植入物或 AR 顯示器，包括 GPS 連接。",
+      "features": [
+        "地理資料庫",
+        "即時 GPS 導航",
+        "各種資訊層",
+        "網路建議"
+      ],
+      "weakness": "一切都是私密且被審查的"
+    },
+    "MentalMap Language and Culture Assistant": {
+      "name": "MentalMap 語言和文化助手",
+      "category": "APPS, CHIPS & DATABASES",
+      "description": "隨著如此多不同的語言和文化在大都會中流傳，擁有一個 AI 悄悄地幫助您不侮辱錯誤的人是很方便的。",
+      "features": [
+        "語言和文化助手",
+        "文化建議",
+        "聽起來像母語使用者"
+      ],
+      "weakness": "傳達複雜概念困難"
+    },
+    "Nu-Phase Body Snatcher": {
+      "name": "Nu-Phase 身體竊取器",
+      "category": "APPS, CHIPS & DATABASES",
+      "description": "在沒有適當實驗的情況下發布到市場（他們說如此），這個晶片捆綁包允許兩個用戶連接他們的視覺和其他感官輸入，並分享應用程式。",
+      "features": [
+        "神經感官和應用程式連結",
+        "存取彼此的應用程式",
+        "協調運動",
+        "移動感官連結"
+      ],
+      "weakness": "定向困難"
+    },
+    "Santos-Krupp Medical Database IV": {
+      "name": "Santos-Krupp 醫療資料庫 IV",
+      "category": "APPS, CHIPS & DATABASES",
+      "description": "完整的醫療參考資料庫，與完整的感官支援和視覺抬頭顯示器指示器集成。",
+      "features": [
+        "醫療資料庫",
+        "診斷協助",
+        "即時生命指標",
+        "急救支援",
+        "假設我是醫生"
+      ],
+      "weakness": "不了解 Mythos"
+    }
+  }
+}
