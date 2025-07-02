@@ -1,0 +1,86 @@
+[
+    {
+  "name": "Communing with a Mythos",
+  "type": ["Quick", "Discover"],
+  "examples": [
+    "投影星靈體",
+    "與映中之影交談",
+    "冥想",
+    "獻祭或祈禱",
+    "傾聽風語",
+    "以儀式之名喚醒神話真名"
+  ],
+  "description": "你在異景中與神話存在溝通，以獲取神祕、魔法或神話的知識。必須持有一個源質才能進行此行動。",
+  "powerTags": [
+    "靈性能力",
+    "與神話相關的性質或特質",
+    "意志力",
+    "對神話的知識",
+    "儀式性道具",
+    "與神話共鳴的地點",
+    "合適的獻祭或供品"
+  ],
+  "weaknessTags": [
+    "身心靈疲勞",
+    "疑惑或恐懼",
+    "噪聲相關狀態",
+    "對神話不敬或冒犯",
+    "不良的神話關係"
+  ],
+  "success": {
+    "quick": "你與神話進行溝通並獲得關鍵資訊。",
+    "discover": "獲得具體問題的答案。",
+    "extraFeats": [
+      "打動觀察者、被神話觸碰者、或召喚體"
+    ]
+  },
+  "consequences": [
+    "你與神話的關係惡化（resentful 或 標記衰變）",
+    "神話反擊你（burn tag 或主題）",
+    "神話入侵現實，產生閾點或召喚物",
+    "你精疲力盡（burn tag 或 exhausted）",
+    "神話接觸對你而言過於沉重（delirious 或 servant-of-the-Mythos）"
+  ],
+  "source": "Metro: Otherscape Corebook"
+},
+{
+  "name": "Identifying a Source",
+  "type": ["Quick", "Discover", "Advance"],
+  "examples": [
+    "閱讀星象靈氣",
+    "感知共鳴",
+    "傾聽源質低語",
+    "請自己的源質講述其他源質"
+  ],
+  "description": "觀察一個源質並試圖透過神話知識、感知或神秘手段，識別其背後的神話與力量。可能揭示先前持有者、用途、神話異象等。",
+  "powerTags": [
+    "直覺與異常感知",
+    "神秘知識",
+    "神話相關歷史知識",
+    "一般神話知識",
+    "與神話共鳴的性質",
+    "哲人與顧問"
+  ],
+  "weaknessTags": [
+    "干擾、幻象、錯覺",
+    "抑制源質力量的效果",
+    "冒犯神話的特質"
+  ],
+  "success": {
+    "quick": "你揭露了該源質背後的神話與力量。",
+    "discover": "釐清你學到了多少資訊，或找到更深入挖掘的方式。",
+    "advance": "代表一個持續研究項目，可填滿 making-progress 至 unlocked 閾值。",
+    "extraFeats": [
+      "與神話進行短暫交流",
+      "使源質短暫顯現出神話的某種可見表徵"
+    ]
+  },
+  "consequences": [
+    "你得到錯誤印象或假象",
+    "周遭的其他源質受到干擾（burn a tag）",
+    "你激怒神話或違反其本性（cursed）",
+    "研究遇到阻礙（減少 making-progress 或必須重新思考方法）"
+  ],
+  "source": "Metro: Otherscape Corebook"
+}
+]

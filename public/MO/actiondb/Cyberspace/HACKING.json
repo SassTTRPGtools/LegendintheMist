@@ -1,0 +1,231 @@
+[
+    {
+  "name": "Blocking a Digital Attack",
+  "type": ["Mitigate"],
+  "examples": [
+    "啟動保護機制",
+    "個人防火牆",
+    "防禦程式",
+    "神經防護硬體",
+    "反惡意軟體"
+  ],
+  "description": "你依靠預設應用、硬體防護或快速編程來防禦網路空間中的傷害。有時也能防禦未察覺的攻擊，例如使用 firewall 標籤。",
+  "powerTags": [
+    "安全應用程式",
+    "強化硬體",
+    "訊號跳轉",
+    "裝置遮蔽",
+    "對方系統出錯或頻寬不足",
+    "你身處於自己的網域"
+  ],
+  "weaknessTags": [
+    "強大滲透病毒或駭客程式",
+    "自身處於計算瓶頸",
+    "網路空間弱點",
+    "突如其來的攻擊",
+    "對方程式設計者的技術",
+    "你處於對方網域中"
+  ],
+  "success": {
+    "quickEffect": "成功抵禦網路空間中的攻擊。",
+    "extraFeats": []
+  },
+  "consequences": [],
+  "source": "Metro: Otherscape Corebook"
+},
+{
+  "name": "Crashing a Node or a Program",
+  "type": ["Attack"],
+  "examples": [
+    "使其過載",
+    "注入惡意程式碼",
+    "發動阻斷服務攻擊",
+    "強制斷線",
+    "強制進入死迴圈",
+    "將對方踢出或封鎖於網域外",
+    "擊毀 IC"
+  ],
+  "description": "你使用駭客技能全力擊垮一個節點（裝置或網域）或一個程式（IC、構造、虛擬體等）。除非你以額外壯舉將行動完全遮掩，否則此行動將引來該網域中任何管理者或 IC 的注意。",
+  "powerTags": [
+    "超級用戶權限",
+    "駭客技能",
+    "強大主機",
+    "惡意軟體",
+    "目標漏洞",
+    "後門程式",
+    "毀滅密碼",
+    "網域階層結構圖"
+  ],
+  "weaknessTags": [
+    "防火牆",
+    "防禦軟體",
+    "強化硬體",
+    "程式碼完整性",
+    "對方程式設計師的技巧"
+  ],
+  "success": {
+    "attackEffect": "賦予 glitched 或其他有害狀態，通常對應 crash 閾值。",
+    "extraFeats": [
+      "保持潛伏",
+      "清除數據紀錄",
+      "讓人類使用者感到恐懼",
+      "若 crash 打滿，造成劇烈斷線"
+    ]
+  },
+  "consequences": [
+    "你被發現，或引起懷疑，提高警報等級",
+    "吸引 IC 或敵方駭客注意",
+    "IC 展開反擊（glitched、taken-over、tagged）",
+    "目標啟動額外防護（firewalled）",
+    "控制台過熱或耗損（burn tag 或 overheated）",
+    "無法存取其他相連設備或子網域"
+  ],
+  "source": "Metro: Otherscape Corebook"
+},
+{
+  "name": "Disrupting Device Functionality",
+  "type": ["Disrupt", "Weaken"],
+  "examples": [
+    "讓賽博義肢失控",
+    "燒毀硬體",
+    "發動資料風暴",
+    "訊號干擾",
+    "植入病毒",
+    "注入衝突指令",
+    "干擾通訊設備"
+  ],
+  "description": "你使用駭客技能對某個裝置、遠端或已安裝的賽博裝備造成破壞。你可能需要與硬體建立連線才能攻擊，也可能透過無線干擾達成目的。",
+  "powerTags": [
+    "駭客技能",
+    "強力主機",
+    "入侵程式",
+    "電磁干擾裝置（ECM）"
+  ],
+  "weaknessTags": [
+    "電磁防護",
+    "防火牆",
+    "高品質或具備備援與自我修復能力的裝置"
+  ],
+  "success": {
+    "disruptEffect": "製造如 fried-circuits、auditory-static、cybernetic-heart-attack、disconnected 等狀態。",
+    "weakenEffect": "移除 cyberlegs 或 firewall 等防禦標籤。",
+    "extraFeats": [
+      "為後續行動延續聚光燈",
+      "讓故障更難察覺或影響更久",
+      "保持潛伏",
+      "清除數據痕跡"
+    ]
+  },
+  "consequences": [
+    "你讓自己裝備或賽博系統失效（glitched），甚至感染 computer virus",
+    "目標發現是你幹的",
+    "目標反擊（glitched）",
+    "目標關閉通訊管道並強化防禦（firewalled 或 hardened）",
+    "你誤傷相關裝置或鄰近系統"
+  ],
+  "source": "Metro: Otherscape Corebook"
+},
+{
+  "name": "Overriding or Fooling a Security Device or Program",
+  "type": ["Quick", "Set Back", "Weaken"],
+  "examples": [
+    "降低警戒等級",
+    "潛行穿越 IC 或虛擬守衛",
+    "重設 IC 程式",
+    "關閉警報",
+    "竄改防火牆"
+  ],
+  "description": "使用駭客技能繞過、削弱或誤導安全系統，不論是在肉身空間還是網路空間，常用於未被發現地通過閘門、降低警報等級或削弱系統防禦。",
+  "powerTags": [
+    "駭客技能",
+    "強力主機",
+    "駭客應用程式",
+    "安全憑證",
+    "對特定系統的使用經驗"
+  ],
+  "weaknessTags": [
+    "當前警報等級",
+    "啟動中的 IC",
+    "防火牆",
+    "硬體強化",
+    "對手程式設計者的技術",
+    "複雜或難以理解的系統"
+  ],
+  "success": {
+    "quickEffect": "無聲通過目標安全系統。",
+    "setBackEffect": "降低 alarm Limit 上的警報等級。",
+    "weakenEffect": "移除或削弱如 firewall 的防禦標籤。",
+    "extraFeats": [
+      "保持聚光燈為後續行動鋪路",
+      "清除資料紀錄",
+      "啟動其他系統（如開門、解除屏障）",
+      "將系統導向錯誤目標或新增假目標"
+    ]
+  },
+  "consequences": [
+    "你被發現，或引起懷疑，提升 alarm 等級",
+    "你或同伴被標記（tagged）",
+    "你失去冷靜，或技能無法發揮作用（burn tag）",
+    "主機或應用程式過載（burn tag）",
+    "留下辨識性數據"
+  ],
+  "source": "Metro: Otherscape Corebook"
+},
+{
+  "name": "Taking Control Over a Node or a Program",
+  "type": ["Quick", "Advance", "Influence"],
+  "examples": [
+    "強力破解密碼",
+    "利用安全漏洞",
+    "冒充系統管理員",
+    "駭入個人裝置",
+    "遙控奪取載具或無人機",
+    "掌控網路腦機"
+  ],
+  "description": "使用駭客技能奪取節點（如網域、裝置）或建構物的控制權，成為超級使用者或強制程式執行特定行為。",
+  "powerTags": [
+    "駭客技能",
+    "強力主機",
+    "系統後門或漏洞",
+    "密碼檔案",
+    "偽造認證",
+    "使用中帳號的內部情報",
+    "與節點開發／管理組織的接觸經驗",
+    "相關硬體的使用經驗"
+  ],
+  "weaknessTags": [
+    "對抗的超級使用者",
+    "防火牆",
+    "硬體強化",
+    "加密協議",
+    "安全節點",
+    "警戒狀態的 IC",
+    "不良連線",
+    "過時的認證",
+    "敵方程式師的技術"
+  ],
+  "success": {
+    "quickEffect": "獲得超級使用者權限或奪取操控權。",
+    "advanceEffect": "增加 take-over Limit 疊加值。",
+    "influenceEffect": "給節點注入強制命令，不計入 take-over。",
+    "extraFeats": [
+      "保持聚光燈，進行後續超級使用者行動",
+      "保持隱匿",
+      "清除資料紀錄",
+      "讓人類用戶感到驚懼"
+    ]
+  },
+  "consequences": [
+    "你吸引了 IC 或敵對駭客",
+    "IC 反制（glitched、taken-over、tagged）",
+    "你行蹤敗露",
+    "你的行動引發警戒，提升 alarm 等級",
+    "目標系統啟動防禦（firewalled）或完全鎖定",
+    "控制台過載（burn tag 或 overheated）",
+    "其他裝置或子節點的存取被封鎖",
+    "你被反駭，失去裝置控制（burn a tag）"
+  ],
+  "source": "Metro: Otherscape Corebook"
+}
+
+]

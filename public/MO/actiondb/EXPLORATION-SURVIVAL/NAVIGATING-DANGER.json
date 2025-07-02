@@ -1,0 +1,251 @@
+[
+    {
+  "name": "Chases",
+  "type": ["Advance", "Disrupt", "Enhance", "Mitigate"],
+  "examples": [
+    "緊追不捨",
+    "沿路追蹤",
+    "切斷對方路線",
+    "穿越交通",
+    "擺脫追兵"
+  ],
+  "description": "在追逐場景中，你奔跑、駕駛或操縱來縮短或拉開與對手的距離，推進 catch／outrun 閾值直到成功。",
+  "powerTags": [
+    "爆發速度",
+    "腎上腺素",
+    "強大載具",
+    "渦輪驅動",
+    "對手恐慌或滑倒",
+    "高處位置",
+    "蜘蛛腿",
+    "障礙物阻擋對方",
+    "地形熟悉",
+    "藏匿物品（若你在逃）"
+  ],
+  "weaknessTags": [
+    "精疲力竭",
+    "燃料不足",
+    "對手偽裝",
+    "視線不佳",
+    "濃密人群",
+    "彎曲小巷",
+    "泥濘或斜坡",
+    "惡劣天候",
+    "對手地利"
+  ],
+  "success": {
+    "advanceEffect": "增加 catch 或 outrun 狀態值直到達成極限",
+    "disruptEffect": "給對手妨礙標籤（如機油滑地、爆胎）",
+    "enhanceEffect": "提升自己的速度（speeding）",
+    "mitigateEffect": "防止對手靠近你",
+    "extraFeats": [
+      "從側面阻擋對手",
+      "封鎖特定路線",
+      "避開障礙物",
+      "改變自身相對位置",
+      "引導追逐進入特定區域",
+      "保留 spotlight",
+      "讓對手暫時失去你的蹤跡"
+    ]
+  },
+  "consequences": [
+    "你面前有障礙物（piled debris）",
+    "他們繞過障礙（移除標籤）",
+    "你失去進展（chase／outrun）",
+    "你撞上障礙（bruised 或 off-balance）",
+    "你減速或他們加速",
+    "你暴露在開放區域（exposed）"
+  ],
+  "source": "Metro: Otherscape Corebook"
+},
+{
+  "name": "Creating and Removing Hazards and Obstacles",
+  "type": ["Create", "Disrupt", "Weaken"],
+  "examples": [
+    "放火",
+    "炸出地面裂口",
+    "釋放奈米雲",
+    "過載門控系統",
+    "清除陷阱",
+    "切斷植物",
+    "平息靈體",
+    "引開敵群"
+  ],
+  "description": "你製造或移除某種形式的危險與障礙。無論是火焰、毒雲還是斷裂地面，這些改變影響場上的所有人，並可透過標籤或狀態來表示其效果。",
+  "powerTags": [
+    "足智多謀",
+    "工程技能",
+    "危險性工具或武器",
+    "爆裂物與油桶",
+    "能釋放毒素的元素",
+    "破壞性膠水"
+  ],
+  "weaknessTags": [
+    "障礙物堅固或難以拆解",
+    "地形結構阻擋行動",
+    "目標位置距離太遠",
+    "抑制危險的系統（如自動滅火）"
+  ],
+  "success": {
+    "createEffect": "新增障礙或危險標籤，如 wrecked car、mutagen cloud 等",
+    "disruptEffect": "給予對手 burning、electrocuted、cursed 等傷害狀態",
+    "weakenEffect": "移除障礙／危險標籤與狀態層級，使其無法造成傷害",
+    "extraFeats": [
+      "精準地塑造影響區域",
+      "保留一個安全地帶",
+      "在障礙生成前後穿越",
+      "精確地計時障礙出現",
+      "引起注意力"
+    ]
+  },
+  "consequences": [
+    "你在過程中受傷（corroded, electrocuted, bruised, bleeding, entangled, poisoned, weakened, impeded 等）",
+    "你被困在障礙物中或其後方",
+    "你的裝備損壞（burn a tag）",
+    "危險的形狀或範圍擴大",
+    "一個不同的障礙出現"
+  ],
+  "source": "Metro: Otherscape Corebook"
+},
+{
+  "name": "Scavenging",
+  "type": ["Create"],
+  "examples": [
+    "搜尋護衛車隊的殘骸",
+    "翻找浮動的垃圾堆",
+    "從死者身上拆下零件",
+    "偷走路邊神龕的聖物",
+    "從生物實驗區取樣",
+    "覓食或狩獵"
+  ],
+  "description": "你運用觀察力與辨識能力，從廢墟、荒野或神秘區域中發現有用或有價值的東西，可能是資源、武器、材料或神秘物件。",
+  "powerTags": [
+    "評估能力",
+    "銳利或超自然感知",
+    "周邊視野良好",
+    "掃描與偵測設備",
+    "資料與知識",
+    "集中藥物",
+    "尋找物資的直覺或經驗",
+    "神話力量"
+  ],
+  "weaknessTags": [
+    "黑暗、霧氣、煙或其他感官阻礙",
+    "惡劣天氣或環境音",
+    "蓄意隱藏的物件或陷阱",
+    "視覺欺騙或幻象",
+    "殘破與荒廢的場地"
+  ],
+  "success": {
+    "createEffect": "添加物品標籤，可組合為標籤組（例如 berries、loaded pistol、extra plating 等），可轉交給盟友使用。",
+    "extraFeats": [
+      "不被發現",
+      "不留痕跡",
+      "保留退路",
+      "避免觸發陷阱"
+    ]
+  },
+  "consequences": [
+    "你觸發陷阱或遭到伏擊（injured）",
+    "你暴露在危險中（poisoned、weakened）",
+    "你找到的物品品質低劣（負面標籤）",
+    "你找到的物品已破損或快壞掉",
+    "你被人發現正在搜尋",
+    "你掉落或被迫放棄物品（burn a tag）"
+  ],
+  "source": "Metro: Otherscape Corebook"
+},
+{
+  "name": "Scouting and Guarding",
+  "type": ["Quick", "Discover", "Enhance"],
+  "examples": [
+    "偵查前方",
+    "追蹤足跡",
+    "探索城市廢墟或企業設施",
+    "巡查防線",
+    "觀察護送車隊",
+    "警戒不眠"
+  ],
+  "description": "你運用感官、技能與工具來找出方向或辨識潛在威脅。此行動適用於偵察未知區域或站崗防守，可能揭示挑戰相關的重要資訊。",
+  "powerTags": [
+    "銳利或超自然感知",
+    "警覺",
+    "潛行",
+    "監控或偵查裝備",
+    "測繪工具",
+    "神話引導或守護",
+    "區域知識資料庫",
+    "專注藥物",
+    "地勢優勢或制高點"
+  ],
+  "weaknessTags": [
+    "黑暗、濃霧、強風、噪音、豪雨",
+    "偽裝或隱藏的陷阱",
+    "敵人警覺",
+    "欺騙視覺或幻象",
+    "神話障蔽",
+    "模糊或遮蔽裝置"
+  ],
+  "success": {
+    "quickEffect": "掌握關鍵偵查資訊。",
+    "discoverEffect": "找到具體情報，如敵人位置、最佳路線、區域構造或威脅規模。",
+    "enhanceEffect": "獲得「警覺 alert」狀態，提升後續偵察與防禦效果。",
+    "extraFeats": [
+      "保留 spotlight 進行進一步偵查或行動",
+      "不被發現",
+      "不留下痕跡",
+      "防止威脅接近",
+      "秘密傳遞情報給盟友"
+    ]
+  },
+  "consequences": [
+    "你對周遭情況掌握不清",
+    "你未察覺近距離的危險（surprised or injured）",
+    "你走得太遠（lost）",
+    "你耗盡觀測工具或感知力（burn a tag）",
+    "你分心、打瞌睡或恍神（distracted or sleepy）",
+    "你被發現了（marked）",
+    "前方障礙比預期更強（barricades、anti-magic circle）"
+  ],
+  "source": "Metro: Otherscape Corebook"
+},
+{
+  "name": "Surviving Environmental Hazards",
+  "type": ["Mitigate"],
+  "examples": [
+    "躲避墜落",
+    "脫離陷阱",
+    "承受熱浪",
+    "抵抗輻射",
+    "抵禦奈米機群",
+    "克服暈眩",
+    "忍受嚴寒",
+    "屏息水中",
+    "避免脫水"
+  ],
+  "description": "你試圖抵擋來自環境危害的傷害。若要在某個環境中長時間生存，請參見《危險環境下的旅行與求生》（Metro: Otherscape 第 45 頁）。",
+  "powerTags": [
+    "敏捷、直覺與反應速度",
+    "機智與創造力",
+    "防護或適應性裝備",
+    "針對此類危害的防禦措施",
+    "當地神話的指引或庇護",
+    "防害咒語或能力"
+  ],
+  "weaknessTags": [
+    "遲鈍、遲疑、冷漠",
+    "裝備不適用於該環境",
+    "對該危害的脆弱性",
+    "遭當地神話排斥或憎恨"
+  ],
+  "success": {
+    "quickEffect": "",
+    "discoverEffect": "",
+    "enhanceEffect": "",
+    "extraFeats": []
+  },
+  "consequences": [],
+  "source": "Metro: Otherscape Corebook"
+}
+
+]

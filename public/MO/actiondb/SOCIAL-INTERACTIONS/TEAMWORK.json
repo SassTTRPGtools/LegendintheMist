@@ -1,0 +1,143 @@
+[
+    {
+  "name": "Helping and Supporting",
+  "type": ["bestow", "enhance"],
+  "examples": [
+    "資助行動",
+    "提供建議",
+    "指出問題",
+    "分享情報",
+    "調整裝備"
+  ],
+  "description": "你採取行動協助某人即將進行的任務，提供指導、資源或純粹的精神支持。有時多人幫忙也可以，只要他們各自採取行動並符合時間與助益的前提即可。若只是輕微支援，也能透過標籤賦予對方力量（詳見 Helping and Acting Together, Metro:Otherscape, page 95）。\n\n若你需要事前準備，可參考 Preparing an Attack（頁 20）與 Preparing an Approach（頁 71）；若在戰鬥中協助，請參見 Assisting an Ally（頁 18）。",
+  "powerTags": [
+    "人際關係標籤",
+    "教育背景",
+    "擅長人際互動",
+    "與任務相關的技能",
+    "任務裝備",
+    "與目標的互信關係",
+    "合適的資源"
+  ],
+  "weaknessTags": [
+    "協調困難或無法聚集",
+    "目標分歧",
+    "通訊障礙",
+    "干擾因素",
+    "個性衝突",
+    "自以為是"
+  ],
+  "success": {
+    "bestow": "賦予你的夥伴一個代表你支援的狀態，如 flushed-with-funds、highly-informed、dripping-with-confidence、at-home-in-high-society 等。",
+    "enhance": "或給予一個故事標籤，如 cash fund、weapon stockpile、I'll be there 或 hoard of data files。"
+  },
+  "extraFeats": [
+    "你的支援效果持續更久。",
+    "你與對方的關係更為緊密。"
+  ],
+  "consequences": [
+    "你提供了錯誤的建議（產生不同主題的狀態）。",
+    "你自己的資源被消耗（燃燒標籤或變得 winded 或 broke）。",
+    "你所收集的物品不如預期（輕微更換標籤）。",
+    "其中一人對這件事感到不悅（變更人際標籤）。"
+  ],
+  "source": "Metro:Otherscape"
+},
+{
+  "name": "Leadership",
+  "type": ["enhance", "restore", "influence"],
+  "examples": [
+    "以身作則",
+    "大聲下令",
+    "重申計畫",
+    "通訊頻道中下達指令",
+    "激勵同伴",
+    "鼓舞士氣",
+    "鞏固決心",
+    "發號施令",
+    "吟唱戰歌"
+  ],
+  "description": "你運用你的魅力、階級、指揮技巧、修辭能力、人脈或戰術知識來鼓舞同伴的士氣、提升他們的戰場表現。你可以激勵或指揮單一人物，若指揮一整支隊伍則須擴大行動範圍（Scaled Action）。",
+  "powerTags": [
+    "魅力",
+    "階級或權威",
+    "表現力與演說技巧",
+    "戰術技巧",
+    "通訊裝備",
+    "戰友情誼",
+    "信念或熱忱",
+    "激勵人心的歌聲或演講",
+    "改變氣氛的魔力"
+  ],
+  "weaknessTags": [
+    "自我懷疑",
+    "恐懼或困惑",
+    "內部紛爭",
+    "敵方優勢地盤",
+    "對手干擾",
+    "通訊不良（例如噪音、網路干擾）"
+  ],
+  "success": {
+    "enhance": "賦予你的隊友一個正面的狀態，如 coordinated-movement、unshakable-resolve 或 barrage-ready。",
+    "restore": "解除你同伴身上的負面狀態，如 exposed、stymied-advance、battlefield-chaos 或 panic。",
+    "influence": "賦予同伴一個強制性的狀態，使他們遵從你的指令，如 obedient、sticking-to-the-plan 或 in-line。"
+  },
+  "extraFeats": [
+    "重新調整整個隊伍的位置（例如：全面衝鋒或後撤）。",
+    "轉移敵方注意力。",
+    "讓一位同伴立即行動（獲得聚光燈）。"
+  ],
+  "consequences": [
+    "你的隊伍開始協調不良或信心不足（confused-orders）。",
+    "你們誤入敵人陷阱。",
+    "你的領導方式不適合此情境（燃燒標籤）。",
+    "敵人在你發言時發動攻擊（injured）。",
+    "敵人聽懂了你們的戰術與弱點。",
+    "有人信念動搖（有成員獲得 demoralized 狀態）。",
+    "你們的計畫有明顯漏洞（vulnerable-position）。"
+  ],
+  "source": "Metro:Otherscape"
+},
+{
+  "name": "Team Preparations",
+  "type": "bestow",
+  "examples": [
+    "擬定計畫",
+    "訂立規則",
+    "討論戰術",
+    "查看藍圖",
+    "在網路空間會面",
+    "在酒吧細談",
+    "模擬訓練",
+    "針對特定任務進行訓練"
+  ],
+  "description": "你與夥伴們共同擬定一份計畫，用來完成某項任務或行動，並可能就此進行準備與訓練。這常在空檔時間或回溯的準備場景中發生。此行動影響整個團隊，因此需視為擴大量級的行動（Scaled）。",
+  "powerTags": [
+    "蒐集到的任務或目標情資",
+    "隊伍間的相互理解",
+    "人際標籤",
+    "分析與規劃技巧",
+    "模擬軟體",
+    "內線協助"
+  ],
+  "weaknessTags": [
+    "錯誤的情資",
+    "協調失敗",
+    "衝動與動輒開火的心態",
+    "處於高壓下"
+  ],
+  "success": {
+    "bestow": "賦予你的隊伍一組標籤，代表可能的行動方式、戰術、備用計畫或撤退路線，例如 tunneling inside、guns blazing、no innocents harmed、smoke bomb retreat 等。"
+  },
+  "extraFeats": [
+    "計畫具有彈性（標籤可在行動中稍作調整）。"
+  ],
+  "consequences": [
+    "計畫存在重大漏洞（confused-orders 或 out-of-sync）。",
+    "計畫外洩給敵人（標籤在行動中被燒毀）。",
+    "隊伍內部出現紛爭（燃燒團隊標籤或重寫關係標籤）。"
+  ],
+  "source": "Metro:Otherscape"
+}
+
+]
