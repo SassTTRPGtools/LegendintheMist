@@ -30,15 +30,15 @@
     "disrupt": "對目標施加負面狀態，如『魔力干擾』『與神隔絕』『靜音』等",
     "extraFeats": [
       "完全阻止目標使用特定能力一段時間",
-      "馬上搶得 spotlight 並採取行動"
+      "馬上搶得聚光燈並採取行動"
     ]
   },
   "consequences": [
-    "你的源質被消耗（burn a tag 或 drained）",
+    "你的源質被消耗（燒掉標籤 或 drained）",
     "對方效果增強",
     "你暫時無法再次驅散此能力",
     "出現副作用（如 dampened-magic, injured, cursed）",
-    "干擾造成對你或周圍的影響（burn a tag）",
+    "干擾造成對你或周圍的影響（燒掉標籤）",
     "區域遺留神話痕跡（cursed）"
   ],
   "source": "Metro: Otherscape Corebook"
@@ -72,16 +72,16 @@
   ],
   "success": {
     "quick": "立即完成儀式並獲得所欲敘事效果",
-    "advance": "賦予 making-progress 狀態，進行至 complete-ritual 的上限以完成儀式",
+    "advance": "賦予 [進度軌] 狀態，進行至 complete-ritual 的上限以完成儀式",
     "enhance": "賦予 empowered 狀態，使下一次魔法行動獲得強化",
     "extraFeats": [
-      "保持 spotlight 以繼續儀式或完成它"
+      "保持聚光燈以繼續儀式或完成它"
     ]
   },
   "consequences": [
-    "儀式被中斷（making-progress 或 empowered 狀態減少）",
+    "儀式被中斷（[進度軌] 或 empowered 狀態減少）",
     "儀式反噬或爆炸（cursed 或 injured）",
-    "魔力被耗盡（burn tags）",
+    "魔力被耗盡（燒掉標籤）",
     "出現副作用（如皮膚變金、單眼失明）",
     "敵對召喚物出現"
   ],

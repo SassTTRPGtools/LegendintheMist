@@ -36,9 +36,9 @@
   },
   "consequences": [
     "你與神話的關係惡化（resentful 或 標記衰變）",
-    "神話反擊你（burn tag 或主題）",
+    "神話反擊你（燒掉標籤或主題）",
     "神話入侵現實，產生閾點或召喚物",
-    "你精疲力盡（burn tag 或 exhausted）",
+    "你精疲力盡（燒掉標籤或 exhausted）",
     "神話接觸對你而言過於沉重（delirious 或 servant-of-the-Mythos）"
   ],
   "source": "Metro: Otherscape Corebook"
@@ -69,7 +69,7 @@
   "success": {
     "quick": "你揭露了該源質背後的神話與力量。",
     "discover": "釐清你學到了多少資訊，或找到更深入挖掘的方式。",
-    "advance": "代表一個持續研究項目，可填滿 making-progress 至 unlocked 閾值。",
+    "advance": "代表一個持續研究項目，可填滿 [進度軌] 至 unlocked 閾值。",
     "extraFeats": [
       "與神話進行短暫交流",
       "使源質短暫顯現出神話的某種可見表徵"
@@ -77,9 +77,9 @@
   },
   "consequences": [
     "你得到錯誤印象或假象",
-    "周遭的其他源質受到干擾（burn a tag）",
+    "周遭的其他源質受到干擾（燒掉標籤）",
     "你激怒神話或違反其本性（cursed）",
-    "研究遇到阻礙（減少 making-progress 或必須重新思考方法）"
+    "研究遇到阻礙（減少 [進度軌] 或必須重新思考方法）"
   ],
   "source": "Metro: Otherscape Corebook"
 }

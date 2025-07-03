@@ -48,7 +48,7 @@
   "consequences": [
     "併發症（獲得另一個狀態或負面標籤）",
     "精疲力竭（exhausted 或燒掉標籤）",
-    "在他人面前失控（burn tags 或 bad-rap）",
+    "在他人面前失控（燒掉標籤或 bad-rap）",
     "失去耐性"
   ],
   "source": "Metro: Otherscape Corebook"
@@ -139,9 +139,9 @@
   },
   "consequences": [
     "病情惡化或產生併發症（增加狀態或負面標籤）",
-    "耗費大量裝備與藥物（burn a tag）",
+    "耗費大量裝備與藥物（燒掉標籤）",
     "你過度操勞（tired）",
-    "你因治療而暴露或分心（exposed 或 distracted）"
+    "你因治療而暴露或分心（exposed 或 分心）"
   ],
   "source": "Metro: Otherscape Corebook"
 }

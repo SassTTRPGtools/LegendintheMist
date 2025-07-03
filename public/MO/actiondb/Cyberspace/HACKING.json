@@ -76,8 +76,8 @@
     "你被發現，或引起懷疑，提高警報等級",
     "吸引 IC 或敵方駭客注意",
     "IC 展開反擊（glitched、taken-over、tagged）",
-    "目標啟動額外防護（firewalled）",
-    "控制台過熱或耗損（burn tag 或 overheated）",
+    "目標啟動額外防護（防火牆）",
+    "控制台過熱或耗損（燒掉標籤或 overheated）",
     "無法存取其他相連設備或子網域"
   ],
   "source": "Metro: Otherscape Corebook"
@@ -163,10 +163,10 @@
     ]
   },
   "consequences": [
-    "你被發現，或引起懷疑，提升 alarm 等級",
+    "你被發現，或引起懷疑，提升[警報]等級",
     "你或同伴被標記（tagged）",
-    "你失去冷靜，或技能無法發揮作用（burn tag）",
-    "主機或應用程式過載（burn tag）",
+    "你失去冷靜，或技能無法發揮作用（燒掉標籤）",
+    "主機或應用程式過載（燒掉標籤）",
     "留下辨識性數據"
   ],
   "source": "Metro: Otherscape Corebook"
@@ -219,11 +219,11 @@
     "你吸引了 IC 或敵對駭客",
     "IC 反制（glitched、taken-over、tagged）",
     "你行蹤敗露",
-    "你的行動引發警戒，提升 alarm 等級",
-    "目標系統啟動防禦（firewalled）或完全鎖定",
-    "控制台過載（burn tag 或 overheated）",
+    "你的行動引發警戒，提升[警報]等級",
+    "目標系統啟動防禦（防火牆）或完全鎖定",
+    "控制台過載（燒掉標籤或 overheated）",
     "其他裝置或子節點的存取被封鎖",
-    "你被反駭，失去裝置控制（burn a tag）"
+    "你被反駭，失去裝置控制（燒掉標籤）"
   ],
   "source": "Metro: Otherscape Corebook"
 }

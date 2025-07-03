@@ -101,7 +101,7 @@
   "consequences": [
     "你在過程中受傷（corroded, electrocuted, bruised, bleeding, entangled, poisoned, weakened, impeded 等）",
     "你被困在障礙物中或其後方",
-    "你的裝備損壞（burn a tag）",
+    "你的裝備損壞（燒掉標籤）",
     "危險的形狀或範圍擴大",
     "一個不同的障礙出現"
   ],
@@ -151,7 +151,7 @@
     "你找到的物品品質低劣（負面標籤）",
     "你找到的物品已破損或快壞掉",
     "你被人發現正在搜尋",
-    "你掉落或被迫放棄物品（burn a tag）"
+    "你掉落或被迫放棄物品（燒掉標籤）"
   ],
   "source": "Metro: Otherscape Corebook"
 },
@@ -191,7 +191,7 @@
     "discoverEffect": "找到具體情報，如敵人位置、最佳路線、區域構造或威脅規模。",
     "enhanceEffect": "獲得「警覺 alert」狀態，提升後續偵察與防禦效果。",
     "extraFeats": [
-      "保留 spotlight 進行進一步偵查或行動",
+      "保留聚光燈進行進一步偵查或行動",
       "不被發現",
       "不留下痕跡",
       "防止威脅接近",
@@ -202,7 +202,7 @@
     "你對周遭情況掌握不清",
     "你未察覺近距離的危險（surprised or injured）",
     "你走得太遠（lost）",
-    "你耗盡觀測工具或感知力（burn a tag）",
+    "你耗盡觀測工具或感知力（燒掉標籤）",
     "你分心、打瞌睡或恍神（distracted or sleepy）",
     "你被發現了（marked）",
     "前方障礙比預期更強（barricades、anti-magic circle）"
