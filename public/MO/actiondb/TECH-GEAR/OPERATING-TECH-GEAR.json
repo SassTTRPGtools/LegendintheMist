@@ -11,7 +11,7 @@
       "分析設計圖",
       "詢問鍛造神明"
     ],
-    "description": "你檢視某個設備或科技元件，試圖了解其用途，並在需要時操作其基本功能。若要觸發特定效果，可能須使用其他動作（例如操作無人機或駕駛）。視情況，MC 可能揭露此設備的標籤、閾值、後果等要素，以反映你所獲得的知識。",
+    "description": "你檢視某個設備或科技元件，試圖了解其用途，並在需要時操作其基本功能。若要觸發特定效果，可能須使用其他動作（例如操作無人機或駕駛）。視情況，主持人可能揭露此設備的標籤、閾值、後果等要素，以反映你所獲得的知識。",
     "powerTags": [
       "相關領域的科技與科學知識",
       "逆向工程軟體與工具",
@@ -29,13 +29,13 @@
     "success": {
       "quick": "你了解此設備及其用途，並可以選擇啟動其基本功能。",
       "discover": "你量化了學到的內容，或細化了問題重點，例如：設備用途、操作方法、功能組成、製造者或科學原理。",
-      "advance": "MC 可將其視為進行中的專案，透過推進對一個 unlocked 閾值進行 [進度軌]。達成後可解鎖設備的所有祕密。"
+      "advance": "主持人可將其視為進行中的專案，透過推進對一個 unlocked 閾值進行 [進度軌]。達成後可解鎖設備的所有祕密。"
     },
     "extraFeats": [
       "悄悄完成評估。",
       "啟動某個簡單功能。",
       "修改一項簡單設定。",
-      "保留聚光燈立即操作這項設備。"
+      "保留「聚光燈」立即操作這項設備。"
     ],
     "consequences": [
       "你對這項科技得出錯誤結論。",
@@ -166,7 +166,7 @@
   },
   {
     "name": "Setting a Trap",
-    "type": ["quick", "varied", "suspend"],
+    "type": ["quick", "varies", "suspend"],
     "examples": [
       "繫上套索",
       "設置絆線",
@@ -193,12 +193,12 @@
     ],
     "success": {
       "quick + suspend": "陷阱造成敘事結果，例如響起警報、讓敵人跌倒而中斷行動，或是封鎖通道。",
-      "varied + suspend": "若陷阱可造成傷害，則進行攻擊並賦予 injure、electrocuted、poisoned、distracted、ensnared、depowered 等狀態。亦可使用其他效果如 Weaken（關閉賽博裝備）、Create（召喚生物）、Discover（掃描敵方弱點）等。"
+      "varies + suspend": "若陷阱可造成傷害，則進行攻擊並賦予 injure、electrocuted、poisoned、distracted、ensnared、depowered 等狀態。亦可使用其他效果如 Weaken（關閉賽博裝備）、Create（召喚生物）、Discover（掃描敵方弱點）等。"
     },
     "extraFeats": [
       "讓陷阱額外閃耀或極度安靜。",
       "干擾目標預定行動（中斷其 Consequence）。",
-      "保留聚光燈立即行動。"
+      "保留「聚光燈」立即行動。"
     ],
     "consequences": [
       "目標變得更加 alert。",

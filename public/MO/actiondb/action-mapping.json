@@ -7,23 +7,96 @@
     "language": "zh-TW"
   },
   "actionTypes": {
-    "attack": { "name": "攻擊", "color": "red", "description": "直接攻擊敵人的行動" },
-    "mitigate": { "name": "緩解", "color": "blue", "description": "減少傷害或負面效果的行動" },
-    "quick": { "name": "快速", "color": "green", "description": "快速執行且不佔用太多時間的行動" },
-    "create": { "name": "創造", "color": "purple", "description": "創造新的物品、狀態或標籤的行動" },
-    "enhance": { "name": "強化", "color": "yellow", "description": "增強現有能力或狀態的行動" },
-    "bestow": { "name": "賦予", "color": "cyan", "description": "給予他人能力或狀態的行動" },
-    "discover": { "name": "發現", "color": "orange", "description": "獲取資訊或知識的行動" },
-    "advance": { "name": "推進", "color": "indigo", "description": "推進任務或改變局勢的行動" },
-    "disrupt": { "name": "干擾", "color": "pink", "description": "干擾敵人行動或計畫的行動" },
-    "weaken": { "name": "削弱", "color": "gray", "description": "削弱敵人能力或狀態的行動" },
-    "influence": { "name": "影響", "color": "teal", "description": "影響他人行為或想法的行動" },
-    "restore": { "name": "恢復", "color": "emerald", "description": "修復或治療的行動" },
-    "suspend": { "name": "暫停", "color": "slate", "description": "暫時阻止某些行動的行動" },
-    "support": { "name": "支援", "color": "lime", "description": "支援團隊或盟友的行動" },
-    "teamwork": { "name": "團隊合作", "color": "amber", "description": "需要團隊協作的行動" },
-    "varies": { "name": "變化", "color": "rose", "description": "效果可能變化的行動" },
-    "set back": { "name": "阻撓", "color": "violet", "description": "阻撓敵人行動的行動" }
+  "attack": {
+    "name": "攻擊",
+    "color": "red",
+    "description": "砍、拳打、射擊、電擊\n給予目標一個有害狀態\n1 點力度／等級"
+  },
+  "disrupt": {
+    "name": "干擾",
+    "color": "pink",
+    "description": "致盲、混亂、電擊、絆倒、干擾\n給予目標阻礙標籤或狀態\n1 點力度／等級，2 點力度／標籤"
+  },
+  "influence": {
+    "name": "影響",
+    "color": "teal",
+    "description": "說服、威脅、挑釁、駭入、心控\n給予目標強制狀態\n1 點力度／等級"
+  },
+  "weaken": {
+    "name": "削弱",
+    "color": "gray",
+    "description": "破壞、瓦解、解除、沉默\n移除目標的有用標籤或狀態\n1 點力度／等級，2 點力度／標籤"
+  },
+  "bestow": {
+    "name": "賦予",
+    "color": "cyan",
+    "description": "教導、學習、強化、附魔、裝備\n給予自己或盟友新能力（使用標籤）\n2 點力度／標籤"
+  },
+  "create": {
+    "name": "創造",
+    "color": "purple",
+    "description": "製作、尋找、掠奪、召喚、建造\n使用標籤創造新物件或生物\n2 點力度／標籤"
+  },
+  "enhance": {
+    "name": "強化",
+    "color": "yellow",
+    "description": "協助、瞄準、充能、掩護\n給自己或盟友一個有利狀態\n1 點力度／等級"
+  },
+  "restore": {
+    "name": "恢復",
+    "color": "emerald",
+    "description": "治療、修復、恢復、撤銷\n減少有害狀態或恢復燒掉的能力標籤\n1 點力度／等級，2 點力度／標籤"
+  },
+  "advance": {
+    "name": "推進",
+    "color": "indigo",
+    "description": "創造進展、接近、推動 \n增加進度狀態\n1 點力度／等級"
+  },
+  "set back": {
+    "name": "阻撓",
+    "color": "violet",
+    "description": "延遲、破壞、逆轉\n降低進度狀態\n1 點力度／等級"
+  },
+  "discover": {
+    "name": "發現",
+    "color": "orange",
+    "description": "感知、回憶、研究、揭示\n發現一個有價值的細節\n1 點力度／細節"
+  },
+  "quick": {
+    "name": "快速",
+    "color": "green",
+    "description": "快速執行且不佔用太多時間的行動"
+  },
+  "mitigate": {
+    "name": "緩解",
+    "color": "blue",
+    "description": "減少傷害或負面效果的行動。\n\n當角色的標籤即將受到影響或燒掉時，可嘗試使用「緩解」行動進行抵抗。緩解為立即行動（通常會暫停他人的「聚光燈」）。\n\n每消耗 2 點力度，可減少 1 點將失去或獲得的標籤。\n\n無法緩解已獲得的負面狀態，只能提前阻止。\n\n若標籤能幫助防禦（如「強化免疫力」對抗寄生蟲），或賦予回應能力（如「武器專精」），亦可納入緩解。"
+  },
+  "suspend": {
+    "name": "暫停",
+    "color": "slate",
+    "description": "結果未知，直到主持人要求擲骰。"
+  },
+  "support": {
+    "name": "支援",
+    "color": "lime",
+    "description": "支援團隊或盟友的行動"
+  },
+  "teamwork": {
+    "name": "團隊合作",
+    "color": "amber",
+    "description": "需要團隊協作的行動"
+  },
+  "varies": {
+    "name": "變化",
+    "color": "rose",
+    "description": "效果可能變化的行動"
+  },
+  "extra feat": {
+    "name": "額外壯舉",
+    "color": "fuchsia",
+    "description": "每個額外細節或附加壯舉需額外消耗 1 點力度"
+  }
   },
   "actions": [
     {
@@ -613,6 +686,13 @@
       "type": ["quick", "disrupt", "weaken"],
       "category": "TECH-GEAR",
       "file": "TECHNICAL-MODIFICATIONS"
+    },
+    {
+      "name": "Operating a Drone",
+      "chinese_name": "操作無人機",
+      "type": [],
+      "category": "TECH-GEAR",
+      "file": "OPERATING-TECH-GEAR"
     }
   ]
 }

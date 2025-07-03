@@ -157,8 +157,9 @@
                 <span 
                   v-for="type in action.type" 
                   :key="type"
-                  :class="`bg-${getActionTypeInfo(type).color}-500/30 text-white px-3 py-1 rounded-full text-xs font-bold uppercase border border-${getActionTypeInfo(type).color}-400/50`"
-                  :title="getActionTypeInfo(type).description"
+                  :class="`bg-${getActionTypeInfo(type).color}-500/30 text-white px-3 py-1 rounded-full text-xs font-bold uppercase border border-${getActionTypeInfo(type).color}-400/50 cursor-help hover:bg-${getActionTypeInfo(type).color}-500/50 transition-colors`"
+                  @mouseenter="showActionTypeTooltip($event, type)"
+                  @mouseleave="hideTooltip()"
                 >
                   {{ getActionTypeInfo(type).name }}
                 </span>
@@ -197,9 +198,18 @@
                 <div 
                   v-for="example in action.examples" 
                   :key="example"
-                  class="bg-green-900/20 text-green-100 px-3 py-2 rounded border-l-2 border-green-400 text-sm"
+                  class="bg-green-900/20 text-green-100 px-3 py-2 rounded border-l-2 border-green-400 text-sm whitespace-pre-line"
                 >
-                  {{ example }}
+                  <template v-for="(segment, segmentIndex) in formatDescription(example)" :key="segmentIndex">
+                    <br v-if="segment.isNewLine" />
+                    <span 
+                      v-else-if="segment.isReference"
+                      class="text-cyan-300 underline cursor-help border-b border-cyan-300/50 hover:border-cyan-300 transition-colors" 
+                      @mouseenter="showTooltip($event, segment.tooltip.title, segment.tooltip.content)"
+                      @mouseleave="hideTooltip()"
+                    >{{ segment.text }}</span>
+                    <span v-else-if="segment.text">{{ segment.text }}</span>
+                  </template>
                 </div>
               </div>
             </div>
@@ -242,31 +252,59 @@
             <div v-if="action.success && Object.keys(action.success).length > 0" class="bg-gray-800/40 rounded-lg p-4">
               <h4 class="text-lg font-semibold text-emerald-100 mb-3 flex items-center">
                 <Icon name="lucide:check-circle" class="w-5 h-5 mr-2 text-emerald-400" />
-                {{ uiLabels?.sections?.successOutcomes || '成功結果' }}
+                {{ uiLabels?.sections?.successOutcomes || '成功結果/效果' }}
               </h4>
               <div class="space-y-2">
                 <!-- 額外壯舉用標籤風格 -->
                 <template v-for="(result, key) in action.success" :key="key">
                   <div v-if="isExtraFeat(key)" class="flex flex-wrap gap-2">
                     <div class="w-full mb-2">
-                      <span class="font-medium text-purple-200 text-sm uppercase">
+                      <span 
+                        class="font-medium text-purple-200 text-sm uppercase cursor-help hover:text-purple-100 transition-colors"
+                        @mouseenter="showSuccessResultTooltip($event, key)"
+                        @mouseleave="hideTooltip()"
+                      >
                         {{ getSuccessResultChineseName(key) }}
                       </span>
                     </div>
-                    <span 
+                    <div 
                       v-for="feat in (Array.isArray(result) ? result : [result])" 
                       :key="feat"
-                      class="bg-purple-900/30 text-purple-100 px-3 py-1 rounded border border-purple-500/30 text-sm hover:bg-purple-800/40 transition-colors cursor-default"
+                      class="bg-purple-900/30 text-purple-100 px-3 py-1 rounded border border-purple-500/30 text-sm hover:bg-purple-800/40 transition-colors cursor-default whitespace-pre-line"
                     >
-                      {{ feat }}
-                    </span>
+                      <template v-for="(segment, segmentIndex) in formatDescription(feat)" :key="segmentIndex">
+                        <br v-if="segment.isNewLine" />
+                        <span 
+                          v-else-if="segment.isReference"
+                          class="text-cyan-300 underline cursor-help border-b border-cyan-300/50 hover:border-cyan-300 transition-colors" 
+                          @mouseenter="showTooltip($event, segment.tooltip.title, segment.tooltip.content)"
+                          @mouseleave="hideTooltip()"
+                        >{{ segment.text }}</span>
+                        <span v-else-if="segment.text">{{ segment.text }}</span>
+                      </template>
+                    </div>
                   </div>
                   <!-- 一般成功結果用卡片風格 -->
                   <div v-else class="bg-emerald-900/20 rounded p-3 border-l-2 border-emerald-400">
-                    <div class="font-medium text-emerald-200 text-sm uppercase mb-1">
+                    <div 
+                      class="font-medium text-emerald-200 text-sm uppercase mb-1 cursor-help hover:text-emerald-100 transition-colors"
+                      @mouseenter="showSuccessResultTooltip($event, key)"
+                      @mouseleave="hideTooltip()"
+                    >
                       {{ getSuccessResultChineseName(key) }}
                     </div>
-                    <div class="text-gray-300 text-sm">{{ result }}</div>
+                    <div class="text-gray-300 text-sm whitespace-pre-line">
+                      <template v-for="(segment, segmentIndex) in formatDescription(result)" :key="segmentIndex">
+                        <br v-if="segment.isNewLine" />
+                        <span 
+                          v-else-if="segment.isReference"
+                          class="text-cyan-400 underline cursor-help border-b border-cyan-400/50 hover:border-cyan-400 transition-colors" 
+                          @mouseenter="showTooltip($event, segment.tooltip.title, segment.tooltip.content)"
+                          @mouseleave="hideTooltip()"
+                        >{{ segment.text }}</span>
+                        <span v-else-if="segment.text">{{ segment.text }}</span>
+                      </template>
+                    </div>
                   </div>
                 </template>
               </div>
@@ -282,9 +320,18 @@
                 <div 
                   v-for="consequence in action.consequences" 
                   :key="consequence"
-                  class="bg-orange-900/20 text-orange-100 px-3 py-2 rounded border-l-2 border-orange-400 text-sm"
+                  class="bg-orange-900/20 text-orange-100 px-3 py-2 rounded border-l-2 border-orange-400 text-sm whitespace-pre-line"
                 >
-                  {{ consequence }}
+                  <template v-for="(segment, segmentIndex) in formatDescription(consequence)" :key="segmentIndex">
+                    <br v-if="segment.isNewLine" />
+                    <span 
+                      v-else-if="segment.isReference"
+                      class="text-cyan-300 underline cursor-help border-b border-cyan-300/50 hover:border-cyan-300 transition-colors" 
+                      @mouseenter="showTooltip($event, segment.tooltip.title, segment.tooltip.content)"
+                      @mouseleave="hideTooltip()"
+                    >{{ segment.text }}</span>
+                    <span v-else-if="segment.text">{{ segment.text }}</span>
+                  </template>
                 </div>
               </div>
             </div>
@@ -719,7 +766,19 @@ const getActionChineseName = (actionName) => {
 const getActionTypeInfo = (type) => {
   if (!actionMapping.value?.actionTypes) return { name: type, color: 'gray' }
   
-  const typeInfo = actionMapping.value.actionTypes[type.toLowerCase()]
+  // 首先嘗試直接匹配
+  let typeInfo = actionMapping.value.actionTypes[type.toLowerCase()]
+  
+  // 如果沒找到，嘗試特殊映射
+  if (!typeInfo) {
+    const lowerType = type.toLowerCase()
+    // 處理額外壯舉的映射
+    if (lowerType.includes('extra') || lowerType.includes('feat')) {
+      typeInfo = actionMapping.value.actionTypes['extra feat']
+    }
+    // 可以在這裡添加其他特殊映射
+  }
+  
   return typeInfo || { name: type, color: 'gray' }
 }
 
@@ -736,6 +795,11 @@ const isExtraFeat = (key) => {
 }
 
 const formatDescription = (description) => {
+  // 安全檢查：確保輸入是字串
+  if (!description || typeof description !== 'string') {
+    return [{ text: description || '', isReference: false }]
+  }
+  
   // 使用配置檔案中的交叉引用關鍵字並返回包含片段的陣列
   if (!crossReferencePatterns.value.length) {
     // 處理換行符號，將文字按行分割
@@ -861,6 +925,45 @@ const showTooltip = (event, title, content) => {
 
 const hideTooltip = () => {
   tooltip.value.show = false
+}
+
+// 顯示成功結果的懸浮提示
+const showSuccessResultTooltip = (event, key) => {
+  // 根據 key 查找對應的行動類型描述
+  const lowerKey = key.toLowerCase()
+  let actionTypeKey = lowerKey
+  
+  // 移除常見後綴以找到基礎行動類型
+  const suffixes = ['effect', 'suspend', 'quick']
+  for (const suffix of suffixes) {
+    if (actionTypeKey.endsWith(suffix)) {
+      actionTypeKey = actionTypeKey.replace(suffix, '').trim()
+      break
+    }
+  }
+  
+  // 處理特殊情況
+  if (actionTypeKey === 'setback' || actionTypeKey === 'set back') {
+    actionTypeKey = 'set back'
+  } else if (actionTypeKey.includes('extra') || actionTypeKey.includes('feat')) {
+    // 處理額外壯舉的映射
+    actionTypeKey = 'extra feat'
+  }
+  
+  const actionTypeInfo = actionMapping.value?.actionTypes?.[actionTypeKey]
+  const title = getSuccessResultChineseName(key)
+  const content = actionTypeInfo?.description || '詳細說明請參考行動類型說明'
+  
+  showTooltip(event, title, content)
+}
+
+// 顯示行動類型的懸浮提示
+const showActionTypeTooltip = (event, type) => {
+  const actionTypeInfo = getActionTypeInfo(type)
+  const title = actionTypeInfo.name
+  const content = actionTypeInfo.description || '此行動類型暫無詳細說明'
+  
+  showTooltip(event, title, content)
 }
 
 // 書籤導航功能
