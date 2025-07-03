@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "title": "SOURCE-TOUCHED ITEMS - 源力觸碰物品",
+    "title": "秘源侵染物",
     "description": "受到神秘源力影響的魔法物品和超自然裝備",
     "category": "SOURCE-TOUCHED ITEMS",
     "version": "1.0.0",
@@ -9,7 +9,7 @@
   },
   "general_items": {
     "category": "GENERAL ITEMS",
-    "description": "這個類別的通用源力觸碰物品，具有共同的特徵和缺陷",
+    "description": "這個類別的通用秘源侵染物，具有共同的特徵和缺陷",
     "items": [
       {
         "name": "blessed water",

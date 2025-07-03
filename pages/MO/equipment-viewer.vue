@@ -81,116 +81,104 @@
           </div>
           
           <div class="p-6 space-y-8">
-            <!-- Regular Items Cards -->
-            <div v-if="equipmentData.general_items.items" class="space-y-4">
-              <h5 class="text-lg font-medium text-blue-200 border-b border-blue-500/30 pb-2">物品項目</h5>
-              <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                <div 
+            <!-- Regular Items -->
+            <div v-if="equipmentData.general_items.items" class="space-y-3">
+              <h5 class="text-lg font-medium text-blue-200 border-b border-blue-500/30 pb-2 flex items-center">
+                <Icon name="lucide:box" class="w-5 h-5 mr-2 text-blue-300" />
+                物品項目
+              </h5>
+              <div class="flex flex-wrap gap-2">
+                <span 
                   v-for="item in equipmentData.general_items.items" 
                   :key="item.name"
-                  class="bg-gradient-to-br from-blue-900/30 to-cyan-900/30 border border-blue-500/30 rounded-lg p-4 hover:border-blue-400/60 hover:from-blue-800/40 hover:to-cyan-800/40 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/10"
+                  class="bg-blue-700/30 text-blue-200 px-3 py-1.5 rounded-lg text-sm font-medium border border-blue-600/40 hover:bg-blue-600/40 hover:border-blue-500/60 transition-all duration-200"
                 >
-                  <div class="text-center">
-                    <div class="w-10 h-10 bg-blue-600/30 rounded-full flex items-center justify-center mx-auto mb-3">
-                      <Icon name="lucide:box" class="w-5 h-5 text-blue-300" />
-                    </div>
-                    <h6 class="text-white font-medium text-sm leading-tight">{{ item.chinese_name }}</h6>
-                  </div>
-                </div>
+                  {{ item.chinese_name }}
+                </span>
               </div>
             </div>
-            <!-- Common Features Cards -->
-            <div v-if="equipmentData.general_items.common_features" class="space-y-4">
-              <h5 class="text-lg font-medium text-green-200 border-b border-green-500/30 pb-2">通用特徵</h5>
-              <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                <div 
+            <!-- Common Features -->
+            <div v-if="equipmentData.general_items.common_features" class="space-y-3">
+              <h5 class="text-lg font-medium text-green-200 border-b border-green-500/30 pb-2 flex items-center">
+                <Icon name="lucide:check-circle" class="w-5 h-5 mr-2 text-green-300" />
+                通用特徵
+              </h5>
+              <div class="flex flex-wrap gap-2">
+                <span 
                   v-for="feature in equipmentData.general_items.common_features" 
                   :key="feature.name"
-                  class="bg-gradient-to-br from-green-900/30 to-emerald-900/30 border border-green-500/30 rounded-lg p-4 hover:border-green-400/60 hover:from-green-800/40 hover:to-emerald-800/40 transition-all duration-300 hover:shadow-lg hover:shadow-green-500/10"
+                  class="bg-green-700/30 text-green-200 px-3 py-1.5 rounded-lg text-sm font-medium border border-green-600/40 hover:bg-green-600/40 hover:border-green-500/60 transition-all duration-200"
                 >
-                  <div class="text-center">
-                    <div class="w-10 h-10 bg-green-600/30 rounded-full flex items-center justify-center mx-auto mb-3">
-                      <Icon name="lucide:check-circle" class="w-5 h-5 text-green-300" />
-                    </div>
-                    <h6 class="text-white font-medium text-sm leading-tight">{{ feature.chinese_name }}</h6>
-                  </div>
-                </div>
+                  {{ feature.chinese_name }}
+                </span>
               </div>
             </div>
 
-            <!-- Common Flaws Cards -->
-            <div v-if="equipmentData.general_items.common_flaws" class="space-y-4">
-              <h5 class="text-lg font-medium text-red-200 border-b border-red-500/30 pb-2">通用缺陷</h5>
-              <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                <div 
+            <!-- Common Flaws -->
+            <div v-if="equipmentData.general_items.common_flaws" class="space-y-3">
+              <h5 class="text-lg font-medium text-red-200 border-b border-red-500/30 pb-2 flex items-center">
+                <Icon name="lucide:x-circle" class="w-5 h-5 mr-2 text-red-300" />
+                通用缺陷
+              </h5>
+              <div class="flex flex-wrap gap-2">
+                <span 
                   v-for="flaw in equipmentData.general_items.common_flaws" 
                   :key="flaw.name"
-                  class="bg-gradient-to-br from-red-900/30 to-rose-900/30 border border-red-500/30 rounded-lg p-4 hover:border-red-400/60 hover:from-red-800/40 hover:to-rose-800/40 transition-all duration-300 hover:shadow-lg hover:shadow-red-500/10"
+                  class="bg-red-700/30 text-red-200 px-3 py-1.5 rounded-lg text-sm font-medium border border-red-600/40 hover:bg-red-600/40 hover:border-red-500/60 transition-all duration-200"
                 >
-                  <div class="text-center">
-                    <div class="w-10 h-10 bg-red-600/30 rounded-full flex items-center justify-center mx-auto mb-3">
-                      <Icon name="lucide:x-circle" class="w-5 h-5 text-red-300" />
-                    </div>
-                    <h6 class="text-white font-medium text-sm leading-tight">{{ flaw.chinese_name }}</h6>
-                  </div>
-                </div>
+                  {{ flaw.chinese_name }}
+                </span>
               </div>
             </div>
 
-            <!-- Software Cards -->
-            <div v-if="equipmentData.general_items.software" class="space-y-4">
-              <h5 class="text-lg font-medium text-purple-200 border-b border-purple-500/30 pb-2">軟體</h5>
-              <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                <div 
+            <!-- Software -->
+            <div v-if="equipmentData.general_items.software" class="space-y-3">
+              <h5 class="text-lg font-medium text-purple-200 border-b border-purple-500/30 pb-2 flex items-center">
+                <Icon name="lucide:code" class="w-5 h-5 mr-2 text-purple-300" />
+                軟體
+              </h5>
+              <div class="flex flex-wrap gap-2">
+                <span 
                   v-for="item in equipmentData.general_items.software" 
                   :key="item.name"
-                  class="bg-gradient-to-br from-purple-900/30 to-violet-900/30 border border-purple-500/30 rounded-lg p-4 hover:border-purple-400/60 hover:from-purple-800/40 hover:to-violet-800/40 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/10"
+                  class="bg-purple-700/30 text-purple-200 px-3 py-1.5 rounded-lg text-sm font-medium border border-purple-600/40 hover:bg-purple-600/40 hover:border-purple-500/60 transition-all duration-200"
                 >
-                  <div class="text-center">
-                    <div class="w-10 h-10 bg-purple-600/30 rounded-full flex items-center justify-center mx-auto mb-3">
-                      <Icon name="lucide:code" class="w-5 h-5 text-purple-300" />
-                    </div>
-                    <h6 class="text-white font-medium text-sm leading-tight">{{ item.chinese_name }}</h6>
-                  </div>
-                </div>
+                  {{ item.chinese_name }}
+                </span>
               </div>
             </div>
 
-            <!-- VR Models Cards -->
-            <div v-if="equipmentData.general_items.vr_models" class="space-y-4">
-              <h5 class="text-lg font-medium text-purple-200 border-b border-purple-500/30 pb-2">VR 模組</h5>
-              <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                <div 
+            <!-- VR Models -->
+            <div v-if="equipmentData.general_items.vr_models" class="space-y-3">
+              <h5 class="text-lg font-medium text-pink-200 border-b border-pink-500/30 pb-2 flex items-center">
+                <Icon name="lucide:headphones" class="w-5 h-5 mr-2 text-pink-300" />
+                VR 模組
+              </h5>
+              <div class="flex flex-wrap gap-2">
+                <span 
                   v-for="item in equipmentData.general_items.vr_models" 
                   :key="item.name"
-                  class="bg-gradient-to-br from-purple-900/30 to-pink-900/30 border border-purple-500/30 rounded-lg p-4 hover:border-purple-400/60 hover:from-purple-800/40 hover:to-pink-800/40 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/10"
+                  class="bg-pink-700/30 text-pink-200 px-3 py-1.5 rounded-lg text-sm font-medium border border-pink-600/40 hover:bg-pink-600/40 hover:border-pink-500/60 transition-all duration-200"
                 >
-                  <div class="text-center">
-                    <div class="w-10 h-10 bg-purple-600/30 rounded-full flex items-center justify-center mx-auto mb-3">
-                      <Icon name="lucide:headphones" class="w-5 h-5 text-purple-300" />
-                    </div>
-                    <h6 class="text-white font-medium text-sm leading-tight">{{ item.chinese_name }}</h6>
-                  </div>
-                </div>
+                  {{ item.chinese_name }}
+                </span>
               </div>
             </div>
 
-            <!-- Hardware Cards -->
-            <div v-if="equipmentData.general_items.hardware" class="space-y-4">
-              <h5 class="text-lg font-medium text-purple-200 border-b border-purple-500/30 pb-2">硬體</h5>
-              <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                <div 
+            <!-- Hardware -->
+            <div v-if="equipmentData.general_items.hardware" class="space-y-3">
+              <h5 class="text-lg font-medium text-indigo-200 border-b border-indigo-500/30 pb-2 flex items-center">
+                <Icon name="lucide:cpu" class="w-5 h-5 mr-2 text-indigo-300" />
+                硬體
+              </h5>
+              <div class="flex flex-wrap gap-2">
+                <span 
                   v-for="item in equipmentData.general_items.hardware" 
                   :key="item.name"
-                  class="bg-gradient-to-br from-purple-900/30 to-indigo-900/30 border border-purple-500/30 rounded-lg p-4 hover:border-purple-400/60 hover:from-purple-800/40 hover:to-indigo-800/40 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/10"
+                  class="bg-indigo-700/30 text-indigo-200 px-3 py-1.5 rounded-lg text-sm font-medium border border-indigo-600/40 hover:bg-indigo-600/40 hover:border-indigo-500/60 transition-all duration-200"
                 >
-                  <div class="text-center">
-                    <div class="w-10 h-10 bg-purple-600/30 rounded-full flex items-center justify-center mx-auto mb-3">
-                      <Icon name="lucide:cpu" class="w-5 h-5 text-purple-300" />
-                    </div>
-                    <h6 class="text-white font-medium text-sm leading-tight">{{ item.chinese_name }}</h6>
-                  </div>
-                </div>
+                  {{ item.chinese_name }}
+                </span>
               </div>
             </div>
 
@@ -212,60 +200,54 @@
                 </button>
               </div>
               
-              <!-- Firearms Cards -->
-              <div v-if="activeWeaponTab === 'firearms' && equipmentData.general_items.firearms" class="space-y-4">
-                <h5 class="text-lg font-medium text-orange-200 border-b border-orange-500/30 pb-2">槍械</h5>
-                <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                  <div 
+              <!-- Firearms -->
+              <div v-if="activeWeaponTab === 'firearms' && equipmentData.general_items.firearms" class="space-y-3">
+                <h5 class="text-lg font-medium text-orange-200 border-b border-orange-500/30 pb-2 flex items-center">
+                  <Icon name="lucide:target" class="w-5 h-5 mr-2 text-orange-300" />
+                  槍械
+                </h5>
+                <div class="flex flex-wrap gap-2">
+                  <span 
                     v-for="item in equipmentData.general_items.firearms" 
                     :key="item.name"
-                    class="bg-gradient-to-br from-orange-900/30 to-red-900/30 border border-orange-500/30 rounded-lg p-4 hover:border-orange-400/60 hover:from-orange-800/40 hover:to-red-800/40 transition-all duration-300 hover:shadow-lg hover:shadow-orange-500/10"
+                    class="bg-orange-700/30 text-orange-200 px-3 py-1.5 rounded-lg text-sm font-medium border border-orange-600/40 hover:bg-orange-600/40 hover:border-orange-500/60 transition-all duration-200"
                   >
-                    <div class="text-center">
-                      <div class="w-10 h-10 bg-orange-600/30 rounded-full flex items-center justify-center mx-auto mb-3">
-                        <Icon name="lucide:target" class="w-5 h-5 text-orange-300" />
-                      </div>
-                      <h6 class="text-white font-medium text-sm leading-tight">{{ item.chinese_name }}</h6>
-                    </div>
-                  </div>
+                    {{ item.chinese_name }}
+                  </span>
                 </div>
               </div>
 
-              <!-- Cold Weapons Cards -->
-              <div v-if="activeWeaponTab === 'cold_weapons' && equipmentData.general_items.cold_weapons" class="space-y-4">
-                <h5 class="text-lg font-medium text-blue-200 border-b border-blue-500/30 pb-2">冷兵器</h5>
-                <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                  <div 
+              <!-- Cold Weapons -->
+              <div v-if="activeWeaponTab === 'cold_weapons' && equipmentData.general_items.cold_weapons" class="space-y-3">
+                <h5 class="text-lg font-medium text-slate-200 border-b border-slate-500/30 pb-2 flex items-center">
+                  <Icon name="lucide:sword" class="w-5 h-5 mr-2 text-slate-300" />
+                  冷兵器
+                </h5>
+                <div class="flex flex-wrap gap-2">
+                  <span 
                     v-for="item in equipmentData.general_items.cold_weapons" 
                     :key="item.name"
-                    class="bg-gradient-to-br from-blue-900/30 to-slate-900/30 border border-blue-500/30 rounded-lg p-4 hover:border-blue-400/60 hover:from-blue-800/40 hover:to-slate-800/40 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/10"
+                    class="bg-slate-700/30 text-slate-200 px-3 py-1.5 rounded-lg text-sm font-medium border border-slate-600/40 hover:bg-slate-600/40 hover:border-slate-500/60 transition-all duration-200"
                   >
-                    <div class="text-center">
-                      <div class="w-10 h-10 bg-blue-600/30 rounded-full flex items-center justify-center mx-auto mb-3">
-                        <Icon name="lucide:sword" class="w-5 h-5 text-blue-300" />
-                      </div>
-                      <h6 class="text-white font-medium text-sm leading-tight">{{ item.chinese_name }}</h6>
-                    </div>
-                  </div>
+                    {{ item.chinese_name }}
+                  </span>
                 </div>
               </div>
 
-              <!-- Explosives Cards -->
-              <div v-if="activeWeaponTab === 'explosives' && equipmentData.general_items.explosives" class="space-y-4">
-                <h5 class="text-lg font-medium text-red-200 border-b border-red-500/30 pb-2">爆裂物</h5>
-                <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                  <div 
+              <!-- Explosives -->
+              <div v-if="activeWeaponTab === 'explosives' && equipmentData.general_items.explosives" class="space-y-3">
+                <h5 class="text-lg font-medium text-yellow-200 border-b border-yellow-500/30 pb-2 flex items-center">
+                  <Icon name="lucide:bomb" class="w-5 h-5 mr-2 text-yellow-300" />
+                  爆裂物
+                </h5>
+                <div class="flex flex-wrap gap-2">
+                  <span 
                     v-for="item in equipmentData.general_items.explosives" 
                     :key="item.name"
-                    class="bg-gradient-to-br from-red-900/30 to-orange-900/30 border border-red-500/30 rounded-lg p-4 hover:border-red-400/60 hover:from-red-800/40 hover:to-orange-800/40 transition-all duration-300 hover:shadow-lg hover:shadow-red-500/10"
+                    class="bg-yellow-700/30 text-yellow-200 px-3 py-1.5 rounded-lg text-sm font-medium border border-yellow-600/40 hover:bg-yellow-600/40 hover:border-yellow-500/60 transition-all duration-200"
                   >
-                    <div class="text-center">
-                      <div class="w-10 h-10 bg-red-600/30 rounded-full flex items-center justify-center mx-auto mb-3">
-                        <Icon name="lucide:bomb" class="w-5 h-5 text-red-300" />
-                      </div>
-                      <h6 class="text-white font-medium text-sm leading-tight">{{ item.chinese_name }}</h6>
-                    </div>
-                  </div>
+                    {{ item.chinese_name }}
+                  </span>
                 </div>
               </div>
             </div>

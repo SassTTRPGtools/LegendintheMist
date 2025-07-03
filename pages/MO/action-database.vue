@@ -173,17 +173,18 @@
                 <Icon name="lucide:info" class="w-5 h-5 mr-2 text-cyan-400" />
                 {{ uiLabels?.sections?.description || '描述' }}
               </h4>
-              <p class="text-gray-300 leading-relaxed">
+              <div class="text-gray-300 leading-relaxed whitespace-pre-line">
                 <template v-for="(segment, segmentIndex) in formatDescription(action.description)" :key="segmentIndex">
+                  <br v-if="segment.isNewLine" />
                   <span 
-                    v-if="segment.isReference"
+                    v-else-if="segment.isReference"
                     class="text-cyan-400 underline cursor-help border-b border-cyan-400/50 hover:border-cyan-400 transition-colors" 
                     @mouseenter="showTooltip($event, segment.tooltip.title, segment.tooltip.content)"
                     @mouseleave="hideTooltip()"
                   >{{ segment.text }}</span>
-                  <span v-else>{{ segment.text }}</span>
+                  <span v-else-if="segment.text">{{ segment.text }}</span>
                 </template>
-              </p>
+              </div>
             </div>
 
             <!-- Examples -->
@@ -319,7 +320,7 @@
       class="fixed z-50 bg-black/90 backdrop-blur-sm border border-cyan-500/50 rounded-lg p-4 max-w-sm shadow-2xl pointer-events-none"
     >
       <h5 class="font-semibold text-cyan-100 mb-2">{{ tooltip.title }}</h5>
-      <p class="text-gray-300 text-sm">{{ tooltip.content }}</p>
+      <p class="text-gray-300 text-sm whitespace-pre-line">{{ tooltip.content }}</p>
     </div>
 
     <!-- Floating Bookmark Navigation -->
@@ -736,7 +737,15 @@ const isExtraFeat = (key) => {
 
 const formatDescription = (description) => {
   // 使用配置檔案中的交叉引用關鍵字並返回包含片段的陣列
-  if (!crossReferencePatterns.value.length) return [{ text: description, isReference: false }]
+  if (!crossReferencePatterns.value.length) {
+    // 處理換行符號，將文字按行分割
+    const lines = description.split(/\r?\n/)
+    return lines.map((line, index) => ({
+      text: line,
+      isReference: false,
+      isNewLine: index > 0
+    }))
+  }
   
   let segments = [{ text: description, isReference: false }]
   
@@ -788,7 +797,30 @@ const formatDescription = (description) => {
     segments = newSegments
   })
   
-  return segments
+  // 處理所有片段中的換行符號
+  const finalSegments = []
+  segments.forEach(segment => {
+    const lines = segment.text.split(/\r?\n/)
+    lines.forEach((line, index) => {
+      if (index > 0) {
+        // 添加換行標記
+        finalSegments.push({
+          text: '',
+          isReference: false,
+          isNewLine: true
+        })
+      }
+      if (line || index === 0) {
+        finalSegments.push({
+          text: line,
+          isReference: segment.isReference,
+          tooltip: segment.tooltip
+        })
+      }
+    })
+  })
+  
+  return finalSegments
 }
 
 // 懸浮提示功能

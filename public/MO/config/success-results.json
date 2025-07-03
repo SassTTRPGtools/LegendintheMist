@@ -27,6 +27,8 @@
     "attack": "攻擊效果",
     "attackEffect": "攻擊效果",
     "setBackEffect": "阻撓效果",
+    "disruptInfluenceEffect": "干擾影響效果",
+    "attackSuspendEffect": "攻擊-暫停效果",
     "createEnhanceEffect": "創造強化效果",
     "bestowEnhanceEffect": "賦予強化效果",
     "quickCreateEffect": "快速創造效果",

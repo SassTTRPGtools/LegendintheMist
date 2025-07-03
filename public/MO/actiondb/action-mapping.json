@@ -357,21 +357,21 @@
     },
     {
       "name": "Communing with a Mythos",
-      "chinese_name": "與神話源質交流",
+      "chinese_name": "與神話秘源交流",
       "type": ["quick", "discover"],
       "category": "MYTHOS",
       "file": "MYTHOI-SOURCES"
     },
     {
       "name": "Identifying a Source",
-      "chinese_name": "識別源質",
+      "chinese_name": "識別秘源",
       "type": ["quick", "discover", "advance"],
       "category": "MYTHOS",
       "file": "MYTHOI-SOURCES"
     },
     {
       "name": "Countering, Dispelling, or Disenchanting Mythos' Powers and Sources",
-      "chinese_name": "反制、驅散或解除神話力量和源質",
+      "chinese_name": "反制、驅散或解除神話力量和秘源",
       "type": ["mitigate", "weaken", "disrupt"],
       "category": "MYTHOS",
       "file": "THE-ARCANE-ARTS"

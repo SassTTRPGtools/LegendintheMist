@@ -1,49 +1,49 @@
 {
   "categories": [
-    { "value": "COMBAT", "label": "COMBAT - 戰鬥" },
-    { "value": "Cyberspace", "label": "Cyberspace - 網路空間" },
-    { "value": "EXPLORATION-SURVIVAL", "label": "EXPLORATION & SURVIVAL - 探索與生存" },
-    { "value": "MYTHOS", "label": "MYTHOS - 神話" },
-    { "value": "SOCIAL-INTERACTIONS", "label": "SOCIAL INTERACTIONS - 社交互動" },
-    { "value": "SPYCRAFT", "label": "SPYCRAFT - 間諜技巧" },
-    { "value": "TECH-GEAR", "label": "TECH & GEAR - 科技與裝備" }
+    { "value": "COMBAT", "label": "戰鬥" },
+    { "value": "Cyberspace", "label": "網路空間" },
+    { "value": "EXPLORATION-SURVIVAL", "label": "探索與生存" },
+    { "value": "MYTHOS", "label": "神話" },
+    { "value": "SOCIAL-INTERACTIONS", "label": "社交互動" },
+    { "value": "SPYCRAFT", "label": "間諜技巧" },
+    { "value": "TECH-GEAR", "label": "科技與裝備" }
   ],
   "categoryFiles": {
     "COMBAT": [
-      { "value": "COMBAT-DEFENSE", "label": "Combat Defense - 戰鬥防禦" },
-      { "value": "COMBAT-MOVEMENT", "label": "Combat Movement - 戰鬥移動" },
-      { "value": "COMBAT-SUPPORT", "label": "Combat Support - 戰鬥支援" },
-      { "value": "DIRECT-ATTACKS", "label": "Direct Attacks - 直接攻擊" },
-      { "value": "TACTICAL-ATTACKS", "label": "Tactical Attacks - 戰術攻擊" }
+      { "value": "DIRECT-ATTACKS", "label": "直接攻擊" },
+      { "value": "TACTICAL-ATTACKS", "label": "戰術攻擊" },
+      { "value": "COMBAT-DEFENSE", "label": "戰鬥防禦" },
+      { "value": "COMBAT-MOVEMENT", "label": "戰鬥移動" },
+      { "value": "COMBAT-SUPPORT", "label": "戰鬥支援" }
     ],
     "Cyberspace": [
-      { "value": "DATA-NETWORK-CODING", "label": "Data Network Coding - 資料網路編程" },
-      { "value": "HACKING", "label": "Hacking - 駭客行為" },
-      { "value": "HARNESSING", "label": "Harnessing - 網路空間掌控" },
-      { "value": "VR-MODELING", "label": "VR Modeling - VR 建模" }
+      { "value": "DATA-NETWORK-CODING", "label": "資料網路編程" },
+      { "value": "HACKING", "label": "駭客行為" },
+      { "value": "HARNESSING", "label": "網路空間掌控" },
+      { "value": "VR-MODELING", "label": "VR 建模" }
     ],
     "EXPLORATION-SURVIVAL": [
-      { "value": "MEDICINE-HEALTH-RECOVERY", "label": "Medicine Health Recovery - 醫療健康恢復" },
-      { "value": "NAVIGATING-DANGER", "label": "Navigating Danger - 危險導航" }
+      { "value": "MEDICINE-HEALTH-RECOVERY", "label": "醫療健康恢復" },
+      { "value": "NAVIGATING-DANGER", "label": "危險導航" }
     ],
     "MYTHOS": [
-      { "value": "CONJURING-COMPANIONS", "label": "Conjuring Companions - 召喚夥伴" },
-      { "value": "MYTHOI-SOURCES", "label": "Mythoi Sources - 神話源質" },
-      { "value": "THE-ARCANE-ARTS", "label": "The Arcane Arts - 奧術技藝" },
-      { "value": "USING-MYTHIC-POWERS", "label": "Using Mythic Powers - 運用神話力量" }
+      { "value": "CONJURING-COMPANIONS", "label": "召喚夥伴" },
+      { "value": "MYTHOI-SOURCES", "label": "神話秘源" },
+      { "value": "THE-ARCANE-ARTS", "label": "奧術技藝" },
+      { "value": "USING-MYTHIC-POWERS", "label": "運用神話力量" }
     ],
     "SOCIAL-INTERACTIONS": [
-      { "value": "BUSINESS-TRANSACTIONS", "label": "Business Transactions - 商業交易" },
-      { "value": "IN-PERSON-INTERACTIONS", "label": "In-Person Interactions - 面對面互動" },
-      { "value": "TEAMWORK", "label": "Teamwork - 團隊合作" }
+      { "value": "BUSINESS-TRANSACTIONS", "label": "商業交易" },
+      { "value": "IN-PERSON-INTERACTIONS", "label": "面對面互動" },
+      { "value": "TEAMWORK", "label": "團隊合作" }
     ],
     "SPYCRAFT": [
-      { "value": "CLANDESTINE-OPERATIONS", "label": "Clandestine Operations - 秘密行動" },
-      { "value": "INTEL-GATHERING", "label": "Intel Gathering - 情報蒐集" }
+      { "value": "CLANDESTINE-OPERATIONS", "label": "秘密行動" },
+      { "value": "INTEL-GATHERING", "label": "情報蒐集" }
     ],
     "TECH-GEAR": [
-      { "value": "OPERATING-TECH-GEAR", "label": "Operating Tech & Gear - 操作科技與裝備" },
-      { "value": "TECHNICAL-MODIFICATIONS", "label": "Technical Modifications - 技術改裝" }
+      { "value": "OPERATING-TECH-GEAR", "label": "操作科技與裝備" },
+      { "value": "TECHNICAL-MODIFICATIONS", "label": "技術改裝" }
     ]
   }
 }
