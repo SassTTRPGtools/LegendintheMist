@@ -205,6 +205,41 @@
       "file": "DIRECT-ATTACKS"
     },
     {
+      "name": "Homing Ranged Attacks",
+      "chinese_name": "導引型遠程攻擊",
+      "type": [],
+      "category": "COMBAT",
+      "file": "DIRECT-ATTACKS"
+    },
+    {
+      "name": "Multiple Attacks",
+      "chinese_name": "多重攻擊",
+      "type": [],
+      "category": "COMBAT",
+      "file": "DIRECT-ATTACKS"
+    },
+    {
+      "name": "Precision Attacks",
+      "chinese_name": "精準攻擊",
+      "type": [],
+      "category": "COMBAT",
+      "file": "DIRECT-ATTACKS"
+    },
+    {
+      "name": "Surprise Attacks and Silent Kills",
+      "chinese_name": "突襲與沉默暗殺",
+      "type": [],
+      "category": "COMBAT",
+      "file": "DIRECT-ATTACKS"
+    },
+    {
+      "name": "Two-Weapon Fighting",
+      "chinese_name": "雙武器戰鬥",
+      "type": [],
+      "category": "COMBAT",
+      "file": "DIRECT-ATTACKS"
+    },
+    {
       "name": "Attacks to Hold Off or Spur Opponents",
       "chinese_name": "牽制或激勵對手的攻擊",
       "type": ["quick", "disrupt", "influence", "attack"],

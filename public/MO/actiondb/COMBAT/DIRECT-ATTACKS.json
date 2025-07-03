@@ -196,5 +196,70 @@
     "他們從你身上奪走某物（燒掉標籤）"
   ],
   "source": "Metro: Otherscape Corebook"
+},
+{
+  "name": "Homing Ranged Attacks",
+  "type": [],
+  "examples": [],
+  "description": "如「導引飛彈」、「智慧彈藥」或「附魔箭矢」等標籤，可用來提升遠程攻擊的力度與命中機率。使用導引武器鎖定目標也可視為「準備攻擊」的一部分。\n\n主持人也可以將發射導引投射物視為一場「追逐」：當追逐進度達到「追上」閾值時，即視為命中目標，並由主持人決定其承受的有害狀態，或以敘事方式移除、解除武裝等處理。",
+  "powerTags": [],
+  "weaknessTags": [],
+  "success": {},
+  "extraFeats": [],
+  "consequences": [],
+  "source": "Metro: Otherscape Corebook"
+},
+{
+  "name": "Multiple Attacks",
+  "type": [],
+  "examples": [],
+  "description": "如「連發射擊」、「多臂女神」等標籤，可用來表示快速連續攻擊的能力。這些標籤可提升徒手攻擊或遠程攻擊的力度，只要你所執行的行動體現了你的攻擊頻率。\n\n當你對多個目標發動攻擊並使用「規模化」時，可用這些標籤來抵銷規模帶來的力度損失。此外，你也可以使用這些標籤來釋放「範圍攻擊」。",
+  "powerTags": [],
+  "weaknessTags": [],
+  "success": {},
+  "extraFeats": [],
+  "consequences": [],
+  "source": "Metro: Otherscape Corebook"
+},
+{
+  "name": "Precision Attacks",
+  "type": [],
+  "examples": [
+    "精準瞄準",
+    "俐落切割",
+    "瞄準弱點",
+    "特技射擊"
+  ],
+  "description": "如「精準瞄準」、「俐落切割」、「瞄準弱點」、「特技射擊」等標籤，表示你的攻擊針對特定部位或弱點。\n\n若你進行精準打擊以造成更多傷害，可視為「準備攻擊」後進行徒手或遠程攻擊。\n若目標是削弱對方能力或裝備，可參考「削弱攻擊」或「破壞裝備」。\n若是特技性質的攻擊，則視為「特技射擊」。",
+  "powerTags": [],
+  "weaknessTags": [],
+  "success": {},
+  "extraFeats": [],
+  "consequences": [],
+  "source": "Metro: Otherscape Corebook"
+},
+{
+  "name": "Surprise Attacks and Silent Kills",
+  "type": [],
+  "examples": [],
+  "description": "對毫無防備的目標進行奇襲攻擊，可令其進入「突襲」狀態。這可能來自「干擾」行動、後果，或由主持人判定敘事觸發。\n\n主持人也可以判定某些防禦標籤（如敏捷、防暴盾牌、某些護甲）在突襲下無效，因為目標來不及反應。\n\n若要讓攻擊對其他人保持隱密，請使用「額外壯舉」。",
+  "powerTags": [],
+  "weaknessTags": [],
+  "success": {},
+  "extraFeats": [],
+  "consequences": [],
+  "source": "Metro: Otherscape Corebook"
+},
+{
+  "name": "Two-Weapon Fighting",
+  "type": [],
+  "examples": [],
+  "description": "雙持戰鬥可透過兩個獨立的武器標籤、或一個表示雙持技能的標籤，或兩者皆具來表示。你可以使用這些標籤進行任何戰鬥動作。",
+  "powerTags": [],
+  "weaknessTags": [],
+  "success": {},
+  "extraFeats": [],
+  "consequences": [],
+  "source": "Metro: Otherscape Corebook"
 }
 ]
