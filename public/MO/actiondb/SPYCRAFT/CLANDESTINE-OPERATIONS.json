@@ -1,7 +1,7 @@
 [
     {
   "name": "Avoiding Attention and Staying Anonymous",
-  "type": "mitigate",
+  "type": ["mitigate"],
   "examples": [
     "更換掩護身分",
     "切換至緊急通訊頻道",

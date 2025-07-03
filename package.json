@@ -9,7 +9,9 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "deploy": "nuxt generate && gh-pages -d .output/public",
-    "build:github": "NODE_ENV=production NITRO_PRESET=github-pages nuxt generate"
+    "build:github": "NODE_ENV=production NITRO_PRESET=github-pages nuxt generate",
+    "validate:config": "node scripts/validate-config.js",
+    "check:data-removal": "node scripts/check-data-removal.js"
   },
   "dependencies": {
     "@nuxt/icon": "^1.14.0",

@@ -1,0 +1,618 @@
+{
+  "metadata": {
+    "title": "行動資料庫映射表",
+    "description": "都市異景所有行動的名稱和類型映射表",
+    "version": "1.0.0",
+    "created": "2025-07-03",
+    "language": "zh-TW"
+  },
+  "actionTypes": {
+    "attack": { "name": "攻擊", "color": "red", "description": "直接攻擊敵人的行動" },
+    "mitigate": { "name": "緩解", "color": "blue", "description": "減少傷害或負面效果的行動" },
+    "quick": { "name": "快速", "color": "green", "description": "快速執行且不佔用太多時間的行動" },
+    "create": { "name": "創造", "color": "purple", "description": "創造新的物品、狀態或標籤的行動" },
+    "enhance": { "name": "強化", "color": "yellow", "description": "增強現有能力或狀態的行動" },
+    "bestow": { "name": "賦予", "color": "cyan", "description": "給予他人能力或狀態的行動" },
+    "discover": { "name": "發現", "color": "orange", "description": "獲取資訊或知識的行動" },
+    "advance": { "name": "推進", "color": "indigo", "description": "推進任務或改變局勢的行動" },
+    "disrupt": { "name": "干擾", "color": "pink", "description": "干擾敵人行動或計畫的行動" },
+    "weaken": { "name": "削弱", "color": "gray", "description": "削弱敵人能力或狀態的行動" },
+    "influence": { "name": "影響", "color": "teal", "description": "影響他人行為或想法的行動" },
+    "restore": { "name": "恢復", "color": "emerald", "description": "修復或治療的行動" },
+    "suspend": { "name": "暫停", "color": "slate", "description": "暫時阻止某些行動的行動" },
+    "support": { "name": "支援", "color": "lime", "description": "支援團隊或盟友的行動" },
+    "teamwork": { "name": "團隊合作", "color": "amber", "description": "需要團隊協作的行動" },
+    "varies": { "name": "變化", "color": "rose", "description": "效果可能變化的行動" },
+    "set back": { "name": "阻撓", "color": "violet", "description": "阻撓敵人行動的行動" }
+  },
+  "actions": [
+    {
+      "name": "Blocking or Soaking an Attack",
+      "chinese_name": "格擋或承受攻擊",
+      "type": ["mitigate"],
+      "category": "COMBAT",
+      "file": "COMBAT-DEFENSE"
+    },
+    {
+      "name": "Dodging an Attack",
+      "chinese_name": "閃避攻擊",
+      "type": ["mitigate"],
+      "category": "COMBAT",
+      "file": "COMBAT-DEFENSE"
+    },
+    {
+      "name": "Taking Cover",
+      "chinese_name": "尋找掩護",
+      "type": ["quick", "create", "enhance"],
+      "category": "COMBAT",
+      "file": "COMBAT-DEFENSE"
+    },
+    {
+      "name": "Forcing an Opponent to Move",
+      "chinese_name": "迫使對手移動",
+      "type": ["quick", "disrupt", "weaken"],
+      "category": "COMBAT",
+      "file": "COMBAT-MOVEMENT"
+    },
+    {
+      "name": "Moving Around the Battlefield",
+      "chinese_name": "戰場移動",
+      "type": ["quick", "enhance"],
+      "category": "COMBAT",
+      "file": "COMBAT-MOVEMENT"
+    },
+    {
+      "name": "Analyzing the Battlefield",
+      "chinese_name": "分析戰場",
+      "type": ["discover", "disrupt"],
+      "category": "COMBAT",
+      "file": "COMBAT-SUPPORT"
+    },
+    {
+      "name": "Assisting an Ally",
+      "chinese_name": "協助盟友",
+      "type": ["quick", "enhance", "bestow"],
+      "category": "COMBAT",
+      "file": "COMBAT-SUPPORT"
+    },
+    {
+      "name": "Assuming a Battle Stance",
+      "chinese_name": "擺出戰鬥姿態",
+      "type": ["enhance"],
+      "category": "COMBAT",
+      "file": "COMBAT-SUPPORT"
+    },
+    {
+      "name": "Improvised Weapons",
+      "chinese_name": "即興武器",
+      "type": ["quick", "create"],
+      "category": "COMBAT",
+      "file": "COMBAT-SUPPORT"
+    },
+    {
+      "name": "Preparing an Attack",
+      "chinese_name": "準備攻擊",
+      "type": ["enhance"],
+      "category": "COMBAT",
+      "file": "COMBAT-SUPPORT"
+    },
+    {
+      "name": "Tactical Teamwork",
+      "chinese_name": "戰術團隊合作",
+      "type": ["support", "teamwork"],
+      "category": "COMBAT",
+      "file": "COMBAT-SUPPORT"
+    },
+    {
+      "name": "Area Attacks",
+      "chinese_name": "區域攻擊",
+      "type": ["attack"],
+      "category": "COMBAT",
+      "file": "DIRECT-ATTACKS"
+    },
+    {
+      "name": "Hand-to-Hand Attacks",
+      "chinese_name": "徒手攻擊",
+      "type": ["attack"],
+      "category": "COMBAT",
+      "file": "DIRECT-ATTACKS"
+    },
+    {
+      "name": "Ranged Attacks",
+      "chinese_name": "遠程攻擊",
+      "type": ["attack"],
+      "category": "COMBAT",
+      "file": "DIRECT-ATTACKS"
+    },
+    {
+      "name": "Restraining an Opponent",
+      "chinese_name": "束縛對手",
+      "type": ["disrupt", "attack"],
+      "category": "COMBAT",
+      "file": "DIRECT-ATTACKS"
+    },
+    {
+      "name": "Attacks to Hold Off or Spur Opponents",
+      "chinese_name": "牽制或激勵對手的攻擊",
+      "type": ["quick", "disrupt", "influence", "attack"],
+      "category": "COMBAT",
+      "file": "TACTICAL-ATTACKS"
+    },
+    {
+      "name": "Disarming and Sundering Gear",
+      "chinese_name": "解除武裝和破壞裝備",
+      "type": ["attack", "weaken"],
+      "category": "COMBAT",
+      "file": "TACTICAL-ATTACKS"
+    },
+    {
+      "name": "Feinting and Distracting Attacks",
+      "chinese_name": "佯攻和干擾攻擊",
+      "type": ["quick", "influence", "disrupt", "weaken"],
+      "category": "COMBAT",
+      "file": "TACTICAL-ATTACKS"
+    },
+    {
+      "name": "Impairing Attacks",
+      "chinese_name": "削弱攻擊",
+      "type": ["disrupt", "weaken"],
+      "category": "COMBAT",
+      "file": "TACTICAL-ATTACKS"
+    },
+    {
+      "name": "Accessing Data",
+      "chinese_name": "存取資料",
+      "type": ["quick", "discover", "create"],
+      "category": "Cyberspace",
+      "file": "DATA-NETWORK-CODING"
+    },
+    {
+      "name": "Data Forgery",
+      "chinese_name": "資料偽造",
+      "type": ["create"],
+      "category": "Cyberspace",
+      "file": "DATA-NETWORK-CODING"
+    },
+    {
+      "name": "Disconnecting",
+      "chinese_name": "斷線",
+      "type": ["quick"],
+      "category": "Cyberspace",
+      "file": "DATA-NETWORK-CODING"
+    },
+    {
+      "name": "Protecting Data or Programs",
+      "chinese_name": "保護資料或程式",
+      "type": ["enhance", "create"],
+      "category": "Cyberspace",
+      "file": "DATA-NETWORK-CODING"
+    },
+    {
+      "name": "Repairing Data or Programs",
+      "chinese_name": "修復資料或程式",
+      "type": ["restore"],
+      "category": "Cyberspace",
+      "file": "DATA-NETWORK-CODING"
+    },
+    {
+      "name": "Scanning the Network",
+      "chinese_name": "掃描網路",
+      "type": ["quick", "discover"],
+      "category": "Cyberspace",
+      "file": "DATA-NETWORK-CODING"
+    },
+    {
+      "name": "Tracing Data or Signal",
+      "chinese_name": "追蹤資料或信號",
+      "type": ["quick", "advance"],
+      "category": "Cyberspace",
+      "file": "DATA-NETWORK-CODING"
+    },
+    {
+      "name": "Writing a New Program",
+      "chinese_name": "編寫新程式",
+      "type": ["create", "advance"],
+      "category": "Cyberspace",
+      "file": "DATA-NETWORK-CODING"
+    },
+    {
+      "name": "Blocking a Digital Attack",
+      "chinese_name": "阻擋數位攻擊",
+      "type": ["mitigate"],
+      "category": "Cyberspace",
+      "file": "HACKING"
+    },
+    {
+      "name": "Crashing a Node or a Program",
+      "chinese_name": "崩潰節點或程式",
+      "type": ["attack"],
+      "category": "Cyberspace",
+      "file": "HACKING"
+    },
+    {
+      "name": "Disrupting Device Functionality",
+      "chinese_name": "干擾設備功能",
+      "type": ["disrupt", "weaken"],
+      "category": "Cyberspace",
+      "file": "HACKING"
+    },
+    {
+      "name": "Overriding or Fooling a Security Device or Program",
+      "chinese_name": "覆蓋或欺騙安全設備或程式",
+      "type": ["quick", "set back", "weaken"],
+      "category": "Cyberspace",
+      "file": "HACKING"
+    },
+    {
+      "name": "Taking Control Over a Node or a Program",
+      "chinese_name": "控制節點或程式",
+      "type": ["quick", "advance", "influence"],
+      "category": "Cyberspace",
+      "file": "HACKING"
+    },
+    {
+      "name": "Harnessing a Brain",
+      "chinese_name": "駕馭大腦",
+      "type": ["quick", "bestow"],
+      "category": "Cyberspace",
+      "file": "HARNESSING"
+    },
+    {
+      "name": "Altering the VR Environment",
+      "chinese_name": "改變VR環境",
+      "type": ["bestow", "weaken"],
+      "category": "Cyberspace",
+      "file": "VR-MODELING"
+    },
+    {
+      "name": "Creating VR Constructs",
+      "chinese_name": "創造VR構體",
+      "type": ["create"],
+      "category": "Cyberspace",
+      "file": "VR-MODELING"
+    },
+    {
+      "name": "Customizing an Avatar",
+      "chinese_name": "自訂化身",
+      "type": ["bestow", "enhance"],
+      "category": "Cyberspace",
+      "file": "VR-MODELING"
+    },
+    {
+      "name": "Mental and Physical Resilience and Recovery",
+      "chinese_name": "精神和身體韌性與恢復",
+      "type": ["mitigate", "restore", "bestow", "enhance"],
+      "category": "EXPLORATION-SURVIVAL",
+      "file": "MEDICINE-HEALTH-RECOVERY"
+    },
+    {
+      "name": "Performance Enhancement",
+      "chinese_name": "表現增強",
+      "type": ["bestow", "enhance"],
+      "category": "EXPLORATION-SURVIVAL",
+      "file": "MEDICINE-HEALTH-RECOVERY"
+    },
+    {
+      "name": "Treating Injuries and Other Conditions",
+      "chinese_name": "治療傷勢和其他狀況",
+      "type": ["restore", "discover"],
+      "category": "EXPLORATION-SURVIVAL",
+      "file": "MEDICINE-HEALTH-RECOVERY"
+    },
+    {
+      "name": "Chases",
+      "chinese_name": "追逐",
+      "type": ["advance", "disrupt", "enhance", "mitigate"],
+      "category": "EXPLORATION-SURVIVAL",
+      "file": "NAVIGATING-DANGER"
+    },
+    {
+      "name": "Creating and Removing Hazards and Obstacles",
+      "chinese_name": "創造和移除危險與障礙",
+      "type": ["create", "disrupt", "weaken"],
+      "category": "EXPLORATION-SURVIVAL",
+      "file": "NAVIGATING-DANGER"
+    },
+    {
+      "name": "Scavenging",
+      "chinese_name": "搜刮",
+      "type": ["create"],
+      "category": "EXPLORATION-SURVIVAL",
+      "file": "NAVIGATING-DANGER"
+    },
+    {
+      "name": "Scouting and Guarding",
+      "chinese_name": "偵察和守衛",
+      "type": ["quick", "discover", "enhance"],
+      "category": "EXPLORATION-SURVIVAL",
+      "file": "NAVIGATING-DANGER"
+    },
+    {
+      "name": "Surviving Environmental Hazards",
+      "chinese_name": "生存環境危險",
+      "type": ["mitigate"],
+      "category": "EXPLORATION-SURVIVAL",
+      "file": "NAVIGATING-DANGER"
+    },
+    {
+      "name": "Banishing a Conjuration",
+      "chinese_name": "驅逐召喚物",
+      "type": ["attack"],
+      "category": "MYTHOS",
+      "file": "CONJURING-COMPANIONS"
+    },
+    {
+      "name": "Commanding a Conjuration",
+      "chinese_name": "指揮召喚物",
+      "type": ["quick", "influence"],
+      "category": "MYTHOS",
+      "file": "CONJURING-COMPANIONS"
+    },
+    {
+      "name": "Summoning a Conjuration",
+      "chinese_name": "召喚召喚物",
+      "type": ["create"],
+      "category": "MYTHOS",
+      "file": "CONJURING-COMPANIONS"
+    },
+    {
+      "name": "Communing with a Mythos",
+      "chinese_name": "與神話源質交流",
+      "type": ["quick", "discover"],
+      "category": "MYTHOS",
+      "file": "MYTHOI-SOURCES"
+    },
+    {
+      "name": "Identifying a Source",
+      "chinese_name": "識別源質",
+      "type": ["quick", "discover", "advance"],
+      "category": "MYTHOS",
+      "file": "MYTHOI-SOURCES"
+    },
+    {
+      "name": "Countering, Dispelling, or Disenchanting Mythos' Powers and Sources",
+      "chinese_name": "反制、驅散或解除神話力量和源質",
+      "type": ["mitigate", "weaken", "disrupt"],
+      "category": "MYTHOS",
+      "file": "THE-ARCANE-ARTS"
+    },
+    {
+      "name": "Performing Magical Rituals",
+      "chinese_name": "執行魔法儀式",
+      "type": ["quick", "advance", "enhance"],
+      "category": "MYTHOS",
+      "file": "THE-ARCANE-ARTS"
+    },
+    {
+      "name": "Warding",
+      "chinese_name": "結界",
+      "type": ["enhance", "attack"],
+      "category": "MYTHOS",
+      "file": "THE-ARCANE-ARTS"
+    },
+    {
+      "name": "Finding and Focusing on a Specific Ability",
+      "chinese_name": "尋找並專注於特定能力",
+      "type": ["create"],
+      "category": "MYTHOS",
+      "file": "USING-MYTHIC-POWERS"
+    },
+    {
+      "name": "Granting Abilities to People or Items",
+      "chinese_name": "賦予人或物品能力",
+      "type": ["bestow", "create", "enhance"],
+      "category": "MYTHOS",
+      "file": "USING-MYTHIC-POWERS"
+    },
+    {
+      "name": "Healing with Mythos Powers",
+      "chinese_name": "用神話力量治療",
+      "type": ["restore", "discover"],
+      "category": "MYTHOS",
+      "file": "USING-MYTHIC-POWERS"
+    },
+    {
+      "name": "Shaping the Environment with Mythos Powers",
+      "chinese_name": "用神話力量塑造環境",
+      "type": ["create", "weaken"],
+      "category": "MYTHOS",
+      "file": "USING-MYTHIC-POWERS"
+    },
+    {
+      "name": "Making a Purchase",
+      "chinese_name": "進行購買",
+      "type": ["quick", "create"],
+      "category": "SOCIAL-INTERACTIONS",
+      "file": "BUSINESS-TRANSACTIONS"
+    },
+    {
+      "name": "Negotiating a Fee",
+      "chinese_name": "談判費用",
+      "type": ["enhance"],
+      "category": "SOCIAL-INTERACTIONS",
+      "file": "BUSINESS-TRANSACTIONS"
+    },
+    {
+      "name": "Selling Stuff",
+      "chinese_name": "販售物品",
+      "type": ["enhance"],
+      "category": "SOCIAL-INTERACTIONS",
+      "file": "BUSINESS-TRANSACTIONS"
+    },
+    {
+      "name": "Competitions",
+      "chinese_name": "競賽",
+      "type": ["advance"],
+      "category": "SOCIAL-INTERACTIONS",
+      "file": "IN-PERSON-INTERACTIONS"
+    },
+    {
+      "name": "Deception",
+      "chinese_name": "欺騙",
+      "type": ["quick"],
+      "category": "SOCIAL-INTERACTIONS",
+      "file": "IN-PERSON-INTERACTIONS"
+    },
+    {
+      "name": "Gathering Support and Resources",
+      "chinese_name": "收集支援和資源",
+      "type": ["create"],
+      "category": "SOCIAL-INTERACTIONS",
+      "file": "IN-PERSON-INTERACTIONS"
+    },
+    {
+      "name": "Making an Impression",
+      "chinese_name": "留下印象",
+      "type": ["quick", "influence", "enhance"],
+      "category": "SOCIAL-INTERACTIONS",
+      "file": "IN-PERSON-INTERACTIONS"
+    },
+    {
+      "name": "Manipulating Public Opinion",
+      "chinese_name": "操縱公眾輿論",
+      "type": ["influence"],
+      "category": "SOCIAL-INTERACTIONS",
+      "file": "IN-PERSON-INTERACTIONS"
+    },
+    {
+      "name": "Outsourcing a Job",
+      "chinese_name": "外包工作",
+      "type": ["quick", "varies"],
+      "category": "SOCIAL-INTERACTIONS",
+      "file": "IN-PERSON-INTERACTIONS"
+    },
+    {
+      "name": "Persuasion",
+      "chinese_name": "說服",
+      "type": ["quick", "influence"],
+      "category": "SOCIAL-INTERACTIONS",
+      "file": "IN-PERSON-INTERACTIONS"
+    },
+    {
+      "name": "Resisting Social or Emotional Manipulation",
+      "chinese_name": "抵抗社交或情感操縱",
+      "type": ["mitigate"],
+      "category": "SOCIAL-INTERACTIONS",
+      "file": "IN-PERSON-INTERACTIONS"
+    },
+    {
+      "name": "Helping and Supporting",
+      "chinese_name": "幫助和支持",
+      "type": ["bestow", "enhance"],
+      "category": "SOCIAL-INTERACTIONS",
+      "file": "TEAMWORK"
+    },
+    {
+      "name": "Leadership",
+      "chinese_name": "領導",
+      "type": ["enhance", "restore", "influence"],
+      "category": "SOCIAL-INTERACTIONS",
+      "file": "TEAMWORK"
+    },
+    {
+      "name": "Team Preparations",
+      "chinese_name": "團隊準備",
+      "type": ["bestow"],
+      "category": "SOCIAL-INTERACTIONS",
+      "file": "TEAMWORK"
+    },
+    {
+      "name": "Avoiding Attention and Staying Anonymous",
+      "chinese_name": "避免注意和保持匿名",
+      "type": ["mitigate"],
+      "category": "SPYCRAFT",
+      "file": "CLANDESTINE-OPERATIONS"
+    },
+    {
+      "name": "Infiltration",
+      "chinese_name": "滲透",
+      "type": ["varies", "advance"],
+      "category": "SPYCRAFT",
+      "file": "CLANDESTINE-OPERATIONS"
+    },
+    {
+      "name": "Sneaking and Hiding",
+      "chinese_name": "潛行和隱藏",
+      "type": ["quick", "enhance", "disrupt"],
+      "category": "SPYCRAFT",
+      "file": "CLANDESTINE-OPERATIONS"
+    },
+    {
+      "name": "Surveilling",
+      "chinese_name": "監視",
+      "type": ["quick", "discover", "enhance"],
+      "category": "SPYCRAFT",
+      "file": "CLANDESTINE-OPERATIONS"
+    },
+    {
+      "name": "Conversational Inquiry",
+      "chinese_name": "對話探詢",
+      "type": ["quick", "discover", "create"],
+      "category": "SPYCRAFT",
+      "file": "INTEL-GATHERING"
+    },
+    {
+      "name": "Researching a Topic",
+      "chinese_name": "研究主題",
+      "type": ["quick", "discover", "create"],
+      "category": "SPYCRAFT",
+      "file": "INTEL-GATHERING"
+    },
+    {
+      "name": "Searching and Investigating a Scene",
+      "chinese_name": "搜索和調查現場",
+      "type": ["quick", "discover", "create"],
+      "category": "SPYCRAFT",
+      "file": "INTEL-GATHERING"
+    },
+    {
+      "name": "Evaluating and Activating Tech",
+      "chinese_name": "評估和啟動科技",
+      "type": ["quick", "discover", "advance"],
+      "category": "TECH-GEAR",
+      "file": "OPERATING-TECH-GEAR"
+    },
+    {
+      "name": "Piloting",
+      "chinese_name": "駕駛",
+      "type": ["quick", "enhance", "restore"],
+      "category": "TECH-GEAR",
+      "file": "OPERATING-TECH-GEAR"
+    },
+    {
+      "name": "Reloading and Recharging",
+      "chinese_name": "重新裝填和充電",
+      "type": ["quick"],
+      "category": "TECH-GEAR",
+      "file": "OPERATING-TECH-GEAR"
+    },
+    {
+      "name": "Setting a Trap",
+      "chinese_name": "設置陷阱",
+      "type": ["quick", "varies", "suspend"],
+      "category": "TECH-GEAR",
+      "file": "OPERATING-TECH-GEAR"
+    },
+    {
+      "name": "Building, Crafting, or Upgrading Tech",
+      "chinese_name": "建造、製作或升級科技",
+      "type": ["create", "bestow", "advance"],
+      "category": "TECH-GEAR",
+      "file": "TECHNICAL-MODIFICATIONS"
+    },
+    {
+      "name": "Maintaining and Repairing Tech",
+      "chinese_name": "維護和修理科技",
+      "type": ["restore"],
+      "category": "TECH-GEAR",
+      "file": "TECHNICAL-MODIFICATIONS"
+    },
+    {
+      "name": "Tampering with a Device",
+      "chinese_name": "干預設備",
+      "type": ["quick", "disrupt", "weaken"],
+      "category": "TECH-GEAR",
+      "file": "TECHNICAL-MODIFICATIONS"
+    }
+  ]
+}

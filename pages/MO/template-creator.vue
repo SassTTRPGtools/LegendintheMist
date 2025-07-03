@@ -447,7 +447,7 @@ async function loadCharacterExamples(themeType) {
   }
   
   try {
-    const filePath = `/data/MO/sample_characters/${themeSystem}/${fileName}.json`
+    const filePath = `/MO/sample_characters/${themeSystem}/${fileName}.json`
     console.log('嘗試載入檔案:', filePath)
     
     const response = await $fetch(filePath)
@@ -502,7 +502,7 @@ async function loadThemeChineseName(themeType) {
   }
   
   try {
-    const filePath = `/data/MO/${themeSystem}.json`
+    const filePath = `/MO/${themeSystem}.json`
     console.log('載入檔案:', filePath)
     const response = await $fetch(filePath)
     themeChineseNames.value[themeSystem] = response
@@ -701,7 +701,7 @@ async function loadSelectedTemplate() {
   if (!selectedTemplateType.value) return
   
   try {
-    const templateData = await $fetch(`/data/MO/templates/${selectedTemplateType.value}.json`)
+    const templateData = await $fetch(`/MO/templates/${selectedTemplateType.value}.json`)
     templates.value = templateData
     
     // 找到對應的顯示名稱

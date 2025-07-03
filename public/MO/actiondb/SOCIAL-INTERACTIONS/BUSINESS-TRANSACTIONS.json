@@ -56,7 +56,7 @@
   },
   {
     "name": "Negotiating a Fee",
-    "type": "enhance",
+    "type": ["enhance"],
     "examples": [
       "討價還價",
       "更改條件",
@@ -103,7 +103,7 @@
   },
   {
     "name": "Selling Stuff",
-    "type": "enhance",
+    "type": ["enhance"],
     "examples": [
       "出售戰利品",
       "販售源質",

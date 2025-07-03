@@ -1,0 +1,52 @@
+{
+  "ui": {
+    "pageTitle": "行動資料庫 - 都市異景",
+    "heroTitle": "都市異景行動資料庫",
+    "heroSubtitle": "探索各種行動類別的詳細資訊，從戰鬥技巧到社交互動",
+    "categorySelector": {
+      "label": "選擇行動類別",
+      "placeholder": "請選擇行動類別"
+    },
+    "fileSelector": {
+      "label": "選擇具體行動檔案",
+      "placeholder": "請選擇行動檔案"
+    },
+    "globalSearch": {
+      "label": "搜尋行動 (全資料庫)",
+      "placeholder": "輸入行動名稱或描述關鍵字..."
+    },
+    "actionTypeFilter": {
+      "label": "過濾行動類型",
+      "placeholder": "所有類型"
+    },
+    "loadAllButton": "載入所有行動資料",
+    "clearFilters": "清除過濾條件",
+    "resultsCount": "找到 {count} 個行動",
+    "bookmark": {
+      "title": "行動書籤",
+      "backToTop": "回到頂部"
+    }
+  },
+  "sections": {
+    "description": "描述",
+    "examples": "範例", 
+    "powerTags": "優勢標籤",
+    "weaknessTags": "弱點標籤",
+    "successOutcomes": "成功結果",
+    "consequences": "後果",
+    "source": "來源"
+  },
+  "states": {
+    "loading": "載入中...",
+    "noData": "尚未載入行動資料",
+    "noResults": "沒有符合條件的行動",
+    "noDataHint": "請選擇行動類別或點擊「載入所有行動資料」按鈕",
+    "noResultsHint": "請調整搜尋條件或過濾設定"
+  },
+  "tooltip": {
+    "maxWidth": 320,
+    "offsetX": 10,
+    "offsetY": 10,
+    "safeMargin": 10
+  }
+}

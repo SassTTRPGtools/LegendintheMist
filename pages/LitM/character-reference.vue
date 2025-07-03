@@ -321,10 +321,10 @@ useHead({
 // 載入 JSON 資料的方法
 const loadJsonData = async (filename) => {
   try {
-    console.log(`正在載入: /data/LitM/${filename}`)
+    console.log(`正在載入: /LitM/${filename}`)
     
     // 使用 $fetch 從 public 目錄載入 JSON
-    const response = await $fetch(`/data/LitM/${filename}`, {
+    const response = await $fetch(`/LitM/${filename}`, {
       parseResponse: JSON.parse
     })
     
@@ -335,8 +335,8 @@ const loadJsonData = async (filename) => {
     
     // 嘗試備用路徑
     try {
-      console.log(`嘗試備用路徑: /LegendintheMist/data/LitM/${filename}`)
-      const backupResponse = await $fetch(`/LegendintheMist/data/LitM/${filename}`, {
+      console.log(`嘗試備用路徑: /LegendintheMist/LitM/${filename}`)
+      const backupResponse = await $fetch(`/LegendintheMist/LitM/${filename}`, {
         parseResponse: JSON.parse
       })
       console.log(`備用路徑成功載入 ${filename}:`, backupResponse)

@@ -1,0 +1,60 @@
+{
+  "crossReferencePatterns": [
+    { 
+      "pattern": "攻擊",
+      "flags": "gi",
+      "tooltip": { 
+        "title": "攻擊", 
+        "content": "對目標造成傷害或不利效果的行動，通常需要攻擊擲骰。" 
+      } 
+    },
+    { 
+      "pattern": "抵抗",
+      "flags": "gi",
+      "tooltip": { 
+        "title": "抵抗", 
+        "content": "目標對抗攻擊或負面效果的能力，可能降低或無效化傷害。" 
+      } 
+    },
+    { 
+      "pattern": "閾值",
+      "flags": "gi",
+      "tooltip": { 
+        "title": "閾值", 
+        "content": "達成特定效果所需的成功次數，如「傷害或壓制」、「摧毀」等。" 
+      } 
+    },
+    { 
+      "pattern": "狀態",
+      "flags": "gi",
+      "tooltip": { 
+        "title": "狀態", 
+        "content": "角色或目標當前的特殊狀況，如受傷、流血、燒傷等，會影響行動效果。" 
+      } 
+    },
+    { 
+      "pattern": "標籤",
+      "flags": "gi",
+      "tooltip": { 
+        "title": "標籤", 
+        "content": "描述角色、物品或情況特性的關鍵字，影響行動的力量或弱點。" 
+      } 
+    },
+    { 
+      "pattern": "擲骰",
+      "flags": "gi",
+      "tooltip": { 
+        "title": "擲骰", 
+        "content": "使用骰子進行判定的機制，通常結合標籤和技能來決定行動結果。" 
+      } 
+    },
+    { 
+      "pattern": "範圍效果",
+      "flags": "gi",
+      "tooltip": { 
+        "title": "範圍效果", 
+        "content": "影響多個目標或大範圍區域的能力或攻擊方式。" 
+      } 
+    }
+  ]
+}

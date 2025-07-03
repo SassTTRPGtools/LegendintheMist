@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tooltip Test</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+    <div id="app" style="padding: 20px;">
+        <h1>交叉引用懸浮提示測試</h1>
+        <p>這段文字包含一些關鍵字：攻擊、抵抗、閾值、狀態、標籤、擲骰等。</p>
+        <p>當滑鼠移動到這些關鍵字上時，應該會顯示相關說明。</p>
+        
+        <div v-if="tooltip.show" 
+             :style="{ left: tooltip.x + 'px', top: tooltip.y + 'px' }"
+             style="position: fixed; z-index: 50; background: rgba(0,0,0,0.9); border: 1px solid cyan; border-radius: 8px; padding: 16px; max-width: 320px; box-shadow: 0 4px 20px rgba(0,0,0,0.5); pointer-events: none;">
+            <h5 style="font-weight: bold; color: #a5f3fc; margin-bottom: 8px;">{{ tooltip.title }}</h5>
+            <p style="color: #d1d5db; font-size: 14px;">{{ tooltip.content }}</p>
+        </div>
+    </div>
+
+    <script>
+        const { createApp, ref } = Vue
+
+        createApp({
+            setup() {
+                const tooltip = ref({
+                    show: false,
+                    x: 0,
+                    y: 0,
+                    title: '',
+                    content: ''
+                })
+
+                const showTooltip = (event, title, content) => {
+                    const rect = event.target.getBoundingClientRect()
+                    tooltip.value = {
+                        show: true,
+                        x: rect.right + 10,
+                        y: rect.top,
+                        title,
+                        content
+                    }
+                }
+
+                const hideTooltip = () => {
+                    tooltip.value.show = false
+                }
+
+                return {
+                    tooltip,
+                    showTooltip,
+                    hideTooltip
+                }
+            }
+        }).mount('#app')
+    </script>
+</body>
+</html>

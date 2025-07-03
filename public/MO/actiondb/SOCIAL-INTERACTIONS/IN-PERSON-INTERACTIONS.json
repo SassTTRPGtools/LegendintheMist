@@ -1,7 +1,7 @@
 [
     {
   "name": "Competitions",
-  "type": "advance",
+  "type": ["advance"],
   "examples": [
     "體育競賽",
     "電玩錦標賽",
@@ -52,7 +52,7 @@
 },
 {
   "name": "Deception",
-  "type": "quick",
+  "type": ["quick"],
   "examples": [
     "誤導",
     "操弄",
@@ -105,7 +105,7 @@
 },
 {
   "name": "Gathering Support and Resources",
-  "type": "create",
+  "type": ["create"],
   "examples": [
     "尋找朋友",
     "召喚追隨者",
@@ -200,7 +200,7 @@
 },
 {
   "name": "Manipulating Public Opinion",
-  "type": "influence",
+  "type": ["influence"],
   "examples": [
     "資訊洩漏",
     "匿名資料投放",
@@ -349,7 +349,7 @@
 },
 {
   "name": "Resisting Social or Emotional Manipulation",
-  "type": "mitigate",
+  "type": ["mitigate"],
   "examples": [
     "保持冷靜",
     "忽視酸民",

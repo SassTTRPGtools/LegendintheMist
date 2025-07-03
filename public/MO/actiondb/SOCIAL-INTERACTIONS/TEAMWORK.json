@@ -100,7 +100,7 @@
 },
 {
   "name": "Team Preparations",
-  "type": "bestow",
+  "type": ["bestow"],
   "examples": [
     "擬定計畫",
     "訂立規則",

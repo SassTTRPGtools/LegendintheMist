@@ -445,10 +445,10 @@ useHead({
 // 載入 JSON 資料的方法
 const loadJsonData = async (filename) => {
   try {
-    console.log(`正在載入: /data/MO/${filename}`)
+    console.log(`正在載入: /MO/${filename}`)
     
     // 使用 $fetch 從 public 目錄載入 JSON
-    const response = await $fetch(`/data/MO/${filename}`)
+    const response = await $fetch(`/MO/${filename}`)
     
     console.log(`成功載入 ${filename}:`, response)
     return response
@@ -649,10 +649,10 @@ const loadSampleCharacters = async () => {
     
     const filePath = `sample_characters/${systemFolder}/${themeFile}`
     
-    console.log(`嘗試載入範例角色: /data/MO/${filePath}`)
+    console.log(`嘗試載入範例角色: /MO/${filePath}`)
     
     // 載入對應的範例檔案
-    const sampleData = await $fetch(`/data/MO/${filePath}`)
+    const sampleData = await $fetch(`/MO/${filePath}`)
     
     console.log('載入的原始資料:', sampleData)
     
