@@ -9,7 +9,7 @@
     "穿越交通",
     "擺脫追兵"
   ],
-  "description": "在追逐場景中，你奔跑、駕駛或操縱來縮短或拉開與對手的距離，推進 catch／outrun 閾值直到成功。",
+  "description": "在追逐場景中，你奔跑、駕駛或操縱來縮短或拉開與對手的距離，推進「追上／甩開」的閾值直到成功。",
   "powerTags": [
     "爆發速度",
     "腎上腺素",
@@ -34,10 +34,10 @@
     "對手地利"
   ],
   "success": {
-    "advanceEffect": "增加 catch 或 outrun 狀態值直到達成極限",
-    "disruptEffect": "給對手妨礙標籤（如機油滑地、爆胎）",
-    "enhanceEffect": "提升自己的速度（speeding）",
-    "mitigateEffect": "防止對手靠近你",
+    "advanceEffect": "增加「追上」或「甩開」的狀態值直到達成閾值。",
+    "disruptEffect": "給對手妨礙標籤（如「機油滑地」、「爆胎」）。",
+    "enhanceEffect": "給自己「加速中」等有利狀態。",
+    "mitigateEffect": "防止對手靠近你。",
     "extraFeats": [
       "從側面阻擋對手",
       "封鎖特定路線",
@@ -49,12 +49,12 @@
     ]
   },
   "consequences": [
-    "你面前有障礙物（piled debris）",
-    "他們繞過障礙（移除標籤）",
-    "你失去進展（chase／outrun）",
-    "你撞上障礙（bruised 或 off-balance）",
+    "你面前有障礙物（如「堆積殘骸」）",
+    "他們繞過障礙（移除你設下的標籤）",
+    "你失去進展（「追上／甩開」減少）",
+    "你撞上障礙（獲得「瘀傷」或「失衡」）",
     "你減速或他們加速",
-    "你暴露在開放區域（exposed）"
+    "你暴露在開放區域（獲得「暴露」）"
   ],
   "source": "Metro: Otherscape Corebook"
 },
@@ -86,25 +86,25 @@
     "目標位置距離太遠",
     "抑制危險的系統（如自動滅火）"
   ],
-  "success": {
-    "createEffect": "新增障礙或危險標籤，如 wrecked car、mutagen cloud 等",
-    "disruptEffect": "給予對手 burning、electrocuted、cursed 等傷害狀態",
-    "weakenEffect": "移除障礙／危險標籤與狀態層級，使其無法造成傷害",
-    "extraFeats": [
-      "精準地塑造影響區域",
-      "保留一個安全地帶",
-      "在障礙生成前後穿越",
-      "精確地計時障礙出現",
-      "引起注意力"
-    ]
-  },
-  "consequences": [
-    "你在過程中受傷（corroded, electrocuted, bruised, bleeding, entangled, poisoned, weakened, impeded 等）",
-    "你被困在障礙物中或其後方",
-    "你的裝備損壞（燒掉標籤）",
-    "危險的形狀或範圍擴大",
-    "一個不同的障礙出現"
-  ],
+"success": {
+  "createEffect": "新增障礙或危險標籤，如「報廢車輛」、「突變雲霧」等",
+  "disruptEffect": "給予對手「灼燒」、「電擊」、「詛咒」等傷害狀態",
+  "weakenEffect": "移除障礙／危險標籤與狀態層級，使其無法造成傷害",
+  "extraFeats": [
+    "精準地塑造影響區域",
+    "保留一個安全地帶",
+    "在障礙生成前後穿越",
+    "精確地計時障礙出現",
+    "引起注意力"
+  ]
+},
+"consequences": [
+  "你在過程中受傷（如「腐蝕」、「電擊」、「瘀傷」、「流血」、「纏繞」、「中毒」、「虛弱」、「阻礙」等）",
+  "你被困在障礙物中或其後方",
+  "你的裝備損壞（燒掉標籤）",
+  "危險的形狀或範圍擴大",
+  "一個不同的障礙出現"
+],
   "source": "Metro: Otherscape Corebook"
 },
 {

@@ -106,27 +106,15 @@
           </div>
         </div>
         
-        <!-- Quick Load All Actions Button -->
-        <div class="mt-4 flex items-center justify-between">
+        <!-- Search Results Count -->
+        <div v-if="globalSearchQuery || globalActionTypeFilter" class="mt-4 text-sm text-gray-400 text-right">
+          {{ uiLabels?.ui?.resultsCount?.replace('{count}', globalFilteredActions.length) || `找到 ${globalFilteredActions.length} 個行動` }}
           <button 
-            @click="loadAllActions"
-            :disabled="loading"
-            class="bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-white px-4 py-2 rounded-lg font-medium transition-all flex items-center"
+            @click="globalSearchQuery = ''; globalActionTypeFilter = ''"
+            class="ml-2 text-cyan-400 hover:text-cyan-300 underline"
           >
-            <Icon name="lucide:download" class="w-4 h-4 mr-2" />
-            {{ uiLabels?.ui?.loadAllButton || '載入所有行動資料' }}
+            {{ uiLabels?.ui?.clearFilters || '清除過濾條件' }}
           </button>
-          
-          <!-- Search Results Count -->
-          <div v-if="globalSearchQuery || globalActionTypeFilter" class="text-sm text-gray-400">
-            {{ uiLabels?.ui?.resultsCount?.replace('{count}', globalFilteredActions.length) || `找到 ${globalFilteredActions.length} 個行動` }}
-            <button 
-              @click="globalSearchQuery = ''; globalActionTypeFilter = ''"
-              class="ml-2 text-cyan-400 hover:text-cyan-300 underline"
-            >
-              {{ uiLabels?.ui?.clearFilters || '清除過濾條件' }}
-            </button>
-          </div>
         </div>
       </div>
 
@@ -352,10 +340,10 @@
           <Icon name="lucide:database" class="w-12 h-12 text-gray-400" />
         </div>
         <h3 class="text-xl font-semibold text-gray-300 mb-2">
-          {{ allActionsData.length === 0 ? (uiLabels?.states?.noData || '尚未載入行動資料') : (uiLabels?.states?.noResults || '沒有符合條件的行動') }}
+          {{ allActionsData.length === 0 ? (uiLabels?.states?.noData || '正在載入行動資料...') : (uiLabels?.states?.noResults || '沒有符合條件的行動') }}
         </h3>
         <p class="text-gray-500">
-          {{ allActionsData.length === 0 ? (uiLabels?.states?.noDataHint || '請選擇行動類別或點擊「載入所有行動資料」按鈕') : (uiLabels?.states?.noResultsHint || '請調整搜尋條件或過濾設定') }}
+          {{ allActionsData.length === 0 ? (uiLabels?.states?.noDataHint || '請稍候，系統正在載入所有行動資料') : (uiLabels?.states?.noResultsHint || '請調整搜尋條件或過濾設定') }}
         </p>
       </div>
     </div>
@@ -1000,6 +988,8 @@ const scrollToTop = () => {
 onMounted(async () => {
   await loadConfigs()
   await loadActionMapping()
+  // 自動載入所有行動資料
+  await loadAllActions()
 })
 </script>
 

@@ -1,7 +1,7 @@
 [
     {
   "name": "Attacks to Hold Off or Spur Opponents",
-  "type": ["Quick", "Disrupt", "Influence", "Attack → Suspend"],
+  "type": ["Quick", "Disrupt", "Influence", "Attack","Suspend"],
   "examples": [
     "壓制性火力",
     "使用劍術或槍術逼退對方",
@@ -29,7 +29,7 @@
   "success": {
     "quickEffect": "對手的行動如你所願地被影響。",
     "disruptInfluenceEffect": "給予目標狀態或標籤，妨礙他們行動，例如：壓制、被困、受威脅、被騷擾。",
-    "attackSuspendEffect": "你可先敘述威脅並暫停擲骰（詳見第125頁）。若對手不照你所期望的方式行動，你可再擲骰並造成傷害狀態，例如：受傷。",
+    "attack + suspend": "你可先敘述威脅並暫停擲骰（詳見第125頁）。若對手不照你所期望的方式行動，你可再擲骰並造成傷害狀態，例如：受傷。",
     "extraFeats": [
       "改善你的位置",
       "把對手逼退",

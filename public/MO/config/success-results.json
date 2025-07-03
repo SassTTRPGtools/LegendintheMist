@@ -1,5 +1,7 @@
 {
   "successResultMapping": {
+    
+    "attack + suspend": "攻擊-暫停行動",
     "quick + suspend": "快速-暫停行動",
     "varies + suspend": "多變-暫停行動",
     "quick": "快速行動",
