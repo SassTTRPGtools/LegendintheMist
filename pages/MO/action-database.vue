@@ -448,19 +448,18 @@
             </div>
           </div>
         </div>
-
-        <!-- Footer -->
-        <div class="p-2 border-t border-cyan-500/30 bg-gray-900/50">
-          <button 
-            @click="scrollToTop"
-            class="w-full text-xs text-cyan-400 hover:text-cyan-300 flex items-center justify-center py-1 transition-colors"
-          >
-            <Icon name="lucide:arrow-up" class="w-3 h-3 mr-1" />
-            {{ uiLabels?.ui?.bookmark?.backToTop || '回到頂部' }}
-          </button>
-        </div>
       </div>
     </div>
+
+    <!-- Back to Top Button -->
+    <button 
+      v-if="displayActions && displayActions.length > 0"
+      @click="scrollToTop"
+      class="fixed left-4 bottom-4 bg-cyan-600 hover:bg-cyan-700 text-white p-3 rounded-full shadow-lg transition-all duration-300 z-40 hover:scale-110"
+      :title="uiLabels?.ui?.bookmark?.backToTop || '回到頂部'"
+    >
+      <Icon name="lucide:arrow-up" class="w-5 h-5" />
+    </button>
   </div>
 </template>
 
@@ -689,11 +688,13 @@ const filteredActions = computed(() => {
   // 文字搜尋
   if (searchQuery.value.trim()) {
     const query = searchQuery.value.toLowerCase()
-    filtered = filtered.filter(action => 
-      action.name?.toLowerCase().includes(query) ||
-      action.description?.toLowerCase().includes(query) ||
-      action.examples?.some(example => example.toLowerCase().includes(query))
-    )
+    filtered = filtered.filter(action => {
+      const chineseName = getActionChineseName(action.name)
+      return action.name?.toLowerCase().includes(query) ||
+             chineseName?.toLowerCase().includes(query) ||
+             action.description?.toLowerCase().includes(query) ||
+             action.examples?.some(example => example.toLowerCase().includes(query))
+    })
   }
   
   // 行動類型過濾
@@ -715,11 +716,13 @@ const globalFilteredActions = computed(() => {
   // 文字搜尋
   if (globalSearchQuery.value.trim()) {
     const query = globalSearchQuery.value.toLowerCase()
-    filtered = filtered.filter(action => 
-      action.name?.toLowerCase().includes(query) ||
-      action.description?.toLowerCase().includes(query) ||
-      action.examples?.some(example => example.toLowerCase().includes(query))
-    )
+    filtered = filtered.filter(action => {
+      const chineseName = getActionChineseName(action.name)
+      return action.name?.toLowerCase().includes(query) ||
+             chineseName?.toLowerCase().includes(query) ||
+             action.description?.toLowerCase().includes(query) ||
+             action.examples?.some(example => example.toLowerCase().includes(query))
+    })
   }
   
   // 行動類型過濾
