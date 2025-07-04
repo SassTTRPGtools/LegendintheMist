@@ -150,5 +150,17 @@
       "買家附加額外要求或索賄。"
     ],
     "source": "Metro:Otherscape"
-  }
+  },
+{
+  "name": "Paying for a Service",
+  "type": ["Varies"],
+  "examples": [],
+  "description": "參見「外包工作」。",
+  "powerTags": [],
+  "weaknessTags": [],
+  "success": {},
+  "extraFeats": [],
+  "consequences": [],
+  "source": "Metro: Otherscape Corebook"
+}
 ]

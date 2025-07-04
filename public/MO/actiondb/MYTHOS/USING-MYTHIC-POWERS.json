@@ -28,9 +28,9 @@
   },
   "consequences": [
     "能力附有缺陷（負面標籤）",
-    "獲得 panic 狀態",
-    "失去獲取更多能力的機會（燒掉原標籤）",
-    "能力衝突，犧牲其他標籤（burn）",
+    "獲得 痛苦 狀態",
+    "失去獲取更多能力的機會（燒掉標籤）",
+    "能力衝突，犧牲其他標籤（燒掉標籤）",
     "副作用顯現（負面狀態）"
   ],
   "source": "Metro: Otherscape Corebook"
@@ -47,7 +47,7 @@
     "鷹眼視野",
     "幻象偽裝"
   ],
-  "description": "臨時賦予人物或物品魔法能力，可增強其行動、改變其狀態，或賦予特殊屬性。可擴展為群體或改變體型等規模效果。",
+  "description": "臨時賦予人物或物品魔法能力，可增強其行動、改變其狀態，或賦予特殊屬性。可擴展為群體或改變體型等「規模」效果。",
   "powerTags": [
     "魔法賦予能力",
     "熟悉目標本身",
@@ -94,7 +94,7 @@
     "治癒傳奇之疫",
     "淨化穢靈之魂"
   ],
-  "description": "使用神話之力來解除一種超自然的狀況。若為自然疾病，請參考一般治療規則。",
+  "description": "使用神話之力來解除一種超自然的狀況。若為自然疾病，請參考「治療傷勢和其他狀況」。",
   "powerTags": [
     "神話療癒能力",
     "與目標的連結",
@@ -132,7 +132,7 @@
     "讓萬物金屬化",
     "創造深邃黑暗"
   ],
-  "description": "使用神話之力改變或創造周遭物件與條件。若影響範圍過大則需進行尺度調整。",
+  "description": "使用神話之力改變或創造周遭物件與條件。若影響範圍過大則需進行「規模」調整。",
   "powerTags": [
     "變形塑造的神話能力",
     "熟悉此地區",
@@ -156,6 +156,138 @@
     "盟友或無辜者被捲入塑形中（受傷）"
   ],
   "source": "Metro: Otherscape Corebook"
+},
+{
+  "name": "Aiding Others With Mythos Powers",
+  "type": [],
+  "examples": [
+    "用念力替他們搬運重物",
+    "鼓舞他們的士氣",
+    "召喚魔法之劍",
+    "閃耀聖光驅逐恐懼"
+  ],
+  "description": "你使用神話之力來支援盟友的行動，例如援助、指揮、臨機製作武器，或將神話能力賦予他人或物品。參見「協助盟友」、「即興武器」、「領導」、「賦予人或物品能力」。",
+  "powerTags": [],
+  "weaknessTags": [],
+  "success": {},
+  "extraFeats": [],
+  "consequences": [],
+  "source": "Metro: Otherscape Corebook"
+},
+{
+  "name": "Attacking With Mythos Powers",
+  "type": [],
+  "examples": [
+    "詛咒敵人",
+    "雷霆一擊",
+    "鎖鏈束縛",
+    "沉眠咒語",
+    "火球術",
+    "影爪撕裂",
+    "時間遲滯"
+  ],
+  "description": "你動用神話之力直接攻擊目標，造成傷害、限制行動或施加其他戰術效果。參見「直接攻擊」、「戰術攻擊」行動檔案。",
+  "powerTags": [],
+  "weaknessTags": [],
+  "success": {},
+  "extraFeats": [],
+  "consequences": [],
+  "source": "Metro: Otherscape Corebook"
+},
+{
+  "name": "Divination or Magical Senses",
+  "type": [],
+  "examples": [
+    "以超感知嗅出敵人位置",
+    "預知未來",
+    "靈視讀取記憶",
+    "刻下預警符文",
+    "讀心",
+    "透過鏡子遠視"
+  ],
+  "description": "你透過神話或魔法感官獲得情報，可用來分析戰場、探索地形或進行偵察與守備。參見「分析戰場」、「偵察和守衛」、「情報蒐集」",
+  "powerTags": [],
+  "weaknessTags": [],
+  "success": {},
+  "extraFeats": [],
+  "consequences": [],
+  "source": "Metro: Otherscape Corebook"
+},
+{
+  "name": "Manipulating Others with Mythos Powers",
+  "type": [],
+  "examples": [
+    "心靈控制",
+    "恐懼靈氣",
+    "魅惑術",
+    "抹除記憶",
+    "野性魅力",
+    "操弄情緒"
+  ],
+  "description": "參見「欺騙」、「說服」、「留下印象」",
+  "powerTags": [],
+  "weaknessTags": [],
+  "success": {},
+  "extraFeats": [],
+  "consequences": [],
+  "source": "Metro: Otherscape Corebook"
+},
+{
+  "name": "Moving and Evading with Mythos Powers",
+  "type": [],
+  "examples": [
+    "飛行",
+    "瞬間移動",
+    "無聲移動",
+    "化為元素穿越地形",
+    "穿梭於影中",
+    "水下呼吸",
+    "蜘蛛步行"
+  ],
+  "description": "參見「戰場移動」、「在危險環境中旅行與生存」, and Sneaking and Hiding (page 77).",
+  "powerTags": [],
+  "weaknessTags": [],
+  "success": {},
+  "extraFeats": [],
+  "consequences": [],
+  "source": "Metro: Otherscape Corebook"
+},
+{
+  "name": "Protecting with Mythos Powers",
+  "type": [],
+  "examples": [
+    "元素護盾",
+    "懸浮閃避",
+    "神聖符咒或祝福",
+    "非物質化",
+    "刀槍不入",
+    "怪物形態的皮膚防禦"
+  ],
+  "description": "參見 See Combat Defense (page 22) and Countering, Dispelling, or Disenchanting Mythos Powers and Sources(page 57).",
+  "powerTags": [],
+  "weaknessTags": [],
+  "success": {},
+  "extraFeats": [],
+  "consequences": [],
+  "source": "Metro: Otherscape Corebook"
+},
+{
+  "name": "Shapeshifting and Transformations",
+  "type": [],
+  "examples": [
+    "隱身",
+    "變為狼人",
+    "讓皮膚長出樹皮",
+    "模仿他人外貌或能力",
+    "製造自己的分身",
+    "變為幽體"
+  ],
+  "description": "參見「賦予人或物品能力」行動",
+  "powerTags": [],
+  "weaknessTags": [],
+  "success": {},
+  "extraFeats": [],
+  "consequences": [],
+  "source": "Metro: Otherscape Corebook"
 }
-
 ]

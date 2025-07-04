@@ -135,6 +135,20 @@
       "file": "COMBAT-MOVEMENT"
     },
     {
+      "name": "Retreating From Combat",
+      "chinese_name": "從戰鬥中撤退",
+      "type": [],
+      "category": "COMBAT",
+      "file": "COMBAT-MOVEMENT"
+    },
+    {
+      "name": "Vehicle Combat",
+      "chinese_name": "載具戰鬥",
+      "type": [],
+      "category": "COMBAT",
+      "file": "COMBAT-MOVEMENT"
+    },
+    {
       "name": "Analyzing the Battlefield",
       "chinese_name": "分析戰場",
       "type": ["discover", "disrupt"],
@@ -324,6 +338,13 @@
       "file": "DATA-NETWORK-CODING"
     },
     {
+      "name": "Connecting to a Node",
+      "chinese_name": "連線至節點",
+      "type": [],
+      "category": "Cyberspace",
+      "file": "DATA-NETWORK-CODING"
+    },
+    {
       "name": "Blocking a Digital Attack",
       "chinese_name": "阻擋數位攻擊",
       "type": ["mitigate"],
@@ -362,6 +383,13 @@
       "name": "Harnessing a Brain",
       "chinese_name": "駕馭大腦",
       "type": ["quick", "bestow"],
+      "category": "Cyberspace",
+      "file": "HARNESSING"
+    },
+    {
+      "name": "Taking Actions in VR While Harnessed",
+      "chinese_name": "在虛擬實境中行動（腦馭中）",
+      "type": [],
       "category": "Cyberspace",
       "file": "HARNESSING"
     },
@@ -443,6 +471,20 @@
       "file": "NAVIGATING-DANGER"
     },
     {
+      "name": "Travel and Survival in Dangerous Environments",
+      "chinese_name": "在危險環境中旅行與生存",
+      "type": ["quick", "advance"],
+      "category": "EXPLORATION-SURVIVAL",
+      "file": "NAVIGATING-DANGER"
+    },
+    {
+      "name": "Sneaking Past a Threat",
+      "chinese_name": "避開威脅",
+      "type": ["quick", "enhance", "disrupt"],
+      "category": "EXPLORATION-SURVIVAL",
+      "file": "NAVIGATING-DANGER"
+    },
+    {
       "name": "Banishing a Conjuration",
       "chinese_name": "驅逐召喚物",
       "type": ["attack"],
@@ -499,6 +541,13 @@
       "file": "THE-ARCANE-ARTS"
     },
     {
+      "name": "Sourcecraft",
+      "chinese_name": "秘源工藝",
+      "type": [],
+      "category": "MYTHOS",
+      "file": "THE-ARCANE-ARTS"
+    },
+    {
       "name": "Finding and Focusing on a Specific Ability",
       "chinese_name": "尋找並專注於特定能力",
       "type": ["create"],
@@ -527,6 +576,55 @@
       "file": "USING-MYTHIC-POWERS"
     },
     {
+      "name": "Aiding Others With Mythos Powers",
+      "chinese_name": "以神話力量援助他人",
+      "type": [],
+      "category": "MYTHOS",
+      "file": "USING-MYTHIC-POWERS"
+    },
+    {
+      "name": "Attacking With Mythos Powers",
+      "chinese_name": "以神話力量攻擊",
+      "type": [],
+      "category": "MYTHOS",
+      "file": "USING-MYTHIC-POWERS"
+    },
+    {
+      "name": "Divination or Magical Senses",
+      "chinese_name": "占卜或魔法感知",
+      "type": [],
+      "category": "MYTHOS",
+      "file": "USING-MYTHIC-POWERS"
+    },
+    {
+      "name": "Manipulating Others with Mythos Powers",
+      "chinese_name": "以神話力量操縱他人",
+      "type": [],
+      "category": "MYTHOS",
+      "file": "USING-MYTHIC-POWERS"
+    },
+    {
+      "name": "Moving and Evading with Mythos Powers",
+      "chinese_name": "以神話力量移動或閃避",
+      "type": [],
+      "category": "MYTHOS",
+      "file": "USING-MYTHIC-POWERS"
+    },
+    {
+      "name": "Protecting with Mythos Powers",
+      "chinese_name": "以神話力量防護",
+      "type": [],
+      "category": "MYTHOS",
+      "file": "USING-MYTHIC-POWERS"
+    },
+    {
+      "name": "Shapeshifting and Transformations",
+      "chinese_name": "變形與轉化",
+      "type": [],
+      "category": "MYTHOS",
+      "file": "USING-MYTHIC-POWERS"
+    },            
+    {
       "name": "Making a Purchase",
       "chinese_name": "進行購買",
       "type": ["quick", "create"],
@@ -535,7 +633,7 @@
     },
     {
       "name": "Negotiating a Fee",
-      "chinese_name": "談判費用",
+      "chinese_name": "議價",
       "type": ["enhance"],
       "category": "SOCIAL-INTERACTIONS",
       "file": "BUSINESS-TRANSACTIONS"
@@ -544,6 +642,13 @@
       "name": "Selling Stuff",
       "chinese_name": "販售物品",
       "type": ["enhance"],
+      "category": "SOCIAL-INTERACTIONS",
+      "file": "BUSINESS-TRANSACTIONS"
+    },
+    {
+      "name": "Paying for a Service",
+      "chinese_name": "支付服務費用",
+      "type": ["varies"],
       "category": "SOCIAL-INTERACTIONS",
       "file": "BUSINESS-TRANSACTIONS"
     },
@@ -604,6 +709,21 @@
       "file": "IN-PERSON-INTERACTIONS"
     },
     {
+      "name": "Getting Close to Someone",
+      "chinese_name": "接近某人",
+      "type": [],
+      "category": "SOCIAL-INTERACTIONS",
+      "file": "IN-PERSON-INTERACTIONS"
+    },
+    {
+      "name": "Negotiation",
+      "chinese_name": "談判",
+      "type": [],
+      "category": "SOCIAL-INTERACTIONS",
+      "file": "IN-PERSON-INTERACTIONS"
+    },
+
+    {
       "name": "Helping and Supporting",
       "chinese_name": "幫助和支持",
       "type": ["bestow", "enhance"],
@@ -653,6 +773,20 @@
       "file": "CLANDESTINE-OPERATIONS"
     },
     {
+      "name": "Breaking and Entering",
+      "chinese_name": "潛入與破壞",
+      "type": [],
+      "category": "SPYCRAFT",
+      "file": "CLANDESTINE-OPERATIONS"
+    },
+    {
+      "name": "Losing a Tail",
+      "chinese_name": "擺脫尾隨",
+      "type": [],
+      "category": "SPYCRAFT",
+      "file": "CLANDESTINE-OPERATIONS"
+    },
+    {
       "name": "Conversational Inquiry",
       "chinese_name": "對話探詢",
       "type": ["quick", "discover", "create"],
@@ -674,6 +808,13 @@
       "file": "INTEL-GATHERING"
     },
     {
+      "name": "Reconnaissance",
+      "chinese_name": "勘察",
+      "type": [],
+      "category": "SPYCRAFT",
+      "file": "INTEL-GATHERING"
+    },
+    {
       "name": "Evaluating and Activating Tech",
       "chinese_name": "評估和啟動科技",
       "type": ["quick", "discover", "advance"],
@@ -689,7 +830,7 @@
     },
     {
       "name": "Reloading and Recharging",
-      "chinese_name": "重新裝填和充電",
+      "chinese_name": "重新裝填和充能",
       "type": ["quick"],
       "category": "TECH-GEAR",
       "file": "OPERATING-TECH-GEAR"
@@ -698,6 +839,13 @@
       "name": "Setting a Trap",
       "chinese_name": "設置陷阱",
       "type": ["quick", "varies", "suspend"],
+      "category": "TECH-GEAR",
+      "file": "OPERATING-TECH-GEAR"
+    },
+    {
+      "name": "Programming a Drone",
+      "chinese_name": "操作無人機",
+      "type": [],
       "category": "TECH-GEAR",
       "file": "OPERATING-TECH-GEAR"
     },

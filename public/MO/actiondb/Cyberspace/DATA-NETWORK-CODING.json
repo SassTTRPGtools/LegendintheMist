@@ -339,5 +339,18 @@
     "程式引起管理員或其他監管單位的深度掃描"
   ],
   "source": "Metro: Otherscape Corebook"
+},
+{
+  "name": "Connecting to a Node",
+  "type": [],
+  "examples": [],
+  "description": "連線至遠端網域或裝置（已知地址）等同於進入網路空間，應作為其他行動（如敘事）的一部分來敘述。\n\n若連線本身具有挑戰性，例如以虛擬身分穿越危險的「螺旋」，請參考「危險環境中的旅行」。若需尋找未知節點的位址，請參見「掃描絡網」。",
+  "powerTags": [],
+  "weaknessTags": [],
+  "success": {},
+  "extraFeats": [],
+  "consequences": [],
+  "source": "Metro: Otherscape Corebook"
 }
+
 ]

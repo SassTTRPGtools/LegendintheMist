@@ -97,7 +97,7 @@
     "無聲或隱形地移動",
     "在陰影間穿梭"
   ],
-  "description": "你避免被發現或被找出。你可能在悄悄移動、靜止不動、利用掩體、尋找隱蔽路徑，或使用強力魔法與科技來實現隱形或幻影效果。\n\n若你想追蹤一系列潛行動作來潛入某地，請參見「滲透」；若要悄悄跟蹤目標，請參見「監視」；若是要偷偷接近目標以發動突襲，請參見 Surprise Attacks and Silent Kills。",
+  "description": "你避免被發現或被找出。你可能在悄悄移動、靜止不動、利用掩體、尋找隱蔽路徑，或使用強力魔法與科技來實現隱形或幻影效果。\n\n若你想追蹤一系列潛行動作來潛入某地，請參見「滲透」；若要悄悄跟蹤目標，請參見「監視」；若是要偷偷接近目標以發動突襲，請參見「突襲與沉默暗殺」。",
   "powerTags": [
     "身形嬌小",
     "偽裝服裝",
@@ -192,6 +192,30 @@
   "長時間尾隨讓你精疲力竭（無聊、抽筋、破產）。"
 ],
   "source": "Metro:Otherscape"
+},
+{
+  "name": "Breaking and Entering",
+  "type": [],
+  "examples": [],
+  "description": "參見「覆蓋或欺騙安全設備或程式」與「干預設備」。",
+  "powerTags": [],
+  "weaknessTags": [],
+  "success": {},
+  "extraFeats": [],
+  "consequences": [],
+  "source": "Metro: Otherscape Corebook"
+},
+{
+  "name": "Losing a Tail",
+  "type": ["restore"],
+  "examples": [],
+  "description": "你可以利用速度、潛行、機智或操作技巧擺脫尾隨者或監視，讓對方無法繼續追蹤你，並移動至隱蔽或遙遠地點。此行動可移除「被尾隨」或「遭監視」狀態，使用的是與「監視」動作相反的標籤組。注意，這無法移除「被標記」或「被鎖定」狀態，只能終止監視行為。",
+  "powerTags": [],
+  "weaknessTags": [],
+  "success": {},
+  "extraFeats": [],
+  "consequences": [],
+  "source": "Metro: Otherscape Corebook"
 }
 
 

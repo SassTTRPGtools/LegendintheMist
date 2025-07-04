@@ -28,8 +28,8 @@
     "自以為是"
   ],
   "success": {
-    "bestow": "賦予你的夥伴一個代表你支援的狀態，如 flushed-with-funds、highly-informed、dripping-with-confidence、at-home-in-high-society 等。",
-    "enhance": "或給予一個故事標籤，如 cash fund、weapon stockpile、I'll be there 或 hoard of data files。"
+    "bestow": "賦予你的夥伴一個代表你支援的狀態，如 鈔票滿手、消息靈通、自信滿滿、社交場合如魚得水。",
+    "enhance": "或給予一個故事標籤，如 現金資助、武器儲備、我會到場、資料檔案庫。"
   },
   "extraFeats": [
     "你的支援效果持續更久。",
@@ -37,7 +37,7 @@
   ],
   "consequences": [
     "你提供了錯誤的建議（產生不同主題的狀態）。",
-    "你自己的資源被消耗（燃燒標籤或變得 winded 或 broke）。",
+    "你自己的資源被消耗（燃燒標籤或變得 精疲力竭 或 破產）。",
     "你所收集的物品不如預期（輕微更換標籤）。",
     "其中一人對這件事感到不悅（變更人際標籤）。"
   ],
@@ -78,9 +78,9 @@
     "通訊不良（例如噪音、網路干擾）"
   ],
   "success": {
-    "enhance": "賦予你的隊友一個正面的狀態，如 coordinated-movement、unshakable-resolve 或 barrage-ready。",
-    "restore": "解除你同伴身上的負面狀態，如 exposed、stymied-advance、battlefield-chaos 或 panic。",
-    "influence": "賦予同伴一個強制性的狀態，使他們遵從你的指令，如 obedient、sticking-to-the-plan 或 in-line。"
+    "enhance": "賦予你的隊友一個正面的狀態，如 協調移動、堅定意志、火力齊發。",
+    "restore": "解除你同伴身上的負面狀態，如 暴露、推進受阻、戰場混亂 或 驚慌。",
+    "influence": "賦予同伴一個強制性的狀態，使他們遵從你的指令，如 服從、遵守計畫、隊形整齊。"
   },
   "extraFeats": [
     "重新調整整個隊伍的位置（例如：全面衝鋒或後撤）。",
@@ -88,13 +88,13 @@
     "讓一位同伴立即行動（獲得「聚光燈」）。"
   ],
   "consequences": [
-    "你的隊伍開始協調不良或信心不足（confused-orders）。",
+    "你的隊伍開始協調不良或信心不足（命令混亂）。",
     "你們誤入敵人陷阱。",
     "你的領導方式不適合此情境（燃燒標籤）。",
-    "敵人在你發言時發動攻擊（injured）。",
+    "敵人在你發言時發動攻擊（受傷）。",
     "敵人聽懂了你們的戰術與弱點。",
-    "有人信念動搖（有成員獲得 demoralized 狀態）。",
-    "你們的計畫有明顯漏洞（vulnerable-position）。"
+    "有人信念動搖（有成員獲得 士氣低落 狀態）。",
+    "你們的計畫有明顯漏洞（位置暴露）。"
   ],
   "source": "Metro:Otherscape"
 },
@@ -127,13 +127,13 @@
     "處於高壓下"
   ],
   "success": {
-    "bestow": "賦予你的隊伍一組標籤，代表可能的行動方式、戰術、備用計畫或撤退路線，例如 tunneling inside、guns blazing、no innocents harmed、smoke bomb retreat 等。"
+    "bestow": "賦予你的隊伍一組標籤，代表可能的行動方式、戰術、備用計畫或撤退路線，例如 潛入通道、全火力壓制、不傷及無辜、煙霧彈撤退 等。"
   },
   "extraFeats": [
     "計畫具有彈性（標籤可在行動中稍作調整）。"
   ],
   "consequences": [
-    "計畫存在重大漏洞（confused-orders 或 out-of-sync）。",
+    "計畫存在重大漏洞（命令混亂 或 行動失衡）。",
     "計畫外洩給敵人（標籤在行動中被燒毀）。",
     "隊伍內部出現紛爭（燃燒團隊標籤或重寫關係標籤）。"
   ],
