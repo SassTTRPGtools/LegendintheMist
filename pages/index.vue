@@ -92,6 +92,49 @@
             </div>
           </div>
         </div>      
+        
+        <!-- 快速功能區域 -->
+        <div class="max-w-4xl mx-auto px-4 mt-16">
+          <h3 class="text-2xl font-bold text-gray-800 mb-8 text-center">
+            <Icon name="lucide:zap" class="w-6 h-6 mr-2 inline text-purple-600" />
+            快速開始
+          </h3>
+          <div class="grid sm:grid-cols-2 gap-6">
+            <div class="bg-white rounded-xl shadow-lg p-6 border border-purple-200 hover:shadow-xl transition-all duration-300">
+              <h4 class="text-lg font-semibold text-purple-700 mb-2 flex items-center">
+                <Icon name="lucide:cpu" class="w-5 h-5 mr-2" />
+                都市異景角色建立器
+              </h4>
+              <p class="text-gray-600 text-sm mb-4">
+                使用互動式介面快速建立你的賽博龐克角色。選擇主題卡、查看雷達圖，立即開始你的都市冒險。
+              </p>
+              <NuxtLink 
+                to="/MO/character-builder"
+                class="inline-flex items-center text-purple-600 hover:text-purple-800 font-medium text-sm transition-colors"
+              >
+                <Icon name="lucide:arrow-right" class="w-4 h-4 mr-1" />
+                立即建立角色
+              </NuxtLink>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-lg p-6 border border-blue-200 hover:shadow-xl transition-all duration-300">
+              <h4 class="text-lg font-semibold text-blue-700 mb-2 flex items-center">
+                <Icon name="lucide:scroll" class="w-5 h-5 mr-2" />
+                迷霧傳奇冒險指南
+              </h4>
+              <p class="text-gray-600 text-sm mb-4">
+                瀏覽豐富的冒險主題與背景設定，為你的迷霧世界冒險尋找靈感與指引。
+              </p>
+              <NuxtLink 
+                to="/LitM"
+                class="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium text-sm transition-colors"
+              >
+                <Icon name="lucide:arrow-right" class="w-4 h-4 mr-1" />
+                探索冒險世界
+              </NuxtLink>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

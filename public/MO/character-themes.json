@@ -1,0 +1,120 @@
+{
+  "themes": {
+    "exposure": [
+      {
+        "id": "newcomer",
+        "name": "新來者",
+        "description": "剛接觸都市異景，對一切都感到新奇但缺乏經驗",
+        "tags": ["好奇", "脆弱", "學習能力"],
+        "abilities": ["快速學習", "直覺反應"],
+        "weaknesses": ["缺乏經驗", "容易受騙"],
+        "stats": { "tech": 30, "combat": 20, "social": 40, "mental": 50, "physical": 30, "survival": 20 }
+      },
+      {
+        "id": "experienced",
+        "name": "老手",
+        "description": "在異景中生存多年，已經適應這個危險的環境",
+        "tags": ["經驗豐富", "謹慎", "適應力強"],
+        "abilities": ["危險感知", "生存技巧"],
+        "weaknesses": ["過度謹慎", "不信任他人"],
+        "stats": { "tech": 40, "combat": 50, "social": 30, "mental": 60, "physical": 40, "survival": 70 }
+      },
+      {
+        "id": "hunter",
+        "name": "獵人",
+        "description": "主動尋找並對抗異景現象的勇者",
+        "tags": ["勇敢", "危險", "主動出擊"],
+        "abilities": ["戰鬥直覺", "追蹤技能"],
+        "weaknesses": ["魯莽行動", "樹立敵人"],
+        "stats": { "tech": 30, "combat": 70, "social": 20, "mental": 40, "physical": 60, "survival": 50 }
+      }
+    ],
+    "assets": [
+      {
+        "id": "wealthy",
+        "name": "富有",
+        "description": "擁有大量財富和豐富的社會資源",
+        "tags": ["金錢", "人脈", "影響力"],
+        "abilities": ["資源調動", "社會地位"],
+        "weaknesses": ["引人注目", "依賴金錢"],
+        "stats": { "tech": 60, "combat": 20, "social": 70, "mental": 50, "physical": 20, "survival": 30 }
+      },
+      {
+        "id": "middle-class",
+        "name": "中產",
+        "description": "擁有穩定收入和基本社會資源的普通人",
+        "tags": ["穩定", "平衡", "務實"],
+        "abilities": ["穩定收入", "社會融入"],
+        "weaknesses": ["資源有限", "缺乏特殊管道"],
+        "stats": { "tech": 40, "combat": 40, "social": 50, "mental": 50, "physical": 40, "survival": 40 }
+      },
+      {
+        "id": "struggling",
+        "name": "掙扎",
+        "description": "資源匱乏，需要努力求生的邊緣人",
+        "tags": ["堅韌", "創新", "求生意志"],
+        "abilities": ["變通能力", "街頭智慧"],
+        "weaknesses": ["資源匱乏", "社會地位低"],
+        "stats": { "tech": 20, "combat": 30, "social": 30, "mental": 60, "physical": 50, "survival": 70 }
+      }
+    ],
+    "personality": [
+      {
+        "id": "analytical",
+        "name": "分析型",
+        "description": "理性思考，喜歡深入分析問題本質",
+        "tags": ["邏輯", "冷靜", "精確"],
+        "abilities": ["邏輯推理", "數據分析"],
+        "weaknesses": ["過度理性", "缺乏直覺"],
+        "stats": { "tech": 70, "combat": 20, "social": 30, "mental": 80, "physical": 20, "survival": 40 }
+      },
+      {
+        "id": "social",
+        "name": "社交型",
+        "description": "善於與人交往，具有天生的領導魅力",
+        "tags": ["魅力", "溝通", "領導力"],
+        "abilities": ["人際關係", "團隊協調"],
+        "weaknesses": ["依賴他人", "容易分心"],
+        "stats": { "tech": 30, "combat": 30, "social": 80, "mental": 50, "physical": 30, "survival": 40 }
+      },
+      {
+        "id": "intuitive",
+        "name": "直覺型",
+        "description": "依靠直覺行動，富有創造力和想像力",
+        "tags": ["創意", "靈感", "冒險精神"],
+        "abilities": ["創意思考", "直覺判斷"],
+        "weaknesses": ["不夠理性", "計劃性差"],
+        "stats": { "tech": 40, "combat": 40, "social": 50, "mental": 60, "physical": 40, "survival": 60 }
+      }
+    ],
+    "drones": [
+      {
+        "id": "high-tech",
+        "name": "高科技",
+        "description": "配備最先進的數位設備和AI助手",
+        "tags": ["AI助手", "自動化", "網路連接"],
+        "abilities": ["數據處理", "網路入侵"],
+        "weaknesses": ["科技依賴", "EMP脆弱"],
+        "stats": { "tech": 80, "combat": 40, "social": 30, "mental": 60, "physical": 20, "survival": 30 }
+      },
+      {
+        "id": "moderate-tech",
+        "name": "中等科技",
+        "description": "使用實用且可靠的科技工具",
+        "tags": ["實用", "可靠", "平衡"],
+        "abilities": ["設備維修", "多用途工具"],
+        "weaknesses": ["技術限制", "更新緩慢"],
+        "stats": { "tech": 50, "combat": 50, "social": 40, "mental": 50, "physical": 40, "survival": 50 }
+      },
+      {
+        "id": "low-tech",
+        "name": "低科技",
+        "description": "偏好傳統方法，避免過度依賴科技",
+        "tags": ["傳統", "獨立", "簡單"],
+        "abilities": ["手工技能", "機械理解"],
+        "weaknesses": ["技術落後", "資訊不足"],
+        "stats": { "tech": 20, "combat": 60, "social": 50, "mental": 40, "physical": 70, "survival": 60 }
+      }
+    ]
+  }
+}

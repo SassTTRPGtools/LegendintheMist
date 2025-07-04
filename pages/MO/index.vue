@@ -120,14 +120,26 @@
 
       <!-- CTA Buttons -->
       <div class="mt-12 space-y-4">
-        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <!-- 主要功能按鈕 -->
+        <div class="flex flex-col sm:flex-row gap-4 justify-center mb-6">
+          <NuxtLink 
+            to="/MO/character-builder"
+            class="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold py-4 px-10 rounded-lg transition-all duration-200 shadow-lg hover:shadow-purple-500/25 inline-block border border-purple-500/30 text-lg"
+          >
+            <Icon name="lucide:cpu" class="w-6 h-6 mr-2 inline" />
+            互動式角色建立器
+          </NuxtLink>
           <NuxtLink 
             to="/MO/character-creation-guide"
             class="bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white font-bold py-3 px-8 rounded-lg transition-all duration-200 shadow-lg hover:shadow-cyan-500/25 inline-block border border-cyan-500/30"
           >
-            <Icon name="lucide:user-plus" class="w-5 h-5 mr-2 inline" />
+            <Icon name="lucide:book-open" class="w-5 h-5 mr-2 inline" />
             角色創建指南
           </NuxtLink>
+        </div>
+        
+        <!-- 工具按鈕 -->
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
           <NuxtLink 
             to="/MO/equipment-viewer"
             class="bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white font-bold py-3 px-8 rounded-lg transition-all duration-200 shadow-lg hover:shadow-orange-500/25 inline-block border border-orange-500/30"
