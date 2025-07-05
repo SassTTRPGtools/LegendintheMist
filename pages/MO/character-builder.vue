@@ -187,43 +187,7 @@
                 <circle v-if="mythosCount > 0 && noiseCount > 0 && selfCount > 0" 
                   cx="190" cy="190" r="3" fill="#ffffff" opacity="0.9"/>
                 <text v-if="mythosCount > 0 && noiseCount > 0 && selfCount > 0" 
-                  x="190" y="175" text-anchor="middle" fill="white" font-size="8">交會點</text>
-                
-                <!-- 靈性主義者：自我與神話 - 左下角 -->
-                <circle v-if="mythosCount > 0 && selfCount > 0 && noiseCount === 0" 
-                  cx="95" cy="245" r="3" fill="#c084fc" opacity="0.9"/>
-                <text v-if="mythosCount > 0 && selfCount > 0 && noiseCount === 0" 
-                  x="80" y="260" text-anchor="end" fill="#c084fc" font-size="8">靈性主義者</text>
-                
-                <!-- 賽博格：自我與喧囂 - 右下角 -->
-                <circle v-if="selfCount > 0 && noiseCount > 0 && mythosCount === 0" 
-                  cx="285" cy="245" r="3" fill="#22d3ee" opacity="0.9"/>
-                <text v-if="selfCount > 0 && noiseCount > 0 && mythosCount === 0" 
-                  x="300" y="260" text-anchor="start" fill="#22d3ee" font-size="8">賽博格</text>
-                
-                <!-- 超人類：神話與喧囂 - 最上方 -->
-                <circle v-if="mythosCount > 0 && noiseCount > 0 && selfCount === 0" 
-                  cx="190" cy="80" r="3" fill="#67e8f9" opacity="0.9"/>
-                <text v-if="mythosCount > 0 && noiseCount > 0 && selfCount === 0" 
-                  x="190" y="70" text-anchor="middle" fill="#67e8f9" font-size="8">超人類</text>
-                
-                <!-- 現實人類：只有自我 - 正下方 -->
-                <circle v-if="selfCount > 0 && mythosCount === 0 && noiseCount === 0" 
-                  cx="190" cy="300" r="3" fill="#f472b6" opacity="0.9"/>
-                <text v-if="selfCount > 0 && mythosCount === 0 && noiseCount === 0" 
-                  x="190" y="315" text-anchor="middle" fill="#f472b6" font-size="8">現實人類</text>
-                
-                <!-- 化身/傳導者：僅神話 - 左上角 -->
-                <circle v-if="mythosCount > 0 && selfCount === 0 && noiseCount === 0" 
-                  cx="95" cy="135" r="3" fill="#a855f7" opacity="0.9"/>
-                <text v-if="mythosCount > 0 && selfCount === 0 && noiseCount === 0" 
-                  x="80" y="125" text-anchor="end" fill="#a855f7" font-size="8">{{ mythosCount === 4 ? '化身' : '傳導者' }}</text>
-                
-                <!-- 奇點：僅喧囂 - 右上角 -->
-                <circle v-if="noiseCount > 0 && mythosCount === 0 && selfCount === 0" 
-                  cx="285" cy="135" r="3" fill="#06b6d4" opacity="0.9"/>
-                <text v-if="noiseCount > 0 && mythosCount === 0 && selfCount === 0" 
-                  x="300" y="125" text-anchor="start" fill="#06b6d4" font-size="8">奇點</text>
+                  x="190" y="175" text-anchor="middle" fill="white" font-size="8">交會點</text>                
               </svg>
             </div>
           </div>
@@ -231,10 +195,21 @@
             <div class="text-center mb-3">
               <span class="text-purple-300 font-semibold">角色類型</span>
             </div>
-            <div class="bg-slate-700/50 rounded-lg p-3 mb-3">
-              <div class="text-center">
-                <div class="text-lg font-bold text-white mb-1">{{ getCharacterType() }}</div>
-                <div class="text-sm text-gray-300">{{ getCharacterSubtype() }}</div>
+            <div class="bg-slate-700/50 rounded-lg p-4 mb-3">
+              <div class="text-center mb-3">
+                <div class="text-lg font-bold text-white mb-2">{{ getCharacterType() }}</div>
+              </div>
+              <div class="text-left space-y-3">
+                <div 
+                  v-for="(paragraph, index) in getFormattedCharacterSubtype()" 
+                  :key="index"
+                  :class="[
+                    'text-sm leading-relaxed',
+                    paragraph.isSpecial ? 'text-amber-300 font-medium bg-amber-900/20 p-2 rounded border-l-2 border-amber-400' : 'text-gray-300'
+                  ]"
+                >
+                  {{ paragraph.text }}
+                </div>
               </div>
             </div>
             <div class="grid grid-cols-1 gap-2 text-xs">
@@ -686,7 +661,7 @@ const getCharacterType = () => {
   } else if (selfCount.value > 0 && mythosCount.value === 0 && noiseCount.value === 0) {
     return '現實人類'
   } else if (mythosCount.value > 0 && selfCount.value === 0 && noiseCount.value === 0) {
-    return mythosCount.value === 4 ? '化身' : '傳導者'
+    return '化身/傳導者'
   } else if (noiseCount.value > 0 && mythosCount.value === 0 && selfCount.value === 0) {
     return '奇點'
   } else {
@@ -697,26 +672,67 @@ const getCharacterType = () => {
 // 獲取角色子類型說明
 const getCharacterSubtype = () => {
   const type = getCharacterType()
+  let returnText =''
   switch (type) {
     case '交會點':
-      return '三種主題皆有'
+      returnText = '你已經觸及了這個時代能提供的完整體驗範圍。因此，你的適應速度比其他人快。'
+      returnText += '\n當你更換主題後，如果你仍處於交會點，那麼它會處於完整階段，而非初生階段。（完整階段：擁有3個能力與1個弱點標籤；初生階段，擁有1個能力與1個弱點標籤。）'
+      return returnText
     case '靈性主義者':
-      return '自我與神話'
+      returnText = '你排斥科技，或至少不讓它侵擾你的靈魂，重視人類精神及其與神話之謎的聯繫。'
+      returnText += '\n每場戲一次，你可以動用此連結，在以自我主題為主導的行動中加入神話，或在以神話主題為主導的行動中加入自我。如果你正在進行神話或自我的擲骰，力度為 4。'
+      return returnText
     case '賽博格':
-      return '自我與喧囂'
+      returnText = '你是人類與科技的結合體，無論是自願還是被迫。 你在物質世界中尋求自由，或為了完全控制它而努力，無論付出多少新奇且難以計算的「魔法」代價。'
+      returnText += '\n每場戲一次，你可以使用自我或喧囂的力度，或一起使用（力度 4）來抵抗或擺脫非實體、無法量化的神話力量，例如詛咒、幻覺或心靈影響。'
+      return returnText
     case '超人類':
-      return '神話與喧囂'
+      returnText = '你在追尋通過魔法和科技可能實現的極限，已放棄所有人性表徵——或者根本沒有過。 試驗傳說與網路的悖論結合，是你存在的終極表現。'
+      returnText += '\n每個場景一次，當你同時動用神話和科技標籤時（不論來源為何），你能夠把失敗（6以下）改為有代價的成功（7-9）。'
+      return returnText
     case '現實人類':
-      return '只有自我'
-    case '化身':
-      return '僅神話，全合一'
-    case '傳導者':
-      return '僅神話，各自偕同'
+      returnText = '在誘惑使人成長的世界裡，你選擇保持自我，避開華麗的謊言和過往的故事。無論是倔強、缺乏遠見還是更深的原因，你就是你，並拒絕外力——無論是神話還是科技。'
+      returnText += '\n每當你採取直接維持或保護身份的行動時，你能選擇以自我主題的數量代替計算正面標籤的力度。'
+      return returnText
+    case '化身/傳導者':
+      returnText = '化身（同秘源）：你與自身秘源合而為一。 現在成了神話本身，你是傳說在世的燈塔。'
+      returnText += '\n你停止所有儀式；改為決定一個「議程」， 如果你忽視它（哪怕任何一次），將導致你立刻替換所有主題（你的新神話主題無法包含曾失去的秘源）。作為化身，你能立刻恢復燒掉的能力標籤。'
+      returnText += '\n\n傳導者（不同秘源）：你不再是個人；你給自己成為秘源容器的使命——神聖且難以言說，內心和諧又充滿衝突。'
+      returnText += '\n你能夠更換神話主題。你本身的任何秘源，甚至鄰近的秘源，都可以成為你新神話的主題，並處於完整階段，而非初生階段。（完整階段：擁有3個能力與1個弱點標籤；初生階段，擁有1個能力與1個弱點標籤。）'
+      return returnText
     case '奇點':
-      return '僅喧囂'
+      returnText = '你是新生命，拋棄了人性與其喋喋不休的故事， 踏入純粹資訊真理的存在，超越了意義幻象。'
+      returnText += '\n心理效應與無形或無法測量的神話效應不會影響你。你能介接所有資訊的媒介，並且擲骰喧囂主題的數量作為力度來搜索和操控它。'
+      return returnText
     default:
       return '請選擇主題卡'
   }
+}
+
+// 格式化角色子類型說明，將文字分段並添加特殊樣式
+const getFormattedCharacterSubtype = () => {
+  const rawText = getCharacterSubtype()
+  if (!rawText) return [{ text: '', isSpecial: false }]
+  
+  // 將文字按換行符分段
+  const paragraphs = rawText.split('\n').filter(p => p.trim() !== '')
+  
+  return paragraphs.map((text, index) => {
+    // 判斷是否為特殊段落（包含機制說明的段落）
+    const isSpecial = text.includes('每場戲一次') || 
+                     text.includes('每個場景一次') || 
+                     text.includes('每當你') ||
+                     text.includes('你停止所有儀式') ||
+                     text.includes('你能夠更換神話主題') ||
+                     text.includes('你能介接所有資訊') ||
+                     text.includes('心理效應與無形') ||
+                     text.includes('力度為 4') 
+    
+    return {
+      text: text.trim(),
+      isSpecial: isSpecial
+    }
+  })
 }
 
 // 六角雷達圖計算 - 重新設計為6個區塊，每個主題佔2個區塊
@@ -880,22 +896,22 @@ const getAllThemesFirstLayerPath = () => {
 // 三主題混合時，神話區域的扇形填滿（到第二層）
 const getAllThemesMythosPath = () => {
   const vertices = getHexVertices(2) // 填滿到第二層
-  // 神話佔據左側區塊：化身/傳導者(5) + 靈性主義者(4) 
-  return `M ${center.x} ${center.y} L ${vertices[5].x} ${vertices[5].y} L ${vertices[4].x} ${vertices[4].y} Z`
+  // 神話佔據從靈性主義者(4) 到 超人類(0) 的區塊：靈性主義者(4) + 化身/傳導者(5) + 超人類(0)
+  return `M ${center.x} ${center.y} L ${vertices[4].x} ${vertices[4].y} L ${vertices[5].x} ${vertices[5].y} L ${vertices[0].x} ${vertices[0].y} Z`
 }
 
 // 三主題混合時，喧囂區域的扇形填滿（到第二層）
 const getAllThemesNoisePath = () => {
   const vertices = getHexVertices(2) // 填滿到第二層
-  // 喧囂佔據右上區塊：超人類(0) + 奇點(1)
-  return `M ${center.x} ${center.y} L ${vertices[0].x} ${vertices[0].y} L ${vertices[1].x} ${vertices[1].y} Z`
+  // 喧囂佔據從超人類(0) 到 賽博格(2) 的區塊：超人類(0) + 奇點(1) + 賽博格(2)
+  return `M ${center.x} ${center.y} L ${vertices[0].x} ${vertices[0].y} L ${vertices[1].x} ${vertices[1].y} L ${vertices[2].x} ${vertices[2].y} Z`
 }
 
 // 三主題混合時，自我區域的扇形填滿（到第二層）
 const getAllThemesSelfPath = () => {
   const vertices = getHexVertices(2) // 填滿到第二層
-  // 自我佔據右下區塊：賽博格(2) + 現實人類(3)
-  return `M ${center.x} ${center.y} L ${vertices[2].x} ${vertices[2].y} L ${vertices[3].x} ${vertices[3].y} Z`
+  // 自我佔據從賽博格(2) 到 靈性主義者(4) 的區塊：賽博格(2) + 現實人類(3) + 靈性主義者(4)
+  return `M ${center.x} ${center.y} L ${vertices[2].x} ${vertices[2].y} L ${vertices[3].x} ${vertices[3].y} L ${vertices[4].x} ${vertices[4].y} Z`
 }
 
 // 方法
