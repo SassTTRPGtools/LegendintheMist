@@ -18,6 +18,7 @@
         <CharacterInfo
           :character="character"
           @toggle-evolution-step="toggleEvolutionStep"
+          @show-evolution-history="openEvolutionHistoryModal"
         />
 
         <!-- 第三欄：裝備卡 -->
@@ -88,6 +89,14 @@
         @confirm="confirmEvolution"
       />
 
+      <!-- 演化歷史模態框 -->
+      <EvolutionHistoryModal
+        :show="showEvolutionHistoryModal"
+        :evolution-history="character.evolutionHistory || []"
+        @close="closeEvolutionHistoryModal"
+        @update-description="updateEvolutionDescription"
+      />
+
       <!-- 底部操作按鈕 -->
       <div class="mt-8 flex justify-center space-x-4">
         <NuxtLink 
@@ -137,6 +146,7 @@ import DecayModal from '~/components/MO/DecayModal.vue'
 import EvolutionModal from '~/components/MO/EvolutionModal.vue'
 import HowToPlayPanel from '~/components/MO/HowToPlayPanel.vue'
 import CharacterDataManager from '~/components/MO/CharacterDataManager.vue'
+import EvolutionHistoryModal from '~/components/MO/EvolutionHistoryModal.vue'
 
 // ====================
 // 頁面配置
@@ -249,14 +259,20 @@ const veteranSpecialties = {
 const evolutionMoments = {
   newEssenceType: {
     name: '創建一個新的精髓類型',
-    description: '你和主持人將共同創建一個新的精髓類型，來契合你的角色、故事和他們的新身份，並賦予其專屬的精髓專長。這個新精髓類型將成為你的系列劇的一部分，其他滿足條件的玩家也能選擇此精髓類型。',
+    description: `你和主持人將共同創建一個新的精髓類型，來契合你的角色、故事和他們的新身份，並賦予其專屬的精髓專長。
+
+這個新精髓類型將成為你的系列劇的一部分，其他滿足條件的玩家也能選擇此精髓類型。`,
     effect: (character, modal) => {
       console.log('創建新的精髓類型', modal.customDescription)
     }
   },
   secondGeneralTag: {
     name: '創建另一個廣義能力標籤',
-    description: '每個角色通常只能擁有一個廣義能力標籤，但藉由這次演化，你可以創建第二個廣義能力標籤。為你的一個主題創建新的廣義能力標籤。若將來失去該主題，可以回答替代主題書中與廣義能力標籤相關的問題。角色不應擁有超過兩個廣義能力標籤。',
+    description: `每個角色通常只能擁有一個廣義能力標籤，但藉由這次演化，你可以創建第二個廣義能力標籤。
+
+為你的一個主題創建新的廣義能力標籤。若將來失去該主題，可以回答替代主題書中與廣義能力標籤相關的問題。
+
+角色不應擁有超過兩個廣義能力標籤。`,
     effect: (character, modal) => {
       console.log('創建第二個廣義能力標籤', modal.customDescription)
     }
@@ -270,21 +286,53 @@ const evolutionMoments = {
   },
   retire: {
     name: '退役',
-    description: '你的角色已走到盡頭，是時候說再見了。你可以選擇退役條件，可能英勇犧牲、帶著最後的勝利笑聲離去，或死於無謂而浪費的死亡。或許他們逃往荒野過孤獨生活，或加入隱秘的嬉皮派系，再也不被發現。也許組建家庭，過著富裕的信仰生活，複製自己進入網路空間，或升華為噬源者。',
+    description: `你的角色已走到盡頭，是時候說再見了。
+
+你可以選擇退役條件：
+• 英勇犧牲、帶著最後的勝利笑聲離去
+• 死於無謂而浪費的死亡
+• 逃往荒野過孤獨生活
+• 加入隱秘的嬉皮派系，再也不被發現
+• 組建家庭，過著富裕的信仰生活
+• 複製自己進入網路空間
+• 升華為噬源者`,
     effect: (character, modal) => {
       console.log('角色退役', modal.customDescription)
     }
   },
   breakCosmology: {
     name: '破壞宇宙論（敘事發展）',
-    description: '你做出一項發現，改變世界，或以重新定義系列的方式轉變。或許你發現異星生命或科技，或在你的系列中，它們成為第一個人類混血體。或許你發現世界是模擬，神話是叛變程式在試圖喚醒人類的網路夢境。或許你的自由鬥士派系對抗企業，帶來首次巨型城市的企業級勝利，連帶所有責任與複雜局面。與主持人討論你想要的改變，並協作將其融入你的系列。',
+    description: `你做出一項發現，改變世界，或以重新定義系列的方式轉變。
+
+可能的改變：
+• 發現異星生命或科技，成為第一個人類混血體
+• 發現世界是模擬，神話是叛變程式在試圖喚醒人類的網路夢境
+• 自由鬥士派系對抗企業，帶來首次巨型城市的企業級勝利，連帶所有責任與複雜局面
+
+與主持人討論你想要的改變，並協作將其融入你的系列。`,
     effect: (character, modal) => {
       console.log('破壞宇宙論', modal.customDescription)
     }
   },
   totalReconstruction: {
     name: '總重組（尊重）',
-    description: '你的角色不再是過去的自己，完全轉變為新存在。這並非部分更替，而是所有主題同時被替換，任何結果都有可能。或許他們死於戰鬥，身體被增強部件取代，意識上傳至網路空間。或許他們被選為鳳凰化身，在火焰中重生，重新建立完整人格、身體與數據紀錄，展開新生活，沒有人知道。當你重塑角色時，創建四個新主題，就像創造新角色一樣。此外，根據舊角色架構，新角色將獲得：每個主題前三個能力標籤免費改進一次、每個主題第一個弱點標籤免費改進一次、每個主題一個免費的專屬特技、舊角色所有演化點、舊角色所有演化時刻。每個演化升級可依改進規則應用於新角色的主題。演化時刻可重新分配至新主題。',
+    description: `你的角色不再是過去的自己，完全轉變為新存在。這並非部分更替，而是所有主題同時被替換，任何結果都有可能。
+
+可能的重組情況：
+• 死於戰鬥，身體被增強部件取代，意識上傳至網路空間
+• 被選為鳳凰化身，在火焰中重生，重新建立完整人格、身體與數據紀錄，展開新生活，沒有人知道
+
+重塑規則：
+當你重塑角色時，創建四個新主題，就像創造新角色一樣。
+
+新角色將獲得：
+• 每個主題前三個能力標籤免費改進一次
+• 每個主題第一個弱點標籤免費改進一次
+• 每個主題一個免費的專屬特技
+• 舊角色所有演化點
+• 舊角色所有演化時刻
+
+每個演化升級可依改進規則應用於新角色的主題。演化時刻可重新分配至新主題。`,
     effect: (character, modal) => {
       console.log('總重組', modal.customDescription)
     }
@@ -335,6 +383,9 @@ const evolutionModal = ref({
   selectedVeteranSpecialty: '',
   customDescription: ''
 })
+
+// 演化歷史模態框相關
+const showEvolutionHistoryModal = ref(false)
 
 // ====================
 // 工具函數
@@ -1064,6 +1115,23 @@ function closeEvolutionModal() {
     selectedMoments: [],
     selectedVeteranSpecialty: '',
     customDescription: ''
+  }
+}
+
+// ====================
+// 演化歷史功能
+// ====================
+function openEvolutionHistoryModal() {
+  showEvolutionHistoryModal.value = true
+}
+
+function closeEvolutionHistoryModal() {
+  showEvolutionHistoryModal.value = false
+}
+
+function updateEvolutionDescription(index, description) {
+  if (character.value.evolutionHistory && character.value.evolutionHistory[index]) {
+    character.value.evolutionHistory[index].customDescription = description
   }
 }
 

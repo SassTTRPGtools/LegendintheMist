@@ -42,7 +42,7 @@
                 />
                 <div class="flex-1">
                   <div class="font-medium text-white">{{ moment.name }}</div>
-                  <div class="text-sm text-gray-400 mt-1">{{ moment.description }}</div>
+                  <div class="text-sm text-gray-400 mt-1 whitespace-pre-line">{{ moment.description }}</div>
                 </div>
                 
                 <!-- 懸浮說明圖示 -->
@@ -54,7 +54,7 @@
                   <!-- 懸浮說明視窗 -->
                   <div class="absolute right-0 top-8 w-80 bg-slate-900 border border-purple-500/30 rounded-lg p-3 text-sm text-gray-200 shadow-xl z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
                     <div class="font-semibold text-purple-300 mb-2">{{ moment.name }}</div>
-                    <div class="text-xs leading-relaxed">{{ moment.description }}</div>
+                    <div class="text-xs leading-relaxed whitespace-pre-line">{{ moment.description }}</div>
                   </div>
                 </div>
               </label>
