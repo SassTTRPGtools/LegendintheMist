@@ -1,160 +1,11 @@
 <template>
   <div class="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white">
     <!-- 側邊「如何遊玩」書籤 -->
-    <div 
-      :class="[
-        'fixed top-1/2 right-0 transform -translate-y-1/2 z-50 transition-all duration-300 ease-in-out',
-        showHowToPlay ? 'translate-x-0' : 'translate-x-80'
-      ]"
-    >
-      <!-- 書籤標籤 -->
-      <button 
-        @click="showHowToPlay = !showHowToPlay"
-        :class="[
-          'absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-full',
-          'bg-purple-600 hover:bg-purple-700 text-white px-2 py-6 rounded-l-lg',
-          'writing-mode-vertical text-sm font-bold tracking-wider shadow-lg',
-          'transition-colors duration-200'
-        ]"
-        style="writing-mode: vertical-rl; text-orientation: mixed;"
-      >
-        如何遊玩
-      </button>
-      
-      <!-- 內容面板 -->
-      <div class="bg-slate-800/95 backdrop-blur-sm border-l border-purple-500/30 w-80 h-screen overflow-y-auto shadow-2xl">
-        <div class="p-4">
-          <!-- 標題區 -->
-          <div class="flex items-center justify-between mb-4 border-b border-purple-500/30 pb-3">
-            <h3 class="text-lg font-bold text-purple-300">遊戲規則</h3>
-            <button 
-              @click="showHowToPlay = false"
-              class="text-gray-400 hover:text-white p-1 rounded"
-            >
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-          </div>
-          
-          <!-- 規則內容 -->
-          <div class="space-y-4">
-            <!-- 建立行動 -->
-            <div class="bg-slate-700/30 rounded-lg p-3">
-              <h4 class="font-bold text-green-400 text-sm mb-2 flex items-center">
-                <div class="w-2 h-2 bg-green-400 rounded-full mr-2"></div>
-                建立行動
-              </h4>
-              <div class="text-xs text-gray-300 space-y-2">
-                <p>MC描述場景，宣佈<span class="text-red-400 font-semibold">威脅</span></p>
-                <p>描述你的行動，MC決定是否需要<span class="text-purple-400 font-semibold">擲骰</span></p>
-                
-                <div class="bg-slate-800/50 rounded p-2 mt-2">
-                  <p class="text-purple-300 font-semibold text-xs mb-1">快速行動</p>
-                  <div class="space-y-1 text-xs">
-                    <div class="flex justify-between">
-                      <span class="text-green-300">正面標籤</span>
-                      <span class="text-green-200">+1 力度</span>
-                    </div>
-                    <div class="flex justify-between">
-                      <span class="text-red-300">負面標籤</span>
-                      <span class="text-red-200">-1 力度</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="grid grid-cols-1 gap-1 text-xs mt-2">
-                  <div class="bg-red-900/30 p-1 rounded text-center">
-                    <span class="text-red-300 font-bold">≤6 失誤</span>
-                  </div>
-                  <div class="bg-yellow-900/30 p-1 rounded text-center">
-                    <span class="text-yellow-300 font-bold">7-9 混合</span>
-                  </div>
-                  <div class="bg-green-900/30 p-1 rounded text-center">
-                    <span class="text-green-300 font-bold">≥10 成功</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- 追蹤行動 -->
-            <div class="bg-slate-700/30 rounded-lg p-3">
-              <h4 class="font-bold text-amber-400 text-sm mb-2 flex items-center">
-                <div class="w-2 h-2 bg-amber-400 rounded-full mr-2"></div>
-                追蹤行動
-              </h4>
-              <div class="text-xs text-gray-300 space-y-2">
-                <p>成功時，花費力度於效果：</p>
-                <div class="grid grid-cols-1 gap-1">
-                  <div class="bg-blue-900/30 p-1 rounded">
-                    <span class="text-blue-300">狀態 ±1層</span>
-                    <span class="text-gray-400 float-right">1力度</span>
-                  </div>
-                  <div class="bg-purple-900/30 p-1 rounded">
-                    <span class="text-purple-300">標籤 ±1個</span>
-                    <span class="text-gray-400 float-right">2力度</span>
-                  </div>
-                  <div class="bg-green-900/30 p-1 rounded">
-                    <span class="text-green-300">發現細節</span>
-                    <span class="text-gray-400 float-right">1力度</span>
-                  </div>
-                  <div class="bg-orange-900/30 p-1 rounded">
-                    <span class="text-orange-300">額外專長</span>
-                    <span class="text-gray-400 float-right">1力度</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- 緩解與後果 -->
-            <div class="bg-slate-700/30 rounded-lg p-3">
-              <h4 class="font-bold text-red-400 text-sm mb-2 flex items-center">
-                <div class="w-2 h-2 bg-red-400 rounded-full mr-2"></div>
-                緩解與後果
-              </h4>
-              <div class="text-xs text-gray-300 space-y-2">
-                <p><span class="text-amber-400 font-semibold">緩解：</span>反應來減少效果</p>
-                <div class="grid grid-cols-1 gap-1">
-                  <div class="bg-red-900/30 p-1 rounded text-center">
-                    <span class="text-red-300">≤6 全部效果</span>
-                  </div>
-                  <div class="bg-yellow-900/30 p-1 rounded text-center">
-                    <span class="text-yellow-300">7-9 花費力度減少</span>
-                  </div>
-                  <div class="bg-green-900/30 p-1 rounded text-center">
-                    <span class="text-green-300">≥10 +1力度</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- 改進 -->
-            <div class="bg-slate-700/30 rounded-lg p-3">
-              <h4 class="font-bold text-purple-400 text-sm mb-2 flex items-center">
-                <div class="w-2 h-2 bg-purple-400 rounded-full mr-2"></div>
-                改進
-              </h4>
-              <div class="text-xs text-gray-300 space-y-2">
-                <p>弱點被調用時標記改進</p>
-                <p>三格改進後選擇：</p>
-                <div class="flex items-center space-x-2 text-xs">
-                  <div class="bg-green-600 w-3 h-3 rounded flex items-center justify-center">
-                    <span class="text-white text-xs">✓</span>
-                  </div>
-                  <span class="text-green-300">新能力標籤</span>
-                </div>
-                <div class="flex items-center space-x-2 text-xs">
-                  <div class="bg-amber-600 w-3 h-3 rounded flex items-center justify-center">
-                    <span class="text-white text-xs">⚡</span>
-                  </div>
-                  <span class="text-amber-300">主題專長</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <HowToPlayPanel 
+      :show="showHowToPlay" 
+      @toggle="showHowToPlay = !showHowToPlay"
+      @close="showHowToPlay = false"
+    />
 
     <!-- 主要容器 -->
     <div class="container mx-auto px-4 py-8">
@@ -277,6 +128,7 @@ import ImprovementModal from '~/components/MO/ImprovementModal.vue'
 import EquipmentModal from '~/components/MO/EquipmentModal.vue'
 import DecayModal from '~/components/MO/DecayModal.vue'
 import EvolutionModal from '~/components/MO/EvolutionModal.vue'
+import HowToPlayPanel from '~/components/MO/HowToPlayPanel.vue'
 
 // ====================
 // 頁面配置
