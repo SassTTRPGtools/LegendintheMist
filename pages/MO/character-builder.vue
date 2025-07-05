@@ -17,8 +17,10 @@
         <!-- 右上角：角色基本資訊 -->
         <CharacterInfo
           :character="character"
+          :has-incomplete-level-up-game="hasIncompleteLevelUpGame"
           @toggle-evolution-step="toggleEvolutionStep"
           @show-evolution-history="openEvolutionHistoryModal"
+          @resume-level-up-game="resumeLevelUpGame"
         />
 
         <!-- 第三欄：裝備卡 -->
@@ -163,7 +165,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, nextTick } from 'vue'
 import CharacterTypeChart from '~/components/MO/CharacterTypeChart.vue'
 import ThemeCard from '~/components/MO/ThemeCard.vue'
 import EquipmentCard from '~/components/MO/EquipmentCard.vue'
@@ -542,6 +544,18 @@ const needsEvolutionDescription = computed(() => {
   return evolutionModal.value.selectedMoments.some(moment => 
     needsDescription.includes(moment)
   )
+})
+
+// 檢查是否有未完成的「改進你的遊戲」流程
+const hasIncompleteLevelUpGame = computed(() => {
+  // 檢查是否有「改進你的遊戲」專長
+  if (!character.value.veteranSpecialties?.includes('levelUpGame')) {
+    return false
+  }
+  
+  // 檢查是否已完成7次改進
+  const completedImprovements = character.value.levelUpGameImprovements?.length || 0
+  return completedImprovements < 7
 })
 
 // ====================
@@ -1506,7 +1520,6 @@ function handleLevelUpGameCancel() {
   console.log('取消改進你的遊戲')
   
   // 重置相關變數
-  levelUpGameImprovementCount.value = 0
   levelUpGameCurrentCardIndex.value = -1
   
   // 重置模態框
@@ -1516,8 +1529,34 @@ function handleLevelUpGameCancel() {
   
   closeLevelUpGameModal()
   
-  // 清空演化軌跡
-  character.value.evolutionTrack = [false, false, false, false, false]
+  // 注意：不清空演化軌跡，也不移除已獲得的專長
+  // 這樣玩家可以稍後重新啟動流程
+}
+
+// 重新啟動改進你的遊戲流程
+function resumeLevelUpGame() {
+  console.log('重新啟動改進你的遊戲流程')
+  
+  // 計算已完成的改進次數
+  const completedCount = character.value.levelUpGameImprovements?.length || 0
+  levelUpGameImprovementCount.value = completedCount
+  
+  // 重置模態框
+  if (levelUpGameModalRef.value) {
+    levelUpGameModalRef.value.resetModal()
+  }
+  
+  // 開啟模態框
+  showLevelUpGameModal.value = true
+  
+  // 延遲恢復已完成的改進記錄，確保模態框已經渲染
+  nextTick(() => {
+    if (levelUpGameModalRef.value && character.value.levelUpGameImprovements) {
+      character.value.levelUpGameImprovements.forEach(improvement => {
+        levelUpGameModalRef.value.addCompletedImprovement(improvement)
+      })
+    }
+  })
 }
 
 // 獲取改進描述的輔助函數

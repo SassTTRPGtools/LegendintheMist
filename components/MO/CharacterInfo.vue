@@ -84,6 +84,27 @@
           </span>
         </div>
       </div>
+
+      <!-- 改進你的遊戲提醒 -->
+      <div v-if="hasIncompleteLevelUpGame" class="mt-4 p-3 bg-yellow-900/50 border border-yellow-500/50 rounded-lg">
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="text-sm font-medium text-yellow-300">未完成的改進流程</div>
+            <div class="text-xs text-yellow-200 mt-1">
+              你有「改進你的遊戲」專長尚未完成全部 7 次改進
+              <span v-if="character.levelUpGameImprovements">
+                （已完成 {{ character.levelUpGameImprovements.length }}/7）
+              </span>
+            </div>
+          </div>
+          <button 
+            @click="emit('resume-level-up-game')"
+            class="px-3 py-1 bg-yellow-600 hover:bg-yellow-700 text-white text-xs rounded transition-colors"
+          >
+            繼續改進
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -118,6 +139,7 @@ interface Character {
 
 interface Props {
   character: Character
+  hasIncompleteLevelUpGame?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -128,13 +150,15 @@ const props = withDefaults(defineProps<Props>(), {
     evolutionHistory: [],
     veteranSpecialties: [],
     levelUpGameImprovements: []
-  })
+  }),
+  hasIncompleteLevelUpGame: false
 })
 
 // 定義事件
 const emit = defineEmits<{
   'toggle-evolution-step': [index: number]
   'show-evolution-history': []
+  'resume-level-up-game': []
 }>()
 
 // 老將專長資料

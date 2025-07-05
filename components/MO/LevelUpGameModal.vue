@@ -205,18 +205,6 @@ const getThemeTypeName = (themeType) => {
   return typeNames[themeType] || '未選擇類型'
 }
 
-const getThemeName = (card) => {
-  // 需要從父組件獲取主題資料來顯示中文名稱
-  // 這裡先顯示英文，稍後會通過 props 傳入主題資料
-  if (card.selectedTheme) {
-    return card.selectedTheme
-  } else if (card.theme) {
-    return card.theme
-  } else {
-    return '未選擇主題'
-  }
-}
-
 // 獲取主題的中文名稱
 const getThemeChineseName = (card) => {
   if (!card.selectedThemeType || !card.selectedTheme) {
