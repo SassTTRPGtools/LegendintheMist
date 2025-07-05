@@ -116,23 +116,42 @@
             />
             <span class="text-sm text-white">選擇主題專長</span>
           </label>
-          <select 
-            v-if="modalData.selectedOption === 'specialty'"
-            v-model="modalData.selectedSpecialty"
-            class="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-md text-white text-sm focus:ring-2 focus:ring-purple-500"
-          >
-            <option value="">請選擇專長</option>
-            <option 
-              v-for="(specialty, key) in availableSpecialties" 
-              :key="key"
-              :value="key"
+          <div v-if="modalData.selectedOption === 'specialty'" class="space-y-3">
+            <select 
+              v-model="modalData.selectedSpecialty"
+              class="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-md text-white text-sm focus:ring-2 focus:ring-purple-500"
             >
-              {{ specialty.name }}
-            </option>
-          </select>
+              <option value="">請選擇專長</option>
+              <option 
+                v-for="(specialty, key) in availableSpecialties" 
+                :key="key"
+                :value="key"
+                :disabled="specialty.isSelected"
+                :class="specialty.isSelected ? 'text-gray-500' : ''"
+              >
+                {{ specialty.name }}{{ specialty.isSelected ? ' (已選擇)' : '' }}
+              </option>
+            </select>
+            
+            <!-- 顯示選中專長的描述 -->
+            <div v-if="modalData.selectedSpecialty && availableSpecialties[modalData.selectedSpecialty]" 
+                 class="p-3 bg-amber-900/20 border border-amber-500/30 rounded-lg">
+              <div class="text-sm font-medium text-amber-300 mb-2">
+                {{ availableSpecialties[modalData.selectedSpecialty].name }}
+              </div>
+              <div class="text-xs text-amber-200 leading-relaxed">
+                {{ availableSpecialties[modalData.selectedSpecialty].description }}
+              </div>
+            </div>
+            
+            <!-- 專長選擇進度 -->
+            <div class="text-xs text-gray-400">
+              已選擇專長：{{ getSelectedSpecialtyCount() }}/5
+            </div>
+          </div>
         </div>
         <div v-else class="text-xs text-gray-500 italic p-2 bg-slate-700/30 rounded">
-          此主題暫無可用專長
+          此主題暫無可用專長或已達專長上限 (5/5)
         </div>
       </div>
 
@@ -171,6 +190,7 @@ interface Weakness {
 interface Specialty {
   name: string
   description?: string
+  isSelected?: boolean
 }
 
 interface ModalData {
@@ -231,8 +251,15 @@ const isValid = computed(() => {
   } else if (props.modalData.selectedOption === 'modifyWeakness') {
     return props.modalData.selectedWeaknessIndex !== null
   } else if (props.modalData.selectedOption === 'specialty') {
-    return props.modalData.selectedSpecialty !== ''
+    return props.modalData.selectedSpecialty !== '' && 
+           props.availableSpecialties[props.modalData.selectedSpecialty] &&
+           !props.availableSpecialties[props.modalData.selectedSpecialty].isSelected
   }
   return false
 })
+
+// 計算已選擇的專長數量
+const getSelectedSpecialtyCount = () => {
+  return Object.values(props.availableSpecialties).filter(specialty => specialty.isSelected).length
+}
 </script>

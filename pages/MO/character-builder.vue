@@ -348,6 +348,7 @@ function createEmptyThemeCard() {
     improvements: Array(3).fill(null).map(() => ({ checked: false })),
     decays: Array(3).fill(null).map(() => ({ checked: false })),
     selectedSpecialty: '',
+    selectedSpecialties: [],
     motivation: {
       identity: '',
       ritual: '',
@@ -584,6 +585,9 @@ function normalizeThemeCards(themeCards) {
       if (typeof card.selectedTheme === 'string') {
         normalizedCard.selectedTheme = card.selectedTheme
       }
+      if (typeof card.title === 'string') {
+        normalizedCard.title = card.title
+      }
       if (Array.isArray(card.abilities)) {
         normalizedCard.abilities = [...card.abilities]
       }
@@ -593,11 +597,17 @@ function normalizeThemeCards(themeCards) {
       if (Array.isArray(card.improvements)) {
         normalizedCard.improvements = [...card.improvements]
       }
-      if (Array.isArray(card.decayOptions)) {
-        normalizedCard.decayOptions = [...card.decayOptions]
+      if (Array.isArray(card.decays)) {
+        normalizedCard.decays = [...card.decays]
       }
-      if (typeof card.power === 'number') {
-        normalizedCard.power = Math.max(0, Math.min(3, card.power))
+      if (typeof card.selectedSpecialty === 'string') {
+        normalizedCard.selectedSpecialty = card.selectedSpecialty
+      }
+      if (Array.isArray(card.selectedSpecialties)) {
+        normalizedCard.selectedSpecialties = [...card.selectedSpecialties]
+      }
+      if (card.motivation && typeof card.motivation === 'object') {
+        normalizedCard.motivation = { ...card.motivation }
       }
       if (typeof card.isEditing === 'boolean') {
         normalizedCard.isEditing = card.isEditing
@@ -759,8 +769,20 @@ function confirmImprovement() {
       break
       
     case 'specialty':
-      // 設定主題專長
-      card.selectedSpecialty = modal.selectedSpecialty
+      // 設定主題專長 - 支援多專長選擇
+      if (!card.selectedSpecialties) {
+        card.selectedSpecialties = []
+      }
+      
+      // 確保不會重複添加同一專長
+      if (!card.selectedSpecialties.includes(modal.selectedSpecialty)) {
+        card.selectedSpecialties.push(modal.selectedSpecialty)
+        
+        // 向後相容性：如果是第一個專長，也設定到舊的欄位
+        if (card.selectedSpecialties.length === 1) {
+          card.selectedSpecialty = modal.selectedSpecialty
+        }
+      }
       break
   }
   
@@ -780,7 +802,8 @@ function confirmImprovement() {
 // 檢查是否有可用的主題專長
 function hasAvailableSpecialties(cardIndex) {
   const availableSpecialties = getAvailableSpecialties(cardIndex)
-  return Object.keys(availableSpecialties).length > 0
+  // 檢查是否有未被選擇的專長
+  return Object.values(availableSpecialties).some(specialty => !specialty.isSelected)
 }
 
 // 獲取可用的主題專長
@@ -814,13 +837,28 @@ function getAvailableSpecialties(cardIndex) {
     return {}
   }
   
-  // 將 theme_specials 陣列轉換為物件格式，供下拉選單使用
+  // 取得已選擇的專長列表
+  const selectedSpecialties = card.selectedSpecialties || []
+  
+  // 將 theme_specials 陣列轉換為物件格式，排除已選擇的專長
   const specialties = {}
   themeData.theme_specials.forEach((special, index) => {
     const key = `${themeKey}_special_${index}`
-    specialties[key] = {
-      name: special.name,
-      description: special.description
+    
+    // 如果專長未被選擇且總數未超過5個，則加入可選列表
+    if (!selectedSpecialties.includes(key) && selectedSpecialties.length < 5) {
+      specialties[key] = {
+        name: special.name,
+        description: special.description,
+        isSelected: false
+      }
+    } else if (selectedSpecialties.includes(key)) {
+      // 已選擇的專長標記為禁用
+      specialties[key] = {
+        name: special.name,
+        description: special.description,
+        isSelected: true
+      }
     }
   })
   

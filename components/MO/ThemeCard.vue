@@ -192,8 +192,15 @@
       <!-- 主題專長 -->
       <div>
         <label class="block text-xs font-medium mb-2 text-amber-400">主題專長</label>
-        <div v-if="themeCard.selectedSpecialty" class="text-xs p-2 bg-amber-900/20 border border-amber-500/30 rounded">
-          {{ specialtyDescription }}
+        <div v-if="themeCard.selectedSpecialties && themeCard.selectedSpecialties.length > 0" class="space-y-2">
+          <div 
+            v-for="(specialty, index) in themeCard.selectedSpecialties" 
+            :key="index"
+            class="text-xs p-2 bg-amber-900/20 border border-amber-500/30 rounded"
+          >
+            <div class="font-medium text-amber-300 mb-1">{{ getSpecialtyName(specialty) }}</div>
+            <div class="text-amber-200">{{ getSpecialtyFullDescription(specialty) }}</div>
+          </div>
         </div>
         <div v-else-if="hasAvailableSpecialties" class="text-xs text-gray-400 italic">
           尚未選擇主題專長（改進時可選擇）
@@ -274,7 +281,8 @@ interface ThemeCard {
   weaknesses: Array<{ text: string }>
   improvements: Array<{ checked: boolean }>
   decays: Array<{ checked: boolean }>
-  selectedSpecialty: string
+  selectedSpecialty: string // 保留向後相容性
+  selectedSpecialties: string[] // 新的多專長陣列
   motivation: {
     identity: string
     ritual: string
@@ -306,6 +314,7 @@ const props = withDefaults(defineProps<Props>(), {
     improvements: Array(3).fill(null).map(() => ({ checked: false })),
     decays: Array(3).fill(null).map(() => ({ checked: false })),
     selectedSpecialty: '',
+    selectedSpecialties: [],
     motivation: {
       identity: '',
       ritual: '',
@@ -347,14 +356,64 @@ const availableThemes = computed(() => {
 
 const specialtyDescription = computed(() => {
   if (!props.themeCard) return ''
-  // 這裡需要從父組件傳入專長描述或者在組件內部處理
+  // 保留向後相容性
   return props.themeCard.selectedSpecialty || ''
 })
 
 const hasAvailableSpecialties = computed(() => {
-  // 這裡需要判斷是否有可用專長
-  return true // 暫時返回 true，實際邏輯需要根據主題類型判斷
+  if (!props.themeCard || !props.themeCard.selectedThemeType || !props.themeCard.selectedTheme) return false
+  
+  const availableSpecialties = getAvailableSpecialtiesForTheme()
+  return Object.keys(availableSpecialties).length > 0
 })
+
+// 獲取主題的可用專長
+const getAvailableSpecialtiesForTheme = () => {
+  if (!props.themeCard || !props.themeCard.selectedThemeType || !props.themeCard.selectedTheme) return {}
+  
+  let themeData = null
+  
+  switch (props.themeCard.selectedThemeType) {
+    case 'mythos':
+      themeData = props.mythosThemes[props.themeCard.selectedTheme]
+      break
+    case 'noise':
+      themeData = props.noiseThemes[props.themeCard.selectedTheme]
+      break
+    case 'self':
+      themeData = props.selfThemes[props.themeCard.selectedTheme]
+      break
+    default:
+      return {}
+  }
+  
+  if (!themeData || !themeData.theme_specials) return {}
+  
+  const specialties: Record<string, any> = {}
+  themeData.theme_specials.forEach((special: any, index: number) => {
+    const key = `${props.themeCard.selectedTheme}_special_${index}`
+    specialties[key] = {
+      name: special.name,
+      description: special.description
+    }
+  })
+  
+  return specialties
+}
+
+// 獲取專長名稱
+const getSpecialtyName = (specialtyKey: string) => {
+  const allSpecialties = getAvailableSpecialtiesForTheme()
+  const specialty = allSpecialties[specialtyKey]
+  return specialty ? specialty.name : '未知專長'
+}
+
+// 獲取專長完整描述
+const getSpecialtyFullDescription = (specialtyKey: string) => {
+  const allSpecialties = getAvailableSpecialtiesForTheme()
+  const specialty = allSpecialties[specialtyKey]
+  return specialty ? specialty.description : '專長描述不存在'
+}
 
 // 方法
 function getThemeColorClasses(themeType: string) {
