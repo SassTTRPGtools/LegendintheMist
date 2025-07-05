@@ -43,7 +43,7 @@
                 >
                   <span class="text-purple-300">{{ improvement.themeName }}</span>
                   <span class="text-gray-400 mx-1">-</span>
-                  <span class="text-white">{{ getImprovementTypeName(improvement.type) }}</span>
+                  <span class="text-white">{{ improvement.improvementDescription }}</span>
                 </div>
               </div>
             </div>
@@ -121,11 +121,10 @@ interface EvolutionRecord {
 }
 
 interface LevelUpGameImprovement {
-  themeType: string
-  themeKey: string
+  cardIndex: number
   themeName: string
-  type: string
-  details: string
+  improvementDescription: string
+  improvementNumber: number
 }
 
 interface Character {
@@ -179,13 +178,6 @@ const veteranSpecialties = {
   willpowerOverChance: { name: '意志超越機會', description: '擲出對子時不再自動失敗。' }
 }
 
-// 改進類型名稱
-const improvementTypeNames = {
-  addAbility: '新增能力標籤',
-  modifyWeakness: '修改弱點標籤',
-  specialty: '獲得主題專長'
-}
-
 // 計算屬性
 const evolutionProgress = computed(() => {
   if (!props.character?.evolutionTrack) return 0
@@ -199,9 +191,5 @@ function getVeteranSpecialtyName(specialtyKey: string): string {
 
 function getVeteranSpecialtyDescription(specialtyKey: string): string {
   return veteranSpecialties[specialtyKey as keyof typeof veteranSpecialties]?.description || '暫無描述'
-}
-
-function getImprovementTypeName(type: string): string {
-  return improvementTypeNames[type as keyof typeof improvementTypeNames] || type
 }
 </script>

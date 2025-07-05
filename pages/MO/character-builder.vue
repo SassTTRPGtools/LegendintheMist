@@ -139,20 +139,6 @@
         >
           完成角色建立
         </button>
-        <!-- 測試按鈕 -->
-        <button 
-          @click="testLevelUpGame"
-          class="px-6 py-3 bg-yellow-600 hover:bg-yellow-700 text-white rounded-lg transition-colors"
-        >
-          測試改進你的遊戲
-        </button>
-        <!-- 簡單測試按鈕 -->
-        <button 
-          @click="showLevelUpGameModal = true"
-          class="px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors"
-        >
-          直接開啟模態框
-        </button>
       </div>
     </div>
 
@@ -991,17 +977,27 @@ function confirmImprovement() {
     // 增加改進計數
     levelUpGameImprovementCount.value++
     
+    // 創建改進記錄物件
+    const improvementRecord = {
+      cardIndex: modal.cardIndex,
+      themeName: card.title || card.selectedTheme,
+      improvementDescription: improvementDescription,
+      improvementNumber: levelUpGameImprovementCount.value
+    }
+    
+    // 同步更新到角色資料中
+    if (!character.value.levelUpGameImprovements) {
+      character.value.levelUpGameImprovements = []
+    }
+    character.value.levelUpGameImprovements.push(improvementRecord)
+    
     // 將改進記錄新增到 LevelUpGameModal
     if (levelUpGameModalRef.value) {
-      levelUpGameModalRef.value.addCompletedImprovement({
-        cardIndex: modal.cardIndex,
-        themeName: card.title || card.selectedTheme,
-        improvementDescription: improvementDescription,
-        improvementNumber: levelUpGameImprovementCount.value
-      })
+      levelUpGameModalRef.value.addCompletedImprovement(improvementRecord)
     }
     
     console.log(`改進你的遊戲：完成第 ${levelUpGameImprovementCount.value} 次改進`)
+    console.log('當前改進記錄:', character.value.levelUpGameImprovements)
     
     // 關閉改進模態框
     showImprovementModal.value = false
@@ -1613,56 +1609,6 @@ function hasAvailableSpecialties(cardIndex) {
   const availableSpecialties = getAvailableSpecialties(cardIndex)
   // 檢查是否有未被選擇的專長
   return Object.values(availableSpecialties).some(specialty => !specialty.isSelected)
-}
-
-// 測試改進你的遊戲功能
-function testLevelUpGame() {
-  alert('測試按鈕被點擊了！')
-  console.log('開始測試改進你的遊戲功能')
-  
-  // 直接添加專長並觸發模態框
-  if (!character.value.veteranSpecialties) {
-    character.value.veteranSpecialties = []
-  }
-  
-  if (!character.value.veteranSpecialties.includes('levelUpGame')) {
-    character.value.veteranSpecialties.push('levelUpGame')
-  }
-  
-  // 創建演化歷史記錄
-  if (!character.value.evolutionHistory) {
-    character.value.evolutionHistory = []
-  }
-  
-  character.value.evolutionHistory.push({
-    date: new Date().toISOString(),
-    moments: [{
-      key: 'veteranSpecialty',
-      name: '獲得一個老將專長',
-      description: '從下列老將專長中選擇一個。'
-    }],
-    veteranSpecialty: {
-      key: 'levelUpGame',
-      name: '改進你的遊戲',
-      description: '從你的主題卡中選擇並進行7次改進。'
-    },
-    customDescription: ''
-  })
-  
-  // 重置改進相關變數
-  levelUpGameImprovementCount.value = 0
-  levelUpGameCurrentCardIndex.value = -1
-  
-  // 重置 LevelUpGameModal
-  if (levelUpGameModalRef.value) {
-    levelUpGameModalRef.value.resetModal()
-  }
-  
-  // 直接開啟模態框
-  console.log('直接開啟 LevelUpGameModal，當前狀態:', showLevelUpGameModal.value)
-  console.log('主題卡數量:', character.value.themeCards.length)
-  showLevelUpGameModal.value = true
-  console.log('設定後狀態:', showLevelUpGameModal.value)
 }
 </script>
 
