@@ -60,9 +60,9 @@
       <div class="grid grid-cols-2 gap-6">
         <div class="text-center">
           <label class="block text-sm font-bold mb-3 text-green-400 tracking-wider">改進</label>
-          <div class="flex justify-center space-x-3">
+          <div class="flex justify-center space-x-2">
             <div 
-              v-for="(improvement, impIndex) in themeCard.improvements.slice(0, 3)" 
+              v-for="(improvement, impIndex) in themeCard.improvements" 
               :key="impIndex"
               class="flex flex-col items-center space-y-1"
             >
@@ -81,6 +81,10 @@
               </div>
               <span class="text-xs text-green-300 font-medium">{{ impIndex + 1 }}</span>
             </div>
+          </div>
+          <!-- 穩扎穩打專長提示 -->
+          <div v-if="themeCard.improvements.length === 5" class="mt-2 text-xs text-yellow-400">
+            穩扎穩打：第5格時獲得兩個改進
           </div>
         </div>
         <div class="text-center">

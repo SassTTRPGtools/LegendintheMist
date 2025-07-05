@@ -5,9 +5,17 @@
     @click.self="$emit('close')"
   >
     <div class="bg-slate-800 rounded-lg p-6 max-w-md w-full mx-4 border border-purple-500/30">
-      <h3 class="text-xl font-bold text-purple-300 mb-4">主題改進選項</h3>
+      <h3 class="text-xl font-bold text-purple-300 mb-4">
+        {{ modalData.isSlowSteadyImprovement ? `穩扎穩打改進 ${modalData.improvementNumber}/2` : '主題改進選項' }}
+      </h3>
       <p class="text-sm text-gray-300 mb-4">
-        改進已填滿！請選擇一個改進選項，完成後會清空改進勾選框並填滿一格演化軌跡。
+        <span v-if="modalData.isSlowSteadyImprovement">
+          穩扎穩打專長：你可以獲得兩個改進，完成後改進軌跡將重設。
+          {{ modalData.improvementNumber === 1 ? '請選擇第一個改進：' : '請選擇第二個改進：' }}
+        </span>
+        <span v-else>
+          改進已填滿！請選擇一個改進選項，完成後會清空改進勾選框並填滿一格演化軌跡。
+        </span>
       </p>
       
       <div class="space-y-4">
@@ -200,6 +208,8 @@ interface ModalData {
   selectedWeaknessIndex: number | string | null
   weaknessText: string
   selectedSpecialty: string
+  isSlowSteadyImprovement?: boolean
+  improvementNumber?: number
 }
 
 interface Props {

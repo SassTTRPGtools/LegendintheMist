@@ -204,11 +204,11 @@ const veteranSpecialties = {
   },
   backupClones: {
     name: '備份複製品',
-    description: '當你獲得超過限制的狀態（通常為tier-6）時，可於下一幕初移除一次。第二次則於下一次休息時移除，第三次於任務結束時移除。移除後也會消除該特技。'
+    description: '當你獲得超過限制的狀態（通常為6級）時，可於下一幕初移除一次。第二次則於下一次休息時移除，第三次於任務結束時移除。第三次後就會移除此專長。'
   },
   customizableGear: {
     name: '可自訂裝備',
-    description: '每場戲可燃燒一個裝備標籤並回復另一個。'
+    description: '每場戲可燒掉一個特定裝備標籤並恢復另一個。'
   },
   experiencedEfficiency: {
     name: '經驗效率',
@@ -216,7 +216,7 @@ const veteranSpecialties = {
   },
   godSlayer: {
     name: '屠神者',
-    description: '在一次互動（戰鬥、社交、魔法等）中，可忽略最多3級的難度，由主持人（MC）決定是否適用此特技。'
+    description: '在一次互動（戰鬥、社交、魔法等）中，可忽略最多3級的難度，由主持人決定是否適用此專長。'
   },
   interfacer: {
     name: '介面師',
@@ -355,7 +355,16 @@ const improvementModal = ref({
   newAbilityText: '',
   weaknessText: '',
   selectedWeaknessIndex: null,
-  selectedSpecialty: ''
+  selectedSpecialty: '',
+  isSlowSteadyImprovement: false,
+  improvementNumber: 0
+})
+
+// 穩扎穩打專長進度追蹤
+const slowSteadyProgress = ref({
+  cardIndex: -1,
+  completedImprovements: 0,
+  totalImprovements: 0
 })
 
 // 裝備改進彈窗相關
@@ -390,14 +399,17 @@ const showEvolutionHistoryModal = ref(false)
 // ====================
 // 工具函數
 // ====================
-function createEmptyThemeCard() {
+function createEmptyThemeCard(hasSlowSteady = false) {
+  // 接受參數來決定改進格數量，避免在初始化時訪問 character
+  const improvementCount = hasSlowSteady ? 5 : 3
+  
   return {
     selectedThemeType: '',
     selectedTheme: '',
     title: '',
     abilities: Array(7).fill(null).map(() => ({ text: '', isBurned: false })),
     weaknesses: Array(2).fill(null).map(() => ({ text: '' })),
-    improvements: Array(3).fill(null).map(() => ({ checked: false })),
+    improvements: Array(improvementCount).fill(null).map(() => ({ checked: false })),
     decays: Array(3).fill(null).map(() => ({ checked: false })),
     selectedSpecialty: '',
     selectedSpecialties: [],
@@ -427,6 +439,7 @@ const character = ref({
   background: '',
   evolutionTrack: [false, false, false, false, false], // 五個演化軌跡格子
   evolutionHistory: [], // 演化歷史記錄
+  veteranSpecialties: [], // 已獲得的老將專長
   equipment: createEmptyEquipment(),
   themeCards: Array(4).fill().map(() => createEmptyThemeCard())
 })
@@ -567,8 +580,10 @@ function resetCharacter() {
     name: '',
     background: '',
     evolutionTrack: [false, false, false, false, false],
+    veteranSpecialties: [],
+    evolutionHistory: [],
     equipment: createEmptyEquipment(),
-    themeCards: Array(4).fill().map(() => createEmptyThemeCard())
+    themeCards: Array(4).fill().map(() => createEmptyThemeCard(false))
   }
 }
 
@@ -585,12 +600,20 @@ function handleImportCharacter(importedCharacter) {
       evolutionHistory: Array.isArray(importedCharacter.evolutionHistory)
         ? importedCharacter.evolutionHistory
         : [],
+      veteranSpecialties: Array.isArray(importedCharacter.veteranSpecialties)
+        ? importedCharacter.veteranSpecialties
+        : [],
       equipment: normalizeEquipment(importedCharacter.equipment),
       themeCards: normalizeThemeCards(importedCharacter.themeCards)
     }
     
     // 覆蓋當前角色資料
     character.value = normalizedCharacter
+    
+    // 如果導入的角色有穩扎穩打專長，更新主題卡改進格
+    if (normalizedCharacter.veteranSpecialties?.includes('slowSteady')) {
+      updateThemeCardImprovements()
+    }
     
     console.log('角色資料導入成功:', normalizedCharacter)
   } catch (error) {
@@ -620,7 +643,7 @@ function normalizeEquipment(equipment) {
 // 標準化主題卡資料
 function normalizeThemeCards(themeCards) {
   if (!Array.isArray(themeCards)) {
-    return Array(4).fill().map(() => createEmptyThemeCard())
+    return Array(4).fill().map(() => createEmptyThemeCard(false))
   }
   
   const normalized = []
@@ -628,7 +651,7 @@ function normalizeThemeCards(themeCards) {
   for (let i = 0; i < 4; i++) {
     const card = themeCards[i]
     if (card && typeof card === 'object') {
-      const normalizedCard = createEmptyThemeCard()
+      const normalizedCard = createEmptyThemeCard(false)
       
       // 複製有效的主題卡資料
       if (typeof card.selectedThemeType === 'string') {
@@ -667,7 +690,7 @@ function normalizeThemeCards(themeCards) {
       
       normalized.push(normalizedCard)
     } else {
-      normalized.push(createEmptyThemeCard())
+      normalized.push(createEmptyThemeCard(false))
     }
   }
   
@@ -709,20 +732,49 @@ function onImprovementChange(cardIndex, improvementIndex) {
   const card = character.value.themeCards[cardIndex]
   if (!card || !card.improvements) return
   
+  const hasSlowSteady = character.value.veteranSpecialties.includes('slowSteady')
   const allChecked = card.improvements.every(imp => imp.checked)
   
   if (allChecked) {
-    // 開啟改進彈窗
-    improvementModal.value = {
-      cardIndex: cardIndex,
-      selectedOption: '',
-      newAbilityText: '',
-      weaknessText: '',
-      selectedWeaknessIndex: null,
-      selectedSpecialty: ''
+    if (hasSlowSteady && card.improvements.length === 5) {
+      // 穩扎穩打專長：第5格時獲得兩個改進並重設軌跡
+      showSlowSteadyModal(cardIndex)
+    } else {
+      // 一般改進：開啟改進彈窗
+      improvementModal.value = {
+        cardIndex: cardIndex,
+        selectedOption: '',
+        newAbilityText: '',
+        weaknessText: '',
+        selectedWeaknessIndex: null,
+        selectedSpecialty: ''
+      }
+      showImprovementModal.value = true
     }
-    showImprovementModal.value = true
   }
+}
+
+// 穩扎穩打專長的特殊改進處理
+function showSlowSteadyModal(cardIndex) {
+  // 自動觸發兩次改進彈窗
+  slowSteadyProgress.value = {
+    cardIndex: cardIndex,
+    completedImprovements: 0,
+    totalImprovements: 2
+  }
+  
+  // 開啟第一次改進
+  improvementModal.value = {
+    cardIndex: cardIndex,
+    selectedOption: '',
+    newAbilityText: '',
+    weaknessText: '',
+    selectedWeaknessIndex: null,
+    selectedSpecialty: '',
+    isSlowSteadyImprovement: true,
+    improvementNumber: 1
+  }
+  showImprovementModal.value = true
 }
 
 // 取得目標主題卡的弱點標籤
@@ -774,7 +826,9 @@ function closeImprovementModal() {
     newAbilityText: '',
     weaknessText: '',
     selectedWeaknessIndex: null,
-    selectedSpecialty: ''
+    selectedSpecialty: '',
+    isSlowSteadyImprovement: false,
+    improvementNumber: 0
   }
 }
 
@@ -838,24 +892,65 @@ function confirmImprovement() {
       break
   }
   
-  // 清空改進勾選框
-  card.improvements.forEach(imp => imp.checked = false)
-  
-  // 填滿一格演化軌跡
-  const emptyTrackIndex = character.value.evolutionTrack.findIndex(track => !track)
-  if (emptyTrackIndex !== -1) {
-    character.value.evolutionTrack[emptyTrackIndex] = true
+  // 處理穩扎穩打專長的連續改進
+  if (modal.isSlowSteadyImprovement) {
+    slowSteadyProgress.value.completedImprovements++
+    
+    if (slowSteadyProgress.value.completedImprovements < slowSteadyProgress.value.totalImprovements) {
+      // 還有改進需要完成，開啟下一次改進彈窗
+      improvementModal.value = {
+        cardIndex: modal.cardIndex,
+        selectedOption: '',
+        newAbilityText: '',
+        weaknessText: '',
+        selectedWeaknessIndex: null,
+        selectedSpecialty: '',
+        isSlowSteadyImprovement: true,
+        improvementNumber: slowSteadyProgress.value.completedImprovements + 1
+      }
+      // 保持彈窗開啟
+      return
+    } else {
+      // 所有改進完成，重設軌跡
+      card.improvements.forEach(imp => imp.checked = false)
+      
+      // 重置穩扎穩打進度
+      slowSteadyProgress.value = {
+        cardIndex: -1,
+        completedImprovements: 0,
+        totalImprovements: 0
+      }
+    }
+  } else {
+    // 一般改進：清空改進勾選框並填滿演化軌跡
+    card.improvements.forEach(imp => imp.checked = false)
+    
+    // 填滿一格演化軌跡
+    const emptyTrackIndex = character.value.evolutionTrack.findIndex(track => !track)
+    if (emptyTrackIndex !== -1) {
+      character.value.evolutionTrack[emptyTrackIndex] = true
+    }
   }
   
   // 關閉彈窗
   showImprovementModal.value = false
 }
 
-// 檢查是否有可用的主題專長
-function hasAvailableSpecialties(cardIndex) {
-  const availableSpecialties = getAvailableSpecialties(cardIndex)
-  // 檢查是否有未被選擇的專長
-  return Object.values(availableSpecialties).some(specialty => !specialty.isSelected)
+// 更新所有主題卡的改進格數量（當獲得穩扎穩打專長時）
+function updateThemeCardImprovements() {
+  const hasSlowSteady = character.value.veteranSpecialties.includes('slowSteady')
+  const targetCount = hasSlowSteady ? 5 : 3
+  
+  character.value.themeCards.forEach(card => {
+    if (card.improvements.length !== targetCount) {
+      const currentChecked = card.improvements.map(imp => imp.checked)
+      
+      // 重建改進陣列
+      card.improvements = Array(targetCount).fill(null).map((_, index) => ({
+        checked: currentChecked[index] || false
+      }))
+    }
+  })
 }
 
 // 獲取可用的主題專長
@@ -1091,8 +1186,9 @@ function confirmDecay() {
   const cardIndex = decayModal.value.cardIndex
   const evolutionPoints = decayModal.value.evolutionPoints
   
-  // 重置主題卡
-  character.value.themeCards[cardIndex] = createEmptyThemeCard()
+  // 重置主題卡，檢查是否有穩扎穩打專長
+  const hasSlowSteady = character.value.veteranSpecialties?.includes('slowSteady') || false
+  character.value.themeCards[cardIndex] = createEmptyThemeCard(hasSlowSteady)
   
   // 自動添加演化點（從前往後填滿）
   let pointsToAdd = evolutionPoints
@@ -1159,6 +1255,23 @@ function confirmEvolution() {
     return
   }
   
+  // 處理老將專長選擇
+  if (evolutionModal.value.selectedVeteranSpecialty) {
+    if (!character.value.veteranSpecialties) {
+      character.value.veteranSpecialties = []
+    }
+    
+    // 添加選擇的老將專長
+    if (!character.value.veteranSpecialties.includes(evolutionModal.value.selectedVeteranSpecialty)) {
+      character.value.veteranSpecialties.push(evolutionModal.value.selectedVeteranSpecialty)
+      
+      // 如果選擇了穩扎穩打，更新所有主題卡的改進格
+      if (evolutionModal.value.selectedVeteranSpecialty === 'slowSteady') {
+        updateThemeCardImprovements()
+      }
+    }
+  }
+  
   // 記錄演化歷史（可以後續用於角色記錄）
   if (!character.value.evolutionHistory) {
     character.value.evolutionHistory = []
@@ -1210,6 +1323,13 @@ function saveCharacter() {
     // 可以導向到角色表頁面或其他頁面
     // await navigateTo('/MO/character-sheet')
   }
+}
+
+// 檢查是否有可用的主題專長
+function hasAvailableSpecialties(cardIndex) {
+  const availableSpecialties = getAvailableSpecialties(cardIndex)
+  // 檢查是否有未被選擇的專長
+  return Object.values(availableSpecialties).some(specialty => !specialty.isSelected)
 }
 </script>
 
