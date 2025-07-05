@@ -65,6 +65,7 @@
         :modal-data="equipmentModal"
         :current-power="character.equipment.power"
         :equipment-specialties="EQUIPMENT_SPECIALTIES"
+        :current-equipment-specialties="character.equipment.specialties"
         @close="closeEquipmentModal"
         @confirm="confirmEquipmentImprovement"
       />
@@ -945,10 +946,18 @@ function confirmEquipmentImprovement() {
   if (equipmentModal.value.selectedOption === 'powerIncrease') {
     character.value.equipment.power += 1
   } else if (equipmentModal.value.selectedOption === 'newSpecialty') {
-    character.value.equipment.specialties.push({
-      type: equipmentModal.value.selectedSpecialty,
-      description: getEquipmentSpecialtyDescription(equipmentModal.value.selectedSpecialty)
-    })
+    // 檢查是否已存在相同專長，避免重複添加
+    const selectedSpecialtyKey = equipmentModal.value.selectedSpecialty
+    const existingSpecialty = character.value.equipment.specialties.find(
+      specialty => specialty.type === selectedSpecialtyKey
+    )
+    
+    if (!existingSpecialty) {
+      character.value.equipment.specialties.push({
+        type: selectedSpecialtyKey,
+        description: getEquipmentSpecialtyDescription(selectedSpecialtyKey)
+      })
+    }
   }
   
   // 清空改進勾選框

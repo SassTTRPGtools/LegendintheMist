@@ -119,14 +119,62 @@
                 class="text-xs bg-slate-700 border border-slate-600 rounded px-2 py-1 text-white"
               >
                 <option value="">選擇專長類型</option>
-                <option value="deepCustomization">{{ equipmentSpecialties.deepCustomization.name }}</option>
-                <option value="fullEquipment">{{ equipmentSpecialties.fullEquipment.name }}</option>
-                <option value="extraCopy">{{ equipmentSpecialties.extraCopy.name }}</option>
-                <option value="externalCall">{{ equipmentSpecialties.externalCall.name }}</option>
-                <option value="reuse">{{ equipmentSpecialties.reuse.name }}</option>
-                <option value="replacementPolicy">{{ equipmentSpecialties.replacementPolicy.name }}</option>
-                <option value="sharedWealth">{{ equipmentSpecialties.sharedWealth.name }}</option>
-                <option value="synergisticRevenue">{{ equipmentSpecialties.synergisticRevenue.name }}</option>
+                <option 
+                  value="deepCustomization" 
+                  :disabled="isSpecialtyAlreadySelected('deepCustomization', index)"
+                  :class="isSpecialtyAlreadySelected('deepCustomization', index) ? 'text-gray-500' : ''"
+                >
+                  {{ equipmentSpecialties.deepCustomization.name }}{{ isSpecialtyAlreadySelected('deepCustomization', index) ? ' (已選擇)' : '' }}
+                </option>
+                <option 
+                  value="fullEquipment" 
+                  :disabled="isSpecialtyAlreadySelected('fullEquipment', index)"
+                  :class="isSpecialtyAlreadySelected('fullEquipment', index) ? 'text-gray-500' : ''"
+                >
+                  {{ equipmentSpecialties.fullEquipment.name }}{{ isSpecialtyAlreadySelected('fullEquipment', index) ? ' (已選擇)' : '' }}
+                </option>
+                <option 
+                  value="extraCopy" 
+                  :disabled="isSpecialtyAlreadySelected('extraCopy', index)"
+                  :class="isSpecialtyAlreadySelected('extraCopy', index) ? 'text-gray-500' : ''"
+                >
+                  {{ equipmentSpecialties.extraCopy.name }}{{ isSpecialtyAlreadySelected('extraCopy', index) ? ' (已選擇)' : '' }}
+                </option>
+                <option 
+                  value="externalCall" 
+                  :disabled="isSpecialtyAlreadySelected('externalCall', index)"
+                  :class="isSpecialtyAlreadySelected('externalCall', index) ? 'text-gray-500' : ''"
+                >
+                  {{ equipmentSpecialties.externalCall.name }}{{ isSpecialtyAlreadySelected('externalCall', index) ? ' (已選擇)' : '' }}
+                </option>
+                <option 
+                  value="reuse" 
+                  :disabled="isSpecialtyAlreadySelected('reuse', index)"
+                  :class="isSpecialtyAlreadySelected('reuse', index) ? 'text-gray-500' : ''"
+                >
+                  {{ equipmentSpecialties.reuse.name }}{{ isSpecialtyAlreadySelected('reuse', index) ? ' (已選擇)' : '' }}
+                </option>
+                <option 
+                  value="replacementPolicy" 
+                  :disabled="isSpecialtyAlreadySelected('replacementPolicy', index)"
+                  :class="isSpecialtyAlreadySelected('replacementPolicy', index) ? 'text-gray-500' : ''"
+                >
+                  {{ equipmentSpecialties.replacementPolicy.name }}{{ isSpecialtyAlreadySelected('replacementPolicy', index) ? ' (已選擇)' : '' }}
+                </option>
+                <option 
+                  value="sharedWealth" 
+                  :disabled="isSpecialtyAlreadySelected('sharedWealth', index)"
+                  :class="isSpecialtyAlreadySelected('sharedWealth', index) ? 'text-gray-500' : ''"
+                >
+                  {{ equipmentSpecialties.sharedWealth.name }}{{ isSpecialtyAlreadySelected('sharedWealth', index) ? ' (已選擇)' : '' }}
+                </option>
+                <option 
+                  value="synergisticRevenue" 
+                  :disabled="isSpecialtyAlreadySelected('synergisticRevenue', index)"
+                  :class="isSpecialtyAlreadySelected('synergisticRevenue', index) ? 'text-gray-500' : ''"
+                >
+                  {{ equipmentSpecialties.synergisticRevenue.name }}{{ isSpecialtyAlreadySelected('synergisticRevenue', index) ? ' (已選擇)' : '' }}
+                </option>
               </select>
               <button 
                 @click="removeSpecialty(index)"
@@ -240,5 +288,12 @@ function removeSpecialty(index: number) {
 function getSpecialtyDescription(type: string) {
   const specialty = props.equipmentSpecialties[type]
   return specialty ? specialty.description : ''
+}
+
+// 檢查專長是否已被其他項目選擇
+function isSpecialtyAlreadySelected(specialtyType: string, currentIndex: number) {
+  return props.equipment.specialties.some((specialty, index) => 
+    specialty.type === specialtyType && index !== currentIndex
+  )
 }
 </script>

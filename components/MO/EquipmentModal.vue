@@ -38,20 +38,39 @@
             />
             <span class="text-sm text-white">選擇一個新的裝備主題專長</span>
           </label>
-          <select 
-            v-if="modalData.selectedOption === 'newSpecialty'"
-            v-model="modalData.selectedSpecialty"
-            class="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-md text-white text-sm focus:ring-2 focus:ring-amber-500"
-          >
-            <option value="">請選擇專長</option>
-            <option 
-              v-for="(specialty, key) in equipmentSpecialties" 
-              :key="key"
-              :value="key"
+          <div v-if="modalData.selectedOption === 'newSpecialty'" class="space-y-3">
+            <select 
+              v-model="modalData.selectedSpecialty"
+              class="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-md text-white text-sm focus:ring-2 focus:ring-amber-500"
             >
-              {{ specialty.name }}
-            </option>
-          </select>
+              <option value="">請選擇專長</option>
+              <option 
+                v-for="(specialty, key) in equipmentSpecialties" 
+                :key="key"
+                :value="key"
+                :disabled="isSpecialtySelected(key)"
+                :class="isSpecialtySelected(key) ? 'text-gray-500' : ''"
+              >
+                {{ specialty.name }}{{ isSpecialtySelected(key) ? ' (已選擇)' : '' }}
+              </option>
+            </select>
+            
+            <!-- 顯示選中專長的描述 -->
+            <div v-if="modalData.selectedSpecialty && equipmentSpecialties[modalData.selectedSpecialty]" 
+                 class="p-3 bg-amber-900/20 border border-amber-500/30 rounded-lg">
+              <div class="text-sm font-medium text-amber-300 mb-2">
+                {{ equipmentSpecialties[modalData.selectedSpecialty].name }}
+              </div>
+              <div class="text-xs text-amber-200 leading-relaxed">
+                {{ equipmentSpecialties[modalData.selectedSpecialty].description }}
+              </div>
+            </div>
+            
+            <!-- 專長選擇進度 -->
+            <div class="text-xs text-gray-400">
+              已選擇專長：{{ getSelectedSpecialtyCount() }}
+            </div>
+          </div>
         </div>
       </div>
 
@@ -98,6 +117,7 @@ interface Props {
   modalData: ModalData
   currentPower: number
   equipmentSpecialties: Record<string, EquipmentSpecialty>
+  currentEquipmentSpecialties?: Array<{ type: string; description?: string }>
 }
 
 const props = defineProps<Props>()
@@ -108,9 +128,25 @@ const emit = defineEmits<{
   confirm: []
 }>()
 
+// 檢查專長是否已被選擇
+const isSpecialtySelected = (specialtyKey: string) => {
+  if (!props.currentEquipmentSpecialties) return false
+  return props.currentEquipmentSpecialties.some(specialty => specialty.type === specialtyKey)
+}
+
+// 計算已選擇的專長數量
+const getSelectedSpecialtyCount = () => {
+  return props.currentEquipmentSpecialties ? props.currentEquipmentSpecialties.length : 0
+}
+
 // 計算屬性
 const isValid = computed(() => {
-  return props.modalData.selectedOption !== '' && 
-         (props.modalData.selectedOption !== 'newSpecialty' || props.modalData.selectedSpecialty !== '')
+  if (props.modalData.selectedOption === 'powerIncrease') {
+    return true
+  } else if (props.modalData.selectedOption === 'newSpecialty') {
+    return props.modalData.selectedSpecialty !== '' && 
+           !isSpecialtySelected(props.modalData.selectedSpecialty)
+  }
+  return false
 })
 </script>
