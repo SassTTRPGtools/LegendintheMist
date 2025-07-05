@@ -304,20 +304,20 @@ const CHARACTER_TYPE_DESCRIPTIONS = {
 // ====================
 // 計算各主題類型的選擇數量
 const mythosCount = computed(() => {
-  return props.themeCards.filter(card => card.selectedThemeType === 'mythos').length
+  return props.themeCards.filter(card => card && card.selectedThemeType === 'mythos').length
 })
 
 const noiseCount = computed(() => {
-  return props.themeCards.filter(card => card.selectedThemeType === 'noise').length
+  return props.themeCards.filter(card => card && card.selectedThemeType === 'noise').length
 })
 
 const selfCount = computed(() => {
-  return props.themeCards.filter(card => card.selectedThemeType === 'self').length
+  return props.themeCards.filter(card => card && card.selectedThemeType === 'self').length
 })
 
 // 計算總主題數量
 const getTotalThemes = () => {
-  return props.themeCards.filter(card => card.selectedThemeType && card.selectedTheme).length
+  return props.themeCards.filter(card => card && card.selectedThemeType && card.selectedTheme).length
 }
 
 // 獲取角色類型

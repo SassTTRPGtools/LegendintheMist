@@ -165,6 +165,14 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  equipment: () => ({
+    name: '',
+    improvements: Array(3).fill(null).map(() => ({ checked: false })),
+    power: 1,
+    abilities: Array(5).fill(null).map(() => ({ text: '', isBurned: false })),
+    weaknesses: Array(2).fill(null).map(() => ({ text: '' })),
+    specialties: []
+  }),
   equipmentSpecialties: () => ({
     deepCustomization: {
       name: '深度客製化',

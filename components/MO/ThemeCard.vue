@@ -1,8 +1,9 @@
 <template>
   <div 
+    v-if="themeCard"
     :class="[
       'backdrop-blur rounded-lg p-4 border-2 transition-all duration-300',
-      getThemeColorClasses(themeCard.selectedThemeType)
+      getThemeColorClasses(themeCard?.selectedThemeType || '')
     ]"
   >
     <!-- 主題卡標題與控制 -->
@@ -280,6 +281,23 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  themeCard: () => ({
+    selectedThemeType: '',
+    selectedTheme: '',
+    title: '',
+    abilities: Array(7).fill(null).map(() => ({ text: '', isBurned: false })),
+    weaknesses: Array(2).fill(null).map(() => ({ text: '' })),
+    improvements: Array(4).fill(null).map(() => ({ checked: false })),
+    decays: Array(4).fill(null).map(() => ({ checked: false })),
+    selectedSpecialty: '',
+    motivation: {
+      identity: '',
+      ritual: '',
+      itch: ''
+    },
+    isEditing: false
+  }),
+  cardIndex: 0,
   mythosThemes: () => ({}),
   noiseThemes: () => ({}),
   selfThemes: () => ({})
@@ -297,19 +315,22 @@ const emit = defineEmits<{
 
 // 計算屬性
 const availableThemes = computed(() => {
+  if (!props.themeCard || !props.themeCard.selectedThemeType) return {}
+  
   switch (props.themeCard.selectedThemeType) {
     case 'mythos':
-      return props.mythosThemes
+      return props.mythosThemes || {}
     case 'noise':
-      return props.noiseThemes
+      return props.noiseThemes || {}
     case 'self':
-      return props.selfThemes
+      return props.selfThemes || {}
     default:
       return {}
   }
 })
 
 const specialtyDescription = computed(() => {
+  if (!props.themeCard) return ''
   // 這裡需要從父組件傳入專長描述或者在組件內部處理
   return props.themeCard.selectedSpecialty || ''
 })

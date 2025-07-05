@@ -164,47 +164,10 @@
         <CharacterTypeChart :theme-cards="character.themeCards" />
 
         <!-- 右上角：角色基本資訊 -->
-        <div class="bg-slate-800/80 backdrop-blur rounded-lg p-6 border border-purple-500/30">
-          <h3 class="text-xl font-bold text-purple-300 mb-4">角色資訊</h3>
-          <div class="space-y-4">
-            <div>
-              <label class="block text-sm font-medium text-gray-300 mb-2">角色名稱</label>
-              <input 
-                v-model="character.name" 
-                type="text" 
-                class="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-md text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                placeholder="輸入角色名稱"
-              />
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-gray-300 mb-2">背景描述</label>
-              <textarea 
-                v-model="character.background" 
-                class="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-md text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent h-20 resize-none"
-                placeholder="角色的背景故事..."
-              />
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-gray-300 mb-2">演化軌跡</label>
-              <div class="flex space-x-2">
-                <div 
-                  v-for="(step, index) in character.evolutionTrack" 
-                  :key="index"
-                  @click="toggleEvolutionStep(index)"
-                  :class="[
-                    'w-6 h-6 border-2 rounded flex items-center justify-center text-xs font-bold cursor-pointer transition-colors hover:border-purple-300',
-                    step ? 'bg-purple-600 border-purple-400 text-white' : 'bg-slate-700 border-slate-600 text-gray-400 hover:bg-slate-600'
-                  ]"
-                >
-                  {{ step ? '●' : '○' }}
-                </div>
-              </div>
-              <div class="text-xs text-gray-400 mt-1">
-                演化進度：{{ character.evolutionTrack.filter(Boolean).length }}/5
-              </div>
-            </div>
-          </div>
-        </div>
+        <CharacterInfo
+          :character="character"
+          @toggle-evolution-step="toggleEvolutionStep"
+        />
 
         <!-- 第三欄：裝備卡 -->
         <EquipmentCard
@@ -235,471 +198,43 @@
       </div>
 
       <!-- 改進彈窗 -->
-      <div 
-        v-if="showImprovementModal" 
-        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
-        @click.self="closeImprovementModal"
-      >
-        <div class="bg-slate-800 rounded-lg p-6 max-w-md w-full mx-4 border border-purple-500/30">
-          <h3 class="text-xl font-bold text-purple-300 mb-4">主題改進選項</h3>
-          <p class="text-sm text-gray-300 mb-4">
-            改進已填滿！請選擇一個改進選項，完成後會清空改進勾選框並填滿一格演化軌跡。
-          </p>
-          
-          <div class="space-y-4">
-            <!-- 新增能力標籤 -->
-            <div class="space-y-2">
-              <label class="flex items-center space-x-2">
-                <input 
-                  v-model="improvementModal.selectedOption" 
-                  type="radio" 
-                  value="newAbility"
-                  class="text-purple-600"
-                />
-                <span class="text-sm text-white">創建一個新的能力標籤</span>
-              </label>
-              <input 
-                v-if="improvementModal.selectedOption === 'newAbility'"
-                v-model="improvementModal.newAbilityText"
-                type="text" 
-                placeholder="輸入新能力標籤"
-                class="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-md text-white text-sm focus:ring-2 focus:ring-purple-500"
-              />
-            </div>
-
-            <!-- 修改弱點標籤 -->
-            <div class="space-y-2">
-              <label class="flex items-center space-x-2">
-                <input 
-                  v-model="improvementModal.selectedOption" 
-                  type="radio" 
-                  value="modifyWeakness"
-                  class="text-purple-600"
-                />
-                <span class="text-sm text-white">新增、重寫或移除一個弱點標籤</span>
-              </label>
-              <div v-if="improvementModal.selectedOption === 'modifyWeakness'" class="space-y-3">
-                <!-- 弱點選擇 -->
-                <div>
-                  <label class="block text-xs font-medium text-gray-300 mb-2">選擇要修改的弱點標籤：</label>
-                  <div class="space-y-2">
-                    <div 
-                      v-for="(weakness, weaknessIndex) in getTargetCardWeaknesses()" 
-                      :key="weaknessIndex"
-                      class="flex items-center space-x-2"
-                    >
-                      <input 
-                        v-model="improvementModal.selectedWeaknessIndex" 
-                        :value="weaknessIndex"
-                        type="radio" 
-                        :id="`weakness-${weaknessIndex}`"
-                        class="text-purple-600"
-                      />
-                      <label 
-                        :for="`weakness-${weaknessIndex}`" 
-                        class="flex-1 text-xs p-2 bg-slate-700/50 rounded border cursor-pointer hover:bg-slate-600/50"
-                      >
-                        <span class="font-medium text-red-300">弱點 {{ weaknessIndex + 1 }}：</span>
-                        <span class="text-gray-300">{{ weakness.text || '（空白）' }}</span>
-                        <span v-if="weaknessIndex === 0" class="text-xs text-amber-400 ml-2">（不可移除）</span>
-                      </label>
-                    </div>
-                    <!-- 新增選項 -->
-                    <div class="flex items-center space-x-2">
-                      <input 
-                        v-model="improvementModal.selectedWeaknessIndex" 
-                        value="add"
-                        type="radio" 
-                        id="weakness-add"
-                        class="text-purple-600"
-                      />
-                      <label 
-                        for="weakness-add" 
-                        class="flex-1 text-xs p-2 bg-green-900/20 border border-green-500/30 rounded cursor-pointer hover:bg-green-800/30"
-                      >
-                        <span class="font-medium text-green-300">新增新的弱點標籤</span>
-                      </label>
-                    </div>
-                  </div>
-                </div>
-                
-                <!-- 弱點內容輸入 -->
-                <div v-if="improvementModal.selectedWeaknessIndex !== null">
-                  <label class="block text-xs font-medium text-gray-300 mb-1">
-                    {{ getWeaknessActionLabel() }}
-                  </label>
-                  <input 
-                    v-model="improvementModal.weaknessText"
-                    type="text" 
-                    :placeholder="getWeaknessPlaceholder()"
-                    class="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-md text-white text-sm focus:ring-2 focus:ring-purple-500"
-                  />
-                  <div v-if="canRemoveWeakness()" class="text-xs text-gray-400 mt-1">
-                    提示：留空即可移除此弱點標籤
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- 選擇主題專長 -->
-            <div v-if="hasAvailableSpecialties(improvementModal.cardIndex)" class="space-y-2">
-              <label class="flex items-center space-x-2">
-                <input 
-                  v-model="improvementModal.selectedOption" 
-                  type="radio" 
-                  value="specialty"
-                  class="text-purple-600"
-                />
-                <span class="text-sm text-white">選擇主題專長</span>
-              </label>
-              <select 
-                v-if="improvementModal.selectedOption === 'specialty'"
-                v-model="improvementModal.selectedSpecialty"
-                class="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-md text-white text-sm focus:ring-2 focus:ring-purple-500"
-              >
-                <option value="">請選擇專長</option>
-                <option 
-                  v-for="(specialty, key) in getAvailableSpecialties(improvementModal.cardIndex)" 
-                  :key="key"
-                  :value="key"
-                >
-                  {{ specialty.name }}
-                </option>
-              </select>
-            </div>
-            <div v-else class="text-xs text-gray-500 italic p-2 bg-slate-700/30 rounded">
-              此主題暫無可用專長
-            </div>
-          </div>
-
-          <div class="flex justify-end space-x-3 mt-6">
-            <button 
-              @click="closeImprovementModal"
-              class="px-4 py-2 bg-slate-600 hover:bg-slate-700 text-white rounded-lg transition-colors"
-            >
-              取消
-            </button>
-            <button 
-              @click="confirmImprovement"
-              :disabled="!isImprovementValid"
-              :class="[
-                'px-4 py-2 rounded-lg transition-colors',
-                isImprovementValid 
-                  ? 'bg-purple-600 hover:bg-purple-700 text-white' 
-                  : 'bg-slate-600 text-gray-400 cursor-not-allowed'
-              ]"
-            >
-              確定
-            </button>
-          </div>
-        </div>
-      </div>
+      <ImprovementModal
+        :show="showImprovementModal"
+        :modal-data="improvementModal"
+        :target-card-weaknesses="getTargetCardWeaknesses()"
+        :available-specialties="getAvailableSpecialties(improvementModal.cardIndex)"
+        :has-available-specialties="hasAvailableSpecialties(improvementModal.cardIndex)"
+        @close="closeImprovementModal"
+        @confirm="confirmImprovement"
+      />
 
       <!-- 裝備改進彈窗 -->
-      <div 
-        v-if="showEquipmentModal" 
-        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
-        @click.self="closeEquipmentModal"
-      >
-        <div class="bg-slate-800 rounded-lg p-6 max-w-md w-full mx-4 border border-purple-500/30">
-          <h3 class="text-xl font-bold text-amber-300 mb-4">裝備改進選項</h3>
-          <p class="text-sm text-gray-300 mb-4">
-            裝備改進已填滿！請選擇一個改進選項。
-          </p>
-          
-          <div class="space-y-4">
-            <!-- 永久 +1 力度 -->
-            <div class="space-y-2">
-              <label class="flex items-center space-x-2">
-                <input 
-                  v-model="equipmentModal.selectedOption" 
-                  type="radio" 
-                  value="powerIncrease"
-                  class="text-amber-600"
-                />
-                <span class="text-sm text-white">獲得永久 +1 力度</span>
-              </label>
-              <div v-if="equipmentModal.selectedOption === 'powerIncrease'" class="text-xs text-gray-400 ml-6">
-                當前力度：{{ character.equipment.power }} → {{ character.equipment.power + 1 }}
-              </div>
-            </div>
-
-            <!-- 新增裝備專長 -->
-            <div class="space-y-2">
-              <label class="flex items-center space-x-2">
-                <input 
-                  v-model="equipmentModal.selectedOption" 
-                  type="radio" 
-                  value="newSpecialty"
-                  class="text-amber-600"
-                />
-                <span class="text-sm text-white">選擇一個新的裝備主題專長</span>
-              </label>
-              <select 
-                v-if="equipmentModal.selectedOption === 'newSpecialty'"
-                v-model="equipmentModal.selectedSpecialty"
-                class="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-md text-white text-sm focus:ring-2 focus:ring-amber-500"
-              >
-                <option value="">請選擇專長</option>
-                <option value="deepCustomization">{{ EQUIPMENT_SPECIALTIES.deepCustomization.name }}</option>
-                <option value="fullEquipment">{{ EQUIPMENT_SPECIALTIES.fullEquipment.name }}</option>
-                <option value="extraCopy">{{ EQUIPMENT_SPECIALTIES.extraCopy.name }}</option>
-                <option value="externalCall">{{ EQUIPMENT_SPECIALTIES.externalCall.name }}</option>
-                <option value="reuse">{{ EQUIPMENT_SPECIALTIES.reuse.name }}</option>
-                <option value="replacementPolicy">{{ EQUIPMENT_SPECIALTIES.replacementPolicy.name }}</option>
-                <option value="sharedWealth">{{ EQUIPMENT_SPECIALTIES.sharedWealth.name }}</option>
-                <option value="synergisticRevenue">{{ EQUIPMENT_SPECIALTIES.synergisticRevenue.name }}</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="flex justify-end space-x-3 mt-6">
-            <button 
-              @click="closeEquipmentModal"
-              class="px-4 py-2 bg-slate-600 hover:bg-slate-700 text-white rounded-lg transition-colors"
-            >
-              取消
-            </button>
-            <button 
-              @click="confirmEquipmentImprovement"
-              :disabled="!isEquipmentImprovementValid"
-              :class="[
-                'px-4 py-2 rounded-lg transition-colors',
-                isEquipmentImprovementValid 
-                  ? 'bg-amber-600 hover:bg-amber-700 text-white' 
-                  : 'bg-slate-600 text-gray-400 cursor-not-allowed'
-              ]"
-            >
-              確定
-            </button>
-          </div>
-        </div>
-      </div>
+      <EquipmentModal
+        :show="showEquipmentModal"
+        :modal-data="equipmentModal"
+        :current-power="character.equipment.power"
+        :equipment-specialties="EQUIPMENT_SPECIALTIES"
+        @close="closeEquipmentModal"
+        @confirm="confirmEquipmentImprovement"
+      />
 
       <!-- 衰變彈窗 -->
-      <div 
-        v-if="showDecayModal" 
-        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
-        @click.self="closeDecayModal"
-      >
-        <div class="bg-slate-800 rounded-lg p-6 max-w-lg w-full mx-4 border border-red-500/30">
-          <h3 class="text-xl font-bold text-red-300 mb-4">主題失去</h3>
-          <div class="bg-red-900/20 border border-red-500/30 rounded-lg p-4 mb-4">
-            <p class="text-sm text-red-200 mb-3 font-semibold">
-              你已失去主題，請進行以下紀錄：
-            </p>
-            
-            <div class="space-y-2 text-sm text-gray-300">
-              <div class="flex justify-between items-center">
-                <span>• 失去主題：</span>
-                <span class="text-red-300 font-medium">{{ decayModal.lostTheme }}</span>
-              </div>
-              
-              <div v-if="decayModal.lostAbilities.length > 0">
-                <div class="flex justify-between items-center">
-                  <span>• 失去前三個能力標籤：</span>
-                  <span class="text-amber-300">{{ decayModal.lostAbilities.length }} 個</span>
-                </div>
-                <div class="ml-4 text-xs text-gray-400">
-                  <div v-for="(ability, index) in decayModal.lostAbilities" :key="index">
-                    {{ index + 1 }}. {{ ability || '（空白）' }}
-                  </div>
-                </div>
-              </div>
-              
-              <div v-if="decayModal.lostWeaknesses.length > 0">
-                <div class="flex justify-between items-center">
-                  <span>• 失去額外弱點標籤：</span>
-                  <span class="text-amber-300">{{ decayModal.lostWeaknesses.length }} 個</span>
-                </div>
-                <div class="ml-4 text-xs text-gray-400">
-                  <div v-for="(weakness, index) in decayModal.lostWeaknesses" :key="index">
-                    {{ index + 2 }}. {{ weakness || '（空白）' }}
-                  </div>
-                </div>
-              </div>
-              
-              <div v-if="decayModal.lostSpecialty">
-                <div class="flex justify-between items-center">
-                  <span>• 失去主題專長：</span>
-                  <span class="text-amber-300">1 個</span>
-                </div>
-                <div class="ml-4 text-xs text-gray-400">
-                  {{ decayModal.lostSpecialty }}
-                </div>
-              </div>
-              
-              <div class="border-t border-red-500/30 pt-2 mt-3">
-                <div class="flex justify-between items-center font-semibold">
-                  <span class="text-purple-300">總演化點數：</span>
-                  <span class="text-purple-200">{{ decayModal.evolutionPoints }} 點</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="flex justify-end space-x-3">
-            <button 
-              @click="closeDecayModal"
-              class="px-4 py-2 bg-slate-600 hover:bg-slate-700 text-white rounded-lg transition-colors"
-            >
-              取消
-            </button>
-            <button 
-              @click="confirmDecay"
-              class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
-            >
-              確認失去主題
-            </button>
-          </div>
-        </div>
-      </div>
+      <DecayModal
+        :show="showDecayModal"
+        :decay-data="decayModal"
+        @close="closeDecayModal"
+        @confirm="confirmDecay"
+      />
 
       <!-- 演化時刻彈窗 -->
-      <div 
-        v-if="showEvolutionModal" 
-        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
-        @click.self="closeEvolutionModal"
-      >
-        <div class="bg-slate-800 rounded-lg p-6 max-w-2xl w-full mx-4 border border-purple-500/30 max-h-[90vh] overflow-y-auto">
-          <h3 class="text-xl font-bold text-purple-300 mb-4">演化時刻</h3>
-          <p class="text-sm text-gray-300 mb-4">
-            演化軌跡已填滿！請選擇你的演化時刻升級。完成後會清空演化軌跡。
-          </p>
-          
-          <!-- 演化時刻選擇提示 -->
-          <div class="mb-4 p-3 bg-blue-900/20 border border-blue-500/30 rounded-lg">
-            <div class="text-sm text-blue-200">
-              <strong>演化時刻說明：</strong>
-              <ul class="mt-2 space-y-1 text-xs">
-                <li>• 你可以選擇多個演化時刻升級</li>
-                <li>• 「退役」和「總重組」是終極選項，會結束或完全改變當前角色</li>
-                <li>• 「獲得老將專長」可以多次選擇</li>
-                <li>• 建議為重要的演化時刻填寫描述以記錄角色轉變</li>
-              </ul>
-            </div>
-          </div>
-          
-          <div class="space-y-6">
-            <!-- 演化時刻選項 -->
-            <div>
-              <label class="block text-sm font-medium text-gray-300 mb-3">選擇演化時刻（可選擇多個）：</label>
-              <div class="space-y-3">
-                <div 
-                  v-for="(moment, key) in evolutionMoments" 
-                  :key="key"
-                  class="border border-slate-600 rounded-lg p-4 hover:border-purple-500/50 transition-colors relative group"
-                >
-                  <label class="flex items-start space-x-3 cursor-pointer">
-                    <input 
-                      v-model="evolutionModal.selectedMoments" 
-                      type="checkbox" 
-                      :value="key"
-                      class="mt-1 text-purple-600"
-                    />
-                    <div class="flex-1">
-                      <div class="font-medium text-white">{{ moment.name }}</div>
-                      <div class="text-sm text-gray-400 mt-1">{{ moment.description }}</div>
-                    </div>
-                    
-                    <!-- 懸浮說明圖示 -->
-                    <div class="text-gray-400 hover:text-purple-300 ml-2 relative">
-                      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
-                      </svg>
-                      
-                      <!-- 懸浮說明視窗 -->
-                      <div class="absolute right-0 top-8 w-80 bg-slate-900 border border-purple-500/30 rounded-lg p-3 text-sm text-gray-200 shadow-xl z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
-                        <div class="font-semibold text-purple-300 mb-2">{{ moment.name }}</div>
-                        <div class="text-xs leading-relaxed">{{ moment.description }}</div>
-                      </div>
-                    </div>
-                  </label>
-                </div>
-              </div>
-            </div>
-
-            <!-- 老將專長選擇（當選擇了對應的演化時刻時顯示） -->
-            <div v-if="evolutionModal.selectedMoments.includes('veteranSpecialty')">
-              <label class="block text-sm font-medium text-gray-300 mb-3">選擇老將專長：</label>
-              <div class="relative">
-                <select 
-                  v-model="evolutionModal.selectedVeteranSpecialty"
-                  class="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-md text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                >
-                  <option value="">-- 請選擇老將專長 --</option>
-                  <option 
-                    v-for="(specialty, key) in veteranSpecialties" 
-                    :key="key" 
-                    :value="key"
-                  >
-                    {{ specialty.name }}
-                  </option>
-                </select>
-                <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
-                  <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                  </svg>
-                </div>
-              </div>
-              
-              <!-- 老將專長說明 -->
-              <div 
-                v-if="evolutionModal.selectedVeteranSpecialty && veteranSpecialties[evolutionModal.selectedVeteranSpecialty]"
-                class="mt-2 p-3 bg-slate-700 rounded-md border border-slate-600"
-              >
-                <div class="text-sm text-gray-300">
-                  <strong class="text-purple-300">{{ veteranSpecialties[evolutionModal.selectedVeteranSpecialty].name }}：</strong>
-                  {{ veteranSpecialties[evolutionModal.selectedVeteranSpecialty].description }}
-                </div>
-              </div>
-            </div>
-
-            <!-- 自訂演化描述 -->
-            <div>
-              <label class="block text-sm font-medium text-gray-300 mb-2">演化描述（選填）：</label>
-              
-              <!-- 提示訊息 -->
-              <div 
-                v-if="needsEvolutionDescription"
-                class="mb-2 p-2 bg-amber-900/20 border border-amber-500/30 rounded text-xs text-amber-200"
-              >
-                <svg class="w-4 h-4 inline mr-1" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
-                </svg>
-                建議為你選擇的演化時刻填寫詳細描述，這將有助於記錄角色的重要轉變。
-              </div>
-              
-              <textarea 
-                v-model="evolutionModal.customDescription"
-                class="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-md text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent h-20 resize-none text-sm"
-                placeholder="描述角色在此次演化時刻的變化..."
-              />
-            </div>
-          </div>
-
-          <div class="flex justify-end space-x-3 mt-6">
-            <button 
-              @click="closeEvolutionModal"
-              class="px-4 py-2 bg-slate-600 hover:bg-slate-700 text-white rounded-md transition-colors"
-            >
-              取消
-            </button>
-            <button 
-              @click="confirmEvolution"
-              :disabled="!isEvolutionValid"
-              :class="[
-                'px-4 py-2 rounded-md transition-colors',
-                isEvolutionValid 
-                  ? 'bg-purple-600 hover:bg-purple-700 text-white' 
-                  : 'bg-slate-600 text-gray-400 cursor-not-allowed'
-              ]"
-            >
-              確認演化
-            </button>
-          </div>
-        </div>
-      </div>
+      <EvolutionModal
+        :show="showEvolutionModal"
+        :modal-data="evolutionModal"
+        :evolution-moments="evolutionMoments"
+        :veteran-specialties="veteranSpecialties"
+        @close="closeEvolutionModal"
+        @confirm="confirmEvolution"
+      />
 
       <!-- 底部操作按鈕 -->
       <div class="mt-8 flex justify-center space-x-4">
@@ -737,6 +272,11 @@ import { ref, computed, onMounted } from 'vue'
 import CharacterTypeChart from '~/components/MO/CharacterTypeChart.vue'
 import ThemeCard from '~/components/MO/ThemeCard.vue'
 import EquipmentCard from '~/components/MO/EquipmentCard.vue'
+import CharacterInfo from '~/components/MO/CharacterInfo.vue'
+import ImprovementModal from '~/components/MO/ImprovementModal.vue'
+import EquipmentModal from '~/components/MO/EquipmentModal.vue'
+import DecayModal from '~/components/MO/DecayModal.vue'
+import EvolutionModal from '~/components/MO/EvolutionModal.vue'
 
 // ====================
 // 頁面配置
@@ -936,6 +476,39 @@ const evolutionModal = ref({
   customDescription: ''
 })
 
+// ====================
+// 工具函數
+// ====================
+function createEmptyThemeCard() {
+  return {
+    selectedThemeType: '',
+    selectedTheme: '',
+    title: '',
+    abilities: Array(7).fill(null).map(() => ({ text: '', isBurned: false })),
+    weaknesses: Array(2).fill(null).map(() => ({ text: '' })),
+    improvements: Array(4).fill(null).map(() => ({ checked: false })),
+    decays: Array(4).fill(null).map(() => ({ checked: false })),
+    selectedSpecialty: '',
+    motivation: {
+      identity: '',
+      ritual: '',
+      itch: ''
+    },
+    isEditing: false
+  }
+}
+
+function createEmptyEquipment() {
+  return {
+    name: '',
+    improvements: Array(3).fill(null).map(() => ({ checked: false })),
+    power: 1,
+    abilities: Array(5).fill(null).map(() => ({ text: '', isBurned: false })),
+    weaknesses: Array(2).fill(null).map(() => ({ text: '' })),
+    specialties: []
+  }
+}
+
 // 初始化角色資料
 const character = ref({
   name: '',
@@ -967,7 +540,7 @@ onMounted(async () => {
 const isCharacterComplete = computed(() => {
   return character.value.name && 
          character.value.themeCards.every(card => 
-           card.selectedThemeType && card.selectedTheme
+           card && card.selectedThemeType && card.selectedTheme
          )
 })
 
@@ -1009,6 +582,8 @@ const needsEvolutionDescription = computed(() => {
 
 function onThemeTypeChange(cardIndex) {
   const card = character.value.themeCards[cardIndex]
+  if (!card) return
+  
   card.selectedTheme = ''
   card.title = ''
   // 重置能力和弱點
@@ -1023,6 +598,8 @@ function onThemeTypeChange(cardIndex) {
 
 function onThemeChange(cardIndex) {
   const card = character.value.themeCards[cardIndex]
+  if (!card) return
+  
   const themeData = getThemeData(card.selectedThemeType, card.selectedTheme)
   
   if (themeData) {
@@ -1040,11 +617,11 @@ function getThemeData(themeType, themeKey) {
 function getAvailableThemes(themeType) {
   switch (themeType) {
     case 'mythos':
-      return mythosThemes.value
+      return mythosThemes.value || {}
     case 'noise':
-      return noiseThemes.value
+      return noiseThemes.value || {}
     case 'self':
-      return selfThemes.value
+      return selfThemes.value || {}
     default:
       return {}
   }
@@ -1052,44 +629,13 @@ function getAvailableThemes(themeType) {
 
 function toggleEdit(cardIndex) {
   const card = character.value.themeCards[cardIndex]
+  if (!card) return
+  
   if (card.isEditing) {
     // 儲存邏輯可以在這裡執行
     console.log(`儲存主題卡 ${cardIndex + 1}:`, card)
   }
   card.isEditing = !card.isEditing
-}
-
-// ====================
-// 工具函數
-// ====================
-function createEmptyThemeCard() {
-  return {
-    selectedThemeType: '',
-    selectedTheme: '',
-    title: '',
-    abilities: Array(7).fill().map(() => ({ text: '', isBurned: false })),
-    weaknesses: Array(2).fill().map(() => ({ text: '' })),
-    improvements: Array(3).fill().map(() => ({ checked: false })),
-    decays: Array(3).fill().map(() => ({ checked: false })),
-    selectedSpecialty: '',
-    motivation: {
-      identity: '',
-      ritual: '',
-      itch: ''
-    },
-    isEditing: false
-  }
-}
-
-function createEmptyEquipment() {
-  return {
-    name: '',
-    improvements: Array(3).fill().map(() => ({ checked: false })),
-    power: 1,
-    abilities: Array(5).fill().map(() => ({ text: '', isBurned: false })),
-    weaknesses: Array(2).fill().map(() => ({ text: '' })),
-    specialties: []
-  }
 }
 
 // ====================
@@ -1147,6 +693,8 @@ const isImprovementValid = computed(() => {
 // 改進相關處理函數
 function onImprovementChange(cardIndex, improvementIndex) {
   const card = character.value.themeCards[cardIndex]
+  if (!card || !card.improvements) return
+  
   const allChecked = card.improvements.every(imp => imp.checked)
   
   if (allChecked) {
@@ -1286,6 +834,8 @@ function hasAvailableSpecialties(cardIndex) {
 // 獲取可用的主題專長
 function getAvailableSpecialties(cardIndex) {
   const card = character.value.themeCards[cardIndex]
+  if (!card) return {}
+  
   const themeType = card.selectedThemeType
   const themeKey = card.selectedTheme
   
@@ -1424,6 +974,7 @@ function confirmEquipmentImprovement() {
 // ====================
 function onDecayChange(cardIndex, decayIndex) {
   const card = character.value.themeCards[cardIndex]
+  if (!card || !card.decays) return
   
   // 檢查是否所有衰變格都被勾選
   if (card.decays.every(decay => decay.checked)) {
