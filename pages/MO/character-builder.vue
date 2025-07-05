@@ -115,6 +115,12 @@
         </button>
       </div>
     </div>
+
+    <!-- 角色資料管理器 -->
+    <CharacterDataManager
+      :character="character"
+      @import-character="handleImportCharacter"
+    />
   </div>
 </template>
 
@@ -129,6 +135,7 @@ import EquipmentModal from '~/components/MO/EquipmentModal.vue'
 import DecayModal from '~/components/MO/DecayModal.vue'
 import EvolutionModal from '~/components/MO/EvolutionModal.vue'
 import HowToPlayPanel from '~/components/MO/HowToPlayPanel.vue'
+import CharacterDataManager from '~/components/MO/CharacterDataManager.vue'
 
 // ====================
 // 頁面配置
@@ -338,8 +345,8 @@ function createEmptyThemeCard() {
     title: '',
     abilities: Array(7).fill(null).map(() => ({ text: '', isBurned: false })),
     weaknesses: Array(2).fill(null).map(() => ({ text: '' })),
-    improvements: Array(4).fill(null).map(() => ({ checked: false })),
-    decays: Array(4).fill(null).map(() => ({ checked: false })),
+    improvements: Array(3).fill(null).map(() => ({ checked: false })),
+    decays: Array(3).fill(null).map(() => ({ checked: false })),
     selectedSpecialty: '',
     motivation: {
       identity: '',
@@ -510,6 +517,99 @@ function resetCharacter() {
     equipment: createEmptyEquipment(),
     themeCards: Array(4).fill().map(() => createEmptyThemeCard())
   }
+}
+
+// 處理角色資料導入
+function handleImportCharacter(importedCharacter) {
+  try {
+    // 確保導入的資料結構完整
+    const normalizedCharacter = {
+      name: importedCharacter.name || '',
+      background: importedCharacter.background || '',
+      evolutionTrack: Array.isArray(importedCharacter.evolutionTrack) 
+        ? importedCharacter.evolutionTrack.slice(0, 5).concat(Array(5).fill(false)).slice(0, 5)
+        : [false, false, false, false, false],
+      evolutionHistory: Array.isArray(importedCharacter.evolutionHistory)
+        ? importedCharacter.evolutionHistory
+        : [],
+      equipment: normalizeEquipment(importedCharacter.equipment),
+      themeCards: normalizeThemeCards(importedCharacter.themeCards)
+    }
+    
+    // 覆蓋當前角色資料
+    character.value = normalizedCharacter
+    
+    console.log('角色資料導入成功:', normalizedCharacter)
+  } catch (error) {
+    console.error('處理導入資料時發生錯誤:', error)
+  }
+}
+
+// 標準化裝備資料
+function normalizeEquipment(equipment) {
+  if (!equipment || typeof equipment !== 'object') {
+    return createEmptyEquipment()
+  }
+  
+  const normalized = createEmptyEquipment()
+  
+  // 複製有效的裝備資料
+  if (typeof equipment.name === 'string') normalized.name = equipment.name
+  if (typeof equipment.description === 'string') normalized.description = equipment.description
+  if (typeof equipment.power === 'number') normalized.power = Math.max(0, Math.min(3, equipment.power))
+  if (Array.isArray(equipment.specialties)) normalized.specialties = [...equipment.specialties]
+  if (Array.isArray(equipment.tags)) normalized.tags = [...equipment.tags]
+  if (Array.isArray(equipment.improvements)) normalized.improvements = [...equipment.improvements]
+  
+  return normalized
+}
+
+// 標準化主題卡資料
+function normalizeThemeCards(themeCards) {
+  if (!Array.isArray(themeCards)) {
+    return Array(4).fill().map(() => createEmptyThemeCard())
+  }
+  
+  const normalized = []
+  
+  for (let i = 0; i < 4; i++) {
+    const card = themeCards[i]
+    if (card && typeof card === 'object') {
+      const normalizedCard = createEmptyThemeCard()
+      
+      // 複製有效的主題卡資料
+      if (typeof card.selectedThemeType === 'string') {
+        normalizedCard.selectedThemeType = card.selectedThemeType
+      }
+      if (typeof card.selectedTheme === 'string') {
+        normalizedCard.selectedTheme = card.selectedTheme
+      }
+      if (Array.isArray(card.abilities)) {
+        normalizedCard.abilities = [...card.abilities]
+      }
+      if (Array.isArray(card.weaknesses)) {
+        normalizedCard.weaknesses = [...card.weaknesses]
+      }
+      if (Array.isArray(card.improvements)) {
+        normalizedCard.improvements = [...card.improvements]
+      }
+      if (Array.isArray(card.decayOptions)) {
+        normalizedCard.decayOptions = [...card.decayOptions]
+      }
+      if (typeof card.power === 'number') {
+        normalizedCard.power = Math.max(0, Math.min(3, card.power))
+      }
+      if (typeof card.isEditing === 'boolean') {
+        normalizedCard.isEditing = card.isEditing
+      }
+      
+      normalized.push(normalizedCard)
+    } else {
+      normalized.push(createEmptyThemeCard())
+    }
+  }
+  
+  return normalized
 }
 
 // 改進彈窗相關計算屬性

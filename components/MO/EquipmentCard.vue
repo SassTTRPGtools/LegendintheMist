@@ -14,21 +14,29 @@
       </div>
 
       <!-- 改進與力度 -->
-      <div class="grid grid-cols-2 gap-4">
-        <div>
-          <label class="block text-sm font-medium mb-2 text-green-400">改進</label>
-          <div class="flex space-x-1">
+      <div class="grid grid-cols-2 gap-6">
+        <div class="text-center">
+          <label class="block text-sm font-bold mb-3 text-green-400 tracking-wider">改進</label>
+          <div class="flex justify-center space-x-3">
             <div 
               v-for="(improvement, impIndex) in equipment.improvements" 
               :key="impIndex"
-              class="flex items-center"
+              class="flex flex-col items-center space-y-1"
             >
-              <input 
-                v-model="improvement.checked"
-                @change="onImprovementChange(impIndex)"
-                type="checkbox"
-                class="w-4 h-4 text-green-600 bg-slate-600 border-slate-500 rounded focus:ring-green-500"
-              />
+              <div class="relative">
+                <input 
+                  v-model="improvement.checked"
+                  @change="onImprovementChange(impIndex)"
+                  type="checkbox"
+                  class="w-5 h-5 text-green-600 bg-slate-700 border-2 border-green-500/50 rounded-md focus:ring-2 focus:ring-green-400 focus:border-green-400 transition-all duration-200 hover:border-green-400"
+                />
+                <div v-if="improvement.checked" class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                  <svg class="w-3 h-3 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                  </svg>
+                </div>
+              </div>
+              <span class="text-xs text-green-300 font-medium">{{ impIndex + 1 }}</span>
             </div>
           </div>
         </div>

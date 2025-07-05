@@ -57,38 +57,54 @@
     <!-- 主題卡內容 -->
     <div v-if="themeCard.selectedTheme" class="space-y-4">
       <!-- 改進與衰變勾選框 -->
-      <div class="grid grid-cols-2 gap-4">
-        <div>
-          <label class="block text-xs font-medium mb-2 text-green-400">改進</label>
-          <div class="flex space-x-1">
+      <div class="grid grid-cols-2 gap-6">
+        <div class="text-center">
+          <label class="block text-sm font-bold mb-3 text-green-400 tracking-wider">改進</label>
+          <div class="flex justify-center space-x-3">
             <div 
-              v-for="(improvement, impIndex) in themeCard.improvements" 
+              v-for="(improvement, impIndex) in themeCard.improvements.slice(0, 3)" 
               :key="impIndex"
-              class="flex items-center"
+              class="flex flex-col items-center space-y-1"
             >
-              <input 
-                v-model="improvement.checked"
-                @change="onImprovementChange(impIndex)"
-                type="checkbox"
-                class="w-3 h-3 text-green-600 bg-slate-600 border-slate-500 rounded focus:ring-green-500"
-              />
+              <div class="relative">
+                <input 
+                  v-model="improvement.checked"
+                  @change="onImprovementChange(impIndex)"
+                  type="checkbox"
+                  class="w-5 h-5 text-green-600 bg-slate-700 border-2 border-green-500/50 rounded-md focus:ring-2 focus:ring-green-400 focus:border-green-400 transition-all duration-200 hover:border-green-400"
+                />
+                <div v-if="improvement.checked" class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                  <svg class="w-3 h-3 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                  </svg>
+                </div>
+              </div>
+              <span class="text-xs text-green-300 font-medium">{{ impIndex + 1 }}</span>
             </div>
           </div>
         </div>
-        <div>
-          <label class="block text-xs font-medium mb-2 text-red-400">衰變</label>
-          <div class="flex space-x-1">
+        <div class="text-center">
+          <label class="block text-sm font-bold mb-3 text-red-400 tracking-wider">衰變</label>
+          <div class="flex justify-center space-x-3">
             <div 
-              v-for="(decay, decayIndex) in themeCard.decays" 
+              v-for="(decay, decayIndex) in themeCard.decays.slice(0, 3)" 
               :key="decayIndex"
-              class="flex items-center"
+              class="flex flex-col items-center space-y-1"
             >
-              <input 
-                v-model="decay.checked"
-                @change="onDecayChange(decayIndex)"
-                type="checkbox"
-                class="w-3 h-3 text-red-600 bg-slate-600 border-slate-500 rounded focus:ring-red-500"
-              />
+              <div class="relative">
+                <input 
+                  v-model="decay.checked"
+                  @change="onDecayChange(decayIndex)"
+                  type="checkbox"
+                  class="w-5 h-5 text-red-600 bg-slate-700 border-2 border-red-500/50 rounded-md focus:ring-2 focus:ring-red-400 focus:border-red-400 transition-all duration-200 hover:border-red-400"
+                />
+                <div v-if="decay.checked" class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                  <svg class="w-3 h-3 text-red-400" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                  </svg>
+                </div>
+              </div>
+              <span class="text-xs text-red-300 font-medium">{{ decayIndex + 1 }}</span>
             </div>
           </div>
         </div>
@@ -287,8 +303,8 @@ const props = withDefaults(defineProps<Props>(), {
     title: '',
     abilities: Array(7).fill(null).map(() => ({ text: '', isBurned: false })),
     weaknesses: Array(2).fill(null).map(() => ({ text: '' })),
-    improvements: Array(4).fill(null).map(() => ({ checked: false })),
-    decays: Array(4).fill(null).map(() => ({ checked: false })),
+    improvements: Array(3).fill(null).map(() => ({ checked: false })),
+    decays: Array(3).fill(null).map(() => ({ checked: false })),
     selectedSpecialty: '',
     motivation: {
       identity: '',
