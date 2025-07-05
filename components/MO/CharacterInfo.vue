@@ -1,23 +1,5 @@
 <template>
-  <div class="bg-slate-800/80 backdrop-blur rounded-lg p-6 border boconst props = withDefaults(defineProps<Props>(), {
-  character: () => ({
-    name: '',
-    background: '',
-    evolutionTrack: Array(5).fill(false),
-    evolutionHistory: []
-  })
-})
-
-// 定義事件
-const emit = defineEmits<{
-  'toggle-evolution-step': [index: number]
-  'show-evolution-history': []
-}>()
-
-// 方法
-function showEvolutionHistory() {
-  emit('show-evolution-history')
-}500/30">
+  <div class="bg-slate-800/80 backdrop-blur rounded-lg p-6 border border-purple-500/30">
     <h3 class="text-xl font-bold text-purple-300 mb-4">角色資訊</h3>
     <div class="space-y-4">
       <div>
@@ -37,6 +19,38 @@ function showEvolutionHistory() {
           placeholder="角色的背景故事..."
         />
       </div>
+
+      <!-- 老將專長顯示 -->
+      <div v-if="character.veteranSpecialties && character.veteranSpecialties.length > 0">
+        <label class="block text-sm font-medium text-gray-300 mb-2">老將專長</label>
+        <div class="space-y-2">
+          <div 
+            v-for="specialty in character.veteranSpecialties" 
+            :key="specialty"
+            class="bg-slate-700 p-3 rounded-lg border border-purple-500/30"
+          >
+            <div class="font-medium text-purple-300">{{ getVeteranSpecialtyName(specialty) }}</div>
+            <div class="text-sm text-gray-400 mt-1">{{ getVeteranSpecialtyDescription(specialty) }}</div>
+            
+            <!-- 改進你的遊戲專長的特殊顯示 -->
+            <div v-if="specialty === 'levelUpGame' && character.levelUpGameImprovements && character.levelUpGameImprovements.length > 0" class="mt-2">
+              <div class="text-xs text-purple-400 mb-1">已選擇的改進：</div>
+              <div class="grid grid-cols-1 gap-1">
+                <div 
+                  v-for="(improvement, index) in character.levelUpGameImprovements" 
+                  :key="index"
+                  class="text-xs bg-slate-600 p-2 rounded"
+                >
+                  <span class="text-purple-300">{{ improvement.themeName }}</span>
+                  <span class="text-gray-400 mx-1">-</span>
+                  <span class="text-white">{{ getImprovementTypeName(improvement.type) }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div>
         <div class="flex items-center justify-between mb-2">
           <label class="block text-sm font-medium text-gray-300">演化軌跡</label>
@@ -85,11 +99,21 @@ interface EvolutionRecord {
   customDescription: string
 }
 
+interface LevelUpGameImprovement {
+  themeType: string
+  themeKey: string
+  themeName: string
+  type: string
+  details: string
+}
+
 interface Character {
   name: string
   background: string
   evolutionTrack: boolean[]
   evolutionHistory?: EvolutionRecord[]
+  veteranSpecialties?: string[]
+  levelUpGameImprovements?: LevelUpGameImprovement[]
 }
 
 interface Props {
@@ -101,7 +125,9 @@ const props = withDefaults(defineProps<Props>(), {
     name: '',
     background: '',
     evolutionTrack: Array(5).fill(false),
-    evolutionHistory: []
+    evolutionHistory: [],
+    veteranSpecialties: [],
+    levelUpGameImprovements: []
   })
 })
 
@@ -111,9 +137,47 @@ const emit = defineEmits<{
   'show-evolution-history': []
 }>()
 
+// 老將專長資料
+const veteranSpecialties = {
+  backpackBeast: { name: '背包野獸', description: '啟動通用裝備槽只需花費1點力度，而非2點。' },
+  backupClones: { name: '備份複製品', description: '當你獲得超過限制的狀態時，可於下一幕初移除一次。' },
+  customizableGear: { name: '可自訂裝備', description: '每場戲可燒掉一個特定裝備標籤並恢復另一個。' },
+  experiencedEfficiency: { name: '經驗效率', description: '每場戲一次，在休息時選擇力量加成時，你可以獲得5點力度而非3點。' },
+  godSlayer: { name: '屠神者', description: '在一次互動中，可忽略最多3級的難度。' },
+  interfacer: { name: '介面師', description: '初次遇到科技時，立即學到一個有用的細節。' },
+  largerThanLife: { name: '長壽', description: '在所有行動中，可忽略1級難度。' },
+  levelUpGame: { name: '改進你的遊戲', description: '從所有主題中選擇7個改進。' },
+  notFirstRodeo: { name: '不是我的第一場牛仔競技秀', description: '每場戲一次，當擲骰結果為失敗時，可以改成混合成功。' },
+  sawThatComing: { name: '即將來臨', description: '每場戲一次，當主持人宣布後果或啟動挑戰特技時，可以將其視為威脅。' },
+  slowSteady: { name: '穩扎穩打', description: '今後，所有主題卡的改進軌從3格變為5格。' },
+  sourceSensitive: { name: '祕源敏感', description: '首次遇到某個祕源時，立即獲得一個關於其神話的有用細節。' },
+  harderFall: { name: '當你失敗時', description: '當你的弱點標籤被啟動時，可以選擇失去2點力度，並在改進軌上標記2格。' },
+  willpowerOverChance: { name: '意志超越機會', description: '擲出對子時不再自動失敗。' }
+}
+
+// 改進類型名稱
+const improvementTypeNames = {
+  addAbility: '新增能力標籤',
+  modifyWeakness: '修改弱點標籤',
+  specialty: '獲得主題專長'
+}
+
 // 計算屬性
 const evolutionProgress = computed(() => {
   if (!props.character?.evolutionTrack) return 0
   return props.character.evolutionTrack.filter(Boolean).length
 })
+
+// 方法
+function getVeteranSpecialtyName(specialtyKey: string): string {
+  return veteranSpecialties[specialtyKey as keyof typeof veteranSpecialties]?.name || specialtyKey
+}
+
+function getVeteranSpecialtyDescription(specialtyKey: string): string {
+  return veteranSpecialties[specialtyKey as keyof typeof veteranSpecialties]?.description || '暫無描述'
+}
+
+function getImprovementTypeName(type: string): string {
+  return improvementTypeNames[type as keyof typeof improvementTypeNames] || type
+}
 </script>

@@ -97,6 +97,20 @@
         @update-description="updateEvolutionDescription"
       />
 
+      <!-- 改進你的遊戲模態框 -->
+      <LevelUpGameModal
+        :show="showLevelUpGameModal"
+        :theme-cards="character.themeCards"
+        :mythos-themes="mythosThemes"
+        :noise-themes="noiseThemes"
+        :self-themes="selfThemes"
+        @close="closeLevelUpGameModal"
+        @selectCard="handleLevelUpGameCardSelection"
+        @finish="handleLevelUpGameFinish"
+        @cancel="handleLevelUpGameCancel"
+        ref="levelUpGameModalRef"
+      />
+
       <!-- 底部操作按鈕 -->
       <div class="mt-8 flex justify-center space-x-4">
         <NuxtLink 
@@ -123,6 +137,20 @@
         >
           完成角色建立
         </button>
+        <!-- 測試按鈕 -->
+        <button 
+          @click="testLevelUpGame"
+          class="px-6 py-3 bg-yellow-600 hover:bg-yellow-700 text-white rounded-lg transition-colors"
+        >
+          測試改進你的遊戲
+        </button>
+        <!-- 簡單測試按鈕 -->
+        <button 
+          @click="showLevelUpGameModal = true"
+          class="px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors"
+        >
+          直接開啟模態框
+        </button>
       </div>
     </div>
 
@@ -147,6 +175,7 @@ import EvolutionModal from '~/components/MO/EvolutionModal.vue'
 import HowToPlayPanel from '~/components/MO/HowToPlayPanel.vue'
 import CharacterDataManager from '~/components/MO/CharacterDataManager.vue'
 import EvolutionHistoryModal from '~/components/MO/EvolutionHistoryModal.vue'
+import LevelUpGameModal from '~/components/MO/LevelUpGameModal.vue'
 
 // ====================
 // 頁面配置
@@ -396,6 +425,12 @@ const evolutionModal = ref({
 // 演化歷史模態框相關
 const showEvolutionHistoryModal = ref(false)
 
+// 改進你的遊戲模態框相關
+const showLevelUpGameModal = ref(false)
+const levelUpGameModalRef = ref(null)
+const levelUpGameCurrentCardIndex = ref(-1)
+const levelUpGameImprovementCount = ref(0)
+
 // ====================
 // 工具函數
 // ====================
@@ -440,6 +475,7 @@ const character = ref({
   evolutionTrack: [false, false, false, false, false], // 五個演化軌跡格子
   evolutionHistory: [], // 演化歷史記錄
   veteranSpecialties: [], // 已獲得的老將專長
+  levelUpGameImprovements: [], // 改進你的遊戲專長選擇的改進
   equipment: createEmptyEquipment(),
   themeCards: Array(4).fill().map(() => createEmptyThemeCard())
 })
@@ -447,6 +483,7 @@ const character = ref({
 // 載入主題資料
 onMounted(async () => {
   try {
+    console.log('開始載入主題資料...')
     const [mythosRes, noiseRes, selfRes] = await Promise.all([
       fetch('/MO/mythos-themes.json'),
       fetch('/MO/noise-themes.json'),
@@ -456,6 +493,12 @@ onMounted(async () => {
     mythosThemes.value = (await mythosRes.json()).themes
     noiseThemes.value = (await noiseRes.json()).themes
     selfThemes.value = (await selfRes.json()).themes
+    
+    console.log('主題資料載入完成:', {
+      mythos: Object.keys(mythosThemes.value).length,
+      noise: Object.keys(noiseThemes.value).length,
+      self: Object.keys(selfThemes.value).length
+    })
   } catch (error) {
     console.error('載入主題資料失敗:', error)
   }
@@ -582,6 +625,7 @@ function resetCharacter() {
     evolutionTrack: [false, false, false, false, false],
     veteranSpecialties: [],
     evolutionHistory: [],
+    levelUpGameImprovements: [],
     equipment: createEmptyEquipment(),
     themeCards: Array(4).fill().map(() => createEmptyThemeCard(false))
   }
@@ -602,6 +646,9 @@ function handleImportCharacter(importedCharacter) {
         : [],
       veteranSpecialties: Array.isArray(importedCharacter.veteranSpecialties)
         ? importedCharacter.veteranSpecialties
+        : [],
+      levelUpGameImprovements: Array.isArray(importedCharacter.levelUpGameImprovements)
+        ? importedCharacter.levelUpGameImprovements
         : [],
       equipment: normalizeEquipment(importedCharacter.equipment),
       themeCards: normalizeThemeCards(importedCharacter.themeCards)
@@ -921,7 +968,45 @@ function confirmImprovement() {
         totalImprovements: 0
       }
     }
-  } else {
+  } 
+  // 處理「改進你的遊戲」專長的連續改進
+  else if (modal.isLevelUpGameImprovement) {
+    // 記錄這次改進的詳細資料
+    const improvementDescription = getImprovementDescription(modal, card)
+    
+    // 增加改進計數
+    levelUpGameImprovementCount.value++
+    
+    // 將改進記錄新增到 LevelUpGameModal
+    if (levelUpGameModalRef.value) {
+      levelUpGameModalRef.value.addCompletedImprovement({
+        cardIndex: modal.cardIndex,
+        themeName: card.title || card.selectedTheme,
+        improvementDescription: improvementDescription,
+        improvementNumber: levelUpGameImprovementCount.value
+      })
+    }
+    
+    console.log(`改進你的遊戲：完成第 ${levelUpGameImprovementCount.value} 次改進`)
+    
+    // 關閉改進模態框
+    showImprovementModal.value = false
+    
+    // 如果還沒完成7次改進，重新開啟主題卡選擇
+    if (levelUpGameImprovementCount.value < 7) {
+      setTimeout(() => {
+        showLevelUpGameModal.value = true
+      }, 300)
+    } else {
+      // 已完成7次改進，顯示完成畫面
+      setTimeout(() => {
+        showLevelUpGameModal.value = true
+      }, 300)
+    }
+    
+    return // 提早返回，不執行一般改進的後續處理
+  } 
+  else {
     // 一般改進：清空改進勾選框並填滿演化軌跡
     card.improvements.forEach(imp => imp.checked = false)
     
@@ -1302,6 +1387,31 @@ function confirmEvolution() {
     }
   })
   
+  // 如果選擇了「改進你的遊戲」，開啟選擇模態框
+  if (evolutionModal.value.selectedVeteranSpecialty === 'levelUpGame') {
+    console.log('觸發改進你的遊戲專長，準備開啟模態框')
+    console.log('主題卡數量:', character.value.themeCards.length)
+    
+    // 重置改進相關變數
+    levelUpGameImprovementCount.value = 0
+    levelUpGameCurrentCardIndex.value = -1
+    
+    // 重置 LevelUpGameModal
+    if (levelUpGameModalRef.value) {
+      levelUpGameModalRef.value.resetModal()
+    }
+    
+    // 先關閉演化模態框
+    showEvolutionModal.value = false
+    
+    // 再開啟改進選擇模態框
+    setTimeout(() => {
+      console.log('開啟 LevelUpGameModal')
+      showLevelUpGameModal.value = true
+    }, 100)
+    return // 不要繼續後續的處理，等待用戶完成改進選擇
+  }
+  
   // 特殊處理：如果選擇了退役或總重組，顯示特殊提示
   if (hasRetire || hasReconstruction) {
     const message = hasRetire 
@@ -1314,6 +1424,140 @@ function confirmEvolution() {
   character.value.evolutionTrack = [false, false, false, false, false]
   
   closeEvolutionModal()
+}
+
+// ====================
+// 改進你的遊戲相關功能
+// ====================
+function closeLevelUpGameModal() {
+  showLevelUpGameModal.value = false
+  levelUpGameCurrentCardIndex.value = -1
+}
+
+// 處理玩家選擇要改進的主題卡
+function handleLevelUpGameCardSelection(cardIndex) {
+  console.log('玩家選擇改進主題卡:', cardIndex, character.value.themeCards[cardIndex])
+  
+  // 記錄當前選擇的卡片索引
+  levelUpGameCurrentCardIndex.value = cardIndex
+  
+  // 暫時關閉 LevelUpGameModal
+  showLevelUpGameModal.value = false
+  
+  // 準備改進模態框資料
+  improvementModal.value = {
+    selectedOption: '',
+    cardIndex: cardIndex,
+    newAbilityText: '',
+    selectedWeaknessIndex: null,
+    weaknessText: '',
+    selectedSpecialty: '',
+    isLevelUpGameImprovement: true, // 標記這是改進你的遊戲的改進
+    levelUpGameNumber: levelUpGameImprovementCount.value + 1
+  }
+  
+  // 開啟改進模態框
+  setTimeout(() => {
+    showImprovementModal.value = true
+  }, 100)
+}
+
+// 處理改進你的遊戲完成
+function handleLevelUpGameFinish(completedImprovements) {
+  console.log('改進你的遊戲完成，所有改進:', completedImprovements)
+  
+  // 儲存改進記錄到角色資料
+  if (!character.value.levelUpGameImprovements) {
+    character.value.levelUpGameImprovements = []
+  }
+  character.value.levelUpGameImprovements = completedImprovements
+  
+  // 更新最後一個演化記錄
+  if (character.value.evolutionHistory && character.value.evolutionHistory.length > 0) {
+    const lastEvolution = character.value.evolutionHistory[character.value.evolutionHistory.length - 1]
+    
+    if (lastEvolution.veteranSpecialty && lastEvolution.veteranSpecialty.key === 'levelUpGame') {
+      lastEvolution.levelUpGameImprovements = completedImprovements
+      lastEvolution.customDescription = lastEvolution.customDescription || 
+        `完成了7次主題改進：${completedImprovements.map(imp => imp.improvementDescription).join('；')}`
+    }
+  }
+  
+  // 重置相關變數
+  levelUpGameImprovementCount.value = 0
+  levelUpGameCurrentCardIndex.value = -1
+  
+  // 重置模態框
+  if (levelUpGameModalRef.value) {
+    levelUpGameModalRef.value.resetModal()
+  }
+  
+  closeLevelUpGameModal()
+  
+  // 清空演化軌跡
+  character.value.evolutionTrack = [false, false, false, false, false]
+  
+  // 顯示完成提示
+  alert(`改進你的遊戲完成！已完成${completedImprovements.length}次主題改進。`)
+}
+
+// 處理改進你的遊戲取消
+function handleLevelUpGameCancel() {
+  console.log('取消改進你的遊戲')
+  
+  // 重置相關變數
+  levelUpGameImprovementCount.value = 0
+  levelUpGameCurrentCardIndex.value = -1
+  
+  // 重置模態框
+  if (levelUpGameModalRef.value) {
+    levelUpGameModalRef.value.resetModal()
+  }
+  
+  closeLevelUpGameModal()
+  
+  // 清空演化軌跡
+  character.value.evolutionTrack = [false, false, false, false, false]
+}
+
+// 獲取改進描述的輔助函數
+function getImprovementDescription(modal, card) {
+  switch (modal.selectedOption) {
+    case 'newAbility':
+      return `新增能力標籤："${modal.newAbilityText}"`
+    case 'modifyWeakness':
+      const weaknessIndex = modal.selectedWeaknessIndex
+      const weaknessText = modal.weaknessText.trim()
+      
+      if (weaknessIndex === 'add') {
+        return `新增弱點標籤："${weaknessText}"`
+      } else if (weaknessIndex === 0) {
+        return `重寫第一個弱點標籤："${weaknessText}"`
+      } else if (typeof weaknessIndex === 'number' && weaknessIndex > 0) {
+        if (!weaknessText) {
+          return `移除弱點標籤`
+        } else {
+          return `修改弱點標籤："${weaknessText}"`
+        }
+      }
+      return '修改弱點標籤'
+    case 'specialty':
+      const specialtyData = getAvailableSpecialties(modal.cardIndex)[modal.selectedSpecialty]
+      const specialtyName = specialtyData ? specialtyData.name : modal.selectedSpecialty
+      return `獲得主題專長："${specialtyName}"`
+    default:
+      return '未知改進類型'
+  }
+}
+
+// 獲取改進類型名稱的輔助函數
+function getImprovementTypeName(type) {
+  const typeNames = {
+    addAbility: '新增能力標籤',
+    modifyWeakness: '修改弱點標籤',
+    specialty: '獲得主題專長'
+  }
+  return typeNames[type] || type
 }
 
 function saveCharacter() {
@@ -1330,6 +1574,56 @@ function hasAvailableSpecialties(cardIndex) {
   const availableSpecialties = getAvailableSpecialties(cardIndex)
   // 檢查是否有未被選擇的專長
   return Object.values(availableSpecialties).some(specialty => !specialty.isSelected)
+}
+
+// 測試改進你的遊戲功能
+function testLevelUpGame() {
+  alert('測試按鈕被點擊了！')
+  console.log('開始測試改進你的遊戲功能')
+  
+  // 直接添加專長並觸發模態框
+  if (!character.value.veteranSpecialties) {
+    character.value.veteranSpecialties = []
+  }
+  
+  if (!character.value.veteranSpecialties.includes('levelUpGame')) {
+    character.value.veteranSpecialties.push('levelUpGame')
+  }
+  
+  // 創建演化歷史記錄
+  if (!character.value.evolutionHistory) {
+    character.value.evolutionHistory = []
+  }
+  
+  character.value.evolutionHistory.push({
+    date: new Date().toISOString(),
+    moments: [{
+      key: 'veteranSpecialty',
+      name: '獲得一個老將專長',
+      description: '從下列老將專長中選擇一個。'
+    }],
+    veteranSpecialty: {
+      key: 'levelUpGame',
+      name: '改進你的遊戲',
+      description: '從你的主題卡中選擇並進行7次改進。'
+    },
+    customDescription: ''
+  })
+  
+  // 重置改進相關變數
+  levelUpGameImprovementCount.value = 0
+  levelUpGameCurrentCardIndex.value = -1
+  
+  // 重置 LevelUpGameModal
+  if (levelUpGameModalRef.value) {
+    levelUpGameModalRef.value.resetModal()
+  }
+  
+  // 直接開啟模態框
+  console.log('直接開啟 LevelUpGameModal，當前狀態:', showLevelUpGameModal.value)
+  console.log('主題卡數量:', character.value.themeCards.length)
+  showLevelUpGameModal.value = true
+  console.log('設定後狀態:', showLevelUpGameModal.value)
 }
 </script>
 
