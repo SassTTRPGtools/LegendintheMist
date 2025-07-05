@@ -361,6 +361,7 @@
                   :key="index"
                   :class="[
                     'text-sm leading-relaxed',
+                    paragraph.isSubtitle ? 'text-purple-300 font-bold text-base mt-4 mb-2 border-b border-purple-500/30 pb-1' :
                     paragraph.isSpecial ? 'text-amber-300 font-medium bg-amber-900/20 p-2 rounded border-l-2 border-amber-400' : 'text-gray-300'
                   ]"
                 >
@@ -1367,8 +1368,20 @@ const CHARACTER_TYPE_DESCRIPTIONS = {
     mechanics: '每當你採取直接維持或保護身份的行動時，你能選擇以自我主題的數量代替計算正面標籤的力度。'
   },
   '化身/傳導者': {
-    description: '你與自身秘源合而為一。 現在成了神話本身，你是傳說在世的燈塔。',
-    mechanics: '你停止所有儀式；改為決定一個「議程」， 如果你忽視它（哪怕任何一次），將導致你立刻替換所有主題（你的新神話主題無法包含曾失去的秘源）。作為化身，你能立刻恢復燒掉的能力標籤。'
+    description: '你選擇了與秘源合一的道路，但表現形式有所不同。',
+    mechanics: '根據你與秘源的關係，你將成為「化身」或「傳導者」之一。',
+    subtypes: {
+      化身: {
+        description: '你與自身秘源合而為一。現在成了神話本身，你是傳說在世的燈塔。',
+        mechanics: '你停止所有儀式；改為決定一個「議程」，如果你忽視它（哪怕任何一次），將導致你立刻替換所有主題（你的新神話主題無法包含曾失去的秘源）。作為化身，你能立刻恢復燒掉的能力標籤。',
+        condition: '同秘源'
+      },
+      傳導者: {
+        description: '你不再是個人；你給自己成為秘源容器的使命——神聖且難以言說，內心和諧又充滿衝突。',
+        mechanics: '你能夠更換神話主題。你本身的任何秘源，甚至鄰近的秘源，都可以成為你新神話的主題，並處於完整階段，而非初生階段。（完整階段：擁有3個能力與1個弱點標籤；初生階段，擁有1個能力與1個弱點標籤。）',
+        condition: '不同秘源'
+      }
+    }
   },
   奇點: {
     description: '你是新生命，拋棄了人性與其喋喋不休的故事， 踏入純粹資訊真理的存在，超越了意義幻象。',
@@ -1674,6 +1687,16 @@ const getCharacterSubtype = () => {
   
   if (!typeInfo) return '請選擇主題卡'
   
+  // 特殊處理化身/傳導者
+  if (type === '化身/傳導者' && typeInfo.subtypes) {
+    // 這裡可以根據角色的神話主題來決定是化身還是傳導者
+    // 目前先顯示兩種選項，讓玩家自己選擇
+    const avatar = typeInfo.subtypes.化身
+    const conduit = typeInfo.subtypes.傳導者
+    
+    return `${typeInfo.description}\n\n【化身（${avatar.condition}）】\n${avatar.description}\n${avatar.mechanics}\n\n【傳導者（${conduit.condition}）】\n${conduit.description}\n${conduit.mechanics}`
+  }
+  
   return typeInfo.description + (typeInfo.mechanics ? '\n' + typeInfo.mechanics : '')
 }
 
@@ -1690,14 +1713,17 @@ const getFormattedCharacterSubtype = () => {
                      text.includes('每當你') ||
                      text.includes('你停止所有儀式') ||
                      text.includes('你能夠更換神話主題') ||
-                     text.includes('你能介接所有資訊') ||
                      text.includes('心理效應與無形') ||
-                     text.includes('當你更換主題後，如果你仍處於交會點，') ||                     
-                     text.includes('力度為 4') 
+                     text.includes('當你更換主題後') ||
+                     text.includes('你能介接所有資訊') ||
+                     text.includes('力度為 4')
     
-    return {
-      text: text.trim(),
-      isSpecial: isSpecial
+    const isSubtitle = text.startsWith('【') && text.endsWith('】')
+    
+    return { 
+      text: text.trim(), 
+      isSpecial: isSpecial,
+      isSubtitle: isSubtitle
     }
   })
 }
