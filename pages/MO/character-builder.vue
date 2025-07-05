@@ -207,398 +207,31 @@
         </div>
 
         <!-- 第三欄：裝備卡 -->
-        <div class="bg-slate-800/80 backdrop-blur rounded-lg p-6 border border-purple-500/30">
-          <h3 class="text-xl font-bold text-purple-300 mb-4">裝備卡</h3>
-          <div class="space-y-4">
-            <!-- 裝備名稱 -->
-            <div>
-              <label class="block text-sm font-medium text-gray-300 mb-2">裝備名稱</label>
-              <input 
-                v-model="character.equipment.name" 
-                type="text" 
-                class="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-md text-white text-sm focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                placeholder="輸入裝備名稱"
-              />
-            </div>
-
-            <!-- 改進與力度 -->
-            <div class="grid grid-cols-2 gap-4">
-              <div>
-                <label class="block text-sm font-medium mb-2 text-green-400">改進</label>
-                <div class="flex space-x-1">
-                  <div 
-                    v-for="(improvement, impIndex) in character.equipment.improvements" 
-                    :key="impIndex"
-                    class="flex items-center"
-                  >
-                    <input 
-                      v-model="improvement.checked"
-                      @change="onEquipmentImprovementChange(impIndex)"
-                      type="checkbox"
-                      class="w-4 h-4 text-green-600 bg-slate-600 border-slate-500 rounded focus:ring-green-500"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div>
-                <label class="block text-sm font-medium mb-2 text-blue-400">力度記錄</label>
-                <div class="flex items-center space-x-2">
-                  <span class="text-blue-300 text-sm">當前力度：</span>
-                  <input 
-                    v-model.number="character.equipment.power"
-                    type="number"
-                    min="1"
-                    max="10"
-                    class="w-16 px-2 py-1 bg-blue-900/30 border border-blue-500/50 rounded text-blue-200 font-bold text-center focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  />
-                </div>
-                <div class="text-xs text-gray-400 mt-1">
-                  可手動調整力度數值（1-10）
-                </div>
-              </div>
-            </div>
-
-            <!-- 能力標籤 -->
-            <div>
-              <label class="block text-sm font-medium text-gray-300 mb-2">能力標籤</label>
-              <div class="space-y-2">
-                <div 
-                  v-for="(ability, abilityIndex) in character.equipment.abilities" 
-                  :key="abilityIndex"
-                  class="flex items-center space-x-1 p-2 bg-slate-700/30 rounded"
-                >
-                  <input 
-                    v-model="ability.text"
-                    type="text" 
-                    :placeholder="`裝備能力 ${abilityIndex + 1}`"
-                    class="flex-1 px-2 py-1 bg-slate-600 border border-slate-500 rounded text-white text-sm focus:ring-1 focus:ring-purple-500"
-                  />
-                  <div class="flex items-center space-x-1">
-                    <input 
-                      v-model="ability.isBurned"
-                      type="checkbox"
-                      class="w-3 h-3 text-red-600 bg-slate-600 border-slate-500 rounded focus:ring-red-500"
-                    />
-                    <label class="text-xs text-red-400">燒</label>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- 弱點標籤 -->
-            <div>
-              <label class="block text-sm font-medium mb-2 text-red-400">弱點標籤</label>
-              <div class="space-y-2">
-                <div 
-                  v-for="(weakness, weaknessIndex) in character.equipment.weaknesses" 
-                  :key="weaknessIndex"
-                  class="bg-red-900/20 border border-red-500/30 rounded p-2"
-                >
-                  <input 
-                    v-model="weakness.text"
-                    type="text" 
-                    :placeholder="`裝備弱點 ${weaknessIndex + 1}`"
-                    class="w-full px-2 py-1 bg-slate-700/50 border border-slate-600 rounded-md text-white text-sm focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                  />
-                </div>
-              </div>
-            </div>
-
-            <!-- 裝備專長 -->
-            <div>
-              <label class="block text-sm font-medium mb-2 text-amber-400">裝備專長</label>
-              <div class="space-y-2">
-                <div 
-                  v-for="(specialty, index) in character.equipment.specialties" 
-                  :key="index"
-                  class="bg-amber-900/20 border border-amber-500/30 rounded p-2"
-                >
-                  <div class="flex items-center justify-between mb-1">
-                    <select 
-                      v-model="specialty.type"
-                      class="text-xs bg-slate-700 border border-slate-600 rounded px-2 py-1 text-white"
-                    >
-                      <option value="">選擇專長類型</option>
-                      <option value="deepCustomization">{{ EQUIPMENT_SPECIALTIES.deepCustomization.name }}</option>
-                      <option value="fullEquipment">{{ EQUIPMENT_SPECIALTIES.fullEquipment.name }}</option>
-                      <option value="extraCopy">{{ EQUIPMENT_SPECIALTIES.extraCopy.name }}</option>
-                      <option value="externalCall">{{ EQUIPMENT_SPECIALTIES.externalCall.name }}</option>
-                      <option value="reuse">{{ EQUIPMENT_SPECIALTIES.reuse.name }}</option>
-                      <option value="replacementPolicy">{{ EQUIPMENT_SPECIALTIES.replacementPolicy.name }}</option>
-                      <option value="sharedWealth">{{ EQUIPMENT_SPECIALTIES.sharedWealth.name }}</option>
-                      <option value="synergisticRevenue">{{ EQUIPMENT_SPECIALTIES.synergisticRevenue.name }}</option>
-                    </select>
-                    <button 
-                      @click="removeEquipmentSpecialty(index)"
-                      class="text-red-400 hover:text-red-300 text-xs"
-                    >
-                      移除
-                    </button>
-                  </div>
-                  <div v-if="specialty.type" class="text-xs text-amber-200">
-                    {{ getEquipmentSpecialtyDescription(specialty.type) }}
-                  </div>
-                </div>
-                <button 
-                  @click="addEquipmentSpecialty"
-                  class="w-full px-3 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-lg text-sm transition-colors"
-                >
-                  新增裝備專長
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <EquipmentCard
+          :equipment="character.equipment"
+          :equipment-specialties="EQUIPMENT_SPECIALTIES"
+          @improvement-change="onEquipmentImprovementChange"
+          @add-specialty="addEquipmentSpecialty"
+          @remove-specialty="removeEquipmentSpecialty"
+        />
       </div>
 
       <!-- 四個主題卡區塊 - 4x1 排列 -->
       <div class="grid grid-cols-1 xl:grid-cols-4 lg:grid-cols-2 gap-6">
-        <div 
-          v-for="(card, index) in character.themeCards" 
+        <ThemeCard
+          v-for="(card, index) in character.themeCards"
           :key="index"
-          :class="[
-            'backdrop-blur rounded-lg p-4 border-2 transition-all duration-300',
-            getThemeColorClasses(card.selectedThemeType)
-          ]"
-        >
-          <!-- 主題卡標題與控制 -->
-          <div class="flex flex-col space-y-3 mb-4">
-            <h3 class="text-lg font-bold text-center">{{ card.title || `標題 ${index + 1}` }}</h3>
-            <div class="space-y-2">
-              <div>
-                <label class="block text-xs font-medium mb-1">主題類型：</label>
-                <select 
-                  v-model="card.selectedThemeType"
-                  @change="onThemeTypeChange(index)"
-                  class="w-full px-2 py-1 bg-slate-700 border border-slate-600 rounded text-white text-xs focus:ring-2 focus:ring-purple-500"
-                >
-                  <option value="">請選擇主題類型</option>
-                  <option value="mythos">神話</option>
-                  <option value="noise">喧囂</option>
-                  <option value="self">自我</option>
-                </select>
-              </div>
-              <div v-if="card.selectedThemeType">
-                <label class="block text-xs font-medium mb-1">主題：</label>
-                <select 
-                  v-model="card.selectedTheme"
-                  @change="onThemeChange(index)"
-                  class="w-full px-2 py-1 bg-slate-700 border border-slate-600 rounded text-white text-xs focus:ring-2 focus:ring-purple-500"
-                >
-                  <option value="">請選擇主題</option>
-                  <option 
-                    v-for="(theme, themeKey) in getAvailableThemes(card.selectedThemeType)" 
-                    :key="themeKey"
-                    :value="themeKey"
-                  >
-                    {{ theme.theme }}
-                  </option>
-                </select>
-              </div>
-            </div>
-            <button 
-              @click="toggleEdit(index)"
-              :class="[
-                'w-full px-3 py-2 rounded-lg font-medium transition-colors text-sm',
-                card.isEditing 
-                  ? 'bg-green-600 hover:bg-green-700 text-white' 
-                  : 'bg-blue-600 hover:bg-blue-700 text-white'
-              ]"
-            >
-              {{ card.isEditing ? '儲存' : '編輯' }}
-            </button>
-          </div>
-
-          <!-- 主題卡內容 -->
-          <div v-if="card.selectedTheme" class="space-y-4">
-            <!-- 改進與衰變勾選框 -->
-            <div class="grid grid-cols-2 gap-4">
-              <div>
-                <label class="block text-xs font-medium mb-2 text-green-400">改進</label>
-                <div class="flex space-x-1">
-                  <div 
-                    v-for="(improvement, impIndex) in card.improvements" 
-                    :key="impIndex"
-                    class="flex items-center"
-                  >
-                    <input 
-                      v-model="improvement.checked"
-                      @change="onImprovementChange(index, impIndex)"
-                      type="checkbox"
-                      class="w-3 h-3 text-green-600 bg-slate-600 border-slate-500 rounded focus:ring-green-500"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div>
-                <label class="block text-xs font-medium mb-2 text-red-400">衰變</label>
-                <div class="flex space-x-1">
-                  <div 
-                    v-for="(decay, decayIndex) in card.decays" 
-                    :key="decayIndex"
-                    class="flex items-center"
-                  >
-                    <input 
-                      v-model="decay.checked"
-                      @change="onDecayChange(index, decayIndex)"
-                      type="checkbox"
-                      class="w-3 h-3 text-red-600 bg-slate-600 border-slate-500 rounded focus:ring-red-500"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- 大標題 -->
-            <div>
-              <label class="block text-xs font-medium mb-1">主題標題</label>
-              <input 
-                v-if="card.isEditing"
-                v-model="card.title"
-                type="text" 
-                placeholder="輸入主題標題"
-                class="w-full px-2 py-1 bg-slate-700/50 border border-slate-600 rounded-md text-white text-xs focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-              />
-              <div v-else class="text-sm font-semibold break-words">
-                {{ card.title || '未設定標題' }}
-              </div>
-            </div>
-
-            <!-- 7個能力標籤 -->
-            <div>
-              <label class="block text-xs font-medium mb-2">能力標籤</label>
-              <div class="space-y-2">
-                <div 
-                  v-for="(ability, abilityIndex) in card.abilities" 
-                  :key="abilityIndex"
-                  class="flex items-center space-x-1 p-1 bg-slate-700/30 rounded text-xs"
-                >
-                  <input 
-                    v-if="card.isEditing"
-                    v-model="ability.text"
-                    type="text" 
-                    :placeholder="`能力 ${abilityIndex + 1}`"
-                    class="flex-1 px-1 py-1 bg-slate-600 border border-slate-500 rounded text-white text-xs focus:ring-1 focus:ring-purple-500"
-                  />
-                  <span 
-                    v-else 
-                    :class="[
-                      'flex-1 text-xs break-words',
-                      ability.isBurned ? 'line-through opacity-50' : ''
-                    ]"
-                  >
-                    {{ ability.text || `能力標籤 ${abilityIndex + 1}` }}
-                  </span>
-                  <div class="flex items-center shrink-0">
-                    <input 
-                      v-model="ability.isBurned"
-                      type="checkbox"
-                      class="w-3 h-3 text-red-600 bg-slate-600 border-slate-500 rounded focus:ring-red-500"
-                    />
-                    <label class="ml-1 text-xs text-red-400">燒</label>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- 2個弱點標籤 -->
-            <div>
-              <label class="block text-xs font-medium mb-2 text-red-400 flex items-center justify-between">
-                <span>弱點標籤</span>
-              </label>
-              <div class="space-y-2">
-                <div 
-                  v-for="(weakness, weaknessIndex) in card.weaknesses" 
-                  :key="weaknessIndex"
-                  class="flex items-center space-x-2"
-                >
-                  <div class="flex-1">
-                    <input 
-                      v-if="card.isEditing"
-                      v-model="weakness.text"
-                      type="text" 
-                      :placeholder="`弱點 ${weaknessIndex + 1}`"
-                      class="w-full px-2 py-1 bg-slate-700/50 border border-slate-600 rounded-md text-white text-xs focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                    />
-                    <div v-else class="text-xs p-2 bg-red-900/20 border border-red-500/30 rounded break-words min-h-8 flex items-center">
-                      {{ weakness.text || `弱點標籤 ${weaknessIndex + 1}` }}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- 主題專長 -->
-            <div>
-              <label class="block text-xs font-medium mb-2 text-amber-400">主題專長</label>
-              <div v-if="card.selectedSpecialty" class="text-xs p-2 bg-amber-900/20 border border-amber-500/30 rounded">
-                {{ getSpecialtyDescription(card.selectedSpecialty) }}
-              </div>
-              <div v-else-if="hasAvailableSpecialties(index)" class="text-xs text-gray-400 italic">
-                尚未選擇主題專長（改進時可選擇）
-              </div>
-              <div v-else class="text-xs text-gray-500 italic">
-                此主題暫無可用專長
-              </div>
-            </div>
-
-            <!-- 動機區塊 -->
-            <div>
-              <label class="block text-xs font-medium mb-2">動機</label>
-              <div class="space-y-2">
-                <!-- 自我主題：身份 -->
-                <div v-if="card.selectedThemeType === 'self'">
-                  <label class="block text-xs text-gray-400 mb-1">身份</label>
-                  <input 
-                    v-if="card.isEditing"
-                    v-model="card.motivation.identity"
-                    type="text" 
-                    placeholder="角色身份"
-                    class="w-full px-2 py-1 bg-slate-700/50 border border-slate-600 rounded-md text-white text-xs focus:ring-2 focus:ring-purple-500"
-                  />
-                  <div v-else class="text-xs p-1 bg-slate-700/30 rounded break-words">
-                    {{ card.motivation.identity || '未設定身份' }}
-                  </div>
-                </div>
-                
-                <!-- 喧囂主題：癢處 -->
-                <div v-if="card.selectedThemeType === 'noise'">
-                  <label class="block text-xs text-gray-400 mb-1">癢處</label>
-                  <input 
-                    v-if="card.isEditing"
-                    v-model="card.motivation.itch"
-                    type="text" 
-                    placeholder="角色癢處"
-                    class="w-full px-2 py-1 bg-slate-700/50 border border-slate-600 rounded-md text-white text-xs focus:ring-2 focus:ring-purple-500"
-                  />
-                  <div v-else class="text-xs p-1 bg-slate-700/30 rounded break-words">
-                    {{ card.motivation.itch || '未設定癢處' }}
-                  </div>
-                </div>
-                
-                <!-- 神話主題：儀式 -->
-                <div v-if="card.selectedThemeType === 'mythos'">
-                  <label class="block text-xs text-gray-400 mb-1">儀式</label>
-                  <input 
-                    v-if="card.isEditing"
-                    v-model="card.motivation.ritual"
-                    type="text" 
-                    placeholder="維持儀式"
-                    class="w-full px-2 py-1 bg-slate-700/50 border border-slate-600 rounded-md text-white text-xs focus:ring-2 focus:ring-purple-500"
-                  />
-                  <div v-else class="text-xs p-1 bg-slate-700/30 rounded break-words">
-                    {{ card.motivation.ritual || '未設定儀式' }}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- 未選擇主題時的提示 -->
-          <div v-else class="text-center py-4 text-gray-400">
-            <p class="text-sm">請先選擇主題類型和主題</p>
-          </div>
-        </div>
+          :theme-card="card"
+          :card-index="index"
+          :mythos-themes="mythosThemes"
+          :noise-themes="noiseThemes"
+          :self-themes="selfThemes"
+          @theme-type-change="onThemeTypeChange"
+          @theme-change="onThemeChange"
+          @improvement-change="onImprovementChange"
+          @decay-change="onDecayChange"
+          @toggle-edit="toggleEdit"
+        />
       </div>
 
       <!-- 改進彈窗 -->
@@ -1102,6 +735,8 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import CharacterTypeChart from '~/components/MO/CharacterTypeChart.vue'
+import ThemeCard from '~/components/MO/ThemeCard.vue'
+import EquipmentCard from '~/components/MO/EquipmentCard.vue'
 
 // ====================
 // 頁面配置
@@ -1372,38 +1007,6 @@ const needsEvolutionDescription = computed(() => {
 // 主要功能函數（僅保留主文件需要的）
 // ====================
 
-// 方法
-function getThemeColorClasses(themeType) {
-  switch (themeType) {
-    case 'mythos':
-      return 'bg-gradient-to-br from-purple-800/80 to-purple-900/80 border-purple-400/50'
-    case 'noise':
-      return 'bg-gradient-to-br from-cyan-800/80 to-cyan-900/80 border-cyan-400/50'
-    case 'self':
-      return 'bg-gradient-to-br from-pink-800/80 to-pink-900/80 border-pink-400/50'
-    default:
-      return 'bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-slate-400/50'
-  }
-}
-
-function getAvailableThemes(themeType) {
-  switch (themeType) {
-    case 'mythos':
-      return mythosThemes.value
-    case 'noise':
-      return noiseThemes.value
-    case 'self':
-      return selfThemes.value
-    default:
-      return {}
-  }
-}
-
-function getThemeData(themeType, themeKey) {
-  const themes = getAvailableThemes(themeType)
-  return themes[themeKey] || null
-}
-
 function onThemeTypeChange(cardIndex) {
   const card = character.value.themeCards[cardIndex]
   card.selectedTheme = ''
@@ -1426,6 +1029,24 @@ function onThemeChange(cardIndex) {
     // 不自動填入標題，讓使用者自己設定
     // card.title = themeData.title || ''
     // 可以在這裡預填入一些能力標籤範例
+  }
+}
+
+function getThemeData(themeType, themeKey) {
+  const themes = getAvailableThemes(themeType)
+  return themes[themeKey] || null
+}
+
+function getAvailableThemes(themeType) {
+  switch (themeType) {
+    case 'mythos':
+      return mythosThemes.value
+    case 'noise':
+      return noiseThemes.value
+    case 'self':
+      return selfThemes.value
+    default:
+      return {}
   }
 }
 
