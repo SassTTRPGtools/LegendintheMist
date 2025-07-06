@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>localStorage 功能測試</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #1a1a2e;
+            color: #eee;
+        }
+        .container {
+            background: #16213e;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        h1, h2 {
+            color: #a855f7;
+        }
+        button {
+            background: #a855f7;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #9333ea;
+        }
+        .status {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .success { background: #059669; }
+        .error { background: #dc2626; }
+        .info { background: #0284c7; }
+        .warning { background: #d97706; }
+        textarea {
+            width: 100%;
+            height: 200px;
+            background: #1e293b;
+            color: #eee;
+            border: 1px solid #475569;
+            border-radius: 5px;
+            padding: 10px;
+            font-family: monospace;
+        }
+        .data-info {
+            background: #1e293b;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border-left: 4px solid #a855f7;
+        }
+    </style>
+</head>
+<body>
+    <h1>角色建立器 localStorage 功能測試</h1>
+    
+    <div class="container">
+        <h2>存儲狀態檢查</h2>
+        <button onclick="checkStorageStatus()">檢查存儲狀態</button>
+        <button onclick="showStorageSize()">顯示存儲大小</button>
+        <div id="storageStatus"></div>
+    </div>
+
+    <div class="container">
+        <h2>測試數據操作</h2>
+        <button onclick="createTestData()">創建測試數據</button>
+        <button onclick="saveTestData()">保存測試數據</button>
+        <button onclick="loadTestData()">載入測試數據</button>
+        <button onclick="clearTestData()">清除測試數據</button>
+        <div id="testDataStatus"></div>
+    </div>
+
+    <div class="container">
+        <h2>存儲內容查看</h2>
+        <button onclick="viewStorageContent()">查看存儲內容</button>
+        <button onclick="exportStorageData()">匯出存儲數據</button>
+        <textarea id="storageContent" placeholder="存儲內容將顯示在這裡..."></textarea>
+    </div>
+
+    <div class="container">
+        <h2>瀏覽器兼容性測試</h2>
+        <button onclick="testBrowserSupport()">測試瀏覽器支援</button>
+        <button onclick="testStorageQuota()">測試存儲配額</button>
+        <div id="browserStatus"></div>
+    </div>
+
+    <script>
+        const STORAGE_KEY = 'mo-character-builder-data';
+        
+        // 顯示狀態信息
+        function showStatus(elementId, message, type = 'info') {
+            const element = document.getElementById(elementId);
+            element.innerHTML = `<div class="status ${type}">${message}</div>`;
+        }
+
+        // 檢查存儲狀態
+        function checkStorageStatus() {
+            try {
+                const hasData = localStorage.getItem(STORAGE_KEY) !== null;
+                const timestamp = hasData ? JSON.parse(localStorage.getItem(STORAGE_KEY)).timestamp : null;
+                
+                let message = hasData 
+                    ? `✅ 找到保存的角色資料<br>保存時間: ${new Date(timestamp).toLocaleString()}`
+                    : '❌ 沒有找到保存的角色資料';
+                
+                showStatus('storageStatus', message, hasData ? 'success' : 'warning');
+            } catch (error) {
+                showStatus('storageStatus', `❌ 檢查失敗: ${error.message}`, 'error');
+            }
+        }
+
+        // 顯示存儲大小
+        function showStorageSize() {
+            try {
+                const data = localStorage.getItem(STORAGE_KEY);
+                if (data) {
+                    const sizeInBytes = new Blob([data]).size;
+                    const sizeInKB = (sizeInBytes / 1024).toFixed(2);
+                    showStatus('storageStatus', `📊 存儲大小: ${sizeInKB} KB (${sizeInBytes} bytes)`, 'info');
+                } else {
+                    showStatus('storageStatus', '📊 沒有資料可以計算大小', 'warning');
+                }
+            } catch (error) {
+                showStatus('storageStatus', `❌ 計算大小失敗: ${error.message}`, 'error');
+            }
+        }
+
+        // 創建測試數據
+        function createTestData() {
+            const testData = {
+                version: '1.0',
+                timestamp: new Date().toISOString(),
+                character: {
+                    name: '測試角色',
+                    background: '測試背景',
+                    evolutionTrack: [true, false, false, false, false],
+                    evolutionHistory: [],
+                    veteranSpecialties: [],
+                    levelUpGameImprovements: [],
+                    equipment: {
+                        name: '測試裝備',
+                        improvements: Array(3).fill().map(() => ({ checked: false })),
+                        power: 1,
+                        abilities: Array(7).fill().map(() => ({ text: '', isBurned: false })),
+                        weaknesses: Array(2).fill().map(() => ({ text: '' })),
+                        specialties: [],
+                        isEditing: false
+                    },
+                    teamThemeCard: {
+                        title: '測試團隊主題',
+                        abilities: Array(7).fill().map(() => ({ text: '', isBurned: false })),
+                        weaknesses: Array(2).fill().map(() => ({ text: '' })),
+                        customSpecialties: [],
+                        improvements: Array(3).fill().map(() => ({ checked: false })),
+                        decays: Array(3).fill().map(() => ({ checked: false })),
+                        isEditing: false
+                    },
+                    themeCards: Array(4).fill().map((_, index) => ({
+                        selectedThemeType: 'mythos',
+                        selectedTheme: 'test',
+                        title: `測試主題卡 ${index + 1}`,
+                        abilities: Array(7).fill().map(() => ({ text: '', isBurned: false })),
+                        weaknesses: Array(2).fill().map(() => ({ text: '' })),
+                        improvements: Array(3).fill().map(() => ({ checked: false })),
+                        decays: Array(3).fill().map(() => ({ checked: false })),
+                        selectedSpecialty: '',
+                        selectedSpecialties: [],
+                        motivation: {
+                            identity: '',
+                            ritual: '',
+                            itch: ''
+                        },
+                        isEditing: false
+                    }))
+                },
+                showHowToPlay: false
+            };
+            
+            window.testData = testData;
+            showStatus('testDataStatus', '✅ 測試數據已創建', 'success');
+        }
+
+        // 保存測試數據
+        function saveTestData() {
+            try {
+                if (!window.testData) {
+                    showStatus('testDataStatus', '❌ 請先創建測試數據', 'warning');
+                    return;
+                }
+                
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(window.testData));
+                showStatus('testDataStatus', '✅ 測試數據已保存到 localStorage', 'success');
+            } catch (error) {
+                showStatus('testDataStatus', `❌ 保存失敗: ${error.message}`, 'error');
+            }
+        }
+
+        // 載入測試數據
+        function loadTestData() {
+            try {
+                const data = localStorage.getItem(STORAGE_KEY);
+                if (data) {
+                    const parsed = JSON.parse(data);
+                    showStatus('testDataStatus', `✅ 數據載入成功<br>角色名稱: ${parsed.character?.name || '未知'}<br>保存時間: ${new Date(parsed.timestamp).toLocaleString()}`, 'success');
+                } else {
+                    showStatus('testDataStatus', '❌ 沒有找到保存的數據', 'warning');
+                }
+            } catch (error) {
+                showStatus('testDataStatus', `❌ 載入失敗: ${error.message}`, 'error');
+            }
+        }
+
+        // 清除測試數據
+        function clearTestData() {
+            try {
+                localStorage.removeItem(STORAGE_KEY);
+                showStatus('testDataStatus', '✅ 測試數據已清除', 'success');
+            } catch (error) {
+                showStatus('testDataStatus', `❌ 清除失敗: ${error.message}`, 'error');
+            }
+        }
+
+        // 查看存儲內容
+        function viewStorageContent() {
+            try {
+                const data = localStorage.getItem(STORAGE_KEY);
+                const contentTextarea = document.getElementById('storageContent');
+                
+                if (data) {
+                    // 美化 JSON 格式
+                    const parsed = JSON.parse(data);
+                    contentTextarea.value = JSON.stringify(parsed, null, 2);
+                } else {
+                    contentTextarea.value = '沒有找到保存的數據';
+                }
+            } catch (error) {
+                document.getElementById('storageContent').value = `錯誤: ${error.message}`;
+            }
+        }
+
+        // 匯出存儲數據
+        function exportStorageData() {
+            try {
+                const data = localStorage.getItem(STORAGE_KEY);
+                if (data) {
+                    const blob = new Blob([data], { type: 'application/json' });
+                    const url = URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.download = `character-builder-storage-${new Date().toISOString().split('T')[0]}.json`;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    URL.revokeObjectURL(url);
+                    
+                    showStatus('storageStatus', '✅ 存儲數據已匯出', 'success');
+                } else {
+                    showStatus('storageStatus', '❌ 沒有數據可以匯出', 'warning');
+                }
+            } catch (error) {
+                showStatus('storageStatus', `❌ 匯出失敗: ${error.message}`, 'error');
+            }
+        }
+
+        // 測試瀏覽器支援
+        function testBrowserSupport() {
+            let message = '';
+            
+            // localStorage 支援檢測
+            if (typeof(Storage) !== "undefined") {
+                message += '✅ 瀏覽器支援 localStorage<br>';
+            } else {
+                message += '❌ 瀏覽器不支援 localStorage<br>';
+            }
+            
+            // 可用性測試
+            try {
+                localStorage.setItem('test', 'test');
+                localStorage.removeItem('test');
+                message += '✅ localStorage 可正常讀寫<br>';
+            } catch (error) {
+                message += `❌ localStorage 讀寫失敗: ${error.message}<br>`;
+            }
+            
+            // JSON 支援檢測
+            try {
+                JSON.parse('{"test": true}');
+                JSON.stringify({"test": true});
+                message += '✅ JSON 序列化支援正常<br>';
+            } catch (error) {
+                message += `❌ JSON 序列化失敗: ${error.message}<br>`;
+            }
+            
+            showStatus('browserStatus', message, 'info');
+        }
+
+        // 測試存儲配額
+        function testStorageQuota() {
+            try {
+                // 簡單的配額測試
+                let testData = 'x';
+                let size = 0;
+                
+                // 測試大概的存儲限制（不會真的填滿）
+                try {
+                    for (let i = 0; i < 1000; i++) {
+                        testData += 'x'.repeat(1000); // 每次增加 1KB
+                        localStorage.setItem('quota-test', testData);
+                        size = testData.length;
+                    }
+                } catch (error) {
+                    // 遇到配額限制或其他錯誤
+                    showStatus('browserStatus', `📊 大概存儲限制測試完成<br>測試到 ${(size / 1024).toFixed(0)} KB 左右遇到限制<br>錯誤: ${error.message}`, 'warning');
+                } finally {
+                    // 清理測試數據
+                    localStorage.removeItem('quota-test');
+                }
+                
+                if (size === 0) {
+                    showStatus('browserStatus', '❌ 無法進行配額測試', 'error');
+                }
+            } catch (error) {
+                showStatus('browserStatus', `❌ 配額測試失敗: ${error.message}`, 'error');
+            }
+        }
+
+        // 頁面載入時自動檢查
+        window.addEventListener('load', function() {
+            checkStorageStatus();
+            testBrowserSupport();
+        });
+    </script>
+</body>
+</html>

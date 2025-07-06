@@ -169,15 +169,34 @@
         v-if="showNotification"
         :class="[
           'fixed bottom-20 right-4 p-4 rounded-lg shadow-lg transition-all duration-300 z-50',
-          notificationType === 'success' ? 'bg-green-600 text-white' : 'bg-red-600 text-white'
+          {
+            'bg-green-600 text-white': notificationType === 'success',
+            'bg-red-600 text-white': notificationType === 'error',
+            'bg-yellow-600 text-white': notificationType === 'warning',
+            'bg-blue-600 text-white': notificationType === 'info'
+          }
         ]"
       >
         <div class="flex items-center space-x-2">
+          <!-- Success 圖示 -->
           <svg v-if="notificationType === 'success'" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
           </svg>
-          <svg v-else class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <!-- Error 圖示 -->
+          <svg v-else-if="notificationType === 'error'" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+          <!-- Warning 圖示 -->
+          <svg v-else-if="notificationType === 'warning'" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16c-.77.833.192 2.5 1.732 2.5z" />
+          </svg>
+          <!-- Info 圖示 -->
+          <svg v-else-if="notificationType === 'info'" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <!-- 預設圖示 -->
+          <svg v-else class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
           <span>{{ notificationMessage }}</span>
         </div>
@@ -222,6 +241,42 @@
           <span>清除資料</span>
         </button>
         
+        <!-- 本地存儲管理按鈕 -->
+        <div class="flex space-x-2">
+          <button 
+            @click="manualSaveToStorage"
+            class="px-4 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors flex items-center space-x-2"
+            title="手動保存當前角色資料到瀏覽器"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3-3m0 0l-3 3m3-3v12"/>
+            </svg>
+            <span>保存</span>
+          </button>
+          
+          <button 
+            @click="manualLoadFromStorage"
+            class="px-4 py-3 bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg transition-colors flex items-center space-x-2"
+            title="從瀏覽器恢復上次保存的角色資料"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
+            </svg>
+            <span>恢復</span>
+          </button>
+          
+          <button 
+            @click="clearStorageData"
+            class="px-4 py-3 bg-orange-600 hover:bg-orange-700 text-white rounded-lg transition-colors flex items-center space-x-2"
+            title="清除瀏覽器中保存的角色資料"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+            </svg>
+            <span>清除保存</span>
+          </button>
+        </div>
+        
         <!-- 隱藏的文件輸入 -->
         <input
           ref="fileInput"
@@ -236,7 +291,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, nextTick } from 'vue'
+import { ref, computed, onMounted, nextTick, watch, toRaw } from 'vue'
 import CharacterTypeChart from '~/components/MO/CharacterTypeChart.vue'
 import ThemeCard from '~/components/MO/ThemeCard.vue'
 import TeamThemeCard from '~/components/MO/TeamThemeCard.vue'
@@ -576,9 +631,103 @@ const getBasePath = () => {
   return ''
 }
 
+// =====================================
+// 瀏覽器本地存儲功能
+// =====================================
+
+const STORAGE_KEY = 'mo-character-builder-data'
+const STORAGE_VERSION = '1.0'
+
+// 保存角色資料到 localStorage
+const saveToLocalStorage = () => {
+  try {
+    const dataToSave = {
+      version: STORAGE_VERSION,
+      timestamp: new Date().toISOString(),
+      character: toRaw(character.value),
+      // 保存其他重要狀態
+      showHowToPlay: showHowToPlay.value,
+      // 不保存模態框狀態，避免重新載入時顯示模態框
+    }
+    
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(dataToSave))
+    console.log('角色資料已保存到本地存儲')
+  } catch (error) {
+    console.error('保存角色資料失敗:', error)
+  }
+}
+
+// 從 localStorage 恢復角色資料
+const loadFromLocalStorage = () => {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY)
+    if (!saved) {
+      console.log('沒有找到保存的角色資料')
+      return false
+    }
+    
+    const data = JSON.parse(saved)
+    
+    // 檢查版本兼容性
+    if (data.version !== STORAGE_VERSION) {
+      console.warn('保存的資料版本不匹配，使用預設資料')
+      localStorage.removeItem(STORAGE_KEY)
+      return false
+    }
+    
+    // 恢復角色資料
+    if (data.character) {
+      character.value = data.character
+      console.log('角色資料已從本地存儲恢復:', new Date(data.timestamp))
+    }
+    
+    // 恢復其他狀態
+    if (typeof data.showHowToPlay === 'boolean') {
+      showHowToPlay.value = data.showHowToPlay
+    }
+    
+    return true
+  } catch (error) {
+    console.error('恢復角色資料失敗:', error)
+    localStorage.removeItem(STORAGE_KEY)
+    return false
+  }
+}
+
+// 清除本地存儲
+const clearLocalStorage = () => {
+  try {
+    localStorage.removeItem(STORAGE_KEY)
+    console.log('本地存儲已清除')
+  } catch (error) {
+    console.error('清除本地存儲失敗:', error)
+  }
+}
+
+// 監聽角色資料變化，自動保存
+watch(character, () => {
+  saveToLocalStorage()
+}, { deep: true })
+
+// 也監聽其他重要狀態
+watch(showHowToPlay, () => {
+  saveToLocalStorage()
+})
+
 // 載入主題資料
 onMounted(async () => {
   try {
+    console.log('=== 角色建立器初始化開始 ===')
+    
+    // 1. 先嘗試從本地存儲恢復資料
+    const hasRestoredData = loadFromLocalStorage()
+    if (hasRestoredData) {
+      console.log('✅ 已從本地存儲恢復角色資料')
+    } else {
+      console.log('ℹ️ 使用預設角色資料')
+    }
+    
+    // 2. 載入主題資料
     console.log('開始載入主題資料...')
     const basePath = getBasePath()
     const [mythosRes, noiseRes, selfRes] = await Promise.all([
@@ -591,13 +740,21 @@ onMounted(async () => {
     noiseThemes.value = (await noiseRes.json()).themes
     selfThemes.value = (await selfRes.json()).themes
     
-    console.log('主題資料載入完成:', {
+    console.log('✅ 主題資料載入完成:', {
       mythos: Object.keys(mythosThemes.value).length,
       noise: Object.keys(noiseThemes.value).length,
       self: Object.keys(selfThemes.value).length
     })
+    
+    // 3. 如果沒有恢復的資料，進行初始保存
+    if (!hasRestoredData) {
+      saveToLocalStorage()
+      console.log('✅ 初始角色資料已保存')
+    }
+    
+    console.log('=== 角色建立器初始化完成 ===')
   } catch (error) {
-    console.error('載入主題資料失敗:', error)
+    console.error('❌ 載入主題資料失敗:', error)
   }
 })
 
@@ -2034,6 +2191,63 @@ const clearCharacterData = () => {
     }
     
     showNotificationMessage('success', '角色資料已清除')
+    // 清除資料後也自動保存（保存空白狀態）
+    saveToLocalStorage()
+  }
+}
+
+// =====================================
+// 手動本地存儲管理功能
+// =====================================
+
+// 手動保存到本地存儲
+const manualSaveToStorage = () => {
+  try {
+    saveToLocalStorage()
+    showNotificationMessage('success', '角色資料已手動保存到瀏覽器')
+  } catch (error) {
+    console.error('手動保存失敗:', error)
+    showNotificationMessage('error', '保存失敗，請稍後再試')
+  }
+}
+
+// 手動從本地存儲恢復
+const manualLoadFromStorage = () => {
+  try {
+    if (!localStorage.getItem(STORAGE_KEY)) {
+      showNotificationMessage('warning', '沒有找到保存的角色資料')
+      return
+    }
+    
+    if (confirm('確定要恢復上次保存的角色資料嗎？當前資料將被覆蓋。')) {
+      const success = loadFromLocalStorage()
+      if (success) {
+        showNotificationMessage('success', '角色資料已從瀏覽器恢復')
+      } else {
+        showNotificationMessage('error', '恢復失敗，保存的資料可能已損壞')
+      }
+    }
+  } catch (error) {
+    console.error('手動恢復失敗:', error)
+    showNotificationMessage('error', '恢復失敗，請稍後再試')
+  }
+}
+
+// 清除本地存儲的資料
+const clearStorageData = () => {
+  try {
+    if (!localStorage.getItem(STORAGE_KEY)) {
+      showNotificationMessage('info', '沒有找到需要清除的保存資料')
+      return
+    }
+    
+    if (confirm('確定要清除瀏覽器中保存的角色資料嗎？此操作無法撤銷。')) {
+      clearLocalStorage()
+      showNotificationMessage('success', '瀏覽器保存資料已清除')
+    }
+  } catch (error) {
+    console.error('清除本地存儲失敗:', error)
+    showNotificationMessage('error', '清除失敗，請稍後再試')
   }
 }
 
