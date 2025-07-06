@@ -226,63 +226,39 @@
 
       <!-- 主題專長 -->
       <div>
-        <div class="flex items-center justify-between mb-3">
-          <button
-            @click="toggleSpecialtyExpanded"
-            class="flex items-center space-x-2 text-xs font-medium text-amber-400 hover:text-amber-300 transition-colors"
-          >
-            <span>主題專長</span>
-            <span class="text-xs text-gray-400 ml-1">
-              ({{ (themeCard.selectedSpecialties && themeCard.selectedSpecialties.length) || 0 }})
-            </span>
-            <svg 
-              :class="[
-                'w-3 h-3 transition-transform duration-200',
-                isSpecialtyExpanded ? 'rotate-90' : 'rotate-0'
-              ]" 
-              fill="none" 
-              stroke="currentColor" 
-              viewBox="0 0 24 24"
-            >
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-            </svg>
-          </button>
+        <div class="mb-3">
+          <span class="text-xs font-medium text-amber-400">主題專長</span>
+          <span class="text-xs text-gray-400 ml-1">
+            ({{ getSelectedSpecialtiesCount() }})
+          </span>
         </div>
         
-        <!-- 折疊時的簡要預覽 -->
-        <div v-if="!isSpecialtyExpanded && themeCard.selectedSpecialties && themeCard.selectedSpecialties.length > 0" 
+        <div v-if="getSelectedSpecialtiesCount() > 0" 
              class="mt-2 p-2 bg-amber-900/20 rounded-lg border border-amber-500/30">
           <div class="flex flex-wrap gap-1">
-            <span 
-              v-for="(specialty, index) in themeCard.selectedSpecialties" 
+            <SpecialtyTooltip
+              v-for="(specialty, index) in getSelectedSpecialtiesList()" 
               :key="index"
-              class="inline-flex items-center px-2 py-1 bg-amber-600/20 text-amber-300 rounded text-xs"
+              :name="getSpecialtyName(specialty)"
+              :description="getSpecialtyFullDescription(specialty)"
             >
-              <span class="w-3 h-3 bg-amber-600 text-white rounded-full flex items-center justify-center text-xs font-bold mr-1">
-                {{ index + 1 }}
+              <span 
+                class="inline-flex items-center px-2 py-1 bg-amber-600/20 text-amber-300 rounded text-xs cursor-help border border-amber-500/30 hover:bg-amber-500/30 hover:border-amber-400/50 hover:text-amber-200 hover:shadow-lg hover:shadow-amber-400/20 transition-all duration-200 relative overflow-hidden group"
+              >
+                <!-- 科技感背景效果 -->
+                <div class="absolute inset-0 bg-gradient-to-r from-transparent via-amber-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="relative z-10">{{ getSpecialtyName(specialty) }}</div>
               </span>
-              {{ getSpecialtyName(specialty) }}
-            </span>
+            </SpecialtyTooltip>
           </div>
         </div>
         
-        <div v-if="isSpecialtyExpanded">
-          <div v-if="themeCard.selectedSpecialties && themeCard.selectedSpecialties.length > 0" class="space-y-2">
-            <div 
-              v-for="(specialty, index) in themeCard.selectedSpecialties" 
-              :key="index"
-              class="text-xs p-2 bg-amber-900/20 border border-amber-500/30 rounded"
-            >
-              <div class="font-medium text-amber-300 mb-1">{{ getSpecialtyName(specialty) }}</div>
-              <div class="text-amber-200">{{ getSpecialtyFullDescription(specialty) }}</div>
-            </div>
-          </div>
-          <div v-else-if="hasAvailableSpecialties" class="text-xs text-gray-400 italic">
-            尚未選擇主題專長（改進時可選擇）
-          </div>
-          <div v-else class="text-xs text-gray-500 italic">
-            此主題暫無可用專長
-          </div>
+        <div v-else-if="hasAvailableSpecialties" class="mt-2 text-xs text-gray-400 italic p-2 bg-slate-700/20 rounded border border-slate-600/30">
+          尚未選擇主題專長（改進時可選擇）
+        </div>
+        
+        <div v-else class="mt-2 text-xs text-gray-500 italic p-2 bg-slate-700/20 rounded border border-slate-600/30">
+          此主題暫無可用專長
         </div>
       </div>
 
@@ -346,10 +322,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-
-// 折疊狀態管理
-const isSpecialtyExpanded = ref(false)
+import { computed, onMounted } from 'vue'
+import SpecialtyTooltip from './SpecialtyTooltip.vue'
 
 // 定義接口
 interface ThemeCard {
@@ -482,16 +456,55 @@ const getAvailableSpecialtiesForTheme = () => {
 
 // 獲取專長名稱
 const getSpecialtyName = (specialtyKey: string) => {
+  if (!specialtyKey) return '未知專長'
   const allSpecialties = getAvailableSpecialtiesForTheme()
   const specialty = allSpecialties[specialtyKey]
-  return specialty ? specialty.name : '未知專長'
+  return specialty?.name || '未知專長'
 }
 
 // 獲取專長完整描述
 const getSpecialtyFullDescription = (specialtyKey: string) => {
+  if (!specialtyKey) return '專長描述不存在'
   const allSpecialties = getAvailableSpecialtiesForTheme()
   const specialty = allSpecialties[specialtyKey]
-  return specialty ? specialty.description : '專長描述不存在'
+  return specialty?.description || '專長描述不存在'
+}
+
+// 獲取已選擇專長數量
+const getSelectedSpecialtiesCount = () => {
+  const specialties = getSelectedSpecialtiesList()
+  console.log('ThemeCard: getSelectedSpecialtiesCount called, result:', specialties.length, 'specialties:', specialties)
+  return specialties.length
+}
+
+// 獲取已選擇專長列表（使用向後兼容的方式）
+const getSelectedSpecialtiesList = () => {
+  console.log('=== ThemeCard getSelectedSpecialtiesList 被調用 ===')
+  console.log('ThemeCard: getSelectedSpecialtiesList called with themeCard:', props.themeCard)
+  
+  if (!props.themeCard) {
+    console.log('❌ ThemeCard: themeCard is null')
+    return []
+  }
+  
+  // 優先使用新的 selectedSpecialties 陣列
+  if (props.themeCard.selectedSpecialties && Array.isArray(props.themeCard.selectedSpecialties)) {
+    const filtered = props.themeCard.selectedSpecialties.filter(specialty => specialty && specialty.trim())
+    console.log('✅ ThemeCard: using selectedSpecialties array:', {
+      raw: props.themeCard.selectedSpecialties,
+      filtered: filtered
+    })
+    return filtered
+  }
+  
+  // 向後兼容：如果有舊的 selectedSpecialty
+  if (props.themeCard.selectedSpecialty && props.themeCard.selectedSpecialty.trim()) {
+    console.log('✅ ThemeCard: using legacy selectedSpecialty:', props.themeCard.selectedSpecialty)
+    return [props.themeCard.selectedSpecialty]
+  }
+  
+  console.log('❌ ThemeCard: no specialties found')
+  return []
 }
 
 // 方法
@@ -550,11 +563,6 @@ function toggleDecay(index: number) {
   }
 }
 
-// 切換專長展開狀態
-function toggleSpecialtyExpanded() {
-  isSpecialtyExpanded.value = !isSpecialtyExpanded.value
-}
-
 function toggleEdit() {
   emit('toggle-edit', props.cardIndex)
 }
@@ -588,4 +596,21 @@ function getThemeTypeName() {
   const selectedTheme = availableThemes.value[props.themeCard.selectedTheme]
   return selectedTheme?.theme || '主題'
 }
+
+// 組件掛載時的調試輸出
+onMounted(() => {
+  console.log('=== ThemeCard 組件已掛載 ===')
+  console.log('ThemeCard mounted with props:', {
+    themeCard: props.themeCard,
+    cardIndex: props.cardIndex,
+    hasSelectedSpecialties: props.themeCard?.selectedSpecialties,
+    hasSelectedSpecialty: props.themeCard?.selectedSpecialty,
+    selectedThemeType: props.themeCard?.selectedThemeType,
+    selectedTheme: props.themeCard?.selectedTheme
+  })
+  
+  // 測試專長列表
+  const specialties = getSelectedSpecialtiesList()
+  console.log('ThemeCard 當前專長列表:', specialties)
+})
 </script>

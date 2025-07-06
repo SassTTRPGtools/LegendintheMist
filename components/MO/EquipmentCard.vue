@@ -162,132 +162,31 @@
 
       <!-- 裝備專長 -->
       <div>
-        <div class="flex items-center justify-between mb-3">
-          <button
-            @click="toggleSpecialtyExpanded"
-            class="flex items-center space-x-2 text-sm font-medium text-amber-400 hover:text-amber-300 transition-colors"
-          >
-            <span>裝備專長</span>
-            <span class="text-xs text-gray-400 ml-1">
-              ({{ equipment.specialties.length }})
-            </span>
-            <svg 
-              :class="[
-                'w-4 h-4 transition-transform duration-200',
-                isSpecialtyExpanded ? 'rotate-90' : 'rotate-0'
-              ]" 
-              fill="none" 
-              stroke="currentColor" 
-              viewBox="0 0 24 24"
-            >
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-            </svg>
-          </button>
+        <div class="mb-3">
+          <span class="text-sm font-medium text-amber-400">裝備專長</span>
+          <span class="text-xs text-gray-400 ml-1">
+            ({{ getValidEquipmentSpecialtiesCount() }})
+          </span>
         </div>
         
-        <!-- 折疊時的簡要預覽 -->
-        <div v-if="!isSpecialtyExpanded && equipment.specialties.length > 0" 
+        <div v-if="getValidEquipmentSpecialtiesCount() > 0" 
              class="mt-2 p-3 bg-amber-900/20 rounded-lg border border-amber-500/30">
           <div class="flex flex-wrap gap-2">
-            <span 
-              v-for="(specialty, index) in equipment.specialties" 
+            <SpecialtyTooltip
+              v-for="(specialty, index) in getValidEquipmentSpecialties()" 
               :key="index"
-              class="inline-flex items-center px-2 py-1 bg-amber-600/20 text-amber-300 rounded text-xs"
+              :name="getEquipmentSpecialtyName(specialty)"
+              :description="getEquipmentSpecialtyDescription(specialty)"
             >
-              <span class="w-4 h-4 bg-amber-600 text-white rounded-full flex items-center justify-center text-xs font-bold mr-1">
-                {{ index + 1 }}
+              <span 
+                class="inline-flex items-center px-2 py-1 bg-amber-600/20 text-amber-300 rounded text-xs cursor-help border border-amber-500/30 hover:bg-amber-500/30 hover:border-amber-400/50 hover:text-amber-200 hover:shadow-lg hover:shadow-amber-400/20 transition-all duration-200 relative overflow-hidden group"
+              >
+                <!-- 科技感背景效果 -->
+                <div class="absolute inset-0 bg-gradient-to-r from-transparent via-amber-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="relative z-10">{{ getEquipmentSpecialtyName(specialty) }}</div>
               </span>
-              {{ specialty.type ? equipmentSpecialties[specialty.type]?.name : `專長 ${index + 1}` }}
-            </span>
+            </SpecialtyTooltip>
           </div>
-        </div>
-        
-        <div v-if="isSpecialtyExpanded" class="space-y-2">
-          <div 
-            v-for="(specialty, index) in equipment.specialties" 
-            :key="index"
-            class="bg-amber-900/20 border border-amber-500/30 rounded p-2"
-          >
-            <div class="flex items-center justify-between mb-1">
-              <select 
-                v-model="specialty.type"
-                class="text-xs bg-slate-700 border border-slate-600 rounded px-2 py-1 text-white"
-              >
-                <option value="">選擇專長類型</option>
-                <option 
-                  value="deepCustomization" 
-                  :disabled="isSpecialtyAlreadySelected('deepCustomization', index)"
-                  :class="isSpecialtyAlreadySelected('deepCustomization', index) ? 'text-gray-500' : ''"
-                >
-                  {{ equipmentSpecialties.deepCustomization.name }}{{ isSpecialtyAlreadySelected('deepCustomization', index) ? ' (已選擇)' : '' }}
-                </option>
-                <option 
-                  value="fullEquipment" 
-                  :disabled="isSpecialtyAlreadySelected('fullEquipment', index)"
-                  :class="isSpecialtyAlreadySelected('fullEquipment', index) ? 'text-gray-500' : ''"
-                >
-                  {{ equipmentSpecialties.fullEquipment.name }}{{ isSpecialtyAlreadySelected('fullEquipment', index) ? ' (已選擇)' : '' }}
-                </option>
-                <option 
-                  value="extraCopy" 
-                  :disabled="isSpecialtyAlreadySelected('extraCopy', index)"
-                  :class="isSpecialtyAlreadySelected('extraCopy', index) ? 'text-gray-500' : ''"
-                >
-                  {{ equipmentSpecialties.extraCopy.name }}{{ isSpecialtyAlreadySelected('extraCopy', index) ? ' (已選擇)' : '' }}
-                </option>
-                <option 
-                  value="externalCall" 
-                  :disabled="isSpecialtyAlreadySelected('externalCall', index)"
-                  :class="isSpecialtyAlreadySelected('externalCall', index) ? 'text-gray-500' : ''"
-                >
-                  {{ equipmentSpecialties.externalCall.name }}{{ isSpecialtyAlreadySelected('externalCall', index) ? ' (已選擇)' : '' }}
-                </option>
-                <option 
-                  value="reuse" 
-                  :disabled="isSpecialtyAlreadySelected('reuse', index)"
-                  :class="isSpecialtyAlreadySelected('reuse', index) ? 'text-gray-500' : ''"
-                >
-                  {{ equipmentSpecialties.reuse.name }}{{ isSpecialtyAlreadySelected('reuse', index) ? ' (已選擇)' : '' }}
-                </option>
-                <option 
-                  value="replacementPolicy" 
-                  :disabled="isSpecialtyAlreadySelected('replacementPolicy', index)"
-                  :class="isSpecialtyAlreadySelected('replacementPolicy', index) ? 'text-gray-500' : ''"
-                >
-                  {{ equipmentSpecialties.replacementPolicy.name }}{{ isSpecialtyAlreadySelected('replacementPolicy', index) ? ' (已選擇)' : '' }}
-                </option>
-                <option 
-                  value="sharedWealth" 
-                  :disabled="isSpecialtyAlreadySelected('sharedWealth', index)"
-                  :class="isSpecialtyAlreadySelected('sharedWealth', index) ? 'text-gray-500' : ''"
-                >
-                  {{ equipmentSpecialties.sharedWealth.name }}{{ isSpecialtyAlreadySelected('sharedWealth', index) ? ' (已選擇)' : '' }}
-                </option>
-                <option 
-                  value="synergisticRevenue" 
-                  :disabled="isSpecialtyAlreadySelected('synergisticRevenue', index)"
-                  :class="isSpecialtyAlreadySelected('synergisticRevenue', index) ? 'text-gray-500' : ''"
-                >
-                  {{ equipmentSpecialties.synergisticRevenue.name }}{{ isSpecialtyAlreadySelected('synergisticRevenue', index) ? ' (已選擇)' : '' }}
-                </option>
-              </select>
-              <button 
-                @click="removeSpecialty(index)"
-                class="text-red-400 hover:text-red-300 text-xs"
-              >
-                移除
-              </button>
-            </div>
-            <div v-if="specialty.type" class="text-xs text-amber-200">
-              {{ getSpecialtyDescription(specialty.type) }}
-            </div>
-          </div>
-          <button 
-            @click="addSpecialty"
-            class="w-full px-3 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-lg text-sm transition-colors"
-          >
-            新增裝備專長
-          </button>
         </div>
       </div>
     </div>
@@ -295,10 +194,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-
-// 折疊狀態管理
-const isSpecialtyExpanded = ref(false)
+import { onMounted } from 'vue'
+import SpecialtyTooltip from './SpecialtyTooltip.vue'
 
 // 定義接口
 interface Equipment {
@@ -375,14 +272,53 @@ const emit = defineEmits<{
   'remove-specialty': [index: number]
 }>()
 
+// 獲取有效裝備專長數量
+const getValidEquipmentSpecialtiesCount = () => {
+  console.log('EquipmentCard: getValidEquipmentSpecialtiesCount called with equipment:', props.equipment)
+  
+  if (!props.equipment?.specialties) {
+    console.log('EquipmentCard: equipment or specialties is null')
+    return 0
+  }
+  
+  const validSpecialties = props.equipment.specialties.filter(specialty => 
+    specialty && specialty.type && specialty.type.trim()
+  )
+  
+  console.log('EquipmentCard: specialties analysis:', {
+    rawSpecialties: props.equipment.specialties,
+    validSpecialties: validSpecialties,
+    count: validSpecialties.length
+  })
+  
+  return validSpecialties.length
+}
+
+// 獲取有效裝備專長列表
+const getValidEquipmentSpecialties = () => {
+  if (!props.equipment?.specialties) return []
+  return props.equipment.specialties.filter(specialty => 
+    specialty && specialty.type && specialty.type.trim()
+  )
+}
+
+// 獲取裝備專長名稱
+const getEquipmentSpecialtyName = (specialty: any) => {
+  if (!specialty?.type) return '未知專長'
+  const specialtyData = props.equipmentSpecialties[specialty.type]
+  return specialtyData?.name || specialty.type || '未知專長'
+}
+
+// 獲取裝備專長描述
+const getEquipmentSpecialtyDescription = (specialty: any) => {
+  if (!specialty?.type) return '專長描述不存在'
+  const specialtyData = props.equipmentSpecialties[specialty.type]
+  return specialtyData?.description || specialty.description || '專長描述不存在'
+}
+
 // 方法
 function onImprovementChange(improvementIndex: number) {
   emit('improvement-change', improvementIndex)
-}
-
-// 切換專長展開狀態
-function toggleSpecialtyExpanded() {
-  isSpecialtyExpanded.value = !isSpecialtyExpanded.value
 }
 
 // 切換改進軌跡
@@ -394,10 +330,6 @@ function toggleImprovement(index: number) {
   if (allChecked) {
     onImprovementChange(index)
   }
-}
-
-function addSpecialty() {
-  emit('add-specialty')
 }
 
 function removeSpecialty(index: number) {
@@ -415,4 +347,13 @@ function isSpecialtyAlreadySelected(specialtyType: string, currentIndex: number)
     specialty.type === specialtyType && index !== currentIndex
   )
 }
+
+// 組件掛載時的調試輸出
+onMounted(() => {
+  console.log('EquipmentCard mounted with props:', {
+    equipment: props.equipment,
+    specialties: props.equipment?.specialties,
+    equipmentSpecialties: props.equipmentSpecialties
+  })
+})
 </script>

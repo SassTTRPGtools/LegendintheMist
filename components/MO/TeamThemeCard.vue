@@ -169,127 +169,30 @@
 
     <!-- 主題專長區域 -->
     <div class="mb-6">
-      <div class="flex items-center justify-between mb-3">
-        <button
-          @click="toggleSpecialtyExpanded"
-          class="flex items-center space-x-2 text-sm font-medium text-gray-300 hover:text-white transition-colors"
-        >
-          <span>主題專長</span>
-          <span class="text-xs text-gray-400 ml-1">
-            ({{ teamThemeCard.customSpecialties.length }}/5)
-          </span>
-          <svg 
-            :class="[
-              'w-4 h-4 transition-transform duration-200',
-              isSpecialtyExpanded ? 'rotate-90' : 'rotate-0'
-            ]" 
-            fill="none" 
-            stroke="currentColor" 
-            viewBox="0 0 24 24"
-          >
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-          </svg>
-        </button>
+      <div class="mb-3">
+        <span class="text-sm font-medium text-gray-300">主題專長</span>
+        <span class="text-xs text-gray-400 ml-1">
+          ({{ getValidSpecialtiesCount() }}/5)
+        </span>
       </div>
       
-      <!-- 折疊時的簡要預覽 -->
-      <div v-if="!isSpecialtyExpanded && teamThemeCard.customSpecialties.length > 0" 
+      <div v-if="getValidSpecialtiesCount() > 0" 
            class="mt-2 p-3 bg-slate-700/20 rounded-lg border border-slate-600/30">
         <div class="flex flex-wrap gap-2">
-          <span 
-            v-for="(specialty, index) in teamThemeCard.customSpecialties" 
+          <SpecialtyTooltip
+            v-for="(specialty, index) in getValidSpecialties()" 
             :key="index"
-            class="inline-flex items-center px-2 py-1 bg-amber-600/20 text-amber-300 rounded text-xs"
+            :name="specialty.name || `專長 ${index + 1}`"
+            :description="specialty.description || `專長描述 ${index + 1}`"
           >
-            <span class="w-4 h-4 bg-amber-600 text-white rounded-full flex items-center justify-center text-xs font-bold mr-1">
-              {{ index + 1 }}
+            <span 
+              class="inline-flex items-center px-2 py-1 bg-amber-600/20 text-amber-300 rounded text-xs cursor-help border border-amber-500/30 hover:bg-amber-500/30 hover:border-amber-400/50 hover:text-amber-200 hover:shadow-lg hover:shadow-amber-400/20 transition-all duration-200 relative overflow-hidden group"
+            >
+              <!-- 科技感背景效果 -->
+              <div class="absolute inset-0 bg-gradient-to-r from-transparent via-amber-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div class="relative z-10">{{ specialty.name || `專長 ${index + 1}` }}</div>
             </span>
-            {{ specialty.name.trim() || `專長 ${index + 1}` }}
-          </span>
-        </div>
-      </div>
-      
-      <div v-if="isSpecialtyExpanded" class="space-y-3">
-        <div 
-          v-for="(specialty, index) in teamThemeCard.customSpecialties" 
-          :key="index"
-          :class="[
-            'flex items-start space-x-2 p-3 rounded-lg border transition-colors',
-            teamThemeCard.isEditing 
-              ? 'bg-slate-700/30 border-slate-600/50 hover:border-amber-500/30' 
-              : 'bg-slate-700/20 border-slate-600/30'
-          ]"
-        >
-          <span class="w-6 h-6 bg-amber-600 text-white rounded-full flex items-center justify-center text-xs font-bold mt-1 flex-shrink-0">
-            {{ index + 1 }}
-          </span>
-          
-          <div class="flex-1 space-y-2 min-w-0">
-            <input 
-              v-if="teamThemeCard.isEditing"
-              v-model="specialty.name"
-              type="text" 
-              :placeholder="`專長名稱 ${index + 1}`"
-              class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded text-white text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent placeholder-gray-400"
-            />
-            <div 
-              v-else 
-              :class="[
-                'px-3 py-2 text-sm rounded font-medium min-h-[2rem] flex items-center',
-                specialty.name.trim() 
-                  ? 'text-amber-300 bg-slate-800/50' 
-                  : 'text-gray-500 bg-slate-800/30 italic'
-              ]"
-            >
-              {{ specialty.name.trim() || `專長名稱 ${index + 1}` }}
-            </div>
-            
-            <textarea
-              v-if="teamThemeCard.isEditing"
-              v-model="specialty.description"
-              :placeholder="`專長描述 ${index + 1}`"
-              rows="2"
-              class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded text-white text-xs focus:ring-2 focus:ring-amber-500 focus:border-transparent resize-none placeholder-gray-400"
-            />
-            <div 
-              v-else 
-              :class="[
-                'px-3 py-2 text-xs rounded min-h-[3rem] flex items-start',
-                specialty.description.trim() 
-                  ? 'text-gray-300 bg-slate-800/50' 
-                  : 'text-gray-500 bg-slate-800/30 italic'
-              ]"
-            >
-              {{ specialty.description.trim() || `專長描述 ${index + 1}` }}
-            </div>
-          </div>
-          
-          <button
-            v-if="teamThemeCard.isEditing"
-            @click="removeSpecialty(index)"
-            class="w-7 h-7 bg-red-600 hover:bg-red-700 text-white rounded-full text-xs font-bold mt-1 flex-shrink-0 transition-colors"
-            title="移除專長"
-          >
-            ✕
-          </button>
-        </div>
-        
-        <!-- 新增專長按鈕 -->
-        <button
-          v-if="teamThemeCard.isEditing && teamThemeCard.customSpecialties.length < 5"
-          @click="addSpecialty"
-          class="w-full px-4 py-3 bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white rounded-lg text-sm font-medium transition-all duration-200 flex items-center justify-center space-x-2"
-        >
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
-          </svg>
-          <span>新增專長 ({{ teamThemeCard.customSpecialties.length }}/5)</span>
-        </button>
-        
-        <!-- 專長已滿提示 -->
-        <div v-else-if="teamThemeCard.isEditing && teamThemeCard.customSpecialties.length >= 5" 
-             class="w-full px-4 py-3 bg-slate-700/50 border border-slate-600/50 text-gray-400 rounded-lg text-sm text-center">
-          專長已達上限 (5/5)
+          </SpecialtyTooltip>
         </div>
       </div>
     </div>
@@ -299,6 +202,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import SpecialtyTooltip from './SpecialtyTooltip.vue'
 
 // 定義介面
 interface TeamThemeCard {
@@ -324,12 +228,20 @@ const emit = defineEmits<{
   'decay-change': [index: number]
 }>()
 
-// 折疊狀態管理
-const isSpecialtyExpanded = ref(false)
+// 獲取有效專長數量
+const getValidSpecialtiesCount = () => {
+  if (!props.teamThemeCard?.customSpecialties) return 0
+  return props.teamThemeCard.customSpecialties.filter(specialty => 
+    specialty && (specialty.name?.trim() || specialty.description?.trim())
+  ).length
+}
 
-// 切換專長展開狀態
-function toggleSpecialtyExpanded() {
-  isSpecialtyExpanded.value = !isSpecialtyExpanded.value
+// 獲取有效專長列表
+const getValidSpecialties = () => {
+  if (!props.teamThemeCard?.customSpecialties) return []
+  return props.teamThemeCard.customSpecialties.filter(specialty => 
+    specialty && (specialty.name?.trim() || specialty.description?.trim())
+  )
 }
 
 // 新增專長
