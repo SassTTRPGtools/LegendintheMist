@@ -567,14 +567,24 @@ const character = ref({
   themeCards: Array(4).fill().map(() => createEmptyThemeCard())
 })
 
+// 動態獲取基礎路徑
+const getBasePath = () => {
+  // 在生產環境中使用配置的 baseURL，在開發環境中使用空字串
+  if (process.env.NODE_ENV === 'production') {
+    return '/LegendintheMist'
+  }
+  return ''
+}
+
 // 載入主題資料
 onMounted(async () => {
   try {
     console.log('開始載入主題資料...')
+    const basePath = getBasePath()
     const [mythosRes, noiseRes, selfRes] = await Promise.all([
-      fetch('/MO/mythos-themes.json'),
-      fetch('/MO/noise-themes.json'),
-      fetch('/MO/self-themes.json')
+      fetch(`${basePath}/MO/mythos-themes.json`),
+      fetch(`${basePath}/MO/noise-themes.json`),
+      fetch(`${basePath}/MO/self-themes.json`)
     ])
     
     mythosThemes.value = (await mythosRes.json()).themes

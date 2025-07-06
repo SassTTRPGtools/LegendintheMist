@@ -15,7 +15,7 @@
         <!-- 無主題或圖片載入失敗時顯示預設圖片 -->
         <img 
           v-else
-          src="/ui_icon/essences/blank.svg" 
+          :src="`${getBasePath()}/ui_icon/essences/blank.svg`" 
           alt="未選擇主題"
           class="w-full h-full object-contain opacity-50"
         />
@@ -113,6 +113,18 @@ const showTypeModal = ref(false)
 
 // 圖片錯誤狀態
 const imageError = ref(false)
+
+// 獲取 Nuxt 配置
+const { $config } = useNuxtApp()
+
+// 動態獲取基礎路徑
+const getBasePath = () => {
+  // 在生產環境中使用配置的 baseURL，在開發環境中使用空字串
+  if (process.env.NODE_ENV === 'production') {
+    return '/LegendintheMist'
+  }
+  return ''
+}
 
 // 定義 Props
 interface ThemeCard {
@@ -297,7 +309,7 @@ const getEssenceImagePath = () => {
   
   // 檢查理想檔案是否存在
   if (availableImages.includes(idealFilename)) {
-    const imagePath = `/ui_icon/essences/${idealFilename}`
+    const imagePath = `${getBasePath()}/ui_icon/essences/${idealFilename}`
     console.log('找到精確匹配的圖片:', imagePath)
     return imagePath
   }
@@ -367,7 +379,7 @@ const getEssenceImagePath = () => {
     fallbackFilename = 'blank.svg'
   }
   
-  const imagePath = `/ui_icon/essences/${fallbackFilename}`
+  const imagePath = `${getBasePath()}/ui_icon/essences/${fallbackFilename}`
   console.log('使用替代圖片:', imagePath, '原始嘗試:', idealFilename, '主題數量 - 神話:', mythos, '喧囂:', noise, '自我:', self)
   
   return imagePath

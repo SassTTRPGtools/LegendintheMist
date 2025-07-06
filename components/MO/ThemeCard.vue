@@ -325,6 +325,15 @@
 import { computed, onMounted } from 'vue'
 import SpecialtyTooltip from './SpecialtyTooltip.vue'
 
+// 動態獲取基礎路徑
+const getBasePath = () => {
+  // 在生產環境中使用配置的 baseURL，在開發環境中使用空字串
+  if (process.env.NODE_ENV === 'production') {
+    return '/LegendintheMist'
+  }
+  return ''
+}
+
 // 定義接口
 interface ThemeCard {
   selectedThemeType: string
@@ -569,22 +578,24 @@ function toggleEdit() {
 
 // 獲取主題背景圖片
 function getThemeHeaderImage() {
+  const basePath = getBasePath()
   const imageMap = {
-    'mythos': '/ui_icon/header/header-mythos.webp',
-    'noise': '/ui_icon/header/header-noise.webp',
-    'self': '/ui_icon/header/header-self.webp'
+    'mythos': `${basePath}/ui_icon/header/header-mythos.webp`,
+    'noise': `${basePath}/ui_icon/header/header-noise.webp`,
+    'self': `${basePath}/ui_icon/header/header-self.webp`
   } as const
-  return imageMap[props.themeCard?.selectedThemeType as keyof typeof imageMap] || '/ui_icon/header/header-mythos.webp'
+  return imageMap[props.themeCard?.selectedThemeType as keyof typeof imageMap] || `${basePath}/ui_icon/header/header-mythos.webp`
 }
 
 // 獲取主題圖示
 function getThemeIcon() {
+  const basePath = getBasePath()
   const iconMap = {
-    'mythos': '/ui_icon/dice_otherscape-mythos_color.png',
-    'noise': '/ui_icon/dice_otherscape-noise_color.png',
-    'self': '/ui_icon/dice_otherscape-self_color.png'
+    'mythos': `${basePath}/ui_icon/dice_otherscape-mythos_color.png`,
+    'noise': `${basePath}/ui_icon/dice_otherscape-noise_color.png`,
+    'self': `${basePath}/ui_icon/dice_otherscape-self_color.png`
   } as const
-  return iconMap[props.themeCard?.selectedThemeType as keyof typeof iconMap] || '/ui_icon/dice_otherscape-mythos_color.png'
+  return iconMap[props.themeCard?.selectedThemeType as keyof typeof iconMap] || `${basePath}/ui_icon/dice_otherscape-mythos_color.png`
 }
 
 // 獲取主題類型名稱

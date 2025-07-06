@@ -325,6 +325,15 @@ definePageMeta({
   title: '模板創建工具 - 都市異景'
 })
 
+// 動態獲取基礎路徑
+const getBasePath = () => {
+  // 在生產環境中使用配置的 baseURL，在開發環境中使用空字串
+  if (process.env.NODE_ENV === 'production') {
+    return '/LegendintheMist'
+  }
+  return ''
+}
+
 // 響應式數據
 const selectedTemplateType = ref('')
 const selectedTemplate = ref(null)
@@ -447,7 +456,8 @@ async function loadCharacterExamples(themeType) {
   }
   
   try {
-    const filePath = `/MO/sample_characters/${themeSystem}/${fileName}.json`
+    const basePath = getBasePath()
+    const filePath = `${basePath}/MO/sample_characters/${themeSystem}/${fileName}.json`
     console.log('嘗試載入檔案:', filePath)
     
     const response = await $fetch(filePath)
@@ -502,7 +512,8 @@ async function loadThemeChineseName(themeType) {
   }
   
   try {
-    const filePath = `/MO/${themeSystem}.json`
+    const basePath = getBasePath()
+    const filePath = `${basePath}/MO/${themeSystem}.json`
     console.log('載入檔案:', filePath)
     const response = await $fetch(filePath)
     themeChineseNames.value[themeSystem] = response
@@ -701,7 +712,8 @@ async function loadSelectedTemplate() {
   if (!selectedTemplateType.value) return
   
   try {
-    const templateData = await $fetch(`/MO/templates/${selectedTemplateType.value}.json`)
+    const basePath = getBasePath()
+    const templateData = await $fetch(`${basePath}/MO/templates/${selectedTemplateType.value}.json`)
     templates.value = templateData
     
     // 找到對應的顯示名稱

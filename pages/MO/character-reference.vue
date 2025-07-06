@@ -442,13 +442,24 @@ useHead({
   title: '角色創建參考 - 都市異景'
 })
 
+// 動態獲取基礎路徑
+const getBasePath = () => {
+  // 在生產環境中使用配置的 baseURL，在開發環境中使用空字串
+  if (process.env.NODE_ENV === 'production') {
+    return '/LegendintheMist'
+  }
+  return ''
+}
+
 // 載入 JSON 資料的方法
 const loadJsonData = async (filename) => {
   try {
-    console.log(`正在載入: /MO/${filename}`)
+    const basePath = getBasePath()
+    const filePath = `${basePath}/MO/${filename}`
+    console.log(`正在載入: ${filePath}`)
     
     // 使用 $fetch 從 public 目錄載入 JSON
-    const response = await $fetch(`/MO/${filename}`)
+    const response = await $fetch(filePath)
     
     console.log(`成功載入 ${filename}:`, response)
     return response
@@ -649,10 +660,12 @@ const loadSampleCharacters = async () => {
     
     const filePath = `sample_characters/${systemFolder}/${themeFile}`
     
-    console.log(`嘗試載入範例角色: /MO/${filePath}`)
+    const basePath = getBasePath()
+    const fullPath = `${basePath}/MO/${filePath}`
+    console.log(`嘗試載入範例角色: ${fullPath}`)
     
     // 載入對應的範例檔案
-    const sampleData = await $fetch(`/MO/${filePath}`)
+    const sampleData = await $fetch(fullPath)
     
     console.log('載入的原始資料:', sampleData)
     
