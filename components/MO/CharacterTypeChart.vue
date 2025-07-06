@@ -530,17 +530,26 @@ const getNoiseSelfHalfPath = () => {
 
 // 三種主題混合區域
 const getAllThemesMythosPath = () => {
-  const vertices = getHexVertices(2) // 填滿到第二層
+  // 根據神話主題數量決定填滿層級
+  const maxThemes = Math.max(mythosCount.value, noiseCount.value, selfCount.value)
+  const layer = mythosCount.value === maxThemes ? Math.min(4, mythosCount.value + 1) : 2
+  const vertices = getHexVertices(layer)
   return `M ${center.x} ${center.y} L ${vertices[4].x} ${vertices[4].y} L ${vertices[5].x} ${vertices[5].y} L ${vertices[0].x} ${vertices[0].y} Z`
 }
 
 const getAllThemesNoisePath = () => {
-  const vertices = getHexVertices(2) // 填滿到第二層
+  // 根據喧囂主題數量決定填滿層級
+  const maxThemes = Math.max(mythosCount.value, noiseCount.value, selfCount.value)
+  const layer = noiseCount.value === maxThemes ? Math.min(4, noiseCount.value + 1) : 2
+  const vertices = getHexVertices(layer)
   return `M ${center.x} ${center.y} L ${vertices[0].x} ${vertices[0].y} L ${vertices[1].x} ${vertices[1].y} L ${vertices[2].x} ${vertices[2].y} Z`
 }
 
 const getAllThemesSelfPath = () => {
-  const vertices = getHexVertices(2) // 填滿到第二層
+  // 根據自我主題數量決定填滿層級
+  const maxThemes = Math.max(mythosCount.value, noiseCount.value, selfCount.value)
+  const layer = selfCount.value === maxThemes ? Math.min(4, selfCount.value + 1) : 2
+  const vertices = getHexVertices(layer)
   return `M ${center.x} ${center.y} L ${vertices[2].x} ${vertices[2].y} L ${vertices[3].x} ${vertices[3].y} L ${vertices[4].x} ${vertices[4].y} Z`
 }
 </script>
