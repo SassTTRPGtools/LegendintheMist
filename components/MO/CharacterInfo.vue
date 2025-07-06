@@ -2,55 +2,7 @@
   <div class="bg-slate-800/80 backdrop-blur rounded-lg p-6 border border-purple-500/30">
     <h3 class="text-xl font-bold text-purple-300 mb-4">角色資訊</h3>
     <div class="space-y-4">
-      <div>
-        <label class="block text-sm font-medium text-gray-300 mb-2">角色名稱</label>
-        <input 
-          v-model="character.name" 
-          type="text" 
-          class="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-md text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-          placeholder="輸入角色名稱"
-        />
-      </div>
-      <div>
-        <label class="block text-sm font-medium text-gray-300 mb-2">背景描述</label>
-        <textarea 
-          v-model="character.background" 
-          class="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-md text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent h-20 resize-none"
-          placeholder="角色的背景故事..."
-        />
-      </div>
-
-      <!-- 老將專長顯示 -->
-      <div v-if="character.veteranSpecialties && character.veteranSpecialties.length > 0">
-        <label class="block text-sm font-medium text-gray-300 mb-2">老將專長</label>
-        <div class="space-y-2">
-          <div 
-            v-for="specialty in character.veteranSpecialties" 
-            :key="specialty"
-            class="bg-slate-700 p-3 rounded-lg border border-purple-500/30"
-          >
-            <div class="font-medium text-purple-300">{{ getVeteranSpecialtyName(specialty) }}</div>
-            <div class="text-sm text-gray-400 mt-1">{{ getVeteranSpecialtyDescription(specialty) }}</div>
-            
-            <!-- 改進你的遊戲專長的特殊顯示 -->
-            <div v-if="specialty === 'levelUpGame' && character.levelUpGameImprovements && character.levelUpGameImprovements.length > 0" class="mt-2">
-              <div class="text-xs text-purple-400 mb-1">已選擇的改進：</div>
-              <div class="grid grid-cols-1 gap-1">
-                <div 
-                  v-for="(improvement, index) in character.levelUpGameImprovements" 
-                  :key="index"
-                  class="text-xs bg-slate-600 p-2 rounded"
-                >
-                  <span class="text-purple-300">{{ improvement.themeName }}</span>
-                  <span class="text-gray-400 mx-1">-</span>
-                  <span class="text-white">{{ improvement.improvementDescription }}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
+      <!-- 演化軌跡 -->
       <div>
         <div class="flex items-center justify-between mb-2">
           <label class="block text-sm font-medium text-gray-300">演化軌跡</label>
@@ -82,6 +34,95 @@
           <span v-if="character.evolutionHistory && character.evolutionHistory.length > 0" class="ml-2">
             • 已完成演化：{{ character.evolutionHistory.length }} 次
           </span>
+        </div>
+      </div>
+
+      <!-- 角色名稱 -->
+      <div>
+        <label class="block text-sm font-medium text-gray-300 mb-2">角色名稱</label>
+        <input 
+          v-model="character.name" 
+          type="text" 
+          class="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-md text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+          placeholder="輸入角色名稱"
+        />
+      </div>
+
+      <!-- 玩家名稱 -->
+      <div>
+        <label class="block text-sm font-medium text-gray-300 mb-2">玩家名稱</label>
+        <input 
+          v-model="playerName" 
+          type="text" 
+          class="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-md text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+          placeholder="輸入玩家名稱"
+        />
+      </div>
+
+      <!-- 團隊關係區塊 -->
+      <div>
+        <label class="block text-sm font-medium text-gray-300 mb-3">團隊關係</label>
+        <div class="grid grid-cols-2 gap-4">
+          <!-- 團隊成員欄位 -->
+          <div>
+            <div class="text-xs text-purple-300 mb-2 font-medium">團隊成員</div>
+            <div class="space-y-2">
+              <input 
+                v-for="index in 5" 
+                :key="`member-${index}`"
+                v-model="teamMembers[index - 1]"
+                type="text" 
+                :placeholder="`成員 ${index}`"
+                class="w-full px-2 py-1 bg-slate-700 border border-slate-600 rounded text-white text-sm focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              />
+            </div>
+          </div>
+          
+          <!-- 關係標籤欄位 -->
+          <div>
+            <div class="text-xs text-pink-300 mb-2 font-medium">關係標籤</div>
+            <div class="space-y-2">
+              <input 
+                v-for="index in 5" 
+                :key="`relationship-${index}`"
+                v-model="relationshipTags[index - 1]"
+                type="text" 
+                :placeholder="`關係 ${index}`"
+                class="w-full px-2 py-1 bg-slate-700 border border-slate-600 rounded text-white text-sm focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 老將專長顯示 -->
+      <div v-if="character.veteranSpecialties && character.veteranSpecialties.length > 0">
+        <label class="block text-sm font-medium text-gray-300 mb-2">老將專長</label>
+        <div class="space-y-2">
+          <div 
+            v-for="specialty in character.veteranSpecialties" 
+            :key="specialty"
+            class="bg-slate-700 p-3 rounded-lg border border-purple-500/30"
+          >
+            <div class="font-medium text-purple-300">{{ getVeteranSpecialtyName(specialty) }}</div>
+            <div class="text-sm text-gray-400 mt-1">{{ getVeteranSpecialtyDescription(specialty) }}</div>
+            
+            <!-- 改進你的遊戲專長的特殊顯示 -->
+            <div v-if="specialty === 'levelUpGame' && character.levelUpGameImprovements && character.levelUpGameImprovements.length > 0" class="mt-2">
+              <div class="text-xs text-purple-400 mb-1">已選擇的改進：</div>
+              <div class="grid grid-cols-1 gap-1">
+                <div 
+                  v-for="(improvement, index) in character.levelUpGameImprovements" 
+                  :key="index"
+                  class="text-xs bg-slate-600 p-2 rounded"
+                >
+                  <span class="text-purple-300">{{ improvement.themeName }}</span>
+                  <span class="text-gray-400 mx-1">-</span>
+                  <span class="text-white">{{ improvement.improvementDescription }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -129,11 +170,14 @@ interface LevelUpGameImprovement {
 
 interface Character {
   name: string
+  playerName?: string
   background: string
   evolutionTrack: boolean[]
   evolutionHistory?: EvolutionRecord[]
   veteranSpecialties?: string[]
   levelUpGameImprovements?: LevelUpGameImprovement[]
+  teamMembers?: string[]
+  relationshipTags?: string[]
 }
 
 interface Props {
@@ -144,11 +188,14 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   character: () => ({
     name: '',
+    playerName: '',
     background: '',
     evolutionTrack: Array(5).fill(false),
     evolutionHistory: [],
     veteranSpecialties: [],
-    levelUpGameImprovements: []
+    levelUpGameImprovements: [],
+    teamMembers: Array(5).fill(''),
+    relationshipTags: Array(5).fill('')
   }),
   hasIncompleteLevelUpGame: false
 })
@@ -182,6 +229,36 @@ const veteranSpecialties = {
 const evolutionProgress = computed(() => {
   if (!props.character?.evolutionTrack) return 0
   return props.character.evolutionTrack.filter(Boolean).length
+})
+
+// 安全地處理玩家名稱
+const playerName = computed({
+  get: () => props.character?.playerName || '',
+  set: (value) => {
+    if (props.character) {
+      props.character.playerName = value
+    }
+  }
+})
+
+// 安全地處理團隊成員陣列
+const teamMembers = computed({
+  get: () => props.character?.teamMembers || Array(5).fill(''),
+  set: (value) => {
+    if (props.character) {
+      props.character.teamMembers = value
+    }
+  }
+})
+
+// 安全地處理關係標籤陣列
+const relationshipTags = computed({
+  get: () => props.character?.relationshipTags || Array(5).fill(''),
+  set: (value) => {
+    if (props.character) {
+      props.character.relationshipTags = value
+    }
+  }
 })
 
 // 方法
