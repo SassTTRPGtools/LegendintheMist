@@ -1,16 +1,37 @@
 <template>
   <div class="bg-slate-800/80 backdrop-blur rounded-lg p-6 border border-purple-500/30">
-    <h3 class="text-xl font-bold text-purple-300 mb-4">裝備卡</h3>
+    <div class="flex items-center justify-between mb-4">
+      <h3 class="text-xl font-bold text-purple-300">裝備卡</h3>
+      <button 
+        @click="$emit('toggle-edit')"
+        :class="[
+          'px-4 py-1 rounded text-xs transition-colors min-w-[60px] flex items-center justify-center flex-shrink-0',
+          equipment.isEditing 
+            ? 'bg-green-600 hover:bg-green-700 text-white' 
+            : 'bg-purple-600 hover:bg-purple-700 text-white'
+        ]"
+      >
+        {{ equipment.isEditing ? '完成' : '編輯' }}
+      </button>
+    </div>
+    
     <div class="space-y-4">
       <!-- 裝備名稱 -->
       <div>
         <label class="block text-sm font-medium text-gray-300 mb-2">裝備名稱</label>
         <input 
+          v-if="equipment.isEditing"
           v-model="equipment.name" 
           type="text" 
           class="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-md text-white text-sm focus:ring-2 focus:ring-purple-500 focus:border-transparent"
           placeholder="輸入裝備名稱"
         />
+        <div 
+          v-else
+          class="w-full px-3 py-2 bg-slate-700/50 border border-slate-600/50 rounded-md text-white text-sm"
+        >
+          {{ equipment.name || '未命名裝備' }}
+        </div>
       </div>
 
       <!-- 改進軌跡與力度 -->
@@ -62,14 +83,32 @@
           <div 
             v-for="(ability, abilityIndex) in equipment.abilities" 
             :key="abilityIndex"
-            class="flex items-center space-x-1 p-2 bg-slate-700/30 rounded"
+            class="flex items-center space-x-2"
           >
+            <span class="w-6 h-6 bg-purple-600 text-white rounded-full flex items-center justify-center text-xs font-bold">
+              {{ abilityIndex + 1 }}
+            </span>
+            
             <input 
+              v-if="equipment.isEditing"
               v-model="ability.text"
               type="text" 
               :placeholder="`裝備能力 ${abilityIndex + 1}`"
-              class="flex-1 px-2 py-1 bg-slate-600 border border-slate-500 rounded text-white text-sm focus:ring-1 focus:ring-purple-500"
+              class="flex-1 px-2 py-1 bg-slate-700 border border-slate-600 rounded text-white text-sm focus:ring-2 focus:ring-purple-500 focus:border-transparent"
             />
+            <span 
+              v-else 
+              :class="[
+                'flex-1 px-2 py-1 text-sm rounded',
+                ability.text.trim() 
+                  ? 'text-white bg-slate-700/50' 
+                  : 'text-gray-500 bg-slate-700/30 italic',
+                ability.isBurned ? 'line-through opacity-50' : ''
+              ]"
+            >
+              {{ ability.text.trim() || `裝備能力 ${abilityIndex + 1}` }}
+            </span>
+            
             <div class="flex items-center">
               <button
                 @click="ability.isBurned = !ability.isBurned"
@@ -104,14 +143,30 @@
           <div 
             v-for="(weakness, weaknessIndex) in equipment.weaknesses" 
             :key="weaknessIndex"
-            class="bg-red-900/20 border border-red-500/30 rounded p-2"
+            class="flex items-center space-x-2"
           >
+            <span class="w-6 h-6 bg-red-600 text-white rounded-full flex items-center justify-center text-xs font-bold">
+              {{ weaknessIndex + 1 }}
+            </span>
+            
             <input 
+              v-if="equipment.isEditing"
               v-model="weakness.text"
               type="text" 
               :placeholder="`裝備弱點 ${weaknessIndex + 1}`"
-              class="w-full px-2 py-1 bg-slate-700/50 border border-slate-600 rounded-md text-white text-sm focus:ring-2 focus:ring-red-500 focus:border-transparent"
+              class="flex-1 px-2 py-1 bg-slate-700 border border-slate-600 rounded text-white text-sm focus:ring-2 focus:ring-red-500 focus:border-transparent"
             />
+            <span 
+              v-else 
+              :class="[
+                'flex-1 px-2 py-1 text-sm rounded',
+                weakness.text.trim() 
+                  ? 'text-white bg-red-900/20 border border-red-500/30' 
+                  : 'text-gray-500 bg-slate-700/30 italic border border-slate-600/50'
+              ]"
+            >
+              {{ weakness.text.trim() || `裝備弱點 ${weaknessIndex + 1}` }}
+            </span>
           </div>
         </div>
       </div>
@@ -220,6 +275,7 @@ interface Equipment {
   abilities: Array<{ text: string; isBurned: boolean }>
   weaknesses: Array<{ text: string }>
   specialties: Array<{ type: string; description?: string }>
+  isEditing: boolean
 }
 
 interface EquipmentSpecialty {
@@ -239,7 +295,8 @@ const props = withDefaults(defineProps<Props>(), {
     power: 1,
     abilities: Array(5).fill(null).map(() => ({ text: '', isBurned: false })),
     weaknesses: Array(2).fill(null).map(() => ({ text: '' })),
-    specialties: []
+    specialties: [],
+    isEditing: false
   }),
   equipmentSpecialties: () => ({
     deepCustomization: {
@@ -279,6 +336,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 // 定義事件
 const emit = defineEmits<{
+  'toggle-edit': []
   'improvement-change': [improvementIndex: number]
   'add-specialty': []
   'remove-specialty': [index: number]

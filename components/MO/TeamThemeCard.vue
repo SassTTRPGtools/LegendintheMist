@@ -105,7 +105,8 @@
               'flex-1 px-2 py-1 text-sm rounded',
               ability.text.trim() 
                 ? 'text-white bg-slate-700/50' 
-                : 'text-gray-500 bg-slate-700/30 italic'
+                : 'text-gray-500 bg-slate-700/30 italic',
+              ability.isBurned ? 'line-through opacity-50' : ''
             ]"
           >
             {{ ability.text.trim() || `能力標籤 ${index + 1}` }}

@@ -35,6 +35,7 @@
         <EquipmentCard
           :equipment="character.equipment"
           :equipment-specialties="EQUIPMENT_SPECIALTIES"
+          @toggle-edit="toggleEquipmentEdit"
           @improvement-change="onEquipmentImprovementChange"
           @add-specialty="addEquipmentSpecialty"
           @remove-specialty="removeEquipmentSpecialty"
@@ -536,7 +537,8 @@ function createEmptyEquipment() {
     power: 1,
     abilities: Array(5).fill(null).map(() => ({ text: '', isBurned: false })),
     weaknesses: Array(2).fill(null).map(() => ({ text: '' })),
-    specialties: []
+    specialties: [],
+    isEditing: false
   }
 }
 
@@ -735,6 +737,20 @@ function toggleTeamThemeEdit() {
     console.log('儲存團隊主題卡:', teamCard)
   }
   teamCard.isEditing = !teamCard.isEditing
+}
+
+// ====================
+// 裝備卡功能
+// ====================
+function toggleEquipmentEdit() {
+  const equipment = character.value.equipment
+  if (!equipment) return
+  
+  if (equipment.isEditing) {
+    // 儲存邏輯可以在這裡執行
+    console.log('儲存裝備卡:', equipment)
+  }
+  equipment.isEditing = !equipment.isEditing
 }
 
 function onTeamThemeImprovementChange(improvementIndex) {
