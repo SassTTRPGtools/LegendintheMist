@@ -187,44 +187,80 @@
       <div class="text-center mb-3">
         <span class="text-purple-300 font-semibold">角色類型</span>
       </div>
+      
+      <!-- 角色類型顯示卡片 -->
       <div class="bg-slate-700/50 rounded-lg p-4 mb-3">
         <div class="text-center mb-3">
           <div class="text-lg font-bold text-white mb-2">{{ getCharacterType() }}</div>
-        </div>
-        <div class="text-left space-y-3">
-          <div 
-            v-for="(paragraph, index) in getFormattedCharacterSubtype()" 
-            :key="index"
-            :class="[
-              'text-sm leading-relaxed',
-              paragraph.isSubtitle ? 'text-purple-300 font-bold text-base mt-4 mb-2 border-b border-purple-500/30 pb-1' :
-              paragraph.isSpecial ? 'text-amber-300 font-medium bg-amber-900/20 p-2 rounded border-l-2 border-amber-400' : 'text-gray-300'
-            ]"
+          <button
+            v-if="getCharacterType() !== '未定義'"
+            @click="showTypeModal = true"
+            class="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-sm transition-colors flex items-center space-x-2 mx-auto"
           >
-            {{ paragraph.text }}
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            <span>查看說明</span>
+          </button>
+          <div v-else class="text-sm text-gray-400 italic">
+            請選擇主題卡來確定角色類型
+          </div>
+        </div>
+      </div>
+      
+      <!-- 角色類型說明模態框 -->
+      <div 
+        v-if="showTypeModal"
+        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+        @click.self="showTypeModal = false"
+      >
+        <div class="bg-slate-800 rounded-lg p-6 max-w-2xl w-full max-h-[80vh] overflow-y-auto border border-purple-500/30">
+          <div class="flex justify-between items-center mb-4">
+            <h3 class="text-xl font-bold text-purple-300">{{ getCharacterType() }}</h3>
+            <button 
+              @click="showTypeModal = false"
+              class="w-8 h-8 bg-slate-600 hover:bg-slate-700 text-white rounded-full flex items-center justify-center transition-colors"
+            >
+              ✕
+            </button>
+          </div>
+          
+          <div class="text-left space-y-3">
+            <div 
+              v-for="(paragraph, index) in getFormattedCharacterSubtype()" 
+              :key="index"
+              :class="[
+                'text-sm leading-relaxed',
+                paragraph.isSubtitle ? 'text-purple-300 font-bold text-base mt-4 mb-2 border-b border-purple-500/30 pb-1' :
+                paragraph.isSpecial ? 'text-amber-300 font-medium bg-amber-900/20 p-3 rounded border-l-4 border-amber-400' : 'text-gray-300'
+              ]"
+            >
+              {{ paragraph.text }}
+            </div>
+          </div>
+          
+          <div class="flex justify-end mt-6">
+            <button 
+              @click="showTypeModal = false"
+              class="px-6 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors"
+            >
+              關閉
+            </button>
           </div>
         </div>
       </div>
       <div class="grid grid-cols-1 gap-2 text-xs">
         <div class="flex justify-between">
           <span class="text-purple-300">神話主題：</span>
-          <span class="text-purple-200">{{ mythosCount }}/4 {{ mythosCount > 0 ? '●'.repeat(mythosCount) + '○'.repeat(4-mythosCount) : '○○○○' }}</span>
+          <span class="text-purple-200">{{ mythosCount > 0 ? '●'.repeat(mythosCount) + '○'.repeat(4-mythosCount) : '○○○○' }}</span>
         </div>
         <div class="flex justify-between">
           <span class="text-cyan-300">喧囂主題：</span>
-          <span class="text-cyan-200">{{ noiseCount }}/4 {{ noiseCount > 0 ? '●'.repeat(noiseCount) + '○'.repeat(4-noiseCount) : '○○○○' }}</span>
+          <span class="text-cyan-200">{{ noiseCount > 0 ? '●'.repeat(noiseCount) + '○'.repeat(4-noiseCount) : '○○○○' }}</span>
         </div>
         <div class="flex justify-between">
           <span class="text-pink-300">自我主題：</span>
-          <span class="text-pink-200">{{ selfCount }}/4 {{ selfCount > 0 ? '●'.repeat(selfCount) + '○'.repeat(4-selfCount) : '○○○○' }}</span>
-        </div>
-      </div>
-      <div class="border-t border-purple-500/30 pt-2 mt-2">
-        <div class="text-center text-xs text-gray-400">
-          <div>總計：{{ getTotalThemes() }}/4 張主題卡</div>
-          <div v-if="getTotalThemes() === 4" class="text-green-400 font-semibold mt-1">
-            ✓ 角色建立完成
-          </div>
+          <span class="text-pink-200"> {{ selfCount > 0 ? '●'.repeat(selfCount) + '○'.repeat(4-selfCount) : '○○○○' }}</span>
         </div>
       </div>
     </div>
@@ -232,7 +268,10 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
+
+// 模態框狀態
+const showTypeModal = ref(false)
 
 // 定義 Props
 interface ThemeCard {
