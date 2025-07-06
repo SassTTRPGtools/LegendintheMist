@@ -97,18 +97,18 @@
     <!-- 主題卡內容 -->
     <div v-if="themeCard.selectedTheme" class="space-y-4">
       <!-- 改進與衰變軌跡 -->
-      <div class="mb-6">
-        <div class="flex justify-center space-x-8">
+      <div class="mb-4">
+        <div class="flex justify-center space-x-6">
           <!-- 改進軌跡 -->
           <div class="flex flex-col items-center">
-            <label class="block text-sm font-medium text-gray-300 mb-2">改進軌跡</label>
-            <div class="flex space-x-2">
+            <label class="block text-xs font-medium text-gray-300 mb-1">改進軌跡</label>
+            <div class="flex space-x-1">
               <button
                 v-for="(improvement, index) in themeCard.improvements"
                 :key="index"
                 @click="toggleImprovement(index)"
                 :class="[
-                  'w-8 h-8 border-2 rounded flex items-center justify-center text-sm font-bold transition-colors',
+                  'w-6 h-6 border border-gray-500 rounded flex items-center justify-center text-xs font-bold transition-colors',
                   improvement.checked 
                     ? 'bg-green-600 border-green-400 text-white' 
                     : 'bg-slate-700 border-slate-600 text-gray-400 hover:border-green-500'
@@ -118,21 +118,21 @@
               </button>
             </div>
             <!-- 穩扎穩打專長提示 -->
-            <div v-if="themeCard.improvements.length === 5" class="mt-2 text-xs text-yellow-400 text-center">
+            <div v-if="themeCard.improvements.length === 5" class="mt-1 text-xs text-yellow-400 text-center">
               穩扎穩打：第5格時獲得兩個改進
             </div>
           </div>
 
           <!-- 衰變軌跡 -->
           <div class="flex flex-col items-center">
-            <label class="block text-sm font-medium text-gray-300 mb-2">衰變軌跡</label>
-            <div class="flex space-x-2">
+            <label class="block text-xs font-medium text-gray-300 mb-1">衰變軌跡</label>
+            <div class="flex space-x-1">
               <button
                 v-for="(decay, index) in themeCard.decays.slice(0, 3)"
                 :key="index"
                 @click="toggleDecay(index)"
                 :class="[
-                  'w-8 h-8 border-2 rounded flex items-center justify-center text-sm font-bold transition-colors',
+                  'w-6 h-6 border border-gray-500 rounded flex items-center justify-center text-xs font-bold transition-colors',
                   decay.checked 
                     ? 'bg-red-600 border-red-400 text-white' 
                     : 'bg-slate-700 border-slate-600 text-gray-400 hover:border-red-500'

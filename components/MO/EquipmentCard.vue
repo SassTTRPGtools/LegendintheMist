@@ -33,18 +33,18 @@
       </div>
 
       <!-- 改進軌跡與力度 -->
-      <div class="mb-6">
-        <div class="flex justify-center space-x-8">
+      <div class="mb-4">
+        <div class="flex justify-center space-x-6">
           <!-- 改進軌跡 -->
           <div class="flex flex-col items-center">
-            <label class="block text-sm font-medium text-gray-300 mb-2">改進軌跡</label>
-            <div class="flex space-x-2">
+            <label class="block text-xs font-medium text-gray-300 mb-1">改進軌跡</label>
+            <div class="flex space-x-1">
               <button
                 v-for="(improvement, index) in equipment.improvements"
                 :key="index"
                 @click="toggleImprovement(index)"
                 :class="[
-                  'w-8 h-8 border-2 rounded flex items-center justify-center text-sm font-bold transition-colors',
+                  'w-6 h-6 border border-gray-500 rounded flex items-center justify-center text-xs font-bold transition-colors',
                   improvement.checked 
                     ? 'bg-green-600 border-green-400 text-white' 
                     : 'bg-slate-700 border-slate-600 text-gray-400 hover:border-green-500'
@@ -57,7 +57,7 @@
 
           <!-- 力度 -->
           <div class="flex flex-col items-center">
-            <label class="block text-sm font-medium text-gray-300 mb-2">當前力度</label>
+            <label class="block text-xs font-medium text-gray-300 mb-1">當前力度</label>
             <div class="flex items-center space-x-2">
               <input 
                 v-model.number="equipment.power"
@@ -66,9 +66,6 @@
                 max="10"
                 class="w-16 px-2 py-1 bg-blue-900/30 border border-blue-500/50 rounded text-blue-200 font-bold text-center focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
-            </div>
-            <div class="text-xs text-gray-400 mt-1 text-center">
-              力度數值（1-10）
             </div>
           </div>
         </div>
