@@ -8,8 +8,22 @@
   >
     <!-- 主題卡標題與控制 -->
     <div class="flex flex-col space-y-3 mb-4">
-      <h3 class="text-lg font-bold text-center">{{ themeCard.title || `標題 ${cardIndex + 1}` }}</h3>
-      <div class="space-y-2">
+      <!-- 主題標題 - 編輯時可直接修改 -->
+      <div class="text-center">
+        <input 
+          v-if="themeCard.isEditing"
+          v-model="themeCard.title"
+          type="text" 
+          placeholder="輸入主題標題"
+          class="w-full text-lg font-bold text-center bg-transparent text-white border-b border-purple-400 focus:outline-none focus:border-purple-300"
+        />
+        <h3 v-else class="text-lg font-bold text-center">
+          {{ themeCard.title || `標題 ${cardIndex + 1}` }}
+        </h3>
+      </div>
+
+      <!-- 編輯時才顯示主題類型與主題選擇 -->
+      <div v-if="themeCard.isEditing" class="space-y-2">
         <div>
           <label class="block text-xs font-medium mb-1">主題類型：</label>
           <select 
@@ -41,6 +55,7 @@
           </select>
         </div>
       </div>
+
       <button 
         @click="toggleEdit"
         :class="[
@@ -102,21 +117,6 @@
               </button>
             </div>
           </div>
-        </div>
-      </div>
-
-      <!-- 大標題 -->
-      <div>
-        <label class="block text-xs font-medium mb-1">主題標題</label>
-        <input 
-          v-if="themeCard.isEditing"
-          v-model="themeCard.title"
-          type="text" 
-          placeholder="輸入主題標題"
-          class="w-full px-2 py-1 bg-slate-700/50 border border-slate-600 rounded-md text-white text-xs focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-        />
-        <div v-else class="text-sm font-semibold break-words">
-          {{ themeCard.title || '未設定標題' }}
         </div>
       </div>
 
