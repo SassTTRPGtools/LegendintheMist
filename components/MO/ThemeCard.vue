@@ -6,6 +6,31 @@
       getThemeColorClasses(themeCard?.selectedThemeType || '')
     ]"
   >
+    <!-- 主題區塊 - 顯示主題類型背景圖與圖示 -->
+    <!-- 主題區塊 -->
+    <div 
+      v-if="themeCard.selectedThemeType"
+      class="relative rounded-lg overflow-hidden flex items-center justify-between px-4"
+      :style="{ 
+        backgroundImage: `url(${getThemeHeaderImage()})`,
+        backgroundRepeat: 'no-repeat'
+      }"
+    >
+      <!-- 主題類型名稱 -->
+      <div class="relative z-10 text-white font-bold drop-shadow-lg">
+        {{ getThemeTypeName() }}
+      </div>
+      
+      <!-- 右側圖示 -->
+      <div class="relative z-10 flex items-center justify-end ml-auto">
+        <img 
+          :src="getThemeIcon()" 
+          :alt="getThemeTypeName()"
+          class="w-8 h-8 drop-shadow-lg filter brightness-110 object-contain"
+        />
+      </div>
+    </div>
+
     <!-- 主題卡標題與控制 -->
     <div class="flex flex-col space-y-3 mb-4">
       <!-- 主題標題 - 編輯時可直接修改 -->
@@ -532,5 +557,35 @@ function toggleSpecialtyExpanded() {
 
 function toggleEdit() {
   emit('toggle-edit', props.cardIndex)
+}
+
+// 獲取主題背景圖片
+function getThemeHeaderImage() {
+  const imageMap = {
+    'mythos': '/ui_icon/header/header-mythos.webp',
+    'noise': '/ui_icon/header/header-noise.webp',
+    'self': '/ui_icon/header/header-self.webp'
+  } as const
+  return imageMap[props.themeCard?.selectedThemeType as keyof typeof imageMap] || '/ui_icon/header/header-mythos.webp'
+}
+
+// 獲取主題圖示
+function getThemeIcon() {
+  const iconMap = {
+    'mythos': '/ui_icon/dice_otherscape-mythos_color.png',
+    'noise': '/ui_icon/dice_otherscape-noise_color.png',
+    'self': '/ui_icon/dice_otherscape-self_color.png'
+  } as const
+  return iconMap[props.themeCard?.selectedThemeType as keyof typeof iconMap] || '/ui_icon/dice_otherscape-mythos_color.png'
+}
+
+// 獲取主題類型名稱
+function getThemeTypeName() {
+  if (!props.themeCard?.selectedTheme || !props.themeCard?.selectedThemeType) {
+    return '主題'
+  }
+  
+  const selectedTheme = availableThemes.value[props.themeCard.selectedTheme]
+  return selectedTheme?.theme || '主題'
 }
 </script>
