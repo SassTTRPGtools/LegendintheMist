@@ -122,40 +122,115 @@
         ref="levelUpGameModalRef"
       />
 
+      <!-- 匯入確認彈窗 -->
+      <div
+        v-if="showImportConfirm"
+        class="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+      >
+        <div class="bg-slate-800 rounded-lg p-6 max-w-md w-full mx-4 border border-purple-500/30">
+          <h3 class="text-lg font-bold text-purple-300 mb-4">確認匯入角色</h3>
+          
+          <div v-if="importPreview" class="mb-4 space-y-2">
+            <p class="text-sm text-gray-300">即將匯入的角色：</p>
+            <div class="bg-slate-700/50 rounded p-3 text-sm">
+              <p><span class="text-purple-300">角色名稱：</span>{{ importPreview.name || '未命名' }}</p>
+              <p><span class="text-purple-300">背景：</span>{{ importPreview.background || '無' }}</p>
+              <p><span class="text-purple-300">主題卡：</span>{{ getThemeCardCount(importPreview.themeCards) }}/4</p>
+              <p><span class="text-purple-300">演化進度：</span>{{ getEvolutionProgress(importPreview.evolutionTrack) }}/5</p>
+            </div>
+          </div>
+          
+          <div class="bg-yellow-900/30 border border-yellow-500/50 rounded p-3 mb-4">
+            <p class="text-yellow-300 text-sm">
+              <strong>警告：</strong>匯入將會覆蓋當前的角色數據，此操作無法撤銷。
+            </p>
+          </div>
+          
+          <div class="flex space-x-3">
+            <button
+              @click="confirmImport"
+              class="flex-1 bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg transition-colors"
+            >
+              確認匯入
+            </button>
+            <button
+              @click="cancelImport"
+              class="flex-1 bg-slate-600 hover:bg-slate-700 text-white py-2 px-4 rounded-lg transition-colors"
+            >
+              取消
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 通知彈窗 -->
+      <div
+        v-if="showNotification"
+        :class="[
+          'fixed bottom-20 right-4 p-4 rounded-lg shadow-lg transition-all duration-300 z-50',
+          notificationType === 'success' ? 'bg-green-600 text-white' : 'bg-red-600 text-white'
+        ]"
+      >
+        <div class="flex items-center space-x-2">
+          <svg v-if="notificationType === 'success'" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+          </svg>
+          <svg v-else class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+          <span>{{ notificationMessage }}</span>
+        </div>
+      </div>
+
       <!-- 底部操作按鈕 -->
-      <div class="mt-8 flex justify-center space-x-4">
+      <div class="mt-8 flex flex-wrap justify-center gap-4">
         <NuxtLink 
           to="/MO"
           class="px-6 py-3 bg-slate-600 hover:bg-slate-700 text-white rounded-lg transition-colors"
         >
           返回首頁
         </NuxtLink>
+        
         <button 
-          @click="resetCharacter"
-          class="px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
+          @click="exportCharacter"
+          class="px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors flex items-center space-x-2"
         >
-          重新開始
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+          <span>匯出角色</span>
         </button>
+        
         <button 
-          @click="saveCharacter"
-          :disabled="!isCharacterComplete"
-          :class="[
-            'px-6 py-3 rounded-lg transition-colors',
-            isCharacterComplete 
-              ? 'bg-purple-600 hover:bg-purple-700 text-white' 
-              : 'bg-slate-600 text-gray-400 cursor-not-allowed'
-          ]"
+          @click="triggerFileInput"
+          class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors flex items-center space-x-2"
         >
-          完成角色建立
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10" />
+          </svg>
+          <span>匯入角色</span>
         </button>
+        
+        <button 
+          @click="clearCharacterData"
+          class="px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors flex items-center space-x-2"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+          </svg>
+          <span>清除資料</span>
+        </button>
+        
+        <!-- 隱藏的文件輸入 -->
+        <input
+          ref="fileInput"
+          type="file"
+          accept=".json"
+          @change="importCharacter"
+          class="hidden"
+        />
       </div>
     </div>
-
-    <!-- 角色資料管理器 -->
-    <CharacterDataManager
-      :character="character"
-      @import-character="handleImportCharacter"
-    />
   </div>
 </template>
 
@@ -171,7 +246,6 @@ import EquipmentModal from '~/components/MO/EquipmentModal.vue'
 import DecayModal from '~/components/MO/DecayModal.vue'
 import EvolutionModal from '~/components/MO/EvolutionModal.vue'
 import HowToPlayPanel from '~/components/MO/HowToPlayPanel.vue'
-import CharacterDataManager from '~/components/MO/CharacterDataManager.vue'
 import EvolutionHistoryModal from '~/components/MO/EvolutionHistoryModal.vue'
 import LevelUpGameModal from '~/components/MO/LevelUpGameModal.vue'
 
@@ -516,12 +590,6 @@ onMounted(async () => {
 })
 
 // 計算屬性
-const isCharacterComplete = computed(() => {
-  return character.value.name && 
-         character.value.themeCards.every(card => 
-           card && card.selectedThemeType && card.selectedTheme
-         )
-})
 
 // 演化時刻有效性檢查
 const isEvolutionValid = computed(() => {
@@ -1752,15 +1820,6 @@ function getImprovementTypeName(type) {
   return typeNames[type] || type
 }
 
-function saveCharacter() {
-  if (isCharacterComplete.value) {
-    console.log('角色建立完成:', character.value)
-    alert('角色建立完成！')
-    // 可以導向到角色表頁面或其他頁面
-    // await navigateTo('/MO/character-sheet')
-  }
-}
-
 // 檢查是否有可用的主題專長
 function hasAvailableSpecialties(cardIndex) {
   if (cardIndex === -2) {
@@ -1773,6 +1832,195 @@ function hasAvailableSpecialties(cardIndex) {
   const availableSpecialties = getAvailableSpecialties(cardIndex)
   // 檢查是否有未被選擇的專長
   return Object.values(availableSpecialties).some(specialty => !specialty.isSelected)
+}
+
+// ====================
+// 匯出/匯入/清除資料功能
+// ====================
+
+// 響應式數據用於導入/導出功能
+const fileInput = ref()
+const showNotification = ref(false)
+const notificationType = ref('success')
+const notificationMessage = ref('')
+const showImportConfirm = ref(false)
+const importPreview = ref(null)
+const pendingImportData = ref('')
+
+// 顯示通知
+const showNotificationMessage = (type, message) => {
+  notificationType.value = type
+  notificationMessage.value = message
+  showNotification.value = true
+  
+  setTimeout(() => {
+    showNotification.value = false
+  }, 3000)
+}
+
+// 匯出角色數據
+const exportCharacter = () => {
+  try {
+    // 創建導出數據
+    const exportData = {
+      version: '1.0',
+      exportDate: new Date().toISOString(),
+      character: character.value
+    }
+    
+    // 轉換為 JSON
+    const jsonString = JSON.stringify(exportData, null, 2)
+    
+    // 創建下載鏈接
+    const blob = new Blob([jsonString], { type: 'application/json' })
+    const url = URL.createObjectURL(blob)
+    
+    // 生成文件名
+    const characterName = character.value.name || '未命名角色'
+    const timestamp = new Date().toISOString().split('T')[0]
+    const filename = `${characterName}_${timestamp}.json`
+    
+    // 觸發下載
+    const link = document.createElement('a')
+    link.href = url
+    link.download = filename
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+    
+    // 清理
+    URL.revokeObjectURL(url)
+    
+    showNotificationMessage('success', '角色數據已匯出完成')
+  } catch (error) {
+    console.error('匯出失敗:', error)
+    showNotificationMessage('error', '匯出失敗，請稍後再試')
+  }
+}
+
+// 觸發文件選擇
+const triggerFileInput = () => {
+  fileInput.value?.click()
+}
+
+// 匯入角色數據
+const importCharacter = (event) => {
+  const target = event.target
+  const file = target.files?.[0]
+  
+  if (!file) return
+  
+  const reader = new FileReader()
+  reader.onload = (e) => {
+    try {
+      const jsonData = e.target?.result
+      const importData = JSON.parse(jsonData)
+      
+      // 驗證數據結構
+      if (!validateImportData(importData)) {
+        showNotificationMessage('error', '無效的角色數據格式')
+        return
+      }
+      
+      // 提取角色數據
+      const characterData = importData.character || importData
+      
+      // 顯示預覽和確認對話框
+      importPreview.value = characterData
+      pendingImportData.value = jsonData
+      showImportConfirm.value = true
+      
+    } catch (error) {
+      console.error('匯入失敗:', error)
+      showNotificationMessage('error', '文件解析失敗，請檢查文件格式')
+    }
+  }
+  
+  reader.readAsText(file)
+  
+  // 清空 input
+  if (target) {
+    target.value = ''
+  }
+}
+
+// 驗證匯入數據
+const validateImportData = (data) => {
+  // 檢查基本結構
+  const characterData = data.character || data
+  
+  if (!characterData || typeof characterData !== 'object') return false
+  
+  // 檢查必要欄位
+  const requiredFields = ['name', 'background', 'evolutionTrack', 'equipment', 'themeCards']
+  for (const field of requiredFields) {
+    if (!(field in characterData)) return false
+  }
+  
+  // 檢查陣列結構
+  if (!Array.isArray(characterData.evolutionTrack) || characterData.evolutionTrack.length !== 5) return false
+  if (!Array.isArray(characterData.themeCards) || characterData.themeCards.length !== 4) return false
+  
+  return true
+}
+
+// 確認匯入
+const confirmImport = () => {
+  try {
+    const importData = JSON.parse(pendingImportData.value)
+    const characterData = importData.character || importData
+    
+    // 直接替換角色數據
+    character.value = characterData
+    
+    showImportConfirm.value = false
+    showNotificationMessage('success', '角色數據匯入成功')
+  } catch (error) {
+    console.error('匯入確認失敗:', error)
+    showNotificationMessage('error', '匯入失敗，請稍後再試')
+  }
+}
+
+// 取消匯入
+const cancelImport = () => {
+  showImportConfirm.value = false
+  importPreview.value = null
+  pendingImportData.value = ''
+}
+
+// 清除角色資料
+const clearCharacterData = () => {
+  if (confirm('確定要清除所有角色資料嗎？此操作無法撤銷。')) {
+    // 檢查是否有穩扎穩打專長影響
+    const hasSlowSteady = character.value.veteranSpecialties?.includes('slowSteady')
+    
+    // 重新初始化角色資料
+    character.value = {
+      name: '',
+      background: '',
+      evolutionTrack: [false, false, false, false, false],
+      evolutionHistory: [],
+      veteranSpecialties: [],
+      levelUpGameImprovements: [],
+      equipment: createEmptyEquipment(),
+      teamThemeCard: createEmptyTeamThemeCard(),
+      themeCards: Array(4).fill().map(() => createEmptyThemeCard(hasSlowSteady))
+    }
+    
+    showNotificationMessage('success', '角色資料已清除')
+  }
+}
+
+// 輔助函數：計算主題卡數量
+const getThemeCardCount = (themeCards) => {
+  if (!Array.isArray(themeCards)) return 0
+  return themeCards.filter(card => card && card.selectedThemeType && card.selectedTheme).length
+}
+
+// 輔助函數：計算演化進度
+const getEvolutionProgress = (evolutionTrack) => {
+  if (!Array.isArray(evolutionTrack)) return 0
+  return evolutionTrack.filter(step => step).length
 }
 </script>
 
