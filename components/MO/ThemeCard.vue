@@ -50,26 +50,26 @@
       <!-- 編輯時才顯示主題類型與主題選擇 -->
       <div v-if="themeCard.isEditing" class="space-y-2">
         <div>
-          <label class="block text-xs font-medium mb-1">主題類型：</label>
+          <label class="block text-xs font-medium mb-1">主題風格：</label>
           <select 
             v-model="themeCard.selectedThemeType"
             @change="onThemeTypeChange"
             class="w-full px-2 py-1 bg-slate-700 border border-slate-600 rounded text-white text-xs focus:ring-2 focus:ring-purple-500"
           >
-            <option value="">請選擇主題類型</option>
+            <option value="">請選擇主題風格</option>
             <option value="mythos">神話</option>
             <option value="noise">喧囂</option>
             <option value="self">自我</option>
           </select>
         </div>
         <div v-if="themeCard.selectedThemeType">
-          <label class="block text-xs font-medium mb-1">主題：</label>
+          <label class="block text-xs font-medium mb-1">類型：</label>
           <select 
             v-model="themeCard.selectedTheme"
             @change="onThemeChange"
             class="w-full px-2 py-1 bg-slate-700 border border-slate-600 rounded text-white text-xs focus:ring-2 focus:ring-purple-500"
           >
-            <option value="">請選擇主題</option>
+            <option value="">請選擇類型</option>
             <option 
               v-for="(theme, themeKey) in availableThemes" 
               :key="themeKey"
@@ -266,7 +266,7 @@
       <div>
         <label class="block text-xs font-medium mb-2">動機</label>
         <div class="space-y-2">
-          <!-- 自我主題：身份 -->
+          <!-- 自我：身份 -->
           <div v-if="themeCard.selectedThemeType === 'self'">
             <label class="block text-xs text-gray-400 mb-1">身份</label>
             <input 
@@ -281,7 +281,7 @@
             </div>
           </div>
           
-          <!-- 喧囂主題：癢處 -->
+          <!-- 喧囂：癢處 -->
           <div v-if="themeCard.selectedThemeType === 'noise'">
             <label class="block text-xs text-gray-400 mb-1">癢處</label>
             <input 
@@ -296,7 +296,7 @@
             </div>
           </div>
           
-          <!-- 神話主題：儀式 -->
+          <!-- 神話：儀式 -->
           <div v-if="themeCard.selectedThemeType === 'mythos'">
             <label class="block text-xs text-gray-400 mb-1">儀式</label>
             <input 

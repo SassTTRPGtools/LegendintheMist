@@ -89,15 +89,15 @@
       </div>
       <div class="grid grid-cols-1 gap-2 text-xs">
         <div class="flex justify-between">
-          <span class="text-purple-300">神話主題：</span>
+          <span class="text-purple-300">神話：</span>
           <span class="text-purple-200">{{ mythosCount > 0 ? '●'.repeat(mythosCount) + '○'.repeat(4-mythosCount) : '○○○○' }}</span>
         </div>
         <div class="flex justify-between">
-          <span class="text-cyan-300">喧囂主題：</span>
+          <span class="text-cyan-300">喧囂：</span>
           <span class="text-cyan-200">{{ noiseCount > 0 ? '●'.repeat(noiseCount) + '○'.repeat(4-noiseCount) : '○○○○' }}</span>
         </div>
         <div class="flex justify-between">
-          <span class="text-pink-300">自我主題：</span>
+          <span class="text-pink-300">自我：</span>
           <span class="text-pink-200"> {{ selfCount > 0 ? '●'.repeat(selfCount) + '○'.repeat(4-selfCount) : '○○○○' }}</span>
         </div>
       </div>

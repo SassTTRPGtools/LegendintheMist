@@ -310,7 +310,7 @@
               <Icon name="lucide:search" class="w-12 h-12 text-gray-500 mx-auto mb-4" />
               <p class="text-gray-400">找不到對應的角色參考資料</p>
               <p class="text-gray-500 text-sm mt-2">搜尋的角色名稱：{{ selectedCharacterName }}</p>
-              <p class="text-gray-500 text-sm">主題類型：{{ selectedCharacterType }}</p>
+              <p class="text-gray-500 text-sm">主題風格：{{ selectedCharacterType }}</p>
             </div>
           </div>
         </div>
