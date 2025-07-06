@@ -10,54 +10,66 @@
     <!-- 主要容器 -->
     <div class="container mx-auto px-4 py-8">
       <!-- 頂部區域 -->
-      <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
+      <div class="flex flex-wrap gap-6 mb-8 justify-center">
         <!-- 左上角：六角雷達圖 -->
-        <CharacterTypeChart :theme-cards="character.themeCards" />
+        <div class="w-[280px]">
+          <CharacterTypeChart :theme-cards="character.themeCards" />
+        </div>
 
         <!-- 角色基本資訊 -->
-        <CharacterInfo
-          :character="character"
-          :has-incomplete-level-up-game="hasIncompleteLevelUpGame"
-          @toggle-evolution-step="toggleEvolutionStep"
-          @show-evolution-history="openEvolutionHistoryModal"
-          @resume-level-up-game="resumeLevelUpGame"
-        />
+        <div class="w-[280px]">
+          <CharacterInfo
+            :character="character"
+            :has-incomplete-level-up-game="hasIncompleteLevelUpGame"
+            @toggle-evolution-step="toggleEvolutionStep"
+            @show-evolution-history="openEvolutionHistoryModal"
+            @resume-level-up-game="resumeLevelUpGame"
+          />
+        </div>
 
         <!-- 團隊主題卡 -->
-        <TeamThemeCard
-          :team-theme-card="character.teamThemeCard"
-          @toggle-edit="toggleTeamThemeEdit"
-          @improvement-change="onTeamThemeImprovementChange"
-          @decay-change="onTeamThemeDecayChange"
-        />
+        <div class="w-[280px]">
+          <TeamThemeCard
+            :team-theme-card="character.teamThemeCard"
+            @toggle-edit="toggleTeamThemeEdit"
+            @improvement-change="onTeamThemeImprovementChange"
+            @decay-change="onTeamThemeDecayChange"
+          />
+        </div>
 
         <!-- 裝備卡 -->
-        <EquipmentCard
-          :equipment="character.equipment"
-          :equipment-specialties="EQUIPMENT_SPECIALTIES"
-          @toggle-edit="toggleEquipmentEdit"
-          @improvement-change="onEquipmentImprovementChange"
-          @add-specialty="addEquipmentSpecialty"
-          @remove-specialty="removeEquipmentSpecialty"
-        />
+        <div class="w-[280px]">
+          <EquipmentCard
+            :equipment="character.equipment"
+            :equipment-specialties="EQUIPMENT_SPECIALTIES"
+            @toggle-edit="toggleEquipmentEdit"
+            @improvement-change="onEquipmentImprovementChange"
+            @add-specialty="addEquipmentSpecialty"
+            @remove-specialty="removeEquipmentSpecialty"
+          />
+        </div>
       </div>
 
-      <!-- 四個主題卡區塊 - 4x1 排列 -->
-      <div class="grid grid-cols-4 gap-6">
-        <ThemeCard
+      <!-- 四個主題卡區塊 - 固定寬度排列 -->
+      <div class="flex flex-wrap gap-6 justify-center">
+        <div 
           v-for="(card, index) in character.themeCards"
           :key="index"
-          :theme-card="card"
-          :card-index="index"
-          :mythos-themes="mythosThemes"
-          :noise-themes="noiseThemes"
-          :self-themes="selfThemes"
-          @theme-type-change="onThemeTypeChange"
-          @theme-change="onThemeChange"
-          @improvement-change="onImprovementChange"
-          @decay-change="onDecayChange"
-          @toggle-edit="toggleEdit"
-        />
+          class="w-[280px]"
+        >
+          <ThemeCard
+            :theme-card="card"
+            :card-index="index"
+            :mythos-themes="mythosThemes"
+            :noise-themes="noiseThemes"
+            :self-themes="selfThemes"
+            @theme-type-change="onThemeTypeChange"
+            @theme-change="onThemeChange"
+            @improvement-change="onImprovementChange"
+            @decay-change="onDecayChange"
+            @toggle-edit="toggleEdit"
+          />
+        </div>
       </div>
 
       <!-- 改進彈窗 -->

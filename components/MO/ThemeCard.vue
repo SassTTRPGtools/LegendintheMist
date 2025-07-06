@@ -10,23 +10,24 @@
     <!-- 主題區塊 -->
     <div 
       v-if="themeCard.selectedThemeType"
-      class="relative rounded-lg overflow-hidden flex items-center justify-between px-4"
+      class="relative rounded-lg overflow-hidden flex items-center"
       :style="{ 
         backgroundImage: `url(${getThemeHeaderImage()})`,
-        backgroundRepeat: 'no-repeat'
+        backgroundRepeat: 'no-repeat',
       }"
     >
       <!-- 主題類型名稱 -->
-      <div class="relative z-10 text-white font-bold drop-shadow-lg">
+      <div class="relative z-10 text-white font-bold drop-shadow-lg flex-1 min-w-0 pr-5 pl-3 text-lg truncate">
         {{ getThemeTypeName() }}
       </div>
       
-      <!-- 右側圖示 -->
-      <div class="relative z-10 flex items-center justify-end ml-auto">
+      <!-- 右側圖示 - 確保不被裁切 -->
+      <div class="relative z-10 flex-shrink-0 flex items-center justify-center pl-3 ml-2">
         <img 
           :src="getThemeIcon()" 
           :alt="getThemeTypeName()"
           class="w-8 h-8 drop-shadow-lg filter brightness-110 object-contain"
+          @error="handleImageError"
         />
       </div>
     </div>
@@ -606,6 +607,15 @@ function getThemeTypeName() {
   
   const selectedTheme = availableThemes.value[props.themeCard.selectedTheme]
   return selectedTheme?.theme || '主題'
+}
+
+// 圖片錯誤處理
+function handleImageError(event: Event) {
+  const target = event.target as HTMLImageElement
+  console.error('圖片載入失敗:', target.src)
+  
+  // 設定預設圖片或隱藏圖片
+  target.style.display = 'none'
 }
 
 // 組件掛載時的調試輸出
