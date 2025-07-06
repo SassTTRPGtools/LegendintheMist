@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>團隊主題卡測試</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* 動畫定義 */
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(34, 211, 238, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(34, 211, 238, 0.6); }
+        }
+        @keyframes fade-in {
+            0% { opacity: 0; transform: scale(0.95); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        .animate-glow { animation: glow 2s ease-in-out infinite; }
+        .animate-fade-in { animation: fade-in 0.3s ease-out; }
+        .animate-pulse-slow { animation: pulse 4s ease-in-out infinite; }
+    </style>
+</head>
+<body class="bg-slate-900 text-white p-8">
+    <div id="app">
+        <h1 class="text-2xl font-bold mb-6 text-cyan-400">團隊主題卡 - 專長編輯測試</h1>
+        
+        <div class="max-w-2xl mx-auto">
+            <team-theme-card-test :team-theme-card="teamThemeCard" @toggle-edit="toggleEdit" />
+        </div>
+        
+        <div class="mt-8 max-w-2xl mx-auto">
+            <h2 class="text-lg font-semibold text-white mb-4">調試信息</h2>
+            <div class="p-4 bg-slate-800 rounded-lg text-xs space-y-2">
+                <div>編輯模式: {{ teamThemeCard.isEditing ? '是' : '否' }}</div>
+                <div>專長數量: {{ teamThemeCard.customSpecialties.length }}</div>
+                <div>專長資料: 
+                    <pre class="mt-2 text-xs bg-slate-700 p-2 rounded">{{ JSON.stringify(teamThemeCard.customSpecialties, null, 2) }}</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const { createApp, ref, onMounted } = Vue;
+        
+        console.log('開始加載團隊主題卡測試頁面...');
+        
+        // SpecialtyTooltip 組件
+        const SpecialtyTooltip = {
+            template: `
+                <div class="inline-block">
+                    <div 
+                        @mouseenter="showTooltip"
+                        @mouseleave="hideTooltip"
+                        class="inline-block"
+                    >
+                        <slot />
+                    </div>
+                    
+                    <teleport to="body">
+                        <div 
+                            v-if="tooltipData.visible"
+                            class="fixed transition-all duration-300 ease-out pointer-events-none z-50"
+                            :style="tooltipPosition"
+                        >
+                            <div class="relative">
+                                <div class="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 border-2 border-cyan-400/60 rounded-lg shadow-2xl shadow-cyan-400/20 backdrop-blur-sm w-64 animate-glow">
+                                    <div class="relative">
+                                        <div class="h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent rounded-t-md"></div>
+                                        <div class="absolute top-1 left-2 w-1 h-1 bg-cyan-400 rounded-full animate-pulse"></div>
+                                        <div class="absolute top-1 right-2 w-1 h-1 bg-cyan-400 rounded-full animate-pulse delay-75"></div>
+                                    </div>
+                                    
+                                    <div class="p-3 space-y-2 relative">
+                                        <div class="absolute inset-0 opacity-5" style="background-image: linear-gradient(rgba(34, 211, 238, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(34, 211, 238, 0.1) 1px, transparent 1px); background-size: 8px 8px;"></div>
+                                        
+                                        <div class="relative text-cyan-300 font-bold text-sm tracking-wide border-b border-cyan-400/30 pb-1 flex items-center">
+                                            <div class="w-1 h-1 bg-cyan-400 rounded-full mr-2 animate-pulse"></div>
+                                            {{ tooltipData.name }}
+                                            <div class="ml-auto w-1 h-1 bg-cyan-400 rounded-full animate-pulse delay-150"></div>
+                                        </div>
+                                        
+                                        <div class="relative text-gray-200 text-xs leading-relaxed pl-3">
+                                            <div class="absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-cyan-400/50 to-transparent"></div>
+                                            {{ tooltipData.description }}
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="relative">
+                                        <div class="h-px bg-gradient-to-r from-transparent via-cyan-400/50 to-transparent"></div>
+                                        <div class="absolute bottom-1 left-2 w-1 h-1 bg-cyan-400 rounded-full animate-pulse delay-100"></div>
+                                        <div class="absolute bottom-1 right-2 w-1 h-1 bg-cyan-400 rounded-full animate-pulse delay-200"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </teleport>
+                </div>
+            `,
+            props: {
+                name: { type: String, required: true },
+                description: { type: String, required: true }
+            },
+            setup(props) {
+                const tooltipData = ref({
+                    visible: false,
+                    name: '',
+                    description: '',
+                    x: 0,
+                    y: 0
+                });
+                
+                const tooltipPosition = ref({});
+                
+                const showTooltip = (event) => {
+                    console.log('SpecialtyTooltip showTooltip:', props);
+                    
+                    if (!props.name?.trim() || !props.description?.trim()) {
+                        console.warn('缺少名稱或描述');
+                        return;
+                    }
+                    
+                    const rect = event.target.getBoundingClientRect();
+                    const x = rect.left + rect.width / 2;
+                    const y = rect.top - 16;
+                    
+                    tooltipData.value = {
+                        visible: true,
+                        name: props.name,
+                        description: props.description,
+                        x: x,
+                        y: y
+                    };
+                    
+                    tooltipPosition.value = {
+                        left: x + 'px',
+                        top: y + 'px',
+                        transform: 'translate(-50%, -100%)'
+                    };
+                };
+                
+                const hideTooltip = () => {
+                    tooltipData.value.visible = false;
+                };
+                
+                return {
+                    tooltipData,
+                    tooltipPosition,
+                    showTooltip,
+                    hideTooltip
+                };
+            }
+        };
+        
+        // TeamThemeCard 測試組件
+        const TeamThemeCardTest = {
+            template: `
+                <div class="bg-slate-800/80 backdrop-blur rounded-lg p-6 border border-purple-500/30">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-xl font-bold text-purple-300">團隊主題卡</h3>
+                        <button 
+                            @click="$emit('toggle-edit')"
+                            :class="[
+                                'px-4 py-1 rounded text-xs transition-colors min-w-[60px] flex items-center justify-center flex-shrink-0',
+                                teamThemeCard.isEditing 
+                                    ? 'bg-green-600 hover:bg-green-700 text-white' 
+                                    : 'bg-purple-600 hover:bg-purple-700 text-white'
+                            ]"
+                        >
+                            {{ teamThemeCard.isEditing ? '完成' : '編輯' }}
+                        </button>
+                    </div>
+                    
+                    <!-- 主題專長區域 -->
+                    <div class="mb-6">
+                        <div class="mb-3 flex items-center justify-between">
+                            <div>
+                                <span class="text-sm font-medium text-gray-300">主題專長</span>
+                                <span class="text-xs text-gray-400 ml-1">
+                                    ({{ getValidSpecialtiesCount() }}/5)
+                                </span>
+                            </div>
+                            <button
+                                v-if="teamThemeCard.isEditing && getValidSpecialtiesCount() < 5"
+                                @click="addSpecialty"
+                                class="px-2 py-1 bg-amber-600/20 text-amber-300 rounded text-xs border border-amber-500/30 hover:bg-amber-500/30 hover:border-amber-400/50 transition-all duration-200"
+                            >
+                                + 新增專長
+                            </button>
+                        </div>
+                        
+                        <!-- 編輯模式：專長編輯列表 -->
+                        <div v-if="teamThemeCard.isEditing" class="space-y-3">
+                            <div 
+                                v-for="(specialty, index) in teamThemeCard.customSpecialties" 
+                                :key="index"
+                                class="p-3 bg-slate-700/20 rounded-lg border border-slate-600/30"
+                            >
+                                <div class="flex items-start justify-between mb-2">
+                                    <div class="flex-1 space-y-2">
+                                        <input
+                                            v-model="specialty.name"
+                                            type="text"
+                                            placeholder="專長名稱"
+                                            class="w-full px-2 py-1 bg-slate-600 border border-slate-500 rounded text-white text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                                            @input="onSpecialtyChange"
+                                        />
+                                        <textarea
+                                            v-model="specialty.description"
+                                            placeholder="專長描述"
+                                            rows="2"
+                                            class="w-full px-2 py-1 bg-slate-600 border border-slate-500 rounded text-white text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent resize-none"
+                                            @input="onSpecialtyChange"
+                                        ></textarea>
+                                    </div>
+                                    <button
+                                        @click="removeSpecialty(index)"
+                                        class="ml-2 w-6 h-6 bg-red-600/20 text-red-300 rounded border border-red-500/30 hover:bg-red-500/30 hover:border-red-400/50 transition-all duration-200 flex items-center justify-center text-xs"
+                                        title="刪除專長"
+                                    >
+                                        ×
+                                    </button>
+                                </div>
+                                
+                                <!-- 編輯模式下的預覽 -->
+                                <div v-if="specialty.name?.trim() && specialty.description?.trim()" class="mt-2">
+                                    <specialty-tooltip
+                                        :name="specialty.name"
+                                        :description="specialty.description"
+                                    >
+                                        <span class="inline-flex items-center px-2 py-1 bg-amber-600/20 text-amber-300 rounded text-xs cursor-help border border-amber-500/30 hover:bg-amber-500/30 hover:border-amber-400/50 hover:text-amber-200 transition-all duration-200">
+                                            {{ specialty.name }} (預覽)
+                                        </span>
+                                    </specialty-tooltip>
+                                </div>
+                            </div>
+                            
+                            <!-- 編輯模式提示 -->
+                            <div v-if="teamThemeCard.customSpecialties.length === 0" class="text-center py-4 text-gray-400 bg-slate-700/10 rounded-lg border border-slate-600/20">
+                                <p class="text-sm">點擊「新增專長」來添加團隊專長</p>
+                                <p class="text-xs mt-1">團隊最多可擁有 5 個自定義專長</p>
+                            </div>
+                        </div>
+                        
+                        <!-- 顯示模式：專長標籤 -->
+                        <div v-else>
+                            <div v-if="getValidSpecialtiesCount() > 0" 
+                                 class="mt-2 p-3 bg-slate-700/20 rounded-lg border border-slate-600/30">
+                                <div class="flex flex-wrap gap-2">
+                                    <specialty-tooltip
+                                        v-for="(specialty, index) in getValidSpecialties()" 
+                                        :key="index"
+                                        :name="specialty.name"
+                                        :description="specialty.description"
+                                    >
+                                        <span 
+                                            class="inline-flex items-center px-2 py-1 bg-amber-600/20 text-amber-300 rounded text-xs cursor-help border border-amber-500/30 hover:bg-amber-500/30 hover:border-amber-400/50 hover:text-amber-200 hover:shadow-lg hover:shadow-amber-400/20 transition-all duration-200 relative overflow-hidden group"
+                                        >
+                                            <div class="absolute inset-0 bg-gradient-to-r from-transparent via-amber-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                            <div class="relative z-10">{{ specialty.name }}</div>
+                                        </span>
+                                    </specialty-tooltip>
+                                </div>
+                            </div>
+                            
+                            <div v-else class="mt-2 text-sm text-gray-400 italic p-3 bg-slate-700/10 rounded-lg border border-slate-600/20 text-center">
+                                尚未設定團隊專長
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `,
+            components: {
+                SpecialtyTooltip
+            },
+            props: {
+                teamThemeCard: { type: Object, required: true }
+            },
+            emits: ['toggle-edit'],
+            setup(props) {
+                onMounted(() => {
+                    console.log('TeamThemeCard 測試組件已掛載:', props.teamThemeCard);
+                });
+                
+                const onSpecialtyChange = () => {
+                    console.log('專長資料變更:', props.teamThemeCard.customSpecialties);
+                };
+                
+                const getValidSpecialtiesCount = () => {
+                    if (!props.teamThemeCard?.customSpecialties) return 0;
+                    return props.teamThemeCard.customSpecialties.filter(specialty => 
+                        specialty && specialty.name?.trim() && specialty.description?.trim()
+                    ).length;
+                };
+                
+                const getValidSpecialties = () => {
+                    if (!props.teamThemeCard?.customSpecialties) return [];
+                    return props.teamThemeCard.customSpecialties.filter(specialty => 
+                        specialty && specialty.name?.trim() && specialty.description?.trim()
+                    );
+                };
+                
+                const addSpecialty = () => {
+                    console.log('新增專長');
+                    if (!props.teamThemeCard.customSpecialties) {
+                        props.teamThemeCard.customSpecialties = [];
+                    }
+                    
+                    if (props.teamThemeCard.customSpecialties.length < 5) {
+                        props.teamThemeCard.customSpecialties.push({
+                            name: '',
+                            description: ''
+                        });
+                        console.log('專長已新增，當前列表:', props.teamThemeCard.customSpecialties);
+                    }
+                };
+                
+                const removeSpecialty = (index) => {
+                    console.log('移除專長:', index);
+                    props.teamThemeCard.customSpecialties.splice(index, 1);
+                    console.log('移除後的列表:', props.teamThemeCard.customSpecialties);
+                };
+                
+                return {
+                    onSpecialtyChange,
+                    getValidSpecialtiesCount,
+                    getValidSpecialties,
+                    addSpecialty,
+                    removeSpecialty
+                };
+            }
+        };
+        
+        createApp({
+            components: {
+                TeamThemeCardTest
+            },
+            setup() {
+                const teamThemeCard = ref({
+                    title: '測試團隊主題',
+                    customSpecialties: [
+                        {
+                            name: '團隊協作',
+                            description: '團隊成員能夠更好地協作，在團隊行動中獲得額外優勢。'
+                        }
+                    ],
+                    isEditing: false
+                });
+                
+                const toggleEdit = () => {
+                    teamThemeCard.value.isEditing = !teamThemeCard.value.isEditing;
+                    console.log('編輯模式切換:', teamThemeCard.value.isEditing);
+                };
+                
+                onMounted(() => {
+                    console.log('測試應用已掛載，初始資料:', teamThemeCard.value);
+                });
+                
+                return {
+                    teamThemeCard,
+                    toggleEdit
+                };
+            }
+        }).mount('#app');
+        
+        console.log('團隊主題卡測試應用已啟動');
+    </script>
+</body>
+</html>
