@@ -146,12 +146,27 @@
               {{ ability.text || `能力標籤 ${abilityIndex + 1}` }}
             </span>
             <div class="flex items-center shrink-0">
-              <input 
-                v-model="ability.isBurned"
-                type="checkbox"
-                class="w-3 h-3 text-red-600 bg-slate-600 border-slate-500 rounded focus:ring-red-500"
-              />
-              <label class="ml-1 text-xs text-red-400">燒</label>
+              <button
+                @click="ability.isBurned = !ability.isBurned"
+                :class="[
+                  'w-6 h-6 rounded-full flex items-center justify-center transition-colors',
+                  ability.isBurned 
+                    ? 'bg-orange-600 hover:bg-orange-700 text-white shadow-lg' 
+                    : 'bg-slate-600 hover:bg-slate-700 text-gray-300'
+                ]"
+                :title="ability.isBurned ? '點擊恢復能力' : '點擊燒毀能力'"
+              >
+                <Icon 
+                  v-if="ability.isBurned" 
+                  name="lucide:flame" 
+                  class="w-3 h-3 text-yellow-200" 
+                />
+                <Icon 
+                  v-else 
+                  name="lucide:circle" 
+                  class="w-3 h-3 text-gray-400" 
+                />
+              </button>
             </div>
           </div>
         </div>

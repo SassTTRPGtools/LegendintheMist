@@ -115,14 +115,23 @@
           <button
             @click="ability.isBurned = !ability.isBurned"
             :class="[
-              'w-8 h-8 rounded-full text-xs font-bold transition-colors',
+              'w-8 h-8 rounded-full flex items-center justify-center transition-colors',
               ability.isBurned 
-                ? 'bg-red-600 hover:bg-red-700 text-white' 
+                ? 'bg-orange-600 hover:bg-orange-700 text-white shadow-lg' 
                 : 'bg-slate-600 hover:bg-slate-700 text-gray-300'
             ]"
-            :title="ability.isBurned ? '點擊恢復' : '點擊燒毀'"
+            :title="ability.isBurned ? '點擊恢復能力' : '點擊燒毀能力'"
           >
-            {{ ability.isBurned ? '✕' : '○' }}
+            <Icon 
+              v-if="ability.isBurned" 
+              name="lucide:flame" 
+              class="w-4 h-4 text-yellow-200" 
+            />
+            <Icon 
+              v-else 
+              name="lucide:circle" 
+              class="w-4 h-4 text-gray-400" 
+            />
           </button>
         </div>
       </div>

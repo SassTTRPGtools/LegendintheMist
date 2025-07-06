@@ -70,13 +70,28 @@
               :placeholder="`裝備能力 ${abilityIndex + 1}`"
               class="flex-1 px-2 py-1 bg-slate-600 border border-slate-500 rounded text-white text-sm focus:ring-1 focus:ring-purple-500"
             />
-            <div class="flex items-center space-x-1">
-              <input 
-                v-model="ability.isBurned"
-                type="checkbox"
-                class="w-3 h-3 text-red-600 bg-slate-600 border-slate-500 rounded focus:ring-red-500"
-              />
-              <label class="text-xs text-red-400">燒</label>
+            <div class="flex items-center">
+              <button
+                @click="ability.isBurned = !ability.isBurned"
+                :class="[
+                  'w-6 h-6 rounded-full flex items-center justify-center transition-colors',
+                  ability.isBurned 
+                    ? 'bg-orange-600 hover:bg-orange-700 text-white shadow-lg' 
+                    : 'bg-slate-600 hover:bg-slate-700 text-gray-300'
+                ]"
+                :title="ability.isBurned ? '點擊恢復能力' : '點擊燒毀能力'"
+              >
+                <Icon 
+                  v-if="ability.isBurned" 
+                  name="lucide:flame" 
+                  class="w-3 h-3 text-yellow-200" 
+                />
+                <Icon 
+                  v-else 
+                  name="lucide:circle" 
+                  class="w-3 h-3 text-gray-400" 
+                />
+              </button>
             </div>
           </div>
         </div>
