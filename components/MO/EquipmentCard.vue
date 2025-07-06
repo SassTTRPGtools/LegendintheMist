@@ -41,9 +41,8 @@
           </div>
         </div>
         <div>
-          <label class="block text-sm font-medium mb-2 text-blue-400">力度記錄</label>
+          <label class="block text-sm font-medium mb-2 text-blue-400">當前力度</label>
           <div class="flex items-center space-x-2">
-            <span class="text-blue-300 text-sm">當前力度：</span>
             <input 
               v-model.number="equipment.power"
               type="number"
@@ -53,7 +52,7 @@
             />
           </div>
           <div class="text-xs text-gray-400 mt-1">
-            可手動調整力度數值（1-10）
+            力度數值（1-10）
           </div>
         </div>
       </div>

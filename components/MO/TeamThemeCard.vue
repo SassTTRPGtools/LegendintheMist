@@ -7,22 +7,24 @@
     </div>
     
     <!-- 編輯/檢視模式切換 -->
-    <div class="flex justify-between items-center mb-4">
-      <input 
-        v-if="teamThemeCard.isEditing" 
-        v-model="teamThemeCard.title"
-        type="text" 
-        placeholder="輸入團隊主題標題"
-        class="text-lg font-bold bg-transparent text-white border-b border-purple-400 focus:outline-none focus:border-purple-300 flex-1 mr-2"
-      />
-      <h4 v-else class="text-lg font-bold text-white">
-        {{ teamThemeCard.title || '未命名團隊主題' }}
-      </h4>
+    <div class="flex justify-between items-center mb-4 gap-3">
+      <div class="flex-1 min-w-0">
+        <input 
+          v-if="teamThemeCard.isEditing" 
+          v-model="teamThemeCard.title"
+          type="text" 
+          placeholder="輸入團隊主題標題"
+          class="w-full text-lg font-bold bg-transparent text-white border-b border-purple-400 focus:outline-none focus:border-purple-300"
+        />
+        <h4 v-else class="text-lg font-bold text-white truncate">
+          {{ teamThemeCard.title || '未命名團隊主題' }}
+        </h4>
+      </div>
       
       <button 
         @click="$emit('toggle-edit')"
         :class="[
-          'px-3 py-1 rounded text-xs transition-colors',
+          'px-4 py-1 rounded text-xs transition-colors min-w-[60px] flex items-center justify-center flex-shrink-0',
           teamThemeCard.isEditing 
             ? 'bg-green-600 hover:bg-green-700 text-white' 
             : 'bg-purple-600 hover:bg-purple-700 text-white'
