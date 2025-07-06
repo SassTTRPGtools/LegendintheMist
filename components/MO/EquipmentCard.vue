@@ -16,22 +16,6 @@
     </div>
     
     <div class="space-y-4">
-      <!-- 裝備名稱 -->
-      <div class="flex justify-between items-center mb-4 gap-3">
-        <div class="flex-1 min-w-0">
-          <input 
-            v-if="equipment.isEditing"
-            v-model="equipment.name" 
-            type="text" 
-            placeholder="輸入裝備名稱"
-            class="w-full text-lg font-bold bg-transparent text-white border-b border-purple-400 focus:outline-none focus:border-purple-300"
-          />
-          <h4 v-else class="text-lg font-bold text-white truncate">
-            {{ equipment.name || '未命名裝備' }}
-          </h4>
-        </div>
-      </div>
-
       <!-- 改進軌跡與力度 -->
       <div class="mb-4">
         <div class="flex justify-center space-x-6">
@@ -199,7 +183,6 @@ import SpecialtyTooltip from './SpecialtyTooltip.vue'
 
 // 定義接口
 interface Equipment {
-  name: string
   improvements: Array<{ checked: boolean }>
   power: number
   abilities: Array<{ text: string; isBurned: boolean }>
@@ -220,7 +203,6 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   equipment: () => ({
-    name: '',
     improvements: Array(3).fill(null).map(() => ({ checked: false })),
     power: 1,
     abilities: Array(7).fill(null).map(() => ({ text: '', isBurned: false })),

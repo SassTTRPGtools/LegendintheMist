@@ -1,7 +1,7 @@
 <template>
   <div class="bg-slate-800/80 backdrop-blur rounded-lg p-6 border border-purple-500/30">
     <div class="flex items-center justify-between mb-4">
-      <h3 class="text-xl font-bold text-purple-300">團隊主題卡</h3>
+      <h3 class="text-xl font-bold text-purple-300">團隊主題</h3>
       <button 
         @click="$emit('toggle-edit')"
         :class="[
@@ -16,22 +16,6 @@
     </div>
     
     <div class="space-y-4">
-      <!-- 團隊主題標題 -->
-      <div class="flex justify-between items-center mb-4 gap-3">
-        <div class="flex-1 min-w-0">
-          <input 
-            v-if="teamThemeCard.isEditing" 
-            v-model="teamThemeCard.title"
-            type="text" 
-            placeholder="輸入團隊主題標題"
-            class="w-full text-lg font-bold bg-transparent text-white border-b border-purple-400 focus:outline-none focus:border-purple-300"
-          />
-          <h4 v-else class="text-lg font-bold text-white truncate">
-            {{ teamThemeCard.title || '未命名團隊主題' }}
-          </h4>
-        </div>
-      </div>
-
       <!-- 改進軌跡和衰變軌跡 -->
       <div class="mb-4">
         <div class="flex justify-center space-x-6">
@@ -273,7 +257,6 @@ import SpecialtyTooltip from './SpecialtyTooltip.vue'
 
 // 定義介面
 interface TeamThemeCard {
-  title: string
   abilities: Array<{ text: string; isBurned: boolean }>
   weaknesses: Array<{ text: string }>
   customSpecialties: Array<{ name: string; description: string }>
