@@ -1,26 +1,7 @@
 <template>
   <div class="bg-slate-800/80 backdrop-blur rounded-lg p-6 border border-purple-500/30">
     <div class="flex items-center justify-between mb-4">
-      <div class="flex items-center space-x-2">
-        <h3 class="text-xl font-bold text-purple-300">團隊主題卡</h3>
-      </div>
-    </div>
-    
-    <!-- 編輯/檢視模式切換 -->
-    <div class="flex justify-between items-center mb-4 gap-3">
-      <div class="flex-1 min-w-0">
-        <input 
-          v-if="teamThemeCard.isEditing" 
-          v-model="teamThemeCard.title"
-          type="text" 
-          placeholder="輸入團隊主題標題"
-          class="w-full text-lg font-bold bg-transparent text-white border-b border-purple-400 focus:outline-none focus:border-purple-300"
-        />
-        <h4 v-else class="text-lg font-bold text-white truncate">
-          {{ teamThemeCard.title || '未命名團隊主題' }}
-        </h4>
-      </div>
-      
+      <h3 class="text-xl font-bold text-purple-300">團隊主題卡</h3>
       <button 
         @click="$emit('toggle-edit')"
         :class="[
@@ -33,21 +14,38 @@
         {{ teamThemeCard.isEditing ? '完成' : '編輯' }}
       </button>
     </div>
+    
+    <div class="space-y-4">
+      <!-- 團隊主題標題 -->
+      <div class="flex justify-between items-center mb-4 gap-3">
+        <div class="flex-1 min-w-0">
+          <input 
+            v-if="teamThemeCard.isEditing" 
+            v-model="teamThemeCard.title"
+            type="text" 
+            placeholder="輸入團隊主題標題"
+            class="w-full text-lg font-bold bg-transparent text-white border-b border-purple-400 focus:outline-none focus:border-purple-300"
+          />
+          <h4 v-else class="text-lg font-bold text-white truncate">
+            {{ teamThemeCard.title || '未命名團隊主題' }}
+          </h4>
+        </div>
+      </div>
 
-    <!-- 改進軌跡和衰變軌跡 -->
-    <div class="mb-6">
-      <div class="flex justify-center space-x-8">
-        <!-- 改進軌跡 -->
-        <div class="flex flex-col items-center">
-          <label class="block text-sm font-medium text-gray-300 mb-2">改進軌跡</label>
-          <div class="flex space-x-2">
-            <button
-              v-for="(improvement, index) in teamThemeCard.improvements"
-              :key="index"
-              @click="toggleImprovement(index)"
-              :class="[
-                'w-8 h-8 border-2 rounded flex items-center justify-center text-sm font-bold transition-colors',
-                improvement.checked 
+      <!-- 改進軌跡和衰變軌跡 -->
+      <div class="mb-6">
+        <div class="flex justify-center space-x-8">
+          <!-- 改進軌跡 -->
+          <div class="flex flex-col items-center">
+            <label class="block text-sm font-medium text-gray-300 mb-2">改進軌跡</label>
+            <div class="flex space-x-2">
+              <button
+                v-for="(improvement, index) in teamThemeCard.improvements"
+                :key="index"
+                @click="toggleImprovement(index)"
+                :class="[
+                  'w-8 h-8 border-2 rounded flex items-center justify-center text-sm font-bold transition-colors',
+                  improvement.checked 
                   ? 'bg-purple-600 border-purple-400 text-white' 
                   : 'bg-slate-700 border-slate-600 text-gray-400 hover:border-purple-500'
               ]"
@@ -271,7 +269,7 @@
           </div>
           
           <button
-            v-if="teamThemeCard.isEditing && teamThemeCard.customSpecialties.length > 1"
+            v-if="teamThemeCard.isEditing"
             @click="removeSpecialty(index)"
             class="w-7 h-7 bg-red-600 hover:bg-red-700 text-white rounded-full text-xs font-bold mt-1 flex-shrink-0 transition-colors"
             title="移除專長"
@@ -298,6 +296,7 @@
           專長已達上限 (5/5)
         </div>
       </div>
+    </div>
     </div>
   </div>
 </template>
@@ -350,14 +349,6 @@ function addSpecialty() {
 // 移除專長
 function removeSpecialty(index: number) {
   props.teamThemeCard.customSpecialties.splice(index, 1)
-  
-  // 確保至少有一個專長槽
-  if (props.teamThemeCard.customSpecialties.length === 0) {
-    props.teamThemeCard.customSpecialties.push({
-      name: '',
-      description: ''
-    })
-  }
 }
 
 // 切換改進軌跡

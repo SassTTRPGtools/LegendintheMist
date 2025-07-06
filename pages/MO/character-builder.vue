@@ -547,7 +547,7 @@ function createEmptyTeamThemeCard() {
     title: '',
     abilities: Array(7).fill(null).map(() => ({ text: '', isBurned: false })),
     weaknesses: Array(2).fill(null).map(() => ({ text: '' })),
-    customSpecialties: [{ name: '', description: '' }], // 至少有一個專長槽
+    customSpecialties: [], // 從0個專長開始
     improvements: Array(3).fill(null).map(() => ({ checked: false })),
     decays: Array(3).fill(null).map(() => ({ checked: false })),
     isEditing: false

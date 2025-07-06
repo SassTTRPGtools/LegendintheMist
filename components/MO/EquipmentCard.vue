@@ -17,20 +17,18 @@
     
     <div class="space-y-4">
       <!-- 裝備名稱 -->
-      <div>
-        <label class="block text-sm font-medium text-gray-300 mb-2">裝備名稱</label>
-        <input 
-          v-if="equipment.isEditing"
-          v-model="equipment.name" 
-          type="text" 
-          class="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-md text-white text-sm focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-          placeholder="輸入裝備名稱"
-        />
-        <div 
-          v-else
-          class="w-full px-3 py-2 bg-slate-700/50 border border-slate-600/50 rounded-md text-white text-sm"
-        >
-          {{ equipment.name || '未命名裝備' }}
+      <div class="flex justify-between items-center mb-4 gap-3">
+        <div class="flex-1 min-w-0">
+          <input 
+            v-if="equipment.isEditing"
+            v-model="equipment.name" 
+            type="text" 
+            placeholder="輸入裝備名稱"
+            class="w-full text-lg font-bold bg-transparent text-white border-b border-purple-400 focus:outline-none focus:border-purple-300"
+          />
+          <h4 v-else class="text-lg font-bold text-white truncate">
+            {{ equipment.name || '未命名裝備' }}
+          </h4>
         </div>
       </div>
 
@@ -173,8 +171,47 @@
 
       <!-- 裝備專長 -->
       <div>
-        <label class="block text-sm font-medium mb-2 text-amber-400">裝備專長</label>
-        <div class="space-y-2">
+        <div class="flex items-center justify-between mb-3">
+          <button
+            @click="toggleSpecialtyExpanded"
+            class="flex items-center space-x-2 text-sm font-medium text-amber-400 hover:text-amber-300 transition-colors"
+          >
+            <span>裝備專長</span>
+            <span class="text-xs text-gray-400 ml-1">
+              ({{ equipment.specialties.length }})
+            </span>
+            <svg 
+              :class="[
+                'w-4 h-4 transition-transform duration-200',
+                isSpecialtyExpanded ? 'rotate-90' : 'rotate-0'
+              ]" 
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+          </button>
+        </div>
+        
+        <!-- 折疊時的簡要預覽 -->
+        <div v-if="!isSpecialtyExpanded && equipment.specialties.length > 0" 
+             class="mt-2 p-3 bg-amber-900/20 rounded-lg border border-amber-500/30">
+          <div class="flex flex-wrap gap-2">
+            <span 
+              v-for="(specialty, index) in equipment.specialties" 
+              :key="index"
+              class="inline-flex items-center px-2 py-1 bg-amber-600/20 text-amber-300 rounded text-xs"
+            >
+              <span class="w-4 h-4 bg-amber-600 text-white rounded-full flex items-center justify-center text-xs font-bold mr-1">
+                {{ index + 1 }}
+              </span>
+              {{ specialty.type ? equipmentSpecialties[specialty.type]?.name : `專長 ${index + 1}` }}
+            </span>
+          </div>
+        </div>
+        
+        <div v-if="isSpecialtyExpanded" class="space-y-2">
           <div 
             v-for="(specialty, index) in equipment.specialties" 
             :key="index"
@@ -267,6 +304,11 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
+
+// 折疊狀態管理
+const isSpecialtyExpanded = ref(false)
+
 // 定義接口
 interface Equipment {
   name: string
@@ -345,6 +387,11 @@ const emit = defineEmits<{
 // 方法
 function onImprovementChange(improvementIndex: number) {
   emit('improvement-change', improvementIndex)
+}
+
+// 切換專長展開狀態
+function toggleSpecialtyExpanded() {
+  isSpecialtyExpanded.value = !isSpecialtyExpanded.value
 }
 
 // 切換改進軌跡

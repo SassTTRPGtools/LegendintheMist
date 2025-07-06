@@ -201,22 +201,63 @@
 
       <!-- 主題專長 -->
       <div>
-        <label class="block text-xs font-medium mb-2 text-amber-400">主題專長</label>
-        <div v-if="themeCard.selectedSpecialties && themeCard.selectedSpecialties.length > 0" class="space-y-2">
-          <div 
-            v-for="(specialty, index) in themeCard.selectedSpecialties" 
-            :key="index"
-            class="text-xs p-2 bg-amber-900/20 border border-amber-500/30 rounded"
+        <div class="flex items-center justify-between mb-3">
+          <button
+            @click="toggleSpecialtyExpanded"
+            class="flex items-center space-x-2 text-xs font-medium text-amber-400 hover:text-amber-300 transition-colors"
           >
-            <div class="font-medium text-amber-300 mb-1">{{ getSpecialtyName(specialty) }}</div>
-            <div class="text-amber-200">{{ getSpecialtyFullDescription(specialty) }}</div>
+            <span>主題專長</span>
+            <span class="text-xs text-gray-400 ml-1">
+              ({{ (themeCard.selectedSpecialties && themeCard.selectedSpecialties.length) || 0 }})
+            </span>
+            <svg 
+              :class="[
+                'w-3 h-3 transition-transform duration-200',
+                isSpecialtyExpanded ? 'rotate-90' : 'rotate-0'
+              ]" 
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+          </button>
+        </div>
+        
+        <!-- 折疊時的簡要預覽 -->
+        <div v-if="!isSpecialtyExpanded && themeCard.selectedSpecialties && themeCard.selectedSpecialties.length > 0" 
+             class="mt-2 p-2 bg-amber-900/20 rounded-lg border border-amber-500/30">
+          <div class="flex flex-wrap gap-1">
+            <span 
+              v-for="(specialty, index) in themeCard.selectedSpecialties" 
+              :key="index"
+              class="inline-flex items-center px-2 py-1 bg-amber-600/20 text-amber-300 rounded text-xs"
+            >
+              <span class="w-3 h-3 bg-amber-600 text-white rounded-full flex items-center justify-center text-xs font-bold mr-1">
+                {{ index + 1 }}
+              </span>
+              {{ getSpecialtyName(specialty) }}
+            </span>
           </div>
         </div>
-        <div v-else-if="hasAvailableSpecialties" class="text-xs text-gray-400 italic">
-          尚未選擇主題專長（改進時可選擇）
-        </div>
-        <div v-else class="text-xs text-gray-500 italic">
-          此主題暫無可用專長
+        
+        <div v-if="isSpecialtyExpanded">
+          <div v-if="themeCard.selectedSpecialties && themeCard.selectedSpecialties.length > 0" class="space-y-2">
+            <div 
+              v-for="(specialty, index) in themeCard.selectedSpecialties" 
+              :key="index"
+              class="text-xs p-2 bg-amber-900/20 border border-amber-500/30 rounded"
+            >
+              <div class="font-medium text-amber-300 mb-1">{{ getSpecialtyName(specialty) }}</div>
+              <div class="text-amber-200">{{ getSpecialtyFullDescription(specialty) }}</div>
+            </div>
+          </div>
+          <div v-else-if="hasAvailableSpecialties" class="text-xs text-gray-400 italic">
+            尚未選擇主題專長（改進時可選擇）
+          </div>
+          <div v-else class="text-xs text-gray-500 italic">
+            此主題暫無可用專長
+          </div>
         </div>
       </div>
 
@@ -280,7 +321,10 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
+
+// 折疊狀態管理
+const isSpecialtyExpanded = ref(false)
 
 // 定義接口
 interface ThemeCard {
@@ -479,6 +523,11 @@ function toggleDecay(index: number) {
       onDecayChange(index)
     }
   }
+}
+
+// 切換專長展開狀態
+function toggleSpecialtyExpanded() {
+  isSpecialtyExpanded.value = !isSpecialtyExpanded.value
 }
 
 function toggleEdit() {
