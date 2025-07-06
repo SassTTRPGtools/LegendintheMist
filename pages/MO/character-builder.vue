@@ -66,6 +66,7 @@
         :target-card-weaknesses="getTargetCardWeaknesses()"
         :available-specialties="getAvailableSpecialties(improvementModal.cardIndex)"
         :has-available-specialties="hasAvailableSpecialties(improvementModal.cardIndex)"
+        :team-theme-card="character.teamThemeCard"
         @close="closeImprovementModal"
         @confirm="confirmImprovement"
       />
@@ -695,41 +696,13 @@ function onTeamThemeDecayChange(decayIndex) {
   
   // 檢查是否所有衰變格都被勾選
   if (teamCard.decays.every(decay => decay.checked)) {
-    calculateTeamThemeDecayEvolution()
-    showDecayModal.value = true
+    // 團隊主題卡衰變不導致演化，直接重置
+    const hasSlowSteady = character.value.veteranSpecialties?.includes('slowSteady') || false
+    character.value.teamThemeCard = createEmptyTeamThemeCard()
+    
+    // 顯示衰變完成提示
+    alert('團隊主題卡已衰變重置')
   }
-}
-
-function calculateTeamThemeDecayEvolution() {
-  const teamCard = character.value.teamThemeCard
-  let evolutionPoints = 0
-  
-  // 失去主題 +1 點
-  evolutionPoints += 1
-  
-  // 記錄失去的內容
-  decayModal.value.cardIndex = -2 // 團隊主題卡
-  decayModal.value.lostTheme = teamCard.title || '團隊主題'
-  
-  // 前三個能力標籤，每個 +1 點
-  const lostAbilities = teamCard.abilities.slice(0, 3)
-    .filter(ability => ability.text.trim() !== '')
-  decayModal.value.lostAbilities = lostAbilities.map(a => a.text)
-  evolutionPoints += lostAbilities.length
-  
-  // 第一個弱點標籤以外的每個弱點標籤 +1 點
-  const extraWeaknesses = teamCard.weaknesses.slice(1)
-    .filter(weakness => weakness.text.trim() !== '')
-  decayModal.value.lostWeaknesses = extraWeaknesses.map(w => w.text)
-  evolutionPoints += extraWeaknesses.length
-  
-  // 自定義專長 +1 點每個
-  const customSpecialties = teamCard.customSpecialties
-    .filter(specialty => specialty.name.trim() !== '')
-  decayModal.value.lostSpecialty = customSpecialties.map(s => s.name).join('、') || ''
-  evolutionPoints += customSpecialties.length
-  
-  decayModal.value.evolutionPoints = evolutionPoints
 }
 
 // 處理角色資料導入
@@ -1189,13 +1162,16 @@ function confirmImprovement() {
     return // 提早返回，不執行一般改進的後續處理
   } 
   else {
-    // 一般改進：清空改進勾選框並填滿演化軌跡
+    // 一般改進：清空改進勾選框
     card.improvements.forEach(imp => imp.checked = false)
     
-    // 填滿一格演化軌跡
-    const emptyTrackIndex = character.value.evolutionTrack.findIndex(track => !track)
-    if (emptyTrackIndex !== -1) {
-      character.value.evolutionTrack[emptyTrackIndex] = true
+    // 團隊主題卡不獲得演化點數
+    if (modal.cardIndex !== -2) {
+      // 填滿一格演化軌跡
+      const emptyTrackIndex = character.value.evolutionTrack.findIndex(track => !track)
+      if (emptyTrackIndex !== -1) {
+        character.value.evolutionTrack[emptyTrackIndex] = true
+      }
     }
   }
   
