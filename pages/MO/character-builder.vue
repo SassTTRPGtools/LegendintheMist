@@ -43,7 +43,7 @@
       </div>
 
       <!-- 四個主題卡區塊 - 4x1 排列 -->
-      <div class="grid grid-cols-1 xl:grid-cols-4 lg:grid-cols-2 gap-6">
+      <div class="grid grid-cols-4 gap-6">
         <ThemeCard
           v-for="(card, index) in character.themeCards"
           :key="index"
