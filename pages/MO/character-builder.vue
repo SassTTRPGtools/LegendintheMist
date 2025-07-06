@@ -10,11 +10,11 @@
     <!-- 主要容器 -->
     <div class="container mx-auto px-4 py-8">
       <!-- 頂部區域 -->
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+      <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
         <!-- 左上角：六角雷達圖 -->
         <CharacterTypeChart :theme-cards="character.themeCards" />
 
-        <!-- 右上角：角色基本資訊 -->
+        <!-- 角色基本資訊 -->
         <CharacterInfo
           :character="character"
           :has-incomplete-level-up-game="hasIncompleteLevelUpGame"
@@ -23,7 +23,15 @@
           @resume-level-up-game="resumeLevelUpGame"
         />
 
-        <!-- 第三欄：裝備卡 -->
+        <!-- 團隊主題卡 -->
+        <TeamThemeCard
+          :team-theme-card="character.teamThemeCard"
+          @toggle-edit="toggleTeamThemeEdit"
+          @improvement-change="onTeamThemeImprovementChange"
+          @decay-change="onTeamThemeDecayChange"
+        />
+
+        <!-- 裝備卡 -->
         <EquipmentCard
           :equipment="character.equipment"
           :equipment-specialties="EQUIPMENT_SPECIALTIES"
@@ -154,6 +162,7 @@
 import { ref, computed, onMounted, nextTick } from 'vue'
 import CharacterTypeChart from '~/components/MO/CharacterTypeChart.vue'
 import ThemeCard from '~/components/MO/ThemeCard.vue'
+import TeamThemeCard from '~/components/MO/TeamThemeCard.vue'
 import EquipmentCard from '~/components/MO/EquipmentCard.vue'
 import CharacterInfo from '~/components/MO/CharacterInfo.vue'
 import ImprovementModal from '~/components/MO/ImprovementModal.vue'
@@ -456,6 +465,18 @@ function createEmptyEquipment() {
   }
 }
 
+function createEmptyTeamThemeCard() {
+  return {
+    title: '',
+    abilities: Array(7).fill(null).map(() => ({ text: '', isBurned: false })),
+    weaknesses: Array(2).fill(null).map(() => ({ text: '' })),
+    customSpecialties: [{ name: '', description: '' }], // 至少有一個專長槽
+    improvements: Array(3).fill(null).map(() => ({ checked: false })),
+    decays: Array(3).fill(null).map(() => ({ checked: false })),
+    isEditing: false
+  }
+}
+
 // 初始化角色資料
 const character = ref({
   name: '',
@@ -465,6 +486,7 @@ const character = ref({
   veteranSpecialties: [], // 已獲得的老將專長
   levelUpGameImprovements: [], // 改進你的遊戲專長選擇的改進
   equipment: createEmptyEquipment(),
+  teamThemeCard: createEmptyTeamThemeCard(), // 團隊主題卡
   themeCards: Array(4).fill().map(() => createEmptyThemeCard())
 })
 
@@ -627,8 +649,87 @@ function resetCharacter() {
     evolutionHistory: [],
     levelUpGameImprovements: [],
     equipment: createEmptyEquipment(),
+    teamThemeCard: createEmptyTeamThemeCard(),
     themeCards: Array(4).fill().map(() => createEmptyThemeCard(false))
   }
+}
+
+// ====================
+// 團隊主題卡功能
+// ====================
+function toggleTeamThemeEdit() {
+  const teamCard = character.value.teamThemeCard
+  if (!teamCard) return
+  
+  if (teamCard.isEditing) {
+    // 儲存邏輯可以在這裡執行
+    console.log('儲存團隊主題卡:', teamCard)
+  }
+  teamCard.isEditing = !teamCard.isEditing
+}
+
+function onTeamThemeImprovementChange(improvementIndex) {
+  const teamCard = character.value.teamThemeCard
+  if (!teamCard || !teamCard.improvements) return
+  
+  const allChecked = teamCard.improvements.every(imp => imp.checked)
+  
+  if (allChecked) {
+    // 開啟改進彈窗，使用團隊主題卡的索引（使用 -1 表示團隊主題卡）
+    improvementModal.value = {
+      cardIndex: -2, // 使用 -2 來區分團隊主題卡
+      selectedOption: '',
+      newAbilityText: '',
+      weaknessText: '',
+      selectedWeaknessIndex: null,
+      selectedSpecialty: '',
+      isTeamThemeImprovement: true
+    }
+    showImprovementModal.value = true
+  }
+}
+
+function onTeamThemeDecayChange(decayIndex) {
+  const teamCard = character.value.teamThemeCard
+  if (!teamCard || !teamCard.decays) return
+  
+  // 檢查是否所有衰變格都被勾選
+  if (teamCard.decays.every(decay => decay.checked)) {
+    calculateTeamThemeDecayEvolution()
+    showDecayModal.value = true
+  }
+}
+
+function calculateTeamThemeDecayEvolution() {
+  const teamCard = character.value.teamThemeCard
+  let evolutionPoints = 0
+  
+  // 失去主題 +1 點
+  evolutionPoints += 1
+  
+  // 記錄失去的內容
+  decayModal.value.cardIndex = -2 // 團隊主題卡
+  decayModal.value.lostTheme = teamCard.title || '團隊主題'
+  
+  // 前三個能力標籤，每個 +1 點
+  const lostAbilities = teamCard.abilities.slice(0, 3)
+    .filter(ability => ability.text.trim() !== '')
+  decayModal.value.lostAbilities = lostAbilities.map(a => a.text)
+  evolutionPoints += lostAbilities.length
+  
+  // 第一個弱點標籤以外的每個弱點標籤 +1 點
+  const extraWeaknesses = teamCard.weaknesses.slice(1)
+    .filter(weakness => weakness.text.trim() !== '')
+  decayModal.value.lostWeaknesses = extraWeaknesses.map(w => w.text)
+  evolutionPoints += extraWeaknesses.length
+  
+  // 自定義專長 +1 點每個
+  const customSpecialties = teamCard.customSpecialties
+    .filter(specialty => specialty.name.trim() !== '')
+  decayModal.value.lostSpecialty = customSpecialties.map(s => s.name).join('、') || ''
+  evolutionPoints += customSpecialties.length
+  
+  decayModal.value.evolutionPoints = evolutionPoints
 }
 
 // 處理角色資料導入
@@ -651,6 +752,7 @@ function handleImportCharacter(importedCharacter) {
         ? importedCharacter.levelUpGameImprovements
         : [],
       equipment: normalizeEquipment(importedCharacter.equipment),
+      teamThemeCard: normalizeTeamThemeCard(importedCharacter.teamThemeCard),
       themeCards: normalizeThemeCards(importedCharacter.themeCards)
     }
     
@@ -744,6 +846,40 @@ function normalizeThemeCards(themeCards) {
   return normalized
 }
 
+// 標準化團隊主題卡資料
+function normalizeTeamThemeCard(teamThemeCard) {
+  if (!teamThemeCard || typeof teamThemeCard !== 'object') {
+    return createEmptyTeamThemeCard()
+  }
+  
+  const normalized = createEmptyTeamThemeCard()
+  
+  // 複製有效的團隊主題卡資料
+  if (typeof teamThemeCard.title === 'string') {
+    normalized.title = teamThemeCard.title
+  }
+  if (Array.isArray(teamThemeCard.abilities)) {
+    normalized.abilities = [...teamThemeCard.abilities]
+  }
+  if (Array.isArray(teamThemeCard.weaknesses)) {
+    normalized.weaknesses = [...teamThemeCard.weaknesses]
+  }
+  if (Array.isArray(teamThemeCard.customSpecialties)) {
+    normalized.customSpecialties = [...teamThemeCard.customSpecialties]
+  }
+  if (Array.isArray(teamThemeCard.improvements)) {
+    normalized.improvements = [...teamThemeCard.improvements]
+  }
+  if (Array.isArray(teamThemeCard.decays)) {
+    normalized.decays = [...teamThemeCard.decays]
+  }
+  if (typeof teamThemeCard.isEditing === 'boolean') {
+    normalized.isEditing = teamThemeCard.isEditing
+  }
+  
+  return normalized
+}
+
 // 改進彈窗相關計算屬性
 const isImprovementValid = computed(() => {
   const modal = improvementModal.value
@@ -768,6 +904,11 @@ const isImprovementValid = computed(() => {
       // 其他弱點可以留空（表示移除）
       return true
     case 'specialty':
+      // 對於團隊主題卡，專長選擇總是有效（只是添加空欄位）
+      if (modal.cardIndex === -2) {
+        return true
+      }
+      // 對於一般主題卡，需要選擇具體的專長
       return modal.selectedSpecialty !== ''
     default:
       return false
@@ -826,7 +967,12 @@ function showSlowSteadyModal(cardIndex) {
 
 // 取得目標主題卡的弱點標籤
 function getTargetCardWeaknesses() {
-  if (improvementModal.value.cardIndex === -1) return []
+  if (improvementModal.value.cardIndex === -2) {
+    // 團隊主題卡
+    return character.value.teamThemeCard.weaknesses
+  } else if (improvementModal.value.cardIndex === -1) {
+    return []
+  }
   return character.value.themeCards[improvementModal.value.cardIndex].weaknesses
 }
 
@@ -881,7 +1027,18 @@ function closeImprovementModal() {
 
 function confirmImprovement() {
   const modal = improvementModal.value
-  const card = character.value.themeCards[modal.cardIndex]
+  let card
+  
+  // 根據 cardIndex 決定是團隊主題卡還是一般主題卡
+  if (modal.cardIndex === -2) {
+    // 團隊主題卡
+    card = character.value.teamThemeCard
+  } else {
+    // 一般主題卡
+    card = character.value.themeCards[modal.cardIndex]
+  }
+  
+  if (!card) return
   
   // 根據選擇執行對應操作
   switch (modal.selectedOption) {
@@ -922,18 +1079,33 @@ function confirmImprovement() {
       break
       
     case 'specialty':
-      // 設定主題專長 - 支援多專長選擇
-      if (!card.selectedSpecialties) {
-        card.selectedSpecialties = []
-      }
-      
-      // 確保不會重複添加同一專長
-      if (!card.selectedSpecialties.includes(modal.selectedSpecialty)) {
-        card.selectedSpecialties.push(modal.selectedSpecialty)
+      if (modal.cardIndex === -2) {
+        // 團隊主題卡：添加一個新的自定義專長欄位
+        if (!card.customSpecialties) {
+          card.customSpecialties = []
+        }
         
-        // 向後相容性：如果是第一個專長，也設定到舊的欄位
-        if (card.selectedSpecialties.length === 1) {
-          card.selectedSpecialty = modal.selectedSpecialty
+        // 檢查是否還有空間（最多5個專長）
+        if (card.customSpecialties.length < 5) {
+          card.customSpecialties.push({
+            name: '',
+            description: ''
+          })
+        }
+      } else {
+        // 一般主題卡：設定主題專長 - 支援多專長選擇
+        if (!card.selectedSpecialties) {
+          card.selectedSpecialties = []
+        }
+        
+        // 確保不會重複添加同一專長
+        if (!card.selectedSpecialties.includes(modal.selectedSpecialty)) {
+          card.selectedSpecialties.push(modal.selectedSpecialty)
+          
+          // 向後相容性：如果是第一個專長，也設定到舊的欄位
+          if (card.selectedSpecialties.length === 1) {
+            card.selectedSpecialty = modal.selectedSpecialty
+          }
         }
       }
       break
@@ -1050,6 +1222,11 @@ function updateThemeCardImprovements() {
 
 // 獲取可用的主題專長
 function getAvailableSpecialties(cardIndex) {
+  // 團隊主題卡使用自定義專長，不需要預設專長選項
+  if (cardIndex === -2) {
+    return {}
+  }
+  
   const card = character.value.themeCards[cardIndex]
   if (!card) return {}
   
@@ -1577,9 +1754,13 @@ function getImprovementDescription(modal, card) {
       }
       return '修改弱點標籤'
     case 'specialty':
-      const specialtyData = getAvailableSpecialties(modal.cardIndex)[modal.selectedSpecialty]
-      const specialtyName = specialtyData ? specialtyData.name : modal.selectedSpecialty
-      return `獲得主題專長："${specialtyName}"`
+      if (modal.cardIndex === -2) {
+        return `新增團隊主題專長欄位`
+      } else {
+        const specialtyData = getAvailableSpecialties(modal.cardIndex)[modal.selectedSpecialty]
+        const specialtyName = specialtyData ? specialtyData.name : modal.selectedSpecialty
+        return `獲得主題專長："${specialtyName}"`
+      }
     default:
       return '未知改進類型'
   }
@@ -1606,6 +1787,13 @@ function saveCharacter() {
 
 // 檢查是否有可用的主題專長
 function hasAvailableSpecialties(cardIndex) {
+  if (cardIndex === -2) {
+    // 團隊主題卡：檢查是否還有空間添加新的自定義專長（最多5個）
+    const teamCard = character.value.teamThemeCard
+    if (!teamCard || !teamCard.customSpecialties) return true
+    return teamCard.customSpecialties.length < 5
+  }
+  
   const availableSpecialties = getAvailableSpecialties(cardIndex)
   // 檢查是否有未被選擇的專長
   return Object.values(availableSpecialties).some(specialty => !specialty.isSelected)
