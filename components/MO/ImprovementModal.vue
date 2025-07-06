@@ -255,9 +255,8 @@
               ? 'bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white shadow-lg hover:shadow-purple-500/25' 
               : 'bg-slate-600 text-gray-400 cursor-not-allowed'
           ]"
-        >
-          <span v-if="modalData.cardIndex === -2">確定新增專長</span>
-          <span v-else>確定改進</span>
+        >          
+          <span >確定改進</span>
         </button>
       </div>
     </div>

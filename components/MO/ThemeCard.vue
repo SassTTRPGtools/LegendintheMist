@@ -56,59 +56,50 @@
 
     <!-- 主題卡內容 -->
     <div v-if="themeCard.selectedTheme" class="space-y-4">
-      <!-- 改進與衰變勾選框 -->
-      <div class="grid grid-cols-2 gap-6">
-        <div class="text-center">
-          <label class="block text-sm font-bold mb-3 text-green-400 tracking-wider">改進</label>
-          <div class="flex justify-center space-x-2">
-            <div 
-              v-for="(improvement, impIndex) in themeCard.improvements" 
-              :key="impIndex"
-              class="flex flex-col items-center space-y-1"
-            >
-              <div class="relative">
-                <input 
-                  v-model="improvement.checked"
-                  @change="onImprovementChange(impIndex)"
-                  type="checkbox"
-                  class="w-5 h-5 text-green-600 bg-slate-700 border-2 border-green-500/50 rounded-md focus:ring-2 focus:ring-green-400 focus:border-green-400 transition-all duration-200 hover:border-green-400"
-                />
-                <div v-if="improvement.checked" class="absolute inset-0 flex items-center justify-center pointer-events-none">
-                  <svg class="w-3 h-3 text-green-400" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                  </svg>
-                </div>
-              </div>
-              <span class="text-xs text-green-300 font-medium">{{ impIndex + 1 }}</span>
+      <!-- 改進與衰變軌跡 -->
+      <div class="mb-6">
+        <div class="flex justify-center space-x-8">
+          <!-- 改進軌跡 -->
+          <div class="flex flex-col items-center">
+            <label class="block text-sm font-medium text-gray-300 mb-2">改進軌跡</label>
+            <div class="flex space-x-2">
+              <button
+                v-for="(improvement, index) in themeCard.improvements"
+                :key="index"
+                @click="toggleImprovement(index)"
+                :class="[
+                  'w-8 h-8 border-2 rounded flex items-center justify-center text-sm font-bold transition-colors',
+                  improvement.checked 
+                    ? 'bg-green-600 border-green-400 text-white' 
+                    : 'bg-slate-700 border-slate-600 text-gray-400 hover:border-green-500'
+                ]"
+              >
+                {{ improvement.checked ? '●' : '○' }}
+              </button>
+            </div>
+            <!-- 穩扎穩打專長提示 -->
+            <div v-if="themeCard.improvements.length === 5" class="mt-2 text-xs text-yellow-400 text-center">
+              穩扎穩打：第5格時獲得兩個改進
             </div>
           </div>
-          <!-- 穩扎穩打專長提示 -->
-          <div v-if="themeCard.improvements.length === 5" class="mt-2 text-xs text-yellow-400">
-            穩扎穩打：第5格時獲得兩個改進
-          </div>
-        </div>
-        <div class="text-center">
-          <label class="block text-sm font-bold mb-3 text-red-400 tracking-wider">衰變</label>
-          <div class="flex justify-center space-x-3">
-            <div 
-              v-for="(decay, decayIndex) in themeCard.decays.slice(0, 3)" 
-              :key="decayIndex"
-              class="flex flex-col items-center space-y-1"
-            >
-              <div class="relative">
-                <input 
-                  v-model="decay.checked"
-                  @change="onDecayChange(decayIndex)"
-                  type="checkbox"
-                  class="w-5 h-5 text-red-600 bg-slate-700 border-2 border-red-500/50 rounded-md focus:ring-2 focus:ring-red-400 focus:border-red-400 transition-all duration-200 hover:border-red-400"
-                />
-                <div v-if="decay.checked" class="absolute inset-0 flex items-center justify-center pointer-events-none">
-                  <svg class="w-3 h-3 text-red-400" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
-                  </svg>
-                </div>
-              </div>
-              <span class="text-xs text-red-300 font-medium">{{ decayIndex + 1 }}</span>
+
+          <!-- 衰變軌跡 -->
+          <div class="flex flex-col items-center">
+            <label class="block text-sm font-medium text-gray-300 mb-2">衰變軌跡</label>
+            <div class="flex space-x-2">
+              <button
+                v-for="(decay, index) in themeCard.decays.slice(0, 3)"
+                :key="index"
+                @click="toggleDecay(index)"
+                :class="[
+                  'w-8 h-8 border-2 rounded flex items-center justify-center text-sm font-bold transition-colors',
+                  decay.checked 
+                    ? 'bg-red-600 border-red-400 text-white' 
+                    : 'bg-slate-700 border-slate-600 text-gray-400 hover:border-red-500'
+                ]"
+              >
+                {{ decay.checked ? '●' : '○' }}
+              </button>
             </div>
           </div>
         </div>
@@ -447,6 +438,32 @@ function onImprovementChange(improvementIndex: number) {
 
 function onDecayChange(decayIndex: number) {
   emit('decay-change', props.cardIndex, decayIndex)
+}
+
+// 切換改進軌跡
+function toggleImprovement(index: number) {
+  if (props.themeCard) {
+    props.themeCard.improvements[index].checked = !props.themeCard.improvements[index].checked
+    
+    // 檢查是否所有改進都被勾選
+    const allChecked = props.themeCard.improvements.every(imp => imp.checked)
+    if (allChecked) {
+      onImprovementChange(index)
+    }
+  }
+}
+
+// 切換衰變軌跡
+function toggleDecay(index: number) {
+  if (props.themeCard) {
+    props.themeCard.decays[index].checked = !props.themeCard.decays[index].checked
+    
+    // 檢查是否所有衰變都被勾選
+    const allChecked = props.themeCard.decays.slice(0, 3).every(decay => decay.checked)
+    if (allChecked) {
+      onDecayChange(index)
+    }
+  }
 }
 
 function toggleEdit() {

@@ -13,46 +13,44 @@
         />
       </div>
 
-      <!-- 改進與力度 -->
-      <div class="grid grid-cols-2 gap-6">
-        <div class="text-center">
-          <label class="block text-sm font-bold mb-3 text-green-400 tracking-wider">改進</label>
-          <div class="flex justify-center space-x-3">
-            <div 
-              v-for="(improvement, impIndex) in equipment.improvements" 
-              :key="impIndex"
-              class="flex flex-col items-center space-y-1"
-            >
-              <div class="relative">
-                <input 
-                  v-model="improvement.checked"
-                  @change="onImprovementChange(impIndex)"
-                  type="checkbox"
-                  class="w-5 h-5 text-green-600 bg-slate-700 border-2 border-green-500/50 rounded-md focus:ring-2 focus:ring-green-400 focus:border-green-400 transition-all duration-200 hover:border-green-400"
-                />
-                <div v-if="improvement.checked" class="absolute inset-0 flex items-center justify-center pointer-events-none">
-                  <svg class="w-3 h-3 text-green-400" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                  </svg>
-                </div>
-              </div>
-              <span class="text-xs text-green-300 font-medium">{{ impIndex + 1 }}</span>
+      <!-- 改進軌跡與力度 -->
+      <div class="mb-6">
+        <div class="flex justify-center space-x-8">
+          <!-- 改進軌跡 -->
+          <div class="flex flex-col items-center">
+            <label class="block text-sm font-medium text-gray-300 mb-2">改進軌跡</label>
+            <div class="flex space-x-2">
+              <button
+                v-for="(improvement, index) in equipment.improvements"
+                :key="index"
+                @click="toggleImprovement(index)"
+                :class="[
+                  'w-8 h-8 border-2 rounded flex items-center justify-center text-sm font-bold transition-colors',
+                  improvement.checked 
+                    ? 'bg-green-600 border-green-400 text-white' 
+                    : 'bg-slate-700 border-slate-600 text-gray-400 hover:border-green-500'
+                ]"
+              >
+                {{ improvement.checked ? '●' : '○' }}
+              </button>
             </div>
           </div>
-        </div>
-        <div>
-          <label class="block text-sm font-medium mb-2 text-blue-400">當前力度</label>
-          <div class="flex items-center space-x-2">
-            <input 
-              v-model.number="equipment.power"
-              type="number"
-              min="1"
-              max="10"
-              class="w-16 px-2 py-1 bg-blue-900/30 border border-blue-500/50 rounded text-blue-200 font-bold text-center focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            />
-          </div>
-          <div class="text-xs text-gray-400 mt-1">
-            力度數值（1-10）
+
+          <!-- 力度 -->
+          <div class="flex flex-col items-center">
+            <label class="block text-sm font-medium text-gray-300 mb-2">當前力度</label>
+            <div class="flex items-center space-x-2">
+              <input 
+                v-model.number="equipment.power"
+                type="number"
+                min="1"
+                max="10"
+                class="w-16 px-2 py-1 bg-blue-900/30 border border-blue-500/50 rounded text-blue-200 font-bold text-center focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+            <div class="text-xs text-gray-400 mt-1 text-center">
+              力度數值（1-10）
+            </div>
           </div>
         </div>
       </div>
@@ -274,6 +272,17 @@ const emit = defineEmits<{
 // 方法
 function onImprovementChange(improvementIndex: number) {
   emit('improvement-change', improvementIndex)
+}
+
+// 切換改進軌跡
+function toggleImprovement(index: number) {
+  props.equipment.improvements[index].checked = !props.equipment.improvements[index].checked
+  
+  // 檢查是否所有改進都被勾選
+  const allChecked = props.equipment.improvements.every(imp => imp.checked)
+  if (allChecked) {
+    onImprovementChange(index)
+  }
 }
 
 function addSpecialty() {
