@@ -214,61 +214,98 @@
         </div>
       </div>
 
-      <!-- 底部操作按鈕 -->
-      <div class="mt-8 flex flex-wrap justify-center gap-4">
-        <NuxtLink 
-          to="/MO"
-          class="px-6 py-3 bg-slate-600 hover:bg-slate-700 text-white rounded-lg transition-colors"
+      <!-- 隱藏的文件輸入 -->
+      <input
+        ref="fileInput"
+        type="file"
+        accept=".json"
+        @change="importCharacter"
+        class="hidden"
+      />
+    </div>
+
+    <!-- 懸浮按鈕區塊 -->
+    <div class="fixed bottom-6 right-6 z-40">
+      <!-- 主要懸浮按鈕 -->
+      <div class="relative">
+        <!-- 展開的功能按鈕 -->
+        <div 
+          v-show="showFloatingMenu"
+          class="absolute bottom-16 right-0 flex flex-col gap-3 transition-all duration-300 transform"
+          :class="showFloatingMenu ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'"
         >
-          返回首頁
-        </NuxtLink>
+          <!-- 返回首頁 -->
+          <NuxtLink 
+            to="/MO"
+            class="px-4 py-2 bg-slate-600 hover:bg-slate-700 text-white rounded-lg transition-all duration-200 flex items-center space-x-2 shadow-lg hover:shadow-xl min-w-[140px]"
+            title="返回首頁"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+            </svg>
+            <span class="text-sm">返回首頁</span>
+          </NuxtLink>
+          
+          <!-- 匯出角色 -->
+          <button 
+            @click="exportCharacter"
+            class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-all duration-200 flex items-center space-x-2 shadow-lg hover:shadow-xl min-w-[140px]"
+            title="匯出角色資料"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            <span class="text-sm">匯出角色</span>
+          </button>
+          
+          <!-- 匯入角色 -->
+          <button 
+            @click="triggerFileInput"
+            class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-all duration-200 flex items-center space-x-2 shadow-lg hover:shadow-xl min-w-[140px]"
+            title="匯入角色資料"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10" />
+            </svg>
+            <span class="text-sm">匯入角色</span>
+          </button>
+          
+          <!-- 清除資料 -->
+          <button 
+            @click="clearCharacterData"
+            class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-all duration-200 flex items-center space-x-2 shadow-lg hover:shadow-xl min-w-[140px]"
+            title="清除所有角色資料"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+            </svg>
+            <span class="text-sm">清除資料</span>
+          </button>
+        </div>
         
-        <button 
-          @click="exportCharacter"
-          class="px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors flex items-center space-x-2"
+        <!-- 主要懸浮按鈕 - 菜單切換 -->
+        <button
+          @click="toggleFloatingMenu"
+          class="w-14 h-14 bg-purple-600 hover:bg-purple-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center group"
+          title="操作菜單"
         >
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          <svg 
+            class="w-6 h-6 transition-transform duration-300"
+            :class="showFloatingMenu ? 'rotate-45' : 'rotate-0'"
+            fill="none" 
+            stroke="currentColor" 
+            viewBox="0 0 24 24"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
           </svg>
-          <span>匯出角色</span>
         </button>
-        
-        <button 
-          @click="triggerFileInput"
-          class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors flex items-center space-x-2"
-        >
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10" />
-          </svg>
-          <span>匯入角色</span>
-        </button>
-        
-        <button 
-          @click="clearCharacterData"
-          class="px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors flex items-center space-x-2"
-        >
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-          </svg>
-          <span>清除資料</span>
-        </button>
-       
-        
-        <!-- 隱藏的文件輸入 -->
-        <input
-          ref="fileInput"
-          type="file"
-          accept=".json"
-          @change="importCharacter"
-          class="hidden"
-        />
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted, nextTick, watch, toRaw } from 'vue'
+import { ref, computed, onMounted, onUnmounted, nextTick, watch, toRaw } from 'vue'
 import CharacterTypeChart from '~/components/MO/CharacterTypeChart.vue'
 import ThemeCard from '~/components/MO/ThemeCard.vue'
 import TeamThemeCard from '~/components/MO/TeamThemeCard.vue'
@@ -477,6 +514,7 @@ const evolutionMoments = {
 // 響應式數據
 // ====================
 const showHowToPlay = ref(false)
+const showFloatingMenu = ref(false) // 懸浮菜單顯示狀態
 const mythosThemes = ref({})
 const noiseThemes = ref({})
 const selfThemes = ref({})
@@ -728,9 +766,20 @@ onMounted(async () => {
     }
     
     console.log('=== 角色建立器初始化完成 ===')
+    
+    // 4. 添加懸浮菜單事件監聽器
+    document.addEventListener('click', handleClickOutside)
+    document.addEventListener('keydown', handleEscapeKey)
+    
   } catch (error) {
     console.error('❌ 載入主題資料失敗:', error)
   }
+})
+
+// 清理事件監聽器
+onUnmounted(() => {
+  document.removeEventListener('click', handleClickOutside)
+  document.removeEventListener('keydown', handleEscapeKey)
 })
 
 // 計算屬性
@@ -778,6 +827,30 @@ const hasIncompleteLevelUpGame = computed(() => {
   const completedImprovements = character.value.levelUpGameImprovements?.length || 0
   return completedImprovements < 7
 })
+
+// ====================
+// 懸浮菜單控制
+// ====================
+
+// 切換懸浮菜單顯示/隱藏
+function toggleFloatingMenu() {
+  showFloatingMenu.value = !showFloatingMenu.value
+}
+
+// 點擊頁面其他地方時關閉懸浮菜單
+function handleClickOutside(event) {
+  const floatingMenu = document.querySelector('.fixed.bottom-6.right-6')
+  if (floatingMenu && !floatingMenu.contains(event.target)) {
+    showFloatingMenu.value = false
+  }
+}
+
+// 監聽 ESC 鍵關閉懸浮菜單
+function handleEscapeKey(event) {
+  if (event.key === 'Escape') {
+    showFloatingMenu.value = false
+  }
+}
 
 // ====================
 // 主要功能函數（僅保留主文件需要的）
@@ -1299,7 +1372,8 @@ function confirmImprovement() {
         
         // 確保不會重複添加同一專長
         if (!card.selectedSpecialties.includes(modal.selectedSpecialty)) {
-          card.selectedSpecialties.push(modal.selectedSpecialty)
+          card.selectedSpecialties.push(modal.selectedSpecialty
+          )
           
           // 向後相容性：如果是第一個專長，也設定到舊的欄位
           if (card.selectedSpecialties.length === 1) {
