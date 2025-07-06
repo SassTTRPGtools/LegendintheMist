@@ -535,7 +535,7 @@ function createEmptyEquipment() {
     name: '',
     improvements: Array(3).fill(null).map(() => ({ checked: false })),
     power: 1,
-    abilities: Array(5).fill(null).map(() => ({ text: '', isBurned: false })),
+    abilities: Array(7).fill(null).map(() => ({ text: '', isBurned: false })),
     weaknesses: Array(2).fill(null).map(() => ({ text: '' })),
     specialties: [],
     isEditing: false

@@ -64,7 +64,7 @@
                 type="number"
                 min="1"
                 max="10"
-                class="w-16 px-2 py-1 bg-blue-900/30 border border-blue-500/50 rounded text-blue-200 font-bold text-center focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                class="w-12 h-6 px-1 bg-blue-900/30 border border-blue-500/50 rounded text-blue-200 font-bold text-center text-xs focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
           </div>
@@ -80,10 +80,7 @@
             :key="abilityIndex"
             class="flex items-center space-x-2"
           >
-            <span class="w-6 h-6 bg-purple-600 text-white rounded-full flex items-center justify-center text-xs font-bold">
-              {{ abilityIndex + 1 }}
-            </span>
-            
+
             <input 
               v-if="equipment.isEditing"
               v-model="ability.text"
@@ -140,10 +137,7 @@
             :key="weaknessIndex"
             class="flex items-center space-x-2"
           >
-            <span class="w-6 h-6 bg-red-600 text-white rounded-full flex items-center justify-center text-xs font-bold">
-              {{ weaknessIndex + 1 }}
-            </span>
-            
+
             <input 
               v-if="equipment.isEditing"
               v-model="weakness.text"
@@ -332,7 +326,7 @@ const props = withDefaults(defineProps<Props>(), {
     name: '',
     improvements: Array(3).fill(null).map(() => ({ checked: false })),
     power: 1,
-    abilities: Array(5).fill(null).map(() => ({ text: '', isBurned: false })),
+    abilities: Array(7).fill(null).map(() => ({ text: '', isBurned: false })),
     weaknesses: Array(2).fill(null).map(() => ({ text: '' })),
     specialties: [],
     isEditing: false

@@ -86,9 +86,7 @@
           :key="index"
           class="flex items-center space-x-2"
         >
-          <span class="w-6 h-6 bg-purple-600 text-white rounded-full flex items-center justify-center text-xs font-bold">
-            {{ index + 1 }}
-          </span>
+
           
           <input 
             v-if="teamThemeCard.isEditing"
@@ -114,7 +112,7 @@
           <button
             @click="ability.isBurned = !ability.isBurned"
             :class="[
-              'w-8 h-8 rounded-full flex items-center justify-center transition-colors',
+              'w-6 h-6 rounded-full flex items-center justify-center transition-colors',
               ability.isBurned 
                 ? 'bg-orange-600 hover:bg-orange-700 text-white shadow-lg' 
                 : 'bg-slate-600 hover:bg-slate-700 text-gray-300'
@@ -124,12 +122,12 @@
             <Icon 
               v-if="ability.isBurned" 
               name="lucide:flame" 
-              class="w-4 h-4 text-yellow-200" 
+              class="w-3 h-3 text-yellow-200" 
             />
             <Icon 
               v-else 
               name="lucide:circle" 
-              class="w-4 h-4 text-gray-400" 
+              class="w-3 h-3 text-gray-400" 
             />
           </button>
         </div>
@@ -145,9 +143,7 @@
           :key="index"
           class="flex items-center space-x-2"
         >
-          <span class="w-6 h-6 bg-red-600 text-white rounded-full flex items-center justify-center text-xs font-bold">
-            {{ index + 1 }}
-          </span>
+
           
           <input 
             v-if="teamThemeCard.isEditing"
