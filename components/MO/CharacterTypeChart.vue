@@ -2,185 +2,23 @@
   <div class="bg-slate-800/80 backdrop-blur rounded-lg p-6 border border-purple-500/30">
     <h3 class="text-xl font-bold text-purple-300 mb-4">角色類型圖</h3>    
     <div class="aspect-square relative bg-slate-700/50 rounded-lg flex items-center justify-center">
-      <!-- 六角雷達圖 -->
-      <div class="w-96 h-96 relative">
-        <svg viewBox="0 0 380 380" class="w-full h-full">
-          <!-- 定義漸層 -->
-          <defs>
-            <!-- 神話漸層 -->
-            <radialGradient id="mythosGradient" cx="0.5" cy="0.5" r="0.8">
-              <stop offset="0%" stop-color="rgba(168, 85, 247, 0.8)" stop-opacity="1"/>
-              <stop offset="100%" stop-color="rgba(168, 85, 247, 0.3)" stop-opacity="0.6"/>
-            </radialGradient>
-            
-            <!-- 喧囂漸層 -->
-            <radialGradient id="noiseGradient" cx="0.5" cy="0.5" r="0.8">
-              <stop offset="0%" stop-color="rgba(6, 182, 212, 0.8)" stop-opacity="1"/>
-              <stop offset="100%" stop-color="rgba(6, 182, 212, 0.3)" stop-opacity="0.6"/>
-            </radialGradient>
-            
-            <!-- 自我漸層 -->
-            <radialGradient id="selfGradient" cx="0.5" cy="0.5" r="0.8">
-              <stop offset="0%" stop-color="rgba(236, 72, 153, 0.8)" stop-opacity="1"/>
-              <stop offset="100%" stop-color="rgba(236, 72, 153, 0.3)" stop-opacity="0.6"/>
-            </radialGradient>
-          </defs>
-
-          <!-- 六角形背景框架 -->
-          <g opacity="0.2" stroke="rgba(139, 92, 246, 0.5)" stroke-width="1" fill="none">
-            <!-- 第4層六角形 (最外層) - 半徑110 -->
-            <polygon points="190,80 285,135 285,245 190,300 95,245 95,135" />
-            <!-- 第3層六角形 - 半徑82.5 -->
-            <polygon points="190,107.5 261.4,148.25 261.4,231.75 190,272.5 118.6,231.75 118.6,148.25" />
-            <!-- 第2層六角形 - 半徑55 -->
-            <polygon points="190,135 237.6,167.5 237.6,212.5 190,245 142.4,212.5 142.4,167.5" />
-            <!-- 第1層六角形 (最內層) - 半徑27.5 -->
-            <polygon points="190,162.5 213.8,176.25 213.8,203.75 190,217.5 166.2,203.75 166.2,176.25" />
-            
-            <!-- 從中心到各頂點的線 -->
-            <line x1="190" y1="190" x2="190" y2="80" />   <!-- 到上方 -->
-            <line x1="190" y1="190" x2="285" y2="135" />  <!-- 到右上 -->
-            <line x1="190" y1="190" x2="285" y2="245" />  <!-- 到右下 -->
-            <line x1="190" y1="190" x2="190" y2="300" />  <!-- 到下方 -->
-            <line x1="190" y1="190" x2="95" y2="245" />   <!-- 到左下 -->
-            <line x1="190" y1="190" x2="95" y2="135" />   <!-- 到左上 -->
-          </g>
-
-          <!-- 神話區域填滿 (左側兩個區塊：靈性主義者 + 化身/傳導者) -->
-          <g v-if="mythosCount > 0">
-            <!-- 神話單獨區域 -->
-            <path 
-              v-if="mythosCount > 0 && noiseCount === 0 && selfCount === 0"
-              :d="getMythosOnlyPath()" 
-              fill="url(#mythosGradient)" 
-              stroke="#a855f7" 
-              stroke-width="2"
-              opacity="0.8"
-            />
-            <!-- 神話+喧囂混合區域 -->
-            <path 
-              v-else-if="mythosCount > 0 && noiseCount > 0 && selfCount === 0"
-              :d="getMythosNoiseHalfPath()" 
-              fill="url(#mythosGradient)" 
-              stroke="#a855f7" 
-              stroke-width="2"
-              opacity="0.6"
-            />
-            <!-- 神話+自我混合區域 -->
-            <path 
-              v-else-if="mythosCount > 0 && selfCount > 0 && noiseCount === 0"
-              :d="getMythosSelfHalfPath()" 
-              fill="url(#mythosGradient)" 
-              stroke="#a855f7" 
-              stroke-width="2"
-              opacity="0.6"
-            />
-            <!-- 三種主題混合：神話區域 -->
-            <path 
-              v-if="mythosCount > 0 && noiseCount > 0 && selfCount > 0"
-              :d="getAllThemesMythosPath()" 
-              fill="url(#mythosGradient)" 
-              stroke="#a855f7" 
-              stroke-width="1"
-              opacity="0.7"
-            />
-          </g>
-
-          <!-- 喧囂區域填滿 (右上兩個區塊：超人類 + 奇點) -->
-          <g v-if="noiseCount > 0">
-            <!-- 喧囂單獨區域 -->
-            <path 
-              v-if="noiseCount > 0 && mythosCount === 0 && selfCount === 0"
-              :d="getNoiseOnlyPath()" 
-              fill="url(#noiseGradient)" 
-              stroke="#06b6d4" 
-              stroke-width="2"
-              opacity="0.8"
-            />
-            <!-- 喧囂+神話混合區域 -->
-            <path 
-              v-else-if="noiseCount > 0 && mythosCount > 0 && selfCount === 0"
-              :d="getNoiseHalfPath()" 
-              fill="url(#noiseGradient)" 
-              stroke="#06b6d4" 
-              stroke-width="2"
-              opacity="0.6"
-            />
-            <!-- 喧囂+自我混合區域 -->
-            <path 
-              v-else-if="noiseCount > 0 && selfCount > 0 && mythosCount === 0"
-              :d="getNoiseSelfHalfPath()" 
-              fill="url(#noiseGradient)" 
-              stroke="#06b6d4" 
-              stroke-width="2"
-              opacity="0.6"
-            />
-            <!-- 三種主題混合：喧囂區域 -->
-            <path 
-              v-if="mythosCount > 0 && noiseCount > 0 && selfCount > 0"
-              :d="getAllThemesNoisePath()" 
-              fill="url(#noiseGradient)" 
-              stroke="#06b6d4" 
-              stroke-width="1"
-              opacity="0.7"
-            />
-          </g>
-
-          <!-- 自我區域填滿 (右下兩個區塊：賽博格 + 現實人類 + 靈性主義者) -->
-          <g v-if="selfCount > 0">
-            <!-- 自我單獨區域 -->
-            <path 
-              v-if="selfCount > 0 && mythosCount === 0 && noiseCount === 0"
-              :d="getSelfOnlyPath()" 
-              fill="url(#selfGradient)" 
-              stroke="#ec4899" 
-              stroke-width="2"
-              opacity="0.8"
-            />
-            <!-- 自我+神話混合區域 -->
-            <path 
-              v-else-if="selfCount > 0 && mythosCount > 0 && noiseCount === 0"
-              :d="getSelfHalfPath()" 
-              fill="url(#selfGradient)" 
-              stroke="#ec4899" 
-              stroke-width="2"
-              opacity="0.6"
-            />
-            <!-- 自我+喧囂混合區域 -->
-            <path 
-              v-else-if="selfCount > 0 && noiseCount > 0 && mythosCount === 0"
-              :d="getSelfNoiseHalfPath()" 
-              fill="url(#selfGradient)" 
-              stroke="#ec4899" 
-              stroke-width="2"
-              opacity="0.6"
-            />
-            <!-- 三種主題混合：自我區域 -->
-            <path 
-              v-if="mythosCount > 0 && noiseCount > 0 && selfCount > 0"
-              :d="getAllThemesSelfPath()" 
-              fill="url(#selfGradient)" 
-              stroke="#ec4899" 
-              stroke-width="1"
-              opacity="0.7"
-            />
-          </g>
-
-          <!-- 六個頂點標籤 -->
-          <text x="190" y="65" text-anchor="middle" fill="#67e8f9" font-size="12" font-weight="bold">超人類</text>
-          <text x="300" y="140" text-anchor="start" fill="#06b6d4" font-size="12" font-weight="bold">奇點</text>
-          <text x="300" y="250" text-anchor="start" fill="#22d3ee" font-size="12" font-weight="bold">賽博格</text>
-          <text x="190" y="320" text-anchor="middle" fill="#f472b6" font-size="12" font-weight="bold">現實人類</text>
-          <text x="80" y="250" text-anchor="end" fill="#c084fc" font-size="12" font-weight="bold">靈性主義者</text>
-          <text x="80" y="140" text-anchor="end" fill="#a855f7" font-size="12" font-weight="bold">化身/傳導者</text>
-
-          <!-- 角色類型說明點 -->
-          <!-- 交會點：三種主題皆有 - 正中央 -->
-          <circle v-if="mythosCount > 0 && noiseCount > 0 && selfCount > 0" 
-            cx="190" cy="190" r="3" fill="#ffffff" opacity="0.9"/>
-          <text v-if="mythosCount > 0 && noiseCount > 0 && selfCount > 0" 
-            x="190" y="175" text-anchor="middle" fill="white" font-size="8">交會點</text>                
-        </svg>
+      <!-- 主題組合圖片顯示 -->
+      <div class="w-96 h-96 relative flex items-center justify-center">
+        <!-- 有主題時顯示對應圖片 -->
+        <img 
+          v-if="getEssenceImagePath() && !imageError"
+          :src="getEssenceImagePath()" 
+          :alt="getEssenceImageAlt()"
+          class="w-full h-full object-contain"
+          @error="handleImageError"
+        />
+        <!-- 無主題或圖片載入失敗時顯示預設圖片 -->
+        <img 
+          v-else
+          src="/ui_icon/essences/blank.svg" 
+          alt="未選擇主題"
+          class="w-full h-full object-contain opacity-50"
+        />
       </div>
     </div>
     <div class="mt-4 space-y-2">
@@ -272,6 +110,9 @@ import { computed, ref } from 'vue'
 
 // 模態框狀態
 const showTypeModal = ref(false)
+
+// 圖片錯誤狀態
+const imageError = ref(false)
 
 // 定義 Props
 interface ThemeCard {
@@ -422,173 +263,139 @@ const getFormattedCharacterSubtype = () => {
 }
 
 // ====================
-// 六角雷達圖計算函數
+// 圖片處理方法
 // ====================
-const center = { x: 190, y: 190 }
 
-// 六角形的6個頂點座標 - 四層平均分佈
-const getHexVertices = (layer = 4) => {
-  const layerRadii = [0, 27.5, 55, 82.5, 110]
-  const radius = layerRadii[layer] || 110
+// 根據主題組合獲取對應的圖片路徑
+const getEssenceImagePath = () => {
+  const mythos = mythosCount.value
+  const noise = noiseCount.value
+  const self = selfCount.value
   
-  return [
-    { x: center.x, y: center.y - radius }, // 0: 正上方 (超人類)
-    { x: center.x + radius * Math.cos(Math.PI / 6), y: center.y - radius * Math.sin(Math.PI / 6) }, // 1: 右上 (奇點)
-    { x: center.x + radius * Math.cos(Math.PI / 6), y: center.y + radius * Math.sin(Math.PI / 6) }, // 2: 右下 (賽博格)
-    { x: center.x, y: center.y + radius }, // 3: 正下方 (現實人類)
-    { x: center.x - radius * Math.cos(Math.PI / 6), y: center.y + radius * Math.sin(Math.PI / 6) }, // 4: 左下 (靈性主義者)
-    { x: center.x - radius * Math.cos(Math.PI / 6), y: center.y - radius * Math.sin(Math.PI / 6) }  // 5: 左上 (化身/傳導者)
+  // 重置圖片錯誤狀態（當主題變更時）
+  imageError.value = false
+  
+  // 如果沒有選擇任何主題，返回空字串
+  if (mythos === 0 && noise === 0 && self === 0) {
+    return ''
+  }
+  
+  // 定義所有可用的圖片檔案組合
+  const availableImages = [
+    '1M3N.svg', '1S1M2N.svg', '1S2M1N.svg', '1S3M.svg', '1S3N.svg',
+    '2M2N.svg', '2S1M1N.svg', '2S2M.svg', '2S2N.svg', '3M1N.svg',
+    '3S1M.svg', '3S1N.svg', '4M.svg', '4N.svg', '4S.svg'
   ]
-}
-
-// 神話區域路徑
-const getMythosOnlyPath = () => {
-  const layer = Math.min(4, mythosCount.value)
-  const vertices = getHexVertices(layer)
-  return `M ${center.x} ${center.y} L ${vertices[4].x} ${vertices[4].y} L ${vertices[5].x} ${vertices[5].y} L ${vertices[0].x} ${vertices[0].y} Z`
-}
-
-// 喧囂區域路徑
-const getNoiseOnlyPath = () => {
-  const layer = Math.min(4, noiseCount.value)
-  const vertices = getHexVertices(layer)
-  return `M ${center.x} ${center.y} L ${vertices[0].x} ${vertices[0].y} L ${vertices[1].x} ${vertices[1].y} L ${vertices[2].x} ${vertices[2].y} Z`
-}
-
-// 自我區域路徑
-const getSelfOnlyPath = () => {
-  const layer = Math.min(4, selfCount.value)
-  const vertices = getHexVertices(layer)
-  return `M ${center.x} ${center.y} L ${vertices[2].x} ${vertices[2].y} L ${vertices[3].x} ${vertices[3].y} L ${vertices[4].x} ${vertices[4].y} Z`
-}
-
-// 神話+喧囂混合區域
-const getMythosNoiseHalfPath = () => {
-  const mythosCards = mythosCount.value
-  const noiseCards = noiseCount.value
   
-  let layer
-  if ((mythosCards === 1 && noiseCards === 3) || (mythosCards === 3 && noiseCards === 1)) {
-    layer = 3
-  } else if (mythosCards === 2 && noiseCards === 2) {
-    layer = 4
-  } else {
-    layer = Math.min(4, Math.max(mythosCards, noiseCards))
+  // 構建理想的檔案名稱
+  const parts = []
+  if (self > 0) parts.push(`${self}S`)
+  if (mythos > 0) parts.push(`${mythos}M`)
+  if (noise > 0) parts.push(`${noise}N`)
+  
+  const idealFilename = parts.join('') + '.svg'
+  
+  // 檢查理想檔案是否存在
+  if (availableImages.includes(idealFilename)) {
+    const imagePath = `/ui_icon/essences/${idealFilename}`
+    console.log('找到精確匹配的圖片:', imagePath)
+    return imagePath
   }
   
-  const vertices = getHexVertices(layer)
-  return `M ${center.x} ${center.y} L ${vertices[5].x} ${vertices[5].y} L ${vertices[0].x} ${vertices[0].y} Z`
-}
-
-const getNoiseHalfPath = () => {
-  const mythosCards = mythosCount.value
-  const noiseCards = noiseCount.value
+  // 如果找不到精確匹配，嘗試找最接近的替代方案
+  let fallbackFilename = ''
   
-  let layer
-  if ((mythosCards === 1 && noiseCards === 3) || (mythosCards === 3 && noiseCards === 1)) {
-    layer = 3
-  } else if (mythosCards === 2 && noiseCards === 2) {
-    layer = 4
-  } else {
-    layer = Math.min(4, Math.max(mythosCards, noiseCards))
+  // 優先順序：三種主題組合 > 兩種主題組合 > 單一主題
+  
+  // 三種主題都有的情況 - 尋找接近的組合
+  if (mythos > 0 && noise > 0 && self > 0) {
+    // 嘗試一些常見的三主題組合
+    const threeThemeCombos = ['1S1M2N.svg', '1S2M1N.svg', '2S1M1N.svg']
+    for (const combo of threeThemeCombos) {
+      if (availableImages.includes(combo)) {
+        fallbackFilename = combo
+        break
+      }
+    }
   }
   
-  const vertices = getHexVertices(layer)
-  return `M ${center.x} ${center.y} L ${vertices[0].x} ${vertices[0].y} L ${vertices[1].x} ${vertices[1].y} Z`
-}
-
-// 神話+自我混合區域
-const getMythosSelfHalfPath = () => {
-  const mythosCards = mythosCount.value
-  const selfCards = selfCount.value
-  
-  let layer
-  if ((mythosCards === 1 && selfCards === 3) || (mythosCards === 3 && selfCards === 1)) {
-    layer = 3
-  } else if (mythosCards === 2 && selfCards === 2) {
-    layer = 4
-  } else {
-    layer = Math.min(4, Math.max(mythosCards, selfCards))
+  // 兩種主題的情況
+  if (!fallbackFilename) {
+    if (mythos > 0 && noise > 0 && self === 0) {
+      // 神話+喧囂組合
+      const twoThemeCombos = ['2M2N.svg', '3M1N.svg', '1M3N.svg']
+      for (const combo of twoThemeCombos) {
+        if (availableImages.includes(combo)) {
+          fallbackFilename = combo
+          break
+        }
+      }
+    } else if (self > 0 && mythos > 0 && noise === 0) {
+      // 自我+神話組合
+      const twoThemeCombos = ['2S2M.svg', '3S1M.svg', '1S3M.svg']
+      for (const combo of twoThemeCombos) {
+        if (availableImages.includes(combo)) {
+          fallbackFilename = combo
+          break
+        }
+      }
+    } else if (self > 0 && noise > 0 && mythos === 0) {
+      // 自我+喧囂組合
+      const twoThemeCombos = ['2S2N.svg', '3S1N.svg', '1S3N.svg']
+      for (const combo of twoThemeCombos) {
+        if (availableImages.includes(combo)) {
+          fallbackFilename = combo
+          break
+        }
+      }
+    }
   }
   
-  const vertices = getHexVertices(layer)
-  return `M ${center.x} ${center.y} L ${vertices[4].x} ${vertices[4].y} L ${vertices[5].x} ${vertices[5].y} Z`
-}
-
-const getSelfHalfPath = () => {
-  const mythosCards = mythosCount.value
-  const selfCards = selfCount.value
-  
-  let layer
-  if ((mythosCards === 1 && selfCards === 3) || (mythosCards === 3 && selfCards === 1)) {
-    layer = 3
-  } else if (mythosCards === 2 && selfCards === 2) {
-    layer = 4
-  } else {
-    layer = Math.min(4, Math.max(mythosCards, selfCards))
+  // 單一主題的情況
+  if (!fallbackFilename) {
+    if (mythos > 0 && noise === 0 && self === 0) {
+      fallbackFilename = '4M.svg'
+    } else if (noise > 0 && mythos === 0 && self === 0) {
+      fallbackFilename = '4N.svg'
+    } else if (self > 0 && mythos === 0 && noise === 0) {
+      fallbackFilename = '4S.svg'
+    }
   }
   
-  const vertices = getHexVertices(layer)
-  return `M ${center.x} ${center.y} L ${vertices[3].x} ${vertices[3].y} L ${vertices[4].x} ${vertices[4].y} Z`
-}
-
-// 自我+喧囂混合區域
-const getSelfNoiseHalfPath = () => {
-  const selfCards = selfCount.value
-  const noiseCards = noiseCount.value
-  
-  let layer
-  if ((selfCards === 1 && noiseCards === 3) || (selfCards === 3 && noiseCards === 1)) {
-    layer = 3
-  } else if (selfCards === 2 && noiseCards === 2) {
-    layer = 4
-  } else {
-    layer = Math.min(4, Math.max(selfCards, noiseCards))
+  // 如果還是沒有找到，使用 blank.svg
+  if (!fallbackFilename) {
+    fallbackFilename = 'blank.svg'
   }
   
-  const vertices = getHexVertices(layer)
-  return `M ${center.x} ${center.y} L ${vertices[2].x} ${vertices[2].y} L ${vertices[3].x} ${vertices[3].y} Z`
+  const imagePath = `/ui_icon/essences/${fallbackFilename}`
+  console.log('使用替代圖片:', imagePath, '原始嘗試:', idealFilename, '主題數量 - 神話:', mythos, '喧囂:', noise, '自我:', self)
+  
+  return imagePath
 }
 
-const getNoiseSelfHalfPath = () => {
-  const selfCards = selfCount.value
-  const noiseCards = noiseCount.value
+// 獲取圖片的 alt 文字
+const getEssenceImageAlt = () => {
+  const mythos = mythosCount.value
+  const noise = noiseCount.value
+  const self = selfCount.value
   
-  let layer
-  if ((selfCards === 1 && noiseCards === 3) || (selfCards === 3 && noiseCards === 1)) {
-    layer = 3
-  } else if (selfCards === 2 && noiseCards === 2) {
-    layer = 4
-  } else {
-    layer = Math.min(4, Math.max(selfCards, noiseCards))
+  if (mythos === 0 && noise === 0 && self === 0) {
+    return '未選擇主題'
   }
   
-  const vertices = getHexVertices(layer)
-  return `M ${center.x} ${center.y} L ${vertices[1].x} ${vertices[1].y} L ${vertices[2].x} ${vertices[2].y} Z`
+  const parts = []
+  if (self > 0) parts.push(`自我${self}`)
+  if (mythos > 0) parts.push(`神話${mythos}`)
+  if (noise > 0) parts.push(`喧囂${noise}`)
+  
+  return `主題組合: ${parts.join(', ')}`
 }
 
-// 三種主題混合區域
-const getAllThemesMythosPath = () => {
-  // 根據神話主題數量決定填滿層級
-  const maxThemes = Math.max(mythosCount.value, noiseCount.value, selfCount.value)
-  const layer = mythosCount.value === maxThemes ? Math.min(4, mythosCount.value + 1) : 2
-  const vertices = getHexVertices(layer)
-  return `M ${center.x} ${center.y} L ${vertices[4].x} ${vertices[4].y} L ${vertices[5].x} ${vertices[5].y} L ${vertices[0].x} ${vertices[0].y} Z`
-}
-
-const getAllThemesNoisePath = () => {
-  // 根據喧囂主題數量決定填滿層級
-  const maxThemes = Math.max(mythosCount.value, noiseCount.value, selfCount.value)
-  const layer = noiseCount.value === maxThemes ? Math.min(4, noiseCount.value + 1) : 2
-  const vertices = getHexVertices(layer)
-  return `M ${center.x} ${center.y} L ${vertices[0].x} ${vertices[0].y} L ${vertices[1].x} ${vertices[1].y} L ${vertices[2].x} ${vertices[2].y} Z`
-}
-
-const getAllThemesSelfPath = () => {
-  // 根據自我主題數量決定填滿層級
-  const maxThemes = Math.max(mythosCount.value, noiseCount.value, selfCount.value)
-  const layer = selfCount.value === maxThemes ? Math.min(4, selfCount.value + 1) : 2
-  const vertices = getHexVertices(layer)
-  return `M ${center.x} ${center.y} L ${vertices[2].x} ${vertices[2].y} L ${vertices[3].x} ${vertices[3].y} L ${vertices[4].x} ${vertices[4].y} Z`
+// 處理圖片載入錯誤
+const handleImageError = (event: Event) => {
+  imageError.value = true
+  const img = event.target as HTMLImageElement
+  console.warn('精華圖片載入失敗:', img.src)
+  console.log('主題數量 - 神話:', mythosCount.value, '喧囂:', noiseCount.value, '自我:', selfCount.value)
 }
 </script>
