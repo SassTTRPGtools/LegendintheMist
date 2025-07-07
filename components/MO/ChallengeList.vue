@@ -50,6 +50,8 @@
               <option value="name">名稱</option>
               <option value="difficulty">難度</option>
               <option value="name_en">英文名稱</option>
+              <option value="name_cn">中文名稱</option>
+              <option value="type">類型</option>
             </select>
             <Icon name="lucide:chevron-down" class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 pointer-events-none" />
           </div>
@@ -99,7 +101,7 @@
             <div class="flex justify-between items-center">
               <div>
                 <h3 class="font-semibold text-sm">{{ challenge.name }}</h3>
-                <p class="text-xs opacity-75">{{ challenge.name_en }}</p>
+                <p class="text-xs opacity-75">{{ challenge.name_cn || challenge.name_en || challenge.name }}</p>
               </div>
               <div class="flex flex-col items-end">
                 <span :class="[
@@ -108,7 +110,7 @@
                     ? 'bg-cyan-800 text-cyan-100' 
                     : 'bg-cyan-900/50 text-cyan-200'
                 ]">
-                  等級 {{ challenge.difficulty }}
+                  等級 {{ challenge.difficulty || challenge.tier }}
                 </span>
               </div>
             </div>

@@ -16,7 +16,20 @@
             <Icon name="lucide:database" class="w-5 h-5 mr-2 text-cyan-400" />
             挑戰資料庫 - 都市異景
           </h1>
-          <div class="w-6"></div>
+          <div class="flex items-center space-x-2">
+            <!-- Data Source Selector -->
+            <div class="relative">
+              <select 
+                v-model="selectedDataSource"
+                @change="loadChallenges"
+                class="bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-cyan-100 focus:border-cyan-400 focus:outline-none text-sm appearance-none cursor-pointer pr-8"
+              >
+                <option value="metro">都市異景</option>
+                <option value="powersets">異能組合</option>
+              </select>
+              <Icon name="lucide:chevron-down" class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 pointer-events-none" />
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -47,14 +60,7 @@
           :selectedChallenge="selectedChallengeData"
         />
 
-        <!-- Right Panel - Challenge Tools Component -->
-        <ChallengeTools
-          :selectedChallenge="selectedChallengeData"
-          :totalChallenges="challenges.length"
-          :filteredCount="filteredChallenges.length"
-          :currentPage="currentPage"
-          :totalPages="totalPages"
-        />
+
       </div>
     </div>
   </div>
@@ -86,6 +92,7 @@ const itemsPerPage = 10
 const selectedChallengeData = ref(null)
 const isLoading = ref(true)
 const loadError = ref(null)
+const selectedDataSource = ref('metro')
 
 // 計算屬性
 const filteredChallenges = computed(() => {
@@ -103,15 +110,21 @@ const filteredChallenges = computed(() => {
 
   if (selectedDifficulty.value) {
     const difficulty = parseInt(selectedDifficulty.value)
-    filtered = filtered.filter(challenge => challenge.difficulty === difficulty)
+    filtered = filtered.filter(challenge => 
+      challenge.difficulty === difficulty || challenge.tier === difficulty
+    )
   }
 
   filtered.sort((a, b) => {
     switch (sortBy.value) {
       case 'difficulty':
-        return (a.difficulty || 0) - (b.difficulty || 0)
+        return (a.difficulty || a.tier || 0) - (b.difficulty || b.tier || 0)
       case 'name_en':
         return (a.name_en || '').localeCompare(b.name_en || '')
+      case 'name_cn':
+        return (a.name_cn || '').localeCompare(b.name_cn || '')
+      case 'type':
+        return (a.type || '').localeCompare(b.type || '')
       default:
         return (a.name || '').localeCompare(b.name || '')
     }
@@ -136,8 +149,21 @@ async function loadChallenges() {
     isLoading.value = true
     loadError.value = null
     const basePath = getBasePath()
-    const data = await $fetch(`${basePath}/MO/challenges/metro.json`)
-    challenges.value = data.challenges || []
+    
+    let data
+    if (selectedDataSource.value === 'powersets') {
+      // powersets.json is a direct array
+      data = await $fetch(`${basePath}/MO/challenges/powersets.json`)
+      challenges.value = Array.isArray(data) ? data : []
+    } else {
+      // metro.json has a challenges wrapper
+      data = await $fetch(`${basePath}/MO/challenges/metro.json`)
+      challenges.value = data.challenges || []
+    }
+    
+    // Reset selections when switching data source
+    selectedChallengeData.value = null
+    currentPage.value = 1
   } catch (error) {
     console.error('載入挑戰資料失敗:', error)
     loadError.value = error.message
@@ -167,6 +193,32 @@ onMounted(() => {
 html, body {
   overflow-x: hidden;
   overflow-y: auto;
+}
+
+/* Select dropdown styling */
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: none;
+}
+
+select::-ms-expand {
+  display: none;
+}
+
+select option {
+  background-color: #374151 !important;
+  color: #e5e7eb !important;
+  padding: 8px 12px;
+  border: none;
+}
+
+select option:hover,
+select option:focus,
+select option:checked {
+  background-color: #06b6d4 !important;
+  color: white !important;
 }
 
 /* 響應式調整 */

@@ -5,9 +5,9 @@
       <div class="absolute top-0 left-0 z-20">
         <div :class="[
           'px-4 py-2 rounded-br-lg text-xs font-bold uppercase tracking-wide',
-          getDifficultyColor(selectedChallenge.difficulty)
+          getDifficultyColor(selectedChallenge.difficulty || selectedChallenge.tier)
         ]">
-          Level {{ selectedChallenge.difficulty }}
+          Level {{ selectedChallenge.difficulty || selectedChallenge.tier }}
         </div>
       </div>
       
@@ -18,11 +18,16 @@
           <!-- Title -->
           <div class="mb-4">
             <h1 class="text-2xl font-bold text-white leading-tight mb-1">{{ selectedChallenge.name }}</h1>
-            <p class="text-gray-400 text-sm">{{ selectedChallenge.name_en }}</p>
+            <p class="text-gray-400 text-sm">{{ selectedChallenge.name_cn || selectedChallenge.name_en || '' }}</p>
+            <div v-if="selectedChallenge.type" class="mt-1">
+              <span class="inline-block bg-blue-800/80 text-blue-100 px-2 py-1 rounded text-xs font-medium">
+                {{ getTypeLabel(selectedChallenge.type) }}
+              </span>
+            </div>
           </div>
 
           <!-- Description -->
-          <div class="mb-4">
+          <div v-if="selectedChallenge.description" class="mb-4">
             <p class="text-gray-300 text-sm leading-relaxed">{{ selectedChallenge.description }}</p>
           </div>
 
@@ -65,13 +70,17 @@
             </div>
           </div>
 
-          <!-- Threats and Consequences -->
-          <div v-if="selectedChallenge.threatsAndConsequences && selectedChallenge.threatsAndConsequences.length > 0" class="mb-6">
-            <h4 class="text-orange-300 font-bold text-xs mb-2 uppercase tracking-wider border-b border-orange-500/30 pb-1">Threats & Consequences</h4>
+          <!-- Threats and Consequences / Consequences -->
+          <div v-if="(selectedChallenge.threatsAndConsequences && selectedChallenge.threatsAndConsequences.length > 0) || (selectedChallenge.consequences && selectedChallenge.consequences.length > 0)" class="mb-6">
+            <h4 class="text-orange-300 font-bold text-xs mb-2 uppercase tracking-wider border-b border-orange-500/30 pb-1">
+              {{ selectedChallenge.threatsAndConsequences ? 'Threats & Consequences' : 'Consequences' }}
+            </h4>
             <div class="space-y-3">
+              <!-- Metro format: threatsAndConsequences -->
               <div 
+                v-if="selectedChallenge.threatsAndConsequences"
                 v-for="(threat, index) in selectedChallenge.threatsAndConsequences" 
-                :key="index"
+                :key="'threat-' + index"
               >
                 <h5 class="text-orange-200 font-semibold text-xs mb-1">{{ threat.category }}</h5>
                 <ul class="space-y-1 ml-2">
@@ -84,6 +93,18 @@
                     <span>{{ consequence }}</span>
                   </li>
                 </ul>
+              </div>
+              
+              <!-- Powersets format: consequences -->
+              <div v-if="selectedChallenge.consequences" class="space-y-2">
+                <div 
+                  v-for="(consequence, index) in selectedChallenge.consequences" 
+                  :key="'consequence-' + index"
+                  class="text-gray-300 text-xs leading-tight flex items-start"
+                >
+                  <span class="text-orange-400 mr-1 flex-shrink-0 text-xs">•</span>
+                  <span class="whitespace-pre-line">{{ consequence }}</span>
+                </div>
               </div>
             </div>
           </div>
@@ -120,6 +141,18 @@ function getDifficultyColor(difficulty) {
   if (level <= 6) return 'bg-orange-600 text-orange-100'
   if (level <= 8) return 'bg-red-600 text-red-100'
   return 'bg-purple-600 text-purple-100'
+}
+
+function getTypeLabel(type) {
+  const typeLabels = {
+    'MYTHOS': '神話',
+    'SELF': '自我',
+    'NOISE': '雜訊',
+    'ENVIRONMENT': '環境',
+    'NPC': 'NPC',
+    'ORGANIZATION': '組織'
+  }
+  return typeLabels[type] || type
 }
 
 function getSpecialTitle(special) {
