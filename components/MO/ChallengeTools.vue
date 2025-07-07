@@ -34,192 +34,136 @@
         <!-- Main Content -->
         <div v-else class="p-3 space-y-3">
           
-          <!-- Display Mode Selector -->
-          <div class="space-y-2">
-            <label class="text-purple-300 font-medium text-xs">顯示模式</label>
-            <div class="relative">
-              <select 
-                v-model="displayMode"
-                class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-cyan-100 focus:border-cyan-400 focus:outline-none text-xs appearance-none cursor-pointer"
-              >
-                <option value="overview">整體概覽</option>
-                <option value="cards">卡片瀏覽</option>
-                <option value="list">列表檢視</option>
-                <option value="stats">統計資訊</option>
-              </select>
-              <Icon name="lucide:chevron-down" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-3 h-3 pointer-events-none" />
-            </div>
-          </div>
-          
-          <!-- Main Content Display -->
-          <div v-if="displayMode === 'overview'" class="space-y-3">
-            
-            <!-- Summary Stats -->
-            <div v-if="powersetsStats" class="bg-gray-700/30 rounded-lg p-3 border border-purple-500/20">
-              <h4 class="text-purple-300 font-semibold text-xs mb-2 flex items-center">
-                <Icon name="lucide:bar-chart-3" class="w-3 h-3 mr-1" />
-                資料概覽
-              </h4>
-              <div class="grid grid-cols-2 gap-2 text-xs">
-                <div class="flex justify-between">
-                  <span class="text-gray-400">總數：</span>
-                  <span class="text-purple-300 font-medium">{{ powersetsStats.total }}</span>
-                </div>
-                <div class="flex justify-between">
-                  <span class="text-gray-400">平均能力：</span>
-                  <span class="text-purple-300 font-medium">{{ powersetsStats.avgSpecials }}</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Type Distribution -->
-            <div v-if="powersetsStats" class="bg-gray-700/30 rounded-lg p-3 border border-purple-500/20">
-              <h4 class="text-purple-300 font-semibold text-xs mb-2">類型分布</h4>
-              <div class="space-y-1">
-                <div v-for="(count, type) in powersetsStats.typeCount" :key="type" 
-                     class="flex justify-between items-center text-xs">
-                  <span class="text-gray-300">{{ getTypeLabel(type) }}</span>
-                  <span class="text-purple-300 font-medium">{{ count }}</span>
-                </div>
-              </div>
-            </div>
-
-          </div>
-
-          <!-- Cards View -->
-          <div v-else-if="displayMode === 'cards'" class="space-y-3">
-            
-            <!-- Pagination Controls -->
-            <div class="flex justify-between items-center">
-              <button 
-                @click="prevPage"
-                :disabled="currentPage === 1"
-                class="px-2 py-1 bg-gray-600 hover:bg-gray-700 disabled:bg-gray-800 disabled:opacity-50 rounded text-white text-xs"
-              >
-                <Icon name="lucide:chevron-left" class="w-3 h-3" />
-              </button>
-              <span class="text-gray-300 text-xs">{{ currentPage }} / {{ totalPages }}</span>
-              <button 
-                @click="nextPage"
-                :disabled="currentPage === totalPages"
-                class="px-2 py-1 bg-gray-600 hover:bg-gray-700 disabled:bg-gray-800 disabled:opacity-50 rounded text-white text-xs"
-              >
-                <Icon name="lucide:chevron-right" class="w-3 h-3" />
-              </button>
-            </div>
-
-            <!-- Powerset Cards -->
-            <div class="space-y-2 max-h-96 overflow-y-auto">
-              <div v-for="powerset in paginatedPowersets" :key="powerset.name" 
-                   @click="selectPowerset(powerset)"
-                   :class="[
-                     'bg-gray-700/50 rounded-lg p-2 border cursor-pointer transition-all',
-                     selectedPowerset?.name === powerset.name 
-                       ? 'border-purple-500 bg-purple-900/20' 
-                       : 'border-gray-600 hover:border-purple-400'
-                   ]">
-                <div class="flex justify-between items-start mb-1">
-                  <h5 class="text-white font-medium text-xs">{{ powerset.name }}</h5>
-                  <span :class="[
-                    'px-1 py-0.5 rounded text-xs font-bold',
-                    getTierStyle(powerset.tier || powerset.difficulty)
-                  ]">
-                    T{{ powerset.tier || powerset.difficulty }}
-                  </span>
-                </div>
-                <p class="text-gray-400 text-xs">{{ powerset.name_cn }}</p>
-                <div v-if="powerset.type" class="mt-1">
-                  <span :class="['inline-block px-1 py-0.5 rounded text-xs', getTypeStyle(powerset.type)]">
-                    {{ getTypeLabel(powerset.type) }}
-                  </span>
-                </div>
-              </div>
-            </div>
-
-          </div>
-
-          <!-- List View -->
-          <div v-else-if="displayMode === 'list'" class="space-y-2">
+          <!-- Powerset List -->
+          <div v-if="!selectedPowerset" class="space-y-2">
             <div class="max-h-96 overflow-y-auto space-y-1">
               <div v-for="powerset in powersets" :key="powerset.name" 
                    @click="selectPowerset(powerset)"
-                   :class="[
-                     'bg-gray-700/30 rounded p-2 border cursor-pointer transition-all text-xs',
-                     selectedPowerset?.name === powerset.name 
-                       ? 'border-purple-500 bg-purple-900/20' 
-                       : 'border-gray-600 hover:border-purple-400'
-                   ]">
+                   class="bg-gray-700/30 rounded p-2 border border-gray-600 hover:border-purple-400 cursor-pointer transition-all text-xs">
                 <div class="flex justify-between items-center">
-                  <span class="text-white font-medium">{{ powerset.name }}</span>
-                  <span :class="[
-                    'px-1 py-0.5 rounded text-xs font-bold',
-                    getTierStyle(powerset.tier || powerset.difficulty)
-                  ]">
-                    {{ powerset.tier || powerset.difficulty }}
-                  </span>
+                  <div class="flex-1 min-w-0">
+                    <span class="text-white font-medium block truncate">{{ powerset.name_cn }}</span>
+                    <span class="text-gray-400 text-xs">{{ powerset.name }}</span>
+                  </div>
+                  <div class="flex items-center gap-1 ml-2">
+                    <span v-if="powerset.type" :class="['inline-block px-1 py-0.5 rounded text-xs', getTypeStyle(powerset.type)]">
+                      {{ getTypeLabel(powerset.type) }}
+                    </span>
+                    <span :class="[
+                      'px-1 py-0.5 rounded text-xs font-bold',
+                      getTierStyle(powerset.tier || powerset.difficulty)
+                    ]">
+                      {{ powerset.tier || powerset.difficulty }}
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- Stats View -->
-          <div v-else-if="displayMode === 'stats' && powersetsStats" class="space-y-3">
+          <!-- Selected Powerset Detail Card -->
+          <div v-else class="space-y-3">
             
-            <!-- General Stats -->
-            <div class="bg-gray-700/30 rounded-lg p-3 border border-purple-500/20">
-              <h4 class="text-purple-300 font-semibold text-xs mb-2">統計數據</h4>
-              <div class="grid grid-cols-1 gap-2 text-xs">
-                <div class="flex justify-between">
-                  <span class="text-gray-400">總異能組合：</span>
-                  <span class="text-purple-300 font-medium">{{ powersetsStats.total }}</span>
-                </div>
-                <div class="flex justify-between">
-                  <span class="text-gray-400">總特殊能力：</span>
-                  <span class="text-purple-300 font-medium">{{ powersetsStats.totalSpecials }}</span>
-                </div>
-                <div class="flex justify-between">
-                  <span class="text-gray-400">總標籤數：</span>
-                  <span class="text-purple-300 font-medium">{{ powersetsStats.totalTags }}</span>
-                </div>
-              </div>
-            </div>
+            <!-- Back Button -->
+            <button 
+              @click="selectedPowerset = null"
+              class="flex items-center text-purple-300 hover:text-purple-100 text-xs transition-colors"
+            >
+              <Icon name="lucide:arrow-left" class="w-3 h-3 mr-1" />
+              返回列表
+            </button>
 
-            <!-- Tier Distribution -->
-            <div class="bg-gray-700/30 rounded-lg p-3 border border-purple-500/20">
-              <h4 class="text-purple-300 font-semibold text-xs mb-2">等級分布</h4>
-              <div class="space-y-1">
-                <div v-for="(count, tier) in powersetsStats.tierCount" :key="tier" 
-                     class="flex justify-between items-center text-xs">
-                  <span class="text-gray-300">等級 {{ tier }}</span>
-                  <span class="text-purple-300 font-medium">{{ count }}</span>
-                </div>
-              </div>
-            </div>
-
-          </div>
-
-          <!-- Selected Powerset Detail -->
-          <div v-if="selectedPowerset" class="bg-gray-700/50 rounded-lg p-3 border border-purple-500/30 mt-3">
-            <h4 class="text-purple-300 font-semibold text-xs mb-2 flex items-center">
-              <Icon name="lucide:eye" class="w-3 h-3 mr-1" />
-              當前選擇
-            </h4>
-            <div class="space-y-2">
-              <div>
-                <h5 class="text-white font-medium text-xs">{{ selectedPowerset.name }}</h5>
-                <p class="text-gray-400 text-xs">{{ selectedPowerset.name_cn }}</p>
-              </div>
+            <!-- Compact Info Card -->
+            <div class="bg-gradient-to-br from-gray-700/80 to-gray-800/80 rounded-lg border border-purple-500/20 overflow-hidden">
               
-              <div v-if="selectedPowerset.specials" class="text-xs">
-                <span class="text-gray-400">特殊能力：</span>
-                <span class="text-purple-300 font-medium">{{ selectedPowerset.specials.length }}</span>
+              <!-- Card Header -->
+              <div class="p-3 bg-gradient-to-r from-purple-600/20 to-indigo-600/20 border-b border-purple-500/30">
+                <div class="flex items-start justify-between">
+                  <div class="flex-1 min-w-0">
+                    <h3 class="text-sm font-bold text-white truncate">{{ selectedPowerset.name_cn }}</h3>
+                    <p class="text-purple-200 text-xs truncate">{{ selectedPowerset.name }}</p>
+                    <div class="flex items-center gap-1 mt-1">
+                      <span v-if="selectedPowerset.type" :class="getTypeStyle(selectedPowerset.type)" 
+                            class="px-2 py-0.5 rounded-full text-xs font-medium">
+                        {{ getTypeLabel(selectedPowerset.type) }}
+                      </span>
+                      <span :class="getTierStyle(selectedPowerset.tier || selectedPowerset.difficulty)"
+                            class="px-2 py-0.5 rounded-full text-xs font-bold">
+                        T{{ selectedPowerset.tier || selectedPowerset.difficulty }}
+                      </span>
+                    </div>
+                  </div>
+                  <Icon name="lucide:sparkles" class="w-5 h-5 text-yellow-400 flex-shrink-0" />
+                </div>
               </div>
-              
-              <div v-if="selectedPowerset.tags" class="text-xs">
-                <span class="text-gray-400">標籤數：</span>
-                <span class="text-purple-300 font-medium">{{ selectedPowerset.tags.length }}</span>
+
+              <!-- Card Body -->
+              <div class="p-3 space-y-3">
+                
+                <!-- Description -->
+                <div v-if="selectedPowerset.description" class="text-xs text-gray-300 leading-relaxed bg-gray-700/30 rounded p-2">
+                  {{ selectedPowerset.description }}
+                </div>
+                
+                <!-- Thresholds (Limits) -->
+                <div v-if="selectedPowerset.limits && Object.keys(selectedPowerset.limits).length > 0" class="space-y-2">
+                  <h4 class="text-red-300 font-semibold text-xs flex items-center">
+                    <Icon name="lucide:alert-triangle" class="w-3 h-3 mr-1" />
+                    閾值
+                  </h4>
+                  <div class="flex flex-wrap gap-1">
+                    <span v-for="(value, key) in selectedPowerset.limits" :key="key" 
+                          class="inline-flex items-center px-2 py-1 bg-red-900/30 border border-red-500/30 rounded text-red-200 text-xs font-medium">
+                      {{ key }}: {{ value }}
+                    </span>
+                  </div>
+                </div>
+
+                <!-- Special Abilities -->
+                <div v-if="selectedPowerset.specials && selectedPowerset.specials.length > 0" class="space-y-2">
+                  <h4 class="text-yellow-300 font-semibold text-xs flex items-center">
+                    <Icon name="lucide:sparkles" class="w-3 h-3 mr-1" />
+                    特殊能力
+                  </h4>
+                  <div class="space-y-1">
+                    <div v-for="(special, index) in selectedPowerset.specials" :key="index" 
+                         class="bg-yellow-900/20 border border-yellow-500/30 rounded p-2">
+                      <div class="text-gray-300 text-xs leading-relaxed">{{ special.substring(0, 120) }}{{ special.length > 120 ? '...' : '' }}</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Consequences -->
+                <div v-if="selectedPowerset.consequences && selectedPowerset.consequences.length > 0" class="space-y-2">
+                  <h4 class="text-orange-300 font-semibold text-xs flex items-center">
+                    <Icon name="lucide:target" class="w-3 h-3 mr-1" />
+                    後果行動
+                  </h4>
+                  <div class="space-y-1">
+                    <div v-for="(consequence, index) in selectedPowerset.consequences" :key="index" 
+                         class="bg-orange-900/20 border border-orange-500/30 rounded p-2">
+                      <div class="text-gray-300 text-xs leading-relaxed whitespace-pre-line">{{ consequence }}</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Tags -->
+                <div v-if="selectedPowerset.tags && selectedPowerset.tags.length > 0" class="space-y-2">
+                  <h4 class="text-emerald-300 font-semibold text-xs flex items-center">
+                    <Icon name="lucide:tags" class="w-3 h-3 mr-1" />
+                    標籤
+                  </h4>
+                  <div class="flex flex-wrap gap-1 max-h-24 overflow-y-auto">
+                    <span v-for="(tag, index) in selectedPowerset.tags" :key="index" 
+                          class="inline-flex items-center px-2 py-1 bg-emerald-900/30 border border-emerald-500/30 rounded text-emerald-200 text-xs font-medium">
+                      {{ tag }}
+                    </span>
+                  </div>
+                </div>
+
               </div>
             </div>
+
           </div>
 
         </div>
@@ -231,63 +175,9 @@
 <script setup>
 // 響應式數據
 const powersets = ref([])
-const displayMode = ref('overview')
 const selectedPowerset = ref(null)
 const isLoading = ref(true)
 const loadError = ref(null)
-const currentPage = ref(1)
-const itemsPerPage = 6
-
-// 計算屬性
-const paginatedPowersets = computed(() => {
-  const start = (currentPage.value - 1) * itemsPerPage
-  const end = start + itemsPerPage
-  return powersets.value.slice(start, end)
-})
-
-const totalPages = computed(() => 
-  Math.ceil(powersets.value.length / itemsPerPage)
-)
-
-const powersetsStats = computed(() => {
-  if (!powersets.value.length) return null
-  
-  const typeCount = {}
-  const tierCount = {}
-  let totalSpecials = 0
-  let totalTags = 0
-  
-  powersets.value.forEach(powerset => {
-    // 計算類型分布
-    if (powerset.type) {
-      typeCount[powerset.type] = (typeCount[powerset.type] || 0) + 1
-    }
-    
-    // 計算等級分布
-    const tier = powerset.tier || powerset.difficulty || 1
-    tierCount[tier] = (tierCount[tier] || 0) + 1
-    
-    // 計算特殊能力總數
-    if (powerset.specials) {
-      totalSpecials += powerset.specials.length
-    }
-    
-    // 計算標籤總數
-    if (powerset.tags) {
-      totalTags += powerset.tags.length
-    }
-  })
-  
-  return {
-    total: powersets.value.length,
-    typeCount,
-    tierCount,
-    totalSpecials,
-    totalTags,
-    avgSpecials: (totalSpecials / powersets.value.length).toFixed(1),
-    avgTags: (totalTags / powersets.value.length).toFixed(1)
-  }
-})
 
 // 方法
 async function loadPowersets() {
@@ -298,10 +188,6 @@ async function loadPowersets() {
     const data = await $fetch('/MO/powersets/powersets.json')
     powersets.value = Array.isArray(data) ? data : []
     
-    // 如果有資料，預設選擇第一個
-    if (powersets.value.length > 0) {
-      selectedPowerset.value = powersets.value[0]
-    }
   } catch (error) {
     console.error('載入異能組合失敗:', error)
     loadError.value = error.message
@@ -315,7 +201,7 @@ const getTypeLabel = (type) => {
   const typeLabels = {
     'MYTHOS': '神話',
     'SELF': '自我',
-    'NOISE': '雜訊',
+    'NOISE': '喧囂',
     'ENVIRONMENT': '環境',
     'NPC': 'NPC',
     'ORGANIZATION': '組織'
@@ -346,18 +232,6 @@ const getTierStyle = (tier) => {
 
 const selectPowerset = (powerset) => {
   selectedPowerset.value = powerset
-}
-
-const nextPage = () => {
-  if (currentPage.value < totalPages.value) {
-    currentPage.value++
-  }
-}
-
-const prevPage = () => {
-  if (currentPage.value > 1) {
-    currentPage.value--
-  }
 }
 
 // 生命週期
