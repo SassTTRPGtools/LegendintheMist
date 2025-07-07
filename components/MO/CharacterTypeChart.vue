@@ -1,30 +1,31 @@
 <template>
-  <div class="bg-slate-800/80 backdrop-blur rounded-lg p-6 border border-purple-500/30">
+  <div class="bg-slate-800/80 backdrop-blur rounded-lg p-6 border border-purple-500/30 h-[600px] flex flex-col">
     <h3 class="text-xl font-bold text-purple-300 mb-4">角色類型圖</h3>    
-    <div class="aspect-square relative bg-slate-700/50 rounded-lg flex items-center justify-center">
-      <!-- 主題組合圖片顯示 -->
-      <div class="w-96 h-96 relative flex items-center justify-center">
-        <!-- 有主題時顯示對應圖片 -->
-        <img 
-          v-if="getEssenceImagePath() && !imageError"
-          :src="getEssenceImagePath()" 
-          :alt="getEssenceImageAlt()"
-          class="w-full h-full object-contain"
-          @error="handleImageError"
-        />
-        <!-- 無主題或圖片載入失敗時顯示預設圖片 -->
-        <img 
-          v-else
-          :src="`${getBasePath()}/ui_icon/essences/blank.svg`" 
-          alt="未選擇主題"
-          class="w-full h-full object-contain opacity-50"
-        />
+    <div class="flex-1 flex flex-col">
+      <div class="aspect-square relative bg-slate-700/50 rounded-lg flex items-center justify-center mb-4 max-h-80">
+        <!-- 主題組合圖片顯示 -->
+        <div class="w-full h-full relative flex items-center justify-center">
+          <!-- 有主題時顯示對應圖片 -->
+          <img 
+            v-if="getEssenceImagePath() && !imageError"
+            :src="getEssenceImagePath()" 
+            :alt="getEssenceImageAlt()"
+            class="w-full h-full object-contain"
+            @error="handleImageError"
+          />
+          <!-- 無主題或圖片載入失敗時顯示預設圖片 -->
+          <img 
+            v-else
+            :src="`${getBasePath()}/ui_icon/essences/blank.svg`" 
+            alt="未選擇主題"
+            class="w-full h-full object-contain opacity-50"
+          />
+        </div>
       </div>
-    </div>
-    <div class="mt-4 space-y-2">
-      <div class="text-center mb-3">
-        <span class="text-purple-300 font-semibold">角色類型</span>
-      </div>
+      <div class="flex-1 space-y-2 overflow-y-auto custom-scrollbar">
+        <div class="text-center mb-3">
+          <span class="text-purple-300 font-semibold">角色類型</span>
+        </div>
       
       <!-- 角色類型顯示卡片 -->
       <div class="bg-slate-700/50 rounded-lg p-4 mb-3">
@@ -100,6 +101,7 @@
           <span class="text-pink-300">自我：</span>
           <span class="text-pink-200"> {{ selfCount > 0 ? '●'.repeat(selfCount) + '○'.repeat(4-selfCount) : '○○○○' }}</span>
         </div>
+      </div>
       </div>
     </div>
   </div>
@@ -411,3 +413,55 @@ const handleImageError = (event: Event) => {
   console.log('主題數量 - 神話:', mythosCount.value, '喧囂:', noiseCount.value, '自我:', selfCount.value)
 }
 </script>
+
+<style scoped>
+/* 都市異景風格的自定義滾動條 */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #6b46c1 #1e293b;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: linear-gradient(180deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+  border-radius: 4px;
+  border: 1px solid #374151;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #8b5cf6 0%, #6b46c1 50%, #4c1d95 100%);
+  border-radius: 4px;
+  border: 1px solid #7c3aed;
+  box-shadow: 
+    0 0 4px rgba(139, 92, 246, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #a78bfa 0%, #8b5cf6 50%, #6b46c1 100%);
+  box-shadow: 
+    0 0 8px rgba(139, 92, 246, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:active {
+  background: linear-gradient(180deg, #c4b5fd 0%, #a78bfa 50%, #8b5cf6 100%);
+  box-shadow: 
+    0 0 12px rgba(139, 92, 246, 0.7),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.custom-scrollbar::-webkit-scrollbar-corner {
+  background: #1e293b;
+}
+
+@supports (scrollbar-color: #6b46c1 #1e293b) {
+  .custom-scrollbar {
+    scrollbar-color: #6b46c1 #1e293b;
+    scrollbar-width: thin;
+  }
+}
+</style>

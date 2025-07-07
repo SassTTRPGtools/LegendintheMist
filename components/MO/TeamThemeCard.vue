@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-slate-800/80 backdrop-blur rounded-lg p-6 border border-purple-500/30">
+  <div class="bg-slate-800/80 backdrop-blur rounded-lg p-6 border border-purple-500/30 h-[600px] flex flex-col">
     <div class="flex items-center justify-between mb-4">
       <h3 class="text-xl font-bold text-purple-300">團隊主題</h3>
       <button 
@@ -15,7 +15,7 @@
       </button>
     </div>
     
-    <div class="space-y-4">
+    <div class="space-y-4 flex-1 overflow-y-auto custom-scrollbar">
       <!-- 改進軌跡和衰變軌跡 -->
       <div class="mb-4">
         <div class="flex justify-center space-x-6">
@@ -383,3 +383,55 @@ function toggleDecay(index: number) {
   }
 }
 </script>
+
+<style scoped>
+/* 都市異景風格的自定義滾動條 */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #6b46c1 #1e293b;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: linear-gradient(180deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+  border-radius: 4px;
+  border: 1px solid #374151;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #8b5cf6 0%, #6b46c1 50%, #4c1d95 100%);
+  border-radius: 4px;
+  border: 1px solid #7c3aed;
+  box-shadow: 
+    0 0 4px rgba(139, 92, 246, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #a78bfa 0%, #8b5cf6 50%, #6b46c1 100%);
+  box-shadow: 
+    0 0 8px rgba(139, 92, 246, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:active {
+  background: linear-gradient(180deg, #c4b5fd 0%, #a78bfa 50%, #8b5cf6 100%);
+  box-shadow: 
+    0 0 12px rgba(139, 92, 246, 0.7),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.custom-scrollbar::-webkit-scrollbar-corner {
+  background: #1e293b;
+}
+
+@supports (scrollbar-color: #6b46c1 #1e293b) {
+  .custom-scrollbar {
+    scrollbar-color: #6b46c1 #1e293b;
+    scrollbar-width: thin;
+  }
+}
+</style>
