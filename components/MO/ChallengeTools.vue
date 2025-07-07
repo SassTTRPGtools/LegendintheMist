@@ -10,6 +10,26 @@
       </h2>
     </div>
     
+    <!-- Search Bar -->
+    <div class="flex-shrink-0 p-3 border-b border-purple-500/20">
+      <div class="relative">
+        <Icon name="lucide:search" class="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+        <input
+          v-model="searchKeyword"
+          type="text"
+          placeholder="搜尋異能組合..."
+          class="w-full pl-10 pr-4 py-2 bg-gray-700/50 border border-gray-600 rounded-lg text-white text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+        />
+        <button
+          v-if="searchKeyword"
+          @click="searchKeyword = ''"
+          class="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 hover:text-white transition-colors"
+        >
+          <Icon name="lucide:x" class="w-4 h-4" />
+        </button>
+      </div>
+    </div>
+    
     <!-- Content -->
     <div class="flex-1 min-h-0 overflow-hidden">
       <div class="h-full overflow-y-auto custom-scrollbar">
@@ -36,8 +56,22 @@
           
           <!-- Powerset List -->
           <div v-if="!selectedPowerset" class="space-y-2">
-            <div class="max-h-96 overflow-y-auto space-y-1">
-              <div v-for="powerset in powersets" :key="powerset.name" 
+            <!-- No Search Results -->
+            <div v-if="searchKeyword && filteredPowersets.length === 0" class="text-center py-8 px-4">
+              <Icon name="lucide:search-x" class="w-12 h-12 text-gray-400 mx-auto mb-2" />
+              <p class="text-gray-400 text-sm mb-1">找不到符合的異能組合</p>
+              <p class="text-gray-500 text-xs">關鍵字：{{ searchKeyword }}</p>
+              <button 
+                @click="searchKeyword = ''"
+                class="mt-2 px-3 py-1 bg-purple-600 hover:bg-purple-700 rounded text-white text-xs transition-colors"
+              >
+                清除搜尋
+              </button>
+            </div>
+            
+            <!-- Results List -->
+            <div v-else class="max-h-96 overflow-y-auto space-y-1">
+              <div v-for="powerset in filteredPowersets" :key="powerset.name" 
                    @click="selectPowerset(powerset)"
                    class="bg-gray-700/30 rounded p-2 border border-gray-600 hover:border-purple-400 cursor-pointer transition-all text-xs">
                 <div class="flex justify-between items-center">
@@ -178,6 +212,35 @@ const powersets = ref([])
 const selectedPowerset = ref(null)
 const isLoading = ref(true)
 const loadError = ref(null)
+const searchKeyword = ref('')
+
+// 計算屬性
+const filteredPowersets = computed(() => {
+  if (!searchKeyword.value.trim()) {
+    return powersets.value
+  }
+  
+  const keyword = searchKeyword.value.trim().toLowerCase()
+  return powersets.value.filter(powerset => {
+    // 搜尋中文名稱
+    if (powerset.name_cn && powerset.name_cn.toLowerCase().includes(keyword)) {
+      return true
+    }
+    // 搜尋英文名稱
+    if (powerset.name && powerset.name.toLowerCase().includes(keyword)) {
+      return true
+    }
+    // 搜尋描述
+    if (powerset.description && powerset.description.toLowerCase().includes(keyword)) {
+      return true
+    }
+    // 搜尋標籤
+    if (powerset.tags && Array.isArray(powerset.tags)) {
+      return powerset.tags.some(tag => tag.toLowerCase().includes(keyword))
+    }
+    return false
+  })
+})
 
 // 方法
 async function loadPowersets() {
