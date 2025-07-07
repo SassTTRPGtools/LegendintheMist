@@ -135,8 +135,6 @@
         ref="levelUpGameModalRef"
       />
 
-      <!-- GM快速查閱功能已簡化為按鈕形式 -->
-
       <!-- 匯入確認彈窗 -->
       <div
         v-if="showImportConfirm"
@@ -592,8 +590,6 @@ const levelUpGameModalRef = ref(null)
 const levelUpGameCurrentCardIndex = ref(-1)
 const levelUpGameImprovementCount = ref(0)
 
-// GM快速查閱模態框相關（已移除，改為直接複製功能）
-
 // ====================
 // 工具函數
 // ====================
@@ -955,11 +951,6 @@ function generateGMQuickReferenceText() {
   
   
   return result
-}
-
-// 關閉GM模態框（已移除）
-function closeGMModal() {
-  // 此函數已不需要，保留是為了避免任何遺留的引用問題
 }
 
 // ====================
