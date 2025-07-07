@@ -185,7 +185,7 @@
                   </div>                  
                   <div>
                     <span class="text-gray-400">主題風格：</span>
-                    <span class="text-cyan-200">{{ characterReference.themeChineseName || characterReference.type || '未提供' }}</span>
+                    <span class="text-cyan-200">{{ TypeToThemeMapping[characterReference.type] || '未提供' }}</span>
                   </div>
                   <div>
                     <span class="text-gray-400">類型：</span>
