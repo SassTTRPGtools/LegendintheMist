@@ -148,12 +148,23 @@
             裝備資料庫
           </NuxtLink>
           <NuxtLink 
+            to="/MO/challenge-database"
+            class="bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-700 hover:to-pink-700 text-white font-bold py-3 px-8 rounded-lg transition-all duration-200 shadow-lg hover:shadow-red-500/25 inline-block border border-red-500/30"
+          >
+            <Icon name="lucide:sword" class="w-5 h-5 mr-2 inline" />
+            挑戰資料庫
+          </NuxtLink>
+          <NuxtLink 
             to="/MO/action-database"
             class="bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700 text-white font-bold py-3 px-8 rounded-lg transition-all duration-200 shadow-lg hover:shadow-teal-500/25 inline-block border border-teal-500/30"
           >
             <Icon name="lucide:database" class="w-5 h-5 mr-2 inline" />
             行動資料庫
           </NuxtLink>
+        </div>
+        
+        <!-- 額外工具按鈕 -->
+        <div class="flex flex-col sm:flex-row gap-4 justify-center mt-4">
           <NuxtLink 
             to="/MO/template-creator"
             class="bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 text-white font-bold py-3 px-8 rounded-lg transition-all duration-200 shadow-lg hover:shadow-emerald-500/25 inline-block border border-emerald-500/30"
