@@ -158,172 +158,28 @@
       </div>
 
       <!-- Character Reference Modal -->
-      <div v-if="showReferenceModal" 
-           @click="closeReferenceModal"
-           class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-        <div @click.stop 
-             class="bg-gray-800 rounded-xl shadow-2xl border border-cyan-500/30 max-w-4xl w-full max-h-[80vh] overflow-hidden">
-          <div class="bg-gradient-to-r from-cyan-600 to-purple-600 p-4 flex justify-between items-center">
-            <h3 class="text-lg font-bold text-white">{{ selectedCharacterName }}</h3>
-            <button @click="closeReferenceModal" 
-                    class="text-white hover:text-gray-300 transition-colors">
-              <Icon name="lucide:x" class="w-6 h-6" />
-            </button>
-          </div>
-          <div class="p-6 overflow-y-auto max-h-[60vh]">
-            <div v-if="characterReference" class="space-y-4">
-              <!-- 角色基本資訊 -->
-              <div class="bg-gray-700/30 rounded-lg p-4 border border-gray-600">
-                <div class="grid grid-cols-2 gap-4 text-sm">
-                  <div>
-                    <span class="text-gray-400">名稱：</span>
-                    <span class="text-cyan-200">{{ characterReference.name || '未提供' }}</span>
-                  </div>
-                  <div>
-                    <span class="text-gray-400">資源書：</span>
-                    <span class="text-cyan-200">{{ characterReference.source || '未提供' }}</span>
-                  </div>                  
-                  <div>
-                    <span class="text-gray-400">主題風格：</span>
-                    <span class="text-cyan-200">{{ TypeToThemeMapping[characterReference.type] || '未提供' }}</span>
-                  </div>
-                  <div>
-                    <span class="text-gray-400">類型：</span>
-                    <span class="text-cyan-200">{{ characterReference.themeChineseName || characterReference.type || '未提供' }}</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="grid md:grid-cols-2 gap-6">
-                <div>
-                  <h4 class="text-cyan-200 font-semibold mb-3 flex items-center">
-                    <Icon name="lucide:zap" class="w-4 h-4 mr-2" />
-                    能力標籤
-                  </h4>
-                  <div class="space-y-2">
-                    <span v-for="(tag, index) in characterReference.ability_tags" :key="index"
-                          class="inline-block bg-green-900/30 text-green-200 px-3 py-1 rounded-full text-sm border border-green-500/30 mr-2 mb-2">
-                      {{ tag }}
-                    </span>
-                  </div>
-                </div>
-                <div>
-                  <h4 class="text-red-200 font-semibold mb-3 flex items-center">
-                    <Icon name="lucide:alert-triangle" class="w-4 h-4 mr-2" />
-                    弱點標籤
-                  </h4>
-                  <div class="space-y-2">
-                    <span v-for="(tag, index) in characterReference.weakness_tags" :key="index"
-                          class="inline-block bg-red-900/30 text-red-200 px-3 py-1 rounded-full text-sm border border-red-500/30 mr-2 mb-2">
-                      {{ tag }}
-                    </span>
-                  </div>
-                </div>
-              </div>
-              
-              <!-- 角色動機與目標 -->
-              <div v-if="characterReference.primary_goal || characterReference.itch || characterReference.ritual_concept" 
-                   class="mt-6 space-y-4">
-                <h4 class="text-purple-200 font-semibold mb-4 flex items-center">
-                  <Icon name="lucide:target" class="w-4 h-4 mr-2" />
-                  角色動機與驅動力
-                </h4>
-                
-                <!-- 癢處 (科技心魔) -->
-                <div v-if="characterReference.itch" class="mb-4">
-                  <p class="text-xs font-medium text-cyan-400 mb-2 flex items-center">
-                    <Icon name="lucide:zap" class="w-3 h-3 mr-1" />
-                    癢處
-                    <span class="ml-2 text-xs bg-cyan-500/20 px-2 py-1 rounded-full text-cyan-300">科技心魔</span>
-                  </p>
-                  <div class="p-3 bg-cyan-900/30 rounded-lg border-l-4 border-cyan-400">
-                    <p class="text-sm text-cyan-200 italic mb-2">
-                      "{{ characterReference.itch }}"
-                    </p>
-                    <p class="text-xs text-cyan-300/70">
-                      這是角色對科技的內在驅動力與偏執，長期壓抑將遠離科技。
-                    </p>
-                  </div>
-                </div>
-
-                <!-- 身份信念 -->
-                <div v-if="characterReference.primary_goal" class="mb-4">
-                  <p class="text-xs font-medium text-blue-400 mb-2 flex items-center">
-                    <Icon name="lucide:user" class="w-3 h-3 mr-1" />
-                    身份
-                    <span class="ml-2 text-xs bg-blue-500/20 px-2 py-1 rounded-full text-blue-300">自我信念</span>
-                  </p>
-                  <div class="p-3 bg-blue-900/30 rounded-lg border-l-4 border-blue-400">
-                    <p class="text-sm text-blue-200 italic mb-2">
-                      "{{ characterReference.primary_goal }}"
-                    </p>
-                    <p class="text-xs text-blue-200/70">
-                      這是角色深信不疑的信念，長期違背將喪失自我。
-                    </p>
-                  </div>
-                </div>
-
-                <!-- 儀式誡律 -->
-                <div v-if="characterReference.ritual_concept" class="mb-4">
-                  <p class="text-xs font-medium text-indigo-400 mb-2 flex items-center">
-                    <Icon name="lucide:scroll" class="w-3 h-3 mr-1" />
-                    儀式
-                    <span class="ml-2 text-xs bg-indigo-500/20 px-2 py-1 rounded-full text-indigo-300">祕源誡律</span>
-                  </p>
-                  <div class="p-3 bg-indigo-900/30 rounded-lg border-l-4 border-indigo-400">
-                    <p class="text-sm text-indigo-200 italic mb-2">
-                      "{{ characterReference.ritual_concept }}"
-                    </p>
-                    <p class="text-xs text-indigo-200/70">
-                      這是必須遵守的要求，否則將與神話漸行漸遠。
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <!-- 附加資訊 -->
-              <div v-if="characterReference.gear || characterReference.moves || characterReference.improvements" 
-                   class="mt-6 p-4 bg-blue-900/30 rounded-lg border border-blue-500/30">
-                <h4 class="text-blue-200 font-semibold mb-2 flex items-center">
-                  <Icon name="lucide:info" class="w-4 h-4 mr-2" />
-                  額外資訊
-                </h4>
-                <div class="space-y-2">
-                  <div v-if="characterReference.gear" class="text-blue-300 text-sm">
-                    <strong>裝備：</strong>
-                    <ul class="list-disc list-inside ml-4">
-                      <li v-for="(item, index) in characterReference.gear" :key="index">{{ item }}</li>
-                    </ul>
-                  </div>
-                  <div v-if="characterReference.moves" class="text-blue-300 text-sm">
-                    <strong>招式：</strong>
-                    <ul class="list-disc list-inside ml-4">
-                      <li v-for="(move, index) in characterReference.moves" :key="index">{{ move }}</li>
-                    </ul>
-                  </div>
-                  <div v-if="characterReference.improvements" class="text-blue-300 text-sm">
-                    <strong>提升：</strong>
-                    <ul class="list-disc list-inside ml-4">
-                      <li v-for="(improvement, index) in characterReference.improvements" :key="index">{{ improvement }}</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div v-else class="text-center py-8">
-              <Icon name="lucide:search" class="w-12 h-12 text-gray-500 mx-auto mb-4" />
-              <p class="text-gray-400">找不到對應的角色參考資料</p>
-              <p class="text-gray-500 text-sm mt-2">搜尋的角色名稱：{{ selectedCharacterName }}</p>
-              <p class="text-gray-500 text-sm">主題風格：{{ selectedCharacterType }}</p>
-            </div>
-          </div>
-        </div>
-      </div>
+      <CharacterReferenceModal
+        :is-visible="showReferenceModal"
+        :character-name="selectedCharacterName"
+        :character-type="selectedCharacterType"
+        :character-data="characterReference"
+        @close="closeReferenceModal" />
     </div>
   </div>
 </template>
 
 <script setup>
+// 導入映射數據
+import { 
+  themeFileMapping, 
+  characterTypeToThemeMapping, 
+  TypeToThemeMapping, 
+  themeSystemMapping 
+} from '~/assets/MO/character-type-mapping.js'
+
+// 導入 Character Reference Modal 組件
+import { CharacterReferenceModal } from '~/components/MO/CharacterReference'
+
 // 頁面設定
 definePageMeta({
   title: '模板創建工具 - 都市異景'
@@ -369,93 +225,6 @@ const characterExamples = ref({})
 
 // 主題中文名稱快取
 const themeChineseNames = ref({})
-
-// 主題名稱與檔案名稱的對應表
-const themeFileMapping = {
-  // Mythos themes
-  'ARTIFACT': 'artifact-examples',
-  'COMPANION': 'companion-examples', 
-  'ESOTERICA': 'esoterica-examples',
-  'EXPOSURE': 'exposure-examples',
-  
-  // Noise themes
-  'AUGMENTATION': 'augmentation-examples',
-  'CUTTING EDGE': 'cuttingedge-examples',
-  'CYBERSPACE': 'cyberspace-examples',
-  'DRONES': 'drones-examples',
-  
-  // Self themes  
-  'AFFILIATION': 'affiliation-examples',
-  'ASSETS': 'assets-examples',
-  'EXPERTISE': 'expertises-examples',
-  'HORIZON': 'horizon-examples',
-  'PERSONALITY': 'personality-examples',
-  'TROUBLED PAST': 'troubledpast-examples'
-}
-
-// 角色範例類型到主題檔案鍵的對應表
-const characterTypeToThemeMapping = {
-  // Mythos themes
-  'Artifact': 'Artifact',
-  'Companion': 'Companion', 
-  'Esoterica': 'Esoterica',
-  'Exposure': 'Exposure',
-  
-  // Noise themes
-  'Augmentation': 'Augmentation',
-  'CuttingEdge': 'CuttingEdge',
-  'Cyberspace': 'Cyberspace',
-  'Drones': 'Drones',
-  
-  // Self themes
-  'Affiliation': 'Affiliation',
-  'Assets': 'Assets',
-  'Expertise': 'Expertise',
-  'Horizon': 'Horizon',
-  'Personality': 'Personality',
-  'TroubledPast': 'TroubledPast'
-}
-
-
-const TypeToThemeMapping = {
-  // Mythos themes
-  'Artifact': '神話',
-  'Companion': '神話', 
-  'Esoterica': '神話',
-  'Exposure': '神話',
-  
-  // Noise themes
-  'Augmentation': '喧囂',
-  'CuttingEdge': '喧囂',
-  'Cyberspace': '喧囂',
-  'Drones': '喧囂',
-  
-  // Self themes
-  'Affiliation': '自我',
-  'Assets': '自我',
-  'Expertise': '自我',
-  'Horizon': '自我',
-  'Personality': '自我',
-  'TroubledPast': '自我'
-}
-
-// 主題系統對應表
-const themeSystemMapping = {
-  'ARTIFACT': 'mythos-themes',
-  'COMPANION': 'mythos-themes',
-  'ESOTERICA': 'mythos-themes', 
-  'EXPOSURE': 'mythos-themes',
-  'AUGMENTATION': 'noise-themes',
-  'CUTTING EDGE': 'noise-themes',
-  'CYBERSPACE': 'noise-themes',
-  'DRONES': 'noise-themes',
-  'AFFILIATION': 'self-themes',
-  'ASSETS': 'self-themes',
-  'EXPERTISE': 'self-themes',
-  'HORIZON': 'self-themes',
-  'PERSONALITY': 'self-themes',
-  'TROUBLED PAST': 'self-themes'
-}
 
 // 載入角色範例資料
 async function loadCharacterExamples(themeType) {
