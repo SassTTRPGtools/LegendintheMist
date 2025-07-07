@@ -57,15 +57,20 @@
 
           <!-- Special Abilities -->
           <div v-if="selectedChallenge.specials && selectedChallenge.specials.length > 0" class="mb-4">
-            <h4 class="text-purple-300 font-bold text-xs mb-2 uppercase tracking-wider border-b border-purple-500/30 pb-1">Special Abilities</h4>
+            <h4 class="text-purple-300 font-bold text-xs mb-2 uppercase tracking-wider border-b border-purple-500/30 pb-1">特殊能力</h4>
             <div class="space-y-2">
               <div 
                 v-for="(special, index) in selectedChallenge.specials" 
                 :key="index"
-                class="text-gray-300 text-xs leading-tight"
+                class="bg-purple-900/20 border border-purple-500/30 rounded p-2"
               >
-                <span class="text-purple-200 font-medium">{{ getSpecialTitle(special) }}:</span>
-                <span class="ml-1">{{ getSpecialDescription(special) }}</span>
+                <div v-if="getSpecialTitle(special) && getSpecialDescription(special)" class="text-gray-300 text-xs leading-relaxed">
+                  <span class="text-purple-200 font-medium">{{ getSpecialTitle(special) }}:</span>
+                  <span class="ml-1 whitespace-pre-line">{{ getSpecialDescription(special) }}</span>
+                </div>
+                <div v-else class="text-gray-300 text-xs leading-relaxed whitespace-pre-line">
+                  {{ special }}
+                </div>
               </div>
             </div>
           </div>
@@ -73,7 +78,7 @@
           <!-- Threats and Consequences / Consequences -->
           <div v-if="(selectedChallenge.threatsAndConsequences && selectedChallenge.threatsAndConsequences.length > 0) || (selectedChallenge.consequences && selectedChallenge.consequences.length > 0)" class="mb-6">
             <h4 class="text-orange-300 font-bold text-xs mb-2 uppercase tracking-wider border-b border-orange-500/30 pb-1">
-              {{ selectedChallenge.threatsAndConsequences ? 'Threats & Consequences' : 'Consequences' }}
+              {{ selectedChallenge.threatsAndConsequences ? '威脅 & 後果' : '後果' }}
             </h4>
             <div class="space-y-3">
               <!-- Metro format: threatsAndConsequences -->
@@ -81,16 +86,17 @@
                 v-if="selectedChallenge.threatsAndConsequences"
                 v-for="(threat, index) in selectedChallenge.threatsAndConsequences" 
                 :key="'threat-' + index"
+                class="bg-orange-900/20 border border-orange-500/30 rounded p-2"
               >
-                <h5 class="text-orange-200 font-semibold text-xs mb-1">{{ threat.category }}</h5>
-                <ul class="space-y-1 ml-2">
+                <h5 class="text-orange-200 font-semibold text-xs mb-2">{{ threat.category }}</h5>
+                <ul class="space-y-2">
                   <li 
                     v-for="(consequence, cIndex) in threat.consequences" 
                     :key="cIndex"
-                    class="text-gray-300 text-xs leading-tight flex items-start"
+                    class="text-gray-300 text-xs leading-relaxed flex items-start"
                   >
-                    <span class="text-orange-400 mr-1 flex-shrink-0 text-xs">•</span>
-                    <span>{{ consequence }}</span>
+                    <span class="text-orange-400 mr-2 flex-shrink-0 text-xs mt-0.5">•</span>
+                    <span class="whitespace-pre-line">{{ consequence }}</span>
                   </li>
                 </ul>
               </div>
@@ -100,10 +106,12 @@
                 <div 
                   v-for="(consequence, index) in selectedChallenge.consequences" 
                   :key="'consequence-' + index"
-                  class="text-gray-300 text-xs leading-tight flex items-start"
+                  class="bg-orange-900/20 border border-orange-500/30 rounded p-2"
                 >
-                  <span class="text-orange-400 mr-1 flex-shrink-0 text-xs">•</span>
-                  <span class="whitespace-pre-line">{{ consequence }}</span>
+                  <div class="text-gray-300 text-xs leading-relaxed flex items-start">
+                    <span class="text-orange-400 mr-2 flex-shrink-0 text-xs mt-0.5">•</span>
+                    <span class="whitespace-pre-line">{{ consequence }}</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -157,26 +165,54 @@ function getTypeLabel(type) {
 
 function getSpecialTitle(special) {
   if (typeof special === 'string') {
+    // 尋找冒號分隔符
     const colonIndex = special.indexOf(':')
-    if (colonIndex > 0) {
-      return special.substring(0, colonIndex).trim()
+    if (colonIndex > 0 && colonIndex < 50) { // 確保標題不會太長
+      const title = special.substring(0, colonIndex).trim()
+      // 檢查是否是合理的標題（不包含太多文字）
+      if (title.length <= 30 && !title.includes('。') && !title.includes('，')) {
+        return title
+      }
     }
-    return special.split('.')[0].trim()
+    
+    // 尋找句號分隔符（適用於某些格式）
+    const dotIndex = special.indexOf('。')
+    if (dotIndex > 0 && dotIndex < 30) {
+      const title = special.substring(0, dotIndex).trim()
+      if (title.length <= 20) {
+        return title
+      }
+    }
+    
+    // 如果沒有找到合適的標題，返回空字符串
+    return ''
   }
-  return '特殊能力'
+  return ''
 }
 
 function getSpecialDescription(special) {
   if (typeof special === 'string') {
+    // 尋找冒號分隔符
     const colonIndex = special.indexOf(':')
-    if (colonIndex > 0) {
-      return special.substring(colonIndex + 1).trim()
+    if (colonIndex > 0 && colonIndex < 50) {
+      const title = special.substring(0, colonIndex).trim()
+      // 檢查是否是合理的標題
+      if (title.length <= 30 && !title.includes('。') && !title.includes('，')) {
+        return special.substring(colonIndex + 1).trim()
+      }
     }
-    const dotIndex = special.indexOf('.')
-    if (dotIndex > 0) {
-      return special.substring(dotIndex + 1).trim()
+    
+    // 尋找句號分隔符
+    const dotIndex = special.indexOf('。')
+    if (dotIndex > 0 && dotIndex < 30) {
+      const title = special.substring(0, dotIndex).trim()
+      if (title.length <= 20) {
+        return special.substring(dotIndex + 1).trim()
+      }
     }
-    return special
+    
+    // 如果沒有找到分隔符，返回空字符串（讓整個文本顯示在主要區域）
+    return ''
   }
   return ''
 }

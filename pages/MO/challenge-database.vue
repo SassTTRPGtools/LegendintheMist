@@ -17,7 +17,6 @@
               <Icon name="lucide:database" class="w-5 h-5 mr-2 text-cyan-400" />
               挑戰資料庫
             </h1>
-            <p class="text-cyan-300 text-xs mt-1">都市異景 • 能力套組</p>
           </div>
           <div class="w-6"></div> <!-- 保持佈局平衡 -->
         </div>
