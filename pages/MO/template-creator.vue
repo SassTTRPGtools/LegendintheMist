@@ -182,6 +182,10 @@
                   <div>
                     <span class="text-gray-400">資源書：</span>
                     <span class="text-cyan-200">{{ characterReference.source || '未提供' }}</span>
+                  </div>                  
+                  <div>
+                    <span class="text-gray-400">主題風格：</span>
+                    <span class="text-cyan-200">{{ characterReference.themeChineseName || characterReference.type || '未提供' }}</span>
                   </div>
                   <div>
                     <span class="text-gray-400">類型：</span>
@@ -410,6 +414,29 @@ const characterTypeToThemeMapping = {
   'Horizon': 'Horizon',
   'Personality': 'Personality',
   'TroubledPast': 'TroubledPast'
+}
+
+
+const TypeToThemeMapping = {
+  // Mythos themes
+  'Artifact': '神話',
+  'Companion': '神話', 
+  'Esoterica': '神話',
+  'Exposure': '神話',
+  
+  // Noise themes
+  'Augmentation': '喧囂',
+  'CuttingEdge': '喧囂',
+  'Cyberspace': '喧囂',
+  'Drones': '喧囂',
+  
+  // Self themes
+  'Affiliation': '自我',
+  'Assets': '自我',
+  'Expertise': '自我',
+  'Horizon': '自我',
+  'Personality': '自我',
+  'TroubledPast': '自我'
 }
 
 // 主題系統對應表
