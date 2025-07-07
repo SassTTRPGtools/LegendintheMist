@@ -135,6 +135,8 @@
         ref="levelUpGameModalRef"
       />
 
+      <!-- GM快速查閱功能已簡化為按鈕形式 -->
+
       <!-- 匯入確認彈窗 -->
       <div
         v-if="showImportConfirm"
@@ -257,6 +259,18 @@
             </svg>
             <span class="text-sm">匯出角色</span>
           </button>
+
+          <!-- GM快速查閱 -->
+          <button 
+            @click="showGMQuickReference"
+            class="px-4 py-2 bg-yellow-600 hover:bg-yellow-700 text-white rounded-lg transition-all duration-200 flex items-center space-x-2 shadow-lg hover:shadow-xl min-w-[140px]"
+            title="一鍵複製GM快速查閱文字到剪貼簿"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+            </svg>
+            <span class="text-sm">GM查閱</span>
+          </button>
           
           <!-- 匯入角色 -->
           <button 
@@ -318,6 +332,10 @@ import EvolutionModal from '~/components/MO/EvolutionModal.vue'
 import HowToPlayPanel from '~/components/MO/HowToPlayPanel.vue'
 import EvolutionHistoryModal from '~/components/MO/EvolutionHistoryModal.vue'
 import LevelUpGameModal from '~/components/MO/LevelUpGameModal.vue'
+
+
+// 導入類型映射
+import { TypeChineseNameMapping, TypeToThemeMapping } from '~/assets/MO/character-type-mapping.js'
 
 // ====================
 // 頁面配置
@@ -574,6 +592,8 @@ const levelUpGameModalRef = ref(null)
 const levelUpGameCurrentCardIndex = ref(-1)
 const levelUpGameImprovementCount = ref(0)
 
+// GM快速查閱模態框相關（已移除，改為直接複製功能）
+
 // ====================
 // 工具函數
 // ====================
@@ -625,6 +645,7 @@ function createEmptyTeamThemeCard() {
 // 初始化角色資料
 const character = ref({
   name: '',
+  playerName: '', // 玩家名稱
   background: '',
   evolutionTrack: [false, false, false, false, false], // 五個演化軌跡格子
   evolutionHistory: [], // 演化歷史記錄
@@ -850,6 +871,95 @@ function handleEscapeKey(event) {
   if (event.key === 'Escape') {
     showFloatingMenu.value = false
   }
+}
+
+// ====================
+// GM快速查閱功能
+// ====================
+
+// GM快速查閱 - 直接複製緊湊格式文字
+async function showGMQuickReference() {
+  showFloatingMenu.value = false
+  
+  // 檢查瀏覽器是否支援剪貼簿 API
+  if (!navigator.clipboard) {
+    alert('您的瀏覽器不支援自動複製功能，請手動複製文字。')
+    return
+  }
+  
+  try {
+    const quickRefText = generateGMQuickReferenceText()
+    await navigator.clipboard.writeText(quickRefText)
+    
+    // 顯示成功提示
+    showNotificationMessage('success', 'GM快速查閱文字已複製到剪貼簿！')
+  } catch (error) {
+    console.error('複製失敗:', error)
+    alert('複製失敗，請手動複製文字。')
+  }
+}
+
+// 生成GM快速查閱的緊湊格式文字
+function generateGMQuickReferenceText() {
+  const char = character.value
+  const playerName = char.playerName || '未知玩家'
+  const characterName = char.name || '未命名角色'
+  
+  let result = `${characterName}（${playerName}）\n`
+  
+  // 處理主題卡
+  char.themeCards.forEach((card, index) => {
+    if (card.selectedTheme && card.title) {
+      const themeType = TypeChineseNameMapping[card.selectedTheme] || card.selectedTheme
+      const themeCategory = TypeToThemeMapping[card.selectedTheme] || '未知'
+      
+      // 收集能力（非空且未燒毀）
+      const abilities = card.abilities
+        .filter(ability => ability.text && ability.text.trim() && !ability.isBurned)
+        .map(ability => ability.text.trim())
+      
+      // 收集弱點（非空）
+      const weaknesses = card.weaknesses
+        .filter(weakness => weakness.text && weakness.text.trim())
+        .map(weakness => weakness.text.trim())
+      
+      // 收集動機（非空）
+      const motivations = []
+      if (card.motivation.identity && card.motivation.identity.trim()) {
+        motivations.push(`身份：${card.motivation.identity.trim()}`)
+      }
+      if (card.motivation.ritual && card.motivation.ritual.trim()) {
+        motivations.push(`儀式：${card.motivation.ritual.trim()}`)
+      }
+      if (card.motivation.itch && card.motivation.itch.trim()) {
+        motivations.push(`癢處：${card.motivation.itch.trim()}`)
+      }
+      
+      result += `${card.title} (${themeCategory}-${themeType})`
+      
+      if (abilities.length > 0) {
+        result += ` 能力：${abilities.join('、')}`
+      }
+      
+      if (weaknesses.length > 0) {
+        result += `；弱點：${weaknesses.join('、')}`
+      }
+      
+      if (motivations.length > 0) {
+        result += `；${motivations.join('、')}`
+      }
+      
+      result += '\n'
+    }
+  })
+  
+  
+  return result
+}
+
+// 關閉GM模態框（已移除）
+function closeGMModal() {
+  // 此函數已不需要，保留是為了避免任何遺留的引用問題
 }
 
 // ====================

@@ -52,7 +52,7 @@
       <div>
         <label class="block text-sm font-medium text-gray-300 mb-2">玩家名稱</label>
         <input 
-          v-model="playerName" 
+          v-model="character.playerName" 
           type="text" 
           class="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-md text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent"
           placeholder="輸入玩家名稱"

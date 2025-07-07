@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GM快速查閱功能說明</title>
+    <style>
+        body {
+            font-family: 'Microsoft JhengHei', sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+        }
+        .section h3 {
+            color: #333;
+            border-bottom: 2px solid #f59e0b;
+            padding-bottom: 10px;
+        }
+        .success {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
+        }
+        .info {
+            background-color: #d1ecf1;
+            border-color: #bee5eb;
+            color: #0c5460;
+        }
+        .feature-box {
+            background: #fff8dc;
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .step-list {
+            counter-reset: step-counter;
+            list-style: none;
+            padding: 0;
+        }
+        .step-list li {
+            counter-increment: step-counter;
+            padding: 15px;
+            margin: 10px 0;
+            background: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid #f59e0b;
+        }
+        .step-list li:before {
+            content: "步驟 " counter(step-counter) ": ";
+            font-weight: bold;
+            color: #d97706;
+        }
+        .example-text {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            font-family: monospace;
+            font-size: 0.9em;
+            white-space: pre-line;
+            margin: 10px 0;
+        }
+        .icon {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
+            vertical-align: text-top;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎮 GM快速查閱功能說明</h1>
+            <p>都市異景角色建構器 - 新增功能介紹</p>
+        </div>
+
+        <div class="section success">
+            <h3>✅ 新功能概述</h3>
+            <p>已成功在角色建構器中新增<strong>「GM快速查閱」</strong>功能，讓主持人能夠快速獲取角色的完整資訊文字版本。</p>
+            <div class="feature-box">
+                <h4>🎯 功能目標</h4>
+                <p>提供主持人一個簡潔明瞭的角色資訊摘要，包含玩家角色的基本資料和四個主題卡的詳細內容，方便在遊戲進行中快速查閱和參考。</p>
+            </div>
+        </div>
+
+        <div class="section info">
+            <h3>📍 功能位置</h3>
+            <ol class="step-list">
+                <li>在角色建構器頁面右下角的懸浮按鈕區塊</li>
+                <li>點擊紫色的主要懸浮按鈕展開功能選單</li>
+                <li>找到黃色的「GM查閱」按鈕並點擊</li>
+            </ol>
+        </div>
+
+        <div class="section">
+            <h3>📋 輸出內容包含</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div>
+                    <h4>🧑‍🎭 角色基本資訊</h4>
+                    <ul>
+                        <li>角色名稱</li>
+                        <li>背景設定</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>🃏 主題卡詳細資訊</h4>
+                    <ul>
+                        <li>主題名稱（中文+類型）</li>
+                        <li>能力標籤</li>
+                        <li>弱點標籤</li>
+                        <li>動機設定</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>🖥️ 介面功能</h3>
+            
+            <div class="feature-box">
+                <h4>📊 視覺化顯示</h4>
+                <p>模態框上半部提供圖形化的角色資訊展示，包含結構化的卡片式佈局，讓GM能夠快速瀏覽各主題卡的重點資訊。</p>
+            </div>
+
+            <div class="feature-box">
+                <h4>📝 文字版本</h4>
+                <p>下半部提供純文字格式的角色摘要，專為複製和分享而設計，方便GM在其他應用程式中使用。</p>
+            </div>
+
+            <div class="feature-box">
+                <h4>📋 一鍵複製</h4>
+                <p>內建剪貼簿功能，支援現代瀏覽器的 Clipboard API，並提供備用的傳統複製方案確保相容性。</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>📄 輸出範例</h3>
+            <div class="example-text">=== 都市異景角色資訊 ===
+
+角色名稱：網路空間中成長
+背景：駭客
+
+=== 主題卡資訊 ===
+
+【主題卡 1】網路空間 (喧囂)
+能力：數位、駭客、連線
+弱點：缺乏現實感知
+動機：揭露企業的黑暗秘密
+
+【主題卡 2】困頓過往 (自我)
+能力：街頭智慧、生存本能
+弱點：信任問題、創傷反應
+動機：尋求救贖與重新開始
+
+【主題卡 3】尖端科技 (喧囂)
+能力：科技原型、創新思維
+弱點：資源依賴、實驗風險
+動機：推動科技進步改變世界
+
+【主題卡 4】組織歸屬 (自我)
+能力：資源、人脈、支援
+弱點：組織義務、政治鬥爭
+動機：維護組織利益與榮譽
+
+=== 快速參考 ===
+生成時間：2025/7/7 下午2:30:15
+此資訊由都市異景角色建構器自動生成，供主持人快速查閱使用。</div>
+        </div>
+
+        <div class="section">
+            <h3>🎮 使用場景</h3>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div>
+                    <h4>⚡ 遊戲進行中</h4>
+                    <ul>
+                        <li>快速查閱角色能力</li>
+                        <li>確認角色動機</li>
+                        <li>參考弱點設計情節</li>
+                        <li>即時確認角色設定</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>📝 遊戲準備</h4>
+                    <ul>
+                        <li>準備角色相關劇情</li>
+                        <li>分享給其他GM參考</li>
+                        <li>建立角色關係圖</li>
+                        <li>設計專屬挑戰</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>🔧 技術特色</h3>
+            
+            <ul>
+                <li><strong>🎨 響應式設計：</strong>支援桌面和行動裝置</li>
+                <li><strong>⌨️ 鍵盤支援：</strong>ESC鍵快速關閉模態框</li>
+                <li><strong>📱 現代化UI：</strong>使用Tailwind CSS設計</li>
+                <li><strong>🔄 即時更新：</strong>角色資料變更後自動反映在輸出中</li>
+                <li><strong>🌐 多瀏覽器支援：</strong>支援主流瀏覽器的剪貼簿功能</li>
+                <li><strong>🛡️ 錯誤處理：</strong>提供友善的錯誤提示和備用方案</li>
+            </ul>
+        </div>
+
+        <div class="section success">
+            <h3>🎉 效益與價值</h3>
+            
+            <div class="feature-box">
+                <h4>⏱️ 提升效率</h4>
+                <p>GM不再需要逐一點開各個主題卡查看詳細資訊，一次性獲得完整角色摘要。</p>
+            </div>
+
+            <div class="feature-box">
+                <h4>📋 便於記錄</h4>
+                <p>文字格式便於複製到筆記軟體、聊天群組或其他工具中保存和分享。</p>
+            </div>
+
+            <div class="feature-box">
+                <h4>🎭 增強代入感</h4>
+                <p>完整的角色資訊有助於GM更好地理解角色，提供更貼合角色設定的劇情和挑戰。</p>
+            </div>
+        </div>
+
+        <div class="section info">
+            <h3>🚀 後續可能的擴展</h3>
+            <ul>
+                <li>添加裝備和團隊主題卡資訊</li>
+                <li>支援匯出為PDF格式</li>
+                <li>提供多種輸出模板選擇</li>
+                <li>整合角色演化歷史記錄</li>
+                <li>添加角色關係和背景故事</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📊 實作摘要</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div>
+                    <h4>新增檔案修改</h4>
+                    <ul style="font-size: 0.9em;">
+                        <li>character-builder.vue (主要功能)</li>
+                        <li>character-type-mapping.js (中文映射)</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>新增功能組件</h4>
+                    <ul style="font-size: 0.9em;">
+                        <li>GM快速查閱模態框</li>
+                        <li>文字生成函數</li>
+                        <li>剪貼簿複製功能</li>
+                        <li>懸浮按鈕整合</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
