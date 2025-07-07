@@ -5,7 +5,8 @@
 <script setup>
 // 導入映射數據
 import { 
-  TypeToThemeMapping 
+  TypeToThemeMapping,
+  TypeChineseNameMapping 
 } from '~/assets/MO/character-type-mapping.js'
 
 // Props
@@ -17,6 +18,11 @@ const props = defineProps({
   },
   // 是否使用類型映射（顯示主題風格而非類型本身）
   useTypeMapping: {
+    type: Boolean,
+    default: false
+  },
+  // 是否使用中文類型名稱
+  useChineseName: {
     type: Boolean,
     default: false
   },
@@ -41,8 +47,11 @@ const displayText = computed(() => {
   if (props.useTypeMapping) {
     // 使用類型映射，顯示主題風格（神話/喧囂/自我）
     return TypeToThemeMapping[props.themeString] || props.themeString || props.fallback
+  } else if (props.useChineseName) {
+    // 使用中文類型名稱
+    return TypeChineseNameMapping[props.themeString] || props.themeString || props.fallback
   } else {
-    // 直接顯示類型名稱（或主題中文名稱）
+    // 直接顯示類型名稱（英文）
     return props.themeString || props.fallback
   }
 })

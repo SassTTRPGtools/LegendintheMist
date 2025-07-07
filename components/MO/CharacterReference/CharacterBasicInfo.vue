@@ -20,6 +20,7 @@
         <span class="text-gray-400">類型：</span>
         <ThemeDisplayComponent 
           :theme-string="characterData.type" 
+          :use-chinese-name="true"
           text-class="text-cyan-200" />
       </div>
     </div>

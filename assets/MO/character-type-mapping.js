@@ -67,6 +67,29 @@ export const TypeToThemeMapping = {
   'TroubledPast': '自我'
 }
 
+// 類型中文名稱對應表
+export const TypeChineseNameMapping = {
+  // Mythos themes
+  'Artifact': '遺器',
+  'Companion': '夥伴', 
+  'Esoterica': '秘術',
+  'Exposure': '暴露',
+  
+  // Noise themes
+  'Augmentation': '改造',
+  'CuttingEdge': '尖端科技',
+  'Cyberspace': '網路空間',
+  'Drones': '無人機',
+  
+  // Self themes
+  'Affiliation': '從屬',
+  'Assets': '資產',
+  'Expertise': '專長',
+  'Horizon': '遠景',
+  'Personality': '人格',
+  'TroubledPast': '過往創傷'
+}
+
 // 主題系統對應表
 export const themeSystemMapping = {
   'ARTIFACT': 'mythos-themes',
