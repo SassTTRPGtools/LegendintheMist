@@ -1,9 +1,10 @@
 <template>
   <div v-if="isVisible" 
        @click="$emit('close')"
-       class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+       class="fixed inset-0 bg-black/50 backdrop-blur-sm z-[9999] flex items-center justify-center p-4">
+    
     <div @click.stop 
-         class="bg-gray-800 rounded-xl shadow-2xl border border-cyan-500/30 max-w-4xl w-full max-h-[90vh] overflow-hidden">
+         class="bg-gray-800 rounded-xl shadow-2xl border border-cyan-500/30 max-w-4xl w-full max-h-[90vh] overflow-hidden relative z-[10001]">
       
       <!-- Header -->
       <div class="bg-gradient-to-r from-cyan-600 to-purple-600 p-6 flex justify-between items-center">
