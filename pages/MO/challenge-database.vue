@@ -12,24 +12,14 @@
           <NuxtLink to="/MO" class="text-cyan-300 hover:text-cyan-100 transition-colors">
             <Icon name="lucide:arrow-left" class="w-6 h-6" />
           </NuxtLink>
-          <h1 class="text-xl font-bold text-cyan-100 flex items-center">
-            <Icon name="lucide:database" class="w-5 h-5 mr-2 text-cyan-400" />
-            挑戰資料庫 - 都市異景
-          </h1>
-          <div class="flex items-center space-x-2">
-            <!-- Data Source Selector -->
-            <div class="relative">
-              <select 
-                v-model="selectedDataSource"
-                @change="loadChallenges"
-                class="bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-cyan-100 focus:border-cyan-400 focus:outline-none text-sm appearance-none cursor-pointer pr-8"
-              >
-                <option value="metro">都市異景</option>
-                <option value="powersets">異能組合</option>
-              </select>
-              <Icon name="lucide:chevron-down" class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 pointer-events-none" />
-            </div>
+          <div class="text-center">
+            <h1 class="text-xl font-bold text-cyan-100 flex items-center justify-center">
+              <Icon name="lucide:database" class="w-5 h-5 mr-2 text-cyan-400" />
+              挑戰資料庫
+            </h1>
+            <p class="text-cyan-300 text-xs mt-1">都市異景 • 能力套組</p>
           </div>
+          <div class="w-6"></div> <!-- 保持佈局平衡 -->
         </div>
       </div>
     </div>
@@ -60,6 +50,8 @@
           :selectedChallenge="selectedChallengeData"
         />
 
+        <!-- Right Panel - Challenge Tools Component -->
+        <ChallengeTools />
 
       </div>
     </div>
@@ -92,7 +84,6 @@ const itemsPerPage = 10
 const selectedChallengeData = ref(null)
 const isLoading = ref(true)
 const loadError = ref(null)
-const selectedDataSource = ref('metro')
 
 // 計算屬性
 const filteredChallenges = computed(() => {
@@ -150,18 +141,11 @@ async function loadChallenges() {
     loadError.value = null
     const basePath = getBasePath()
     
-    let data
-    if (selectedDataSource.value === 'powersets') {
-      // powersets.json is a direct array
-      data = await $fetch(`${basePath}/MO/challenges/powersets.json`)
-      challenges.value = Array.isArray(data) ? data : []
-    } else {
-      // metro.json has a challenges wrapper
-      data = await $fetch(`${basePath}/MO/challenges/metro.json`)
-      challenges.value = data.challenges || []
-    }
+    // 固定載入 metro.json (都市異景)
+    const data = await $fetch(`${basePath}/MO/challenges/metro.json`)
+    challenges.value = data.challenges || []
     
-    // Reset selections when switching data source
+    // Reset selections when loading
     selectedChallengeData.value = null
     currentPage.value = 1
   } catch (error) {

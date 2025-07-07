@@ -6,7 +6,7 @@
       <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.3) 1px, transparent 0); background-size: 20px 20px;"></div>
       <h2 class="text-base font-bold text-white flex items-center relative z-10">
         <Icon name="lucide:zap" class="w-4 h-4 mr-2 text-yellow-300" />
-        異能組合卡
+        異能組合庫
       </h2>
     </div>
     
@@ -14,199 +14,210 @@
     <div class="flex-1 min-h-0 overflow-hidden">
       <div class="h-full overflow-y-auto custom-scrollbar">
         
-        <!-- No Selection State -->
-        <div v-if="!selectedChallenge" class="text-center py-8 px-4">
+        <!-- Loading State -->
+        <div v-if="isLoading" class="text-center py-8 px-4">
           <div class="relative mb-3">
-            <Icon name="lucide:layers-3" class="w-12 h-12 text-purple-400/50 mx-auto" />
-            <div class="absolute inset-0 w-12 h-12 mx-auto bg-purple-500/20 rounded-full animate-pulse"></div>
+            <Icon name="lucide:loader-2" class="w-12 h-12 text-purple-400 mx-auto animate-spin" />
           </div>
-          <h3 class="text-purple-300 font-semibold text-sm mb-1">選擇異能組合</h3>
-          <p class="text-gray-400 text-xs">選擇左側列表中的異能組合</p>
+          <p class="text-purple-300 text-xs">載入異能組合中...</p>
         </div>
 
-        <!-- Selected Challenge State -->
+        <!-- Error State -->
+        <div v-else-if="loadError" class="text-center py-8 px-4">
+          <Icon name="lucide:alert-circle" class="w-12 h-12 text-red-400 mx-auto mb-2" />
+          <p class="text-red-300 text-xs">載入失敗</p>
+          <button @click="loadPowersets" class="mt-2 px-3 py-1 bg-red-600 hover:bg-red-700 rounded text-white text-xs">
+            重新載入
+          </button>
+        </div>
+
+        <!-- Main Content -->
         <div v-else class="p-3 space-y-3">
           
-          <!-- View Mode Selector -->
+          <!-- Display Mode Selector -->
           <div class="space-y-2">
             <label class="text-purple-300 font-medium text-xs">顯示模式</label>
             <div class="relative">
               <select 
-                v-model="viewMode"
+                v-model="displayMode"
                 class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-cyan-100 focus:border-cyan-400 focus:outline-none text-xs appearance-none cursor-pointer"
               >
-                <option value="compact">緊湊概覽</option>
-                <option value="limits">限制條件</option>
-                <option value="specials">特殊能力</option>
-                <option value="consequences">後果行動</option>
-                <option value="tags">標籤列表</option>
+                <option value="overview">整體概覽</option>
+                <option value="cards">卡片瀏覽</option>
+                <option value="list">列表檢視</option>
+                <option value="stats">統計資訊</option>
               </select>
               <Icon name="lucide:chevron-down" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-3 h-3 pointer-events-none" />
             </div>
           </div>
           
-          <!-- Main Card Display -->
-          <div class="bg-gradient-to-br from-gray-700/80 to-gray-800/80 rounded-lg border border-purple-500/20 overflow-hidden">
+          <!-- Main Content Display -->
+          <div v-if="displayMode === 'overview'" class="space-y-3">
             
-            <!-- Card Header -->
-            <div class="p-3 bg-gradient-to-r from-purple-600/20 to-indigo-600/20 border-b border-purple-500/30">
-              <div class="flex items-start justify-between">
-                <div class="flex-1 min-w-0">
-                  <h3 class="text-sm font-bold text-white truncate">{{ selectedChallenge.name }}</h3>
-                  <p class="text-purple-200 text-xs truncate">{{ selectedChallenge.name_cn || selectedChallenge.name }}</p>
-                  <div class="flex items-center gap-1 mt-1">
-                    <span v-if="selectedChallenge.type" :class="getTypeStyle(selectedChallenge.type)" 
-                          class="px-2 py-0.5 rounded-full text-xs font-medium">
-                      {{ getTypeLabel(selectedChallenge.type) }}
-                    </span>
-                    <span :class="getTierStyle(selectedChallenge.tier || selectedChallenge.difficulty)"
-                          class="px-2 py-0.5 rounded-full text-xs font-bold">
-                      T{{ selectedChallenge.tier || selectedChallenge.difficulty }}
-                    </span>
-                  </div>
+            <!-- Summary Stats -->
+            <div v-if="powersetsStats" class="bg-gray-700/30 rounded-lg p-3 border border-purple-500/20">
+              <h4 class="text-purple-300 font-semibold text-xs mb-2 flex items-center">
+                <Icon name="lucide:bar-chart-3" class="w-3 h-3 mr-1" />
+                資料概覽
+              </h4>
+              <div class="grid grid-cols-2 gap-2 text-xs">
+                <div class="flex justify-between">
+                  <span class="text-gray-400">總數：</span>
+                  <span class="text-purple-300 font-medium">{{ powersetsStats.total }}</span>
                 </div>
-                <Icon name="lucide:sparkles" class="w-5 h-5 text-yellow-400 flex-shrink-0" />
+                <div class="flex justify-between">
+                  <span class="text-gray-400">平均能力：</span>
+                  <span class="text-purple-300 font-medium">{{ powersetsStats.avgSpecials }}</span>
+                </div>
               </div>
             </div>
 
-            <!-- Card Body -->
-            <div class="p-3">
-              
-              <!-- Compact Overview -->
-              <div v-if="viewMode === 'compact'" class="space-y-2">
-                <div v-if="selectedChallenge.description" class="text-xs text-gray-300 leading-relaxed bg-gray-700/30 rounded p-2">
-                  {{ selectedChallenge.description }}
-                </div>
-                
-                <!-- Quick Stats Grid -->
-                <div class="grid grid-cols-2 gap-2 text-xs">
-                  <div class="bg-yellow-900/20 border border-yellow-500/30 rounded p-2 text-center">
-                    <div class="text-yellow-400 font-medium">特殊能力</div>
-                    <div class="text-white font-bold">{{ selectedChallenge.specials?.length || 0 }}</div>
-                  </div>
-                  <div class="bg-orange-900/20 border border-orange-500/30 rounded p-2 text-center">
-                    <div class="text-orange-400 font-medium">後果行動</div>
-                    <div class="text-white font-bold">{{ getConsequences.length }}</div>
-                  </div>
-                  <div class="bg-emerald-900/20 border border-emerald-500/30 rounded p-2 text-center">
-                    <div class="text-emerald-400 font-medium">標籤</div>
-                    <div class="text-white font-bold">{{ selectedChallenge.tags?.length || 0 }}</div>
-                  </div>
-                  <div class="bg-red-900/20 border border-red-500/30 rounded p-2 text-center">
-                    <div class="text-red-400 font-medium">限制</div>
-                    <div class="text-white font-bold">{{ Object.keys(selectedChallenge.limits || {}).length }}</div>
-                  </div>
+            <!-- Type Distribution -->
+            <div v-if="powersetsStats" class="bg-gray-700/30 rounded-lg p-3 border border-purple-500/20">
+              <h4 class="text-purple-300 font-semibold text-xs mb-2">類型分布</h4>
+              <div class="space-y-1">
+                <div v-for="(count, type) in powersetsStats.typeCount" :key="type" 
+                     class="flex justify-between items-center text-xs">
+                  <span class="text-gray-300">{{ getTypeLabel(type) }}</span>
+                  <span class="text-purple-300 font-medium">{{ count }}</span>
                 </div>
               </div>
+            </div>
 
-              <!-- Limits View -->
-              <div v-else-if="viewMode === 'limits' && hasLimits" class="space-y-2">
-                <h4 class="text-red-300 font-semibold text-xs flex items-center">
-                  <Icon name="lucide:alert-triangle" class="w-3 h-3 mr-1" />
-                  限制條件
-                </h4>
-                <div class="grid grid-cols-2 gap-2 max-h-48 overflow-y-auto">
-                  <div v-for="(value, key) in selectedChallenge.limits" :key="key" 
-                       class="bg-red-900/20 border border-red-500/30 rounded p-2 text-center">
-                    <div class="text-red-400 text-xs font-medium truncate">{{ key }}</div>
-                    <div class="text-red-100 text-sm font-bold">{{ value }}</div>
-                  </div>
+          </div>
+
+          <!-- Cards View -->
+          <div v-else-if="displayMode === 'cards'" class="space-y-3">
+            
+            <!-- Pagination Controls -->
+            <div class="flex justify-between items-center">
+              <button 
+                @click="prevPage"
+                :disabled="currentPage === 1"
+                class="px-2 py-1 bg-gray-600 hover:bg-gray-700 disabled:bg-gray-800 disabled:opacity-50 rounded text-white text-xs"
+              >
+                <Icon name="lucide:chevron-left" class="w-3 h-3" />
+              </button>
+              <span class="text-gray-300 text-xs">{{ currentPage }} / {{ totalPages }}</span>
+              <button 
+                @click="nextPage"
+                :disabled="currentPage === totalPages"
+                class="px-2 py-1 bg-gray-600 hover:bg-gray-700 disabled:bg-gray-800 disabled:opacity-50 rounded text-white text-xs"
+              >
+                <Icon name="lucide:chevron-right" class="w-3 h-3" />
+              </button>
+            </div>
+
+            <!-- Powerset Cards -->
+            <div class="space-y-2 max-h-96 overflow-y-auto">
+              <div v-for="powerset in paginatedPowersets" :key="powerset.name" 
+                   @click="selectPowerset(powerset)"
+                   :class="[
+                     'bg-gray-700/50 rounded-lg p-2 border cursor-pointer transition-all',
+                     selectedPowerset?.name === powerset.name 
+                       ? 'border-purple-500 bg-purple-900/20' 
+                       : 'border-gray-600 hover:border-purple-400'
+                   ]">
+                <div class="flex justify-between items-start mb-1">
+                  <h5 class="text-white font-medium text-xs">{{ powerset.name }}</h5>
+                  <span :class="[
+                    'px-1 py-0.5 rounded text-xs font-bold',
+                    getTierStyle(powerset.tier || powerset.difficulty)
+                  ]">
+                    T{{ powerset.tier || powerset.difficulty }}
+                  </span>
                 </div>
-              </div>
-
-              <!-- Specials View -->
-              <div v-else-if="viewMode === 'specials' && hasSpecials" class="space-y-2">
-                <h4 class="text-yellow-300 font-semibold text-xs flex items-center">
-                  <Icon name="lucide:sparkles" class="w-3 h-3 mr-1" />
-                  特殊能力
-                </h4>
-                <div class="space-y-2 max-h-64 overflow-y-auto">
-                  <div v-for="(special, index) in selectedChallenge.specials" :key="index" 
-                       class="bg-yellow-900/20 border border-yellow-500/30 rounded p-2">
-                    <div class="flex items-start">
-                      <div class="w-4 h-4 bg-yellow-600 rounded-full flex items-center justify-center mr-2 mt-0.5 flex-shrink-0">
-                        <span class="text-white text-xs font-bold">{{ index + 1 }}</span>
-                      </div>
-                      <div class="flex-1 min-w-0">
-                        <div class="text-yellow-200 text-xs font-medium mb-1">{{ getSpecialTitle(special) }}</div>
-                        <div class="text-gray-300 text-xs leading-relaxed whitespace-pre-line">{{ getSpecialDescription(special) }}</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Consequences View -->
-              <div v-else-if="viewMode === 'consequences' && hasConsequences" class="space-y-2">
-                <h4 class="text-orange-300 font-semibold text-xs flex items-center">
-                  <Icon name="lucide:target" class="w-3 h-3 mr-1" />
-                  後果行動
-                </h4>
-                <div class="space-y-2 max-h-64 overflow-y-auto">
-                  <div v-for="(consequence, index) in getConsequences" :key="index" 
-                       class="bg-orange-900/20 border border-orange-500/30 rounded p-2">
-                    <div class="flex items-start">
-                      <div class="w-4 h-4 bg-orange-600 rounded-full flex items-center justify-center mr-2 mt-0.5 flex-shrink-0">
-                        <Icon name="lucide:arrow-right" class="w-2 h-2 text-white" />
-                      </div>
-                      <div class="text-gray-300 text-xs leading-relaxed whitespace-pre-line">{{ consequence }}</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Tags View -->
-              <div v-else-if="viewMode === 'tags' && hasTags" class="space-y-2">
-                <h4 class="text-emerald-300 font-semibold text-xs flex items-center">
-                  <Icon name="lucide:tags" class="w-3 h-3 mr-1" />
-                  標籤列表
-                </h4>
-                <div class="flex flex-wrap gap-1 max-h-48 overflow-y-auto">
-                  <span v-for="(tag, index) in selectedChallenge.tags" :key="index" 
-                        class="inline-flex items-center px-2 py-1 bg-emerald-900/30 border border-emerald-500/30 rounded-full text-emerald-200 text-xs font-medium">
-                    <Icon name="lucide:tag" class="w-2 h-2 mr-1" />
-                    {{ tag }}
+                <p class="text-gray-400 text-xs">{{ powerset.name_cn }}</p>
+                <div v-if="powerset.type" class="mt-1">
+                  <span :class="['inline-block px-1 py-0.5 rounded text-xs', getTypeStyle(powerset.type)]">
+                    {{ getTypeLabel(powerset.type) }}
                   </span>
                 </div>
               </div>
+            </div>
 
-              <!-- Empty State -->
-              <div v-else class="text-center py-6">
-                <Icon name="lucide:file-x" class="w-6 h-6 text-gray-500 mx-auto mb-1" />
-                <p class="text-gray-400 text-xs">此異能組合沒有{{ getCurrentViewLabel() }}</p>
+          </div>
+
+          <!-- List View -->
+          <div v-else-if="displayMode === 'list'" class="space-y-2">
+            <div class="max-h-96 overflow-y-auto space-y-1">
+              <div v-for="powerset in powersets" :key="powerset.name" 
+                   @click="selectPowerset(powerset)"
+                   :class="[
+                     'bg-gray-700/30 rounded p-2 border cursor-pointer transition-all text-xs',
+                     selectedPowerset?.name === powerset.name 
+                       ? 'border-purple-500 bg-purple-900/20' 
+                       : 'border-gray-600 hover:border-purple-400'
+                   ]">
+                <div class="flex justify-between items-center">
+                  <span class="text-white font-medium">{{ powerset.name }}</span>
+                  <span :class="[
+                    'px-1 py-0.5 rounded text-xs font-bold',
+                    getTierStyle(powerset.tier || powerset.difficulty)
+                  ]">
+                    {{ powerset.tier || powerset.difficulty }}
+                  </span>
+                </div>
               </div>
-
             </div>
           </div>
 
-          <!-- Action Buttons -->
-          <div class="grid grid-cols-2 gap-2">
-            <button 
-              @click="copyPowersetCard()"
-              class="flex items-center justify-center px-2 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg text-white text-xs font-medium transition-colors"
-            >
-              <Icon name="lucide:copy" class="w-3 h-3 mr-1" />
-              複製卡片
-            </button>
-            <button 
-              @click="copyAllData()"
-              class="flex items-center justify-center px-2 py-2 bg-gray-600 hover:bg-gray-700 rounded-lg text-white text-xs font-medium transition-colors"
-            >
-              <Icon name="lucide:download" class="w-3 h-3 mr-1" />
-              匯出資料
-            </button>
+          <!-- Stats View -->
+          <div v-else-if="displayMode === 'stats' && powersetsStats" class="space-y-3">
+            
+            <!-- General Stats -->
+            <div class="bg-gray-700/30 rounded-lg p-3 border border-purple-500/20">
+              <h4 class="text-purple-300 font-semibold text-xs mb-2">統計數據</h4>
+              <div class="grid grid-cols-1 gap-2 text-xs">
+                <div class="flex justify-between">
+                  <span class="text-gray-400">總異能組合：</span>
+                  <span class="text-purple-300 font-medium">{{ powersetsStats.total }}</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-gray-400">總特殊能力：</span>
+                  <span class="text-purple-300 font-medium">{{ powersetsStats.totalSpecials }}</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-gray-400">總標籤數：</span>
+                  <span class="text-purple-300 font-medium">{{ powersetsStats.totalTags }}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tier Distribution -->
+            <div class="bg-gray-700/30 rounded-lg p-3 border border-purple-500/20">
+              <h4 class="text-purple-300 font-semibold text-xs mb-2">等級分布</h4>
+              <div class="space-y-1">
+                <div v-for="(count, tier) in powersetsStats.tierCount" :key="tier" 
+                     class="flex justify-between items-center text-xs">
+                  <span class="text-gray-300">等級 {{ tier }}</span>
+                  <span class="text-purple-300 font-medium">{{ count }}</span>
+                </div>
+              </div>
+            </div>
+
           </div>
 
-          <!-- Quick Stats Footer -->
-          <div class="bg-gray-800/50 rounded-lg p-2 border border-gray-700">
-            <div class="grid grid-cols-2 gap-2 text-xs">
-              <div class="flex justify-between">
-                <span class="text-gray-400">總數：</span>
-                <span class="text-purple-300 font-medium">{{ totalChallenges }}</span>
+          <!-- Selected Powerset Detail -->
+          <div v-if="selectedPowerset" class="bg-gray-700/50 rounded-lg p-3 border border-purple-500/30 mt-3">
+            <h4 class="text-purple-300 font-semibold text-xs mb-2 flex items-center">
+              <Icon name="lucide:eye" class="w-3 h-3 mr-1" />
+              當前選擇
+            </h4>
+            <div class="space-y-2">
+              <div>
+                <h5 class="text-white font-medium text-xs">{{ selectedPowerset.name }}</h5>
+                <p class="text-gray-400 text-xs">{{ selectedPowerset.name_cn }}</p>
               </div>
-              <div class="flex justify-between">
-                <span class="text-gray-400">頁數：</span>
-                <span class="text-purple-300 font-medium">{{ currentPage }}/{{ totalPages }}</span>
+              
+              <div v-if="selectedPowerset.specials" class="text-xs">
+                <span class="text-gray-400">特殊能力：</span>
+                <span class="text-purple-300 font-medium">{{ selectedPowerset.specials.length }}</span>
+              </div>
+              
+              <div v-if="selectedPowerset.tags" class="text-xs">
+                <span class="text-gray-400">標籤數：</span>
+                <span class="text-purple-300 font-medium">{{ selectedPowerset.tags.length }}</span>
               </div>
             </div>
           </div>
@@ -218,73 +229,88 @@
 </template>
 
 <script setup>
-// Props
-const props = defineProps({
-  selectedChallenge: {
-    type: Object,
-    default: null
-  },
-  totalChallenges: {
-    type: Number,
-    default: 0
-  },
-  filteredCount: {
-    type: Number,
-    default: 0
-  },
-  currentPage: {
-    type: Number,
-    default: 1
-  },
-  totalPages: {
-    type: Number,
-    default: 1
-  }
+// 響應式數據
+const powersets = ref([])
+const displayMode = ref('overview')
+const selectedPowerset = ref(null)
+const isLoading = ref(true)
+const loadError = ref(null)
+const currentPage = ref(1)
+const itemsPerPage = 6
+
+// 計算屬性
+const paginatedPowersets = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage
+  const end = start + itemsPerPage
+  return powersets.value.slice(start, end)
 })
 
-// Reactive data
-const viewMode = ref('compact')
+const totalPages = computed(() => 
+  Math.ceil(powersets.value.length / itemsPerPage)
+)
 
-// Computed properties
-const hasLimits = computed(() => {
-  return props.selectedChallenge?.limits && Object.keys(props.selectedChallenge.limits).length > 0
-})
-
-const hasSpecials = computed(() => {
-  return props.selectedChallenge?.specials && props.selectedChallenge.specials.length > 0
-})
-
-const hasConsequences = computed(() => {
-  const challenge = props.selectedChallenge
-  return (challenge?.consequences && challenge.consequences.length > 0) ||
-         (challenge?.threatsAndConsequences && challenge.threatsAndConsequences.length > 0)
-})
-
-const hasTags = computed(() => {
-  return props.selectedChallenge?.tags && props.selectedChallenge.tags.length > 0
-})
-
-const getConsequences = computed(() => {
-  const challenge = props.selectedChallenge
-  if (!challenge) return []
+const powersetsStats = computed(() => {
+  if (!powersets.value.length) return null
   
-  // Handle different consequence formats
-  if (challenge.consequences) {
-    return challenge.consequences
-  } else if (challenge.threatsAndConsequences) {
-    const consequences = []
-    challenge.threatsAndConsequences.forEach(threat => {
-      consequences.push(`【${threat.category}】`)
-      threat.consequences.forEach(consequence => {
-        consequences.push(`• ${consequence}`)
-      })
-    })
-    return consequences
+  const typeCount = {}
+  const tierCount = {}
+  let totalSpecials = 0
+  let totalTags = 0
+  
+  powersets.value.forEach(powerset => {
+    // 計算類型分布
+    if (powerset.type) {
+      typeCount[powerset.type] = (typeCount[powerset.type] || 0) + 1
+    }
+    
+    // 計算等級分布
+    const tier = powerset.tier || powerset.difficulty || 1
+    tierCount[tier] = (tierCount[tier] || 0) + 1
+    
+    // 計算特殊能力總數
+    if (powerset.specials) {
+      totalSpecials += powerset.specials.length
+    }
+    
+    // 計算標籤總數
+    if (powerset.tags) {
+      totalTags += powerset.tags.length
+    }
+  })
+  
+  return {
+    total: powersets.value.length,
+    typeCount,
+    tierCount,
+    totalSpecials,
+    totalTags,
+    avgSpecials: (totalSpecials / powersets.value.length).toFixed(1),
+    avgTags: (totalTags / powersets.value.length).toFixed(1)
   }
-  return []
 })
 
-// Methods
+// 方法
+async function loadPowersets() {
+  try {
+    isLoading.value = true
+    loadError.value = null
+    
+    const data = await $fetch('/MO/powersets/powersets.json')
+    powersets.value = Array.isArray(data) ? data : []
+    
+    // 如果有資料，預設選擇第一個
+    if (powersets.value.length > 0) {
+      selectedPowerset.value = powersets.value[0]
+    }
+  } catch (error) {
+    console.error('載入異能組合失敗:', error)
+    loadError.value = error.message
+    powersets.value = []
+  } finally {
+    isLoading.value = false
+  }
+}
+
 const getTypeLabel = (type) => {
   const typeLabels = {
     'MYTHOS': '神話',
@@ -318,153 +344,25 @@ const getTierStyle = (tier) => {
   return 'bg-red-600 text-red-100'
 }
 
-const getSpecialTitle = (special) => {
-  if (typeof special === 'string') {
-    const colonIndex = special.indexOf('：')
-    if (colonIndex > 0) {
-      return special.substring(0, colonIndex).trim()
-    }
-    const colonIndex2 = special.indexOf(':')
-    if (colonIndex2 > 0) {
-      return special.substring(0, colonIndex2).trim()
-    }
-    const lines = special.split('\n')
-    if (lines.length > 1 && lines[0].length < 50) {
-      return lines[0].trim()
-    }
-    // 如果沒有明確標題，取前30個字符
-    return special.length > 30 ? special.substring(0, 30) + '...' : special
-  }
-  return '特殊能力'
+const selectPowerset = (powerset) => {
+  selectedPowerset.value = powerset
 }
 
-const getSpecialDescription = (special) => {
-  if (typeof special === 'string') {
-    const colonIndex = special.indexOf('：')
-    if (colonIndex > 0) {
-      return special.substring(colonIndex + 1).trim()
-    }
-    const colonIndex2 = special.indexOf(':')
-    if (colonIndex2 > 0) {
-      return special.substring(colonIndex2 + 1).trim()
-    }
-    return special
-  }
-  return special
-}
-
-const getCurrentViewLabel = () => {
-  const viewLabels = {
-    'compact': '概覽資料',
-    'limits': '限制條件',
-    'specials': '特殊能力',
-    'consequences': '後果行動',
-    'tags': '標籤'
-  }
-  return viewLabels[viewMode.value] || '內容'
-}
-
-const copyPowersetCard = async () => {
-  if (!props.selectedChallenge) return
-  
-  const challenge = props.selectedChallenge
-  let cardText = `🎯 ${challenge.name}\n`
-  cardText += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`
-  cardText += `📝 ${challenge.name_cn || challenge.name}\n`
-  
-  if (challenge.type) {
-    cardText += `🏷️ 類型：${getTypeLabel(challenge.type)}\n`
-  }
-  
-  cardText += `⭐ 等級：${challenge.tier || challenge.difficulty}\n\n`
-  
-  if (hasLimits.value) {
-    cardText += `🚫 限制條件：\n`
-    Object.entries(challenge.limits).forEach(([key, value]) => {
-      cardText += `   • ${key}: ${value}\n`
-    })
-    cardText += `\n`
-  }
-  
-  if (hasSpecials.value) {
-    cardText += `✨ 特殊能力：\n`
-    challenge.specials.forEach((special, index) => {
-      const title = getSpecialTitle(special)
-      const desc = getSpecialDescription(special)
-      cardText += `   ${index + 1}. ${title}\n`
-      if (desc && desc !== title) {
-        cardText += `      ${desc.substring(0, 100)}${desc.length > 100 ? '...' : ''}\n`
-      }
-      cardText += `\n`
-    })
-  }
-  
-  if (hasTags.value) {
-    cardText += `🏷️ 標籤：${challenge.tags.join('、')}\n\n`
-  }
-  
-  cardText += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━`
-  
-  try {
-    await navigator.clipboard.writeText(cardText)
-  } catch (err) {
-    console.error('複製失敗:', err)
+const nextPage = () => {
+  if (currentPage.value < totalPages.value) {
+    currentPage.value++
   }
 }
 
-const copyAllData = async () => {
-  if (!props.selectedChallenge) return
-  
-  const challenge = props.selectedChallenge
-  let allData = `# ${challenge.name}\n\n`
-  
-  allData += `**基本資訊**\n`
-  allData += `- 英文名：${challenge.name}\n`
-  allData += `- 中文名：${challenge.name_cn || challenge.name}\n`
-  if (challenge.name_en) allData += `- 英文別名：${challenge.name_en}\n`
-  if (challenge.type) allData += `- 類型：${getTypeLabel(challenge.type)}\n`
-  allData += `- 等級：${challenge.tier || challenge.difficulty}\n\n`
-  
-  if (challenge.description) {
-    allData += `**描述**\n${challenge.description}\n\n`
-  }
-  
-  if (hasLimits.value) {
-    allData += `**限制條件**\n`
-    Object.entries(challenge.limits).forEach(([key, value]) => {
-      allData += `- ${key}: ${value}\n`
-    })
-    allData += `\n`
-  }
-  
-  if (hasSpecials.value) {
-    allData += `**特殊能力**\n`
-    challenge.specials.forEach((special, index) => {
-      allData += `${index + 1}. ${special}\n\n`
-    })
-  }
-  
-  if (hasConsequences.value) {
-    allData += `**後果行動**\n`
-    getConsequences.value.forEach((consequence, index) => {
-      allData += `${index + 1}. ${consequence}\n\n`
-    })
-  }
-  
-  if (hasTags.value) {
-    allData += `**標籤**\n${challenge.tags.join('、')}\n\n`
-  }
-  
-  try {
-    await navigator.clipboard.writeText(allData)
-  } catch (err) {
-    console.error('複製失敗:', err)
+const prevPage = () => {
+  if (currentPage.value > 1) {
+    currentPage.value--
   }
 }
 
-// Watch for challenge changes to reset view mode
-watch(() => props.selectedChallenge, () => {
-  viewMode.value = 'compact'
+// 生命週期
+onMounted(() => {
+  loadPowersets()
 })
 </script>
 
