@@ -7,7 +7,7 @@
       <Icon name="lucide:info" class="w-6 h-6 mr-3 text-cyan-400" />
       主題核心
     </h3>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="space-y-4">
       <!-- 身份信念 - 適用於自我主題 -->
       <div 
         v-if="selectedSystem === 'self' || (selectedThemeData && (selectedThemeData.identity_concept || selectedThemeData.primary_goal))" 
