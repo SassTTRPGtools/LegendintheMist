@@ -1,30 +1,30 @@
 <template>
-  <div class="bg-black/60 rounded-xl shadow-2xl border border-cyan-500/30 p-4 mb-6">
-    <label class="block text-sm font-medium text-cyan-300 mb-3 flex items-center">
-      <Icon name="lucide:circuit-board" class="w-4 h-4 mr-2" />
+  <div class="bg-black/60 rounded-xl shadow-2xl border border-cyan-500/30 p-6 h-fit">
+    <label class="block text-base font-medium text-cyan-300 mb-4 flex items-center">
+      <Icon name="lucide:circuit-board" class="w-5 h-5 mr-2" />
       選擇主題風格
     </label>
     <div class="relative">
       <button 
         @click="toggleDropdown"
-        class="w-full p-3 border border-cyan-500/50 rounded-lg focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 bg-gray-800/80 text-left flex items-center justify-between text-cyan-100 hover:bg-gray-700/80 transition-all"
+        class="w-full p-4 border border-cyan-500/50 rounded-lg focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 bg-gray-800/80 text-left flex items-center justify-between text-cyan-100 hover:bg-gray-700/80 transition-all"
       >
-        <span class="flex items-center">
+        <span class="flex items-center text-base">
           <Icon 
             v-if="selectedSystem === 'noise'" 
-            name="lucide:zap" class="w-5 h-5 mr-2 text-cyan-400"
+            name="lucide:zap" class="w-6 h-6 mr-3 text-cyan-400"
           />
           <Icon 
             v-if="selectedSystem === 'self'" 
-            name="lucide:user" class="w-5 h-5 mr-2 text-purple-400"
+            name="lucide:user" class="w-6 h-6 mr-3 text-purple-400"
           />
           <Icon 
             v-if="selectedSystem === 'mythos'" 
-            name="lucide:eye" class="w-5 h-5 mr-2 text-orange-400"
+            name="lucide:eye" class="w-6 h-6 mr-3 text-orange-400"
           />
           {{ getSystemDisplayName(selectedSystem) || '請選擇主題風格' }}
         </span>
-        <Icon name="lucide:chevron-down" class="w-4 h-4 text-cyan-400" />
+        <Icon name="lucide:chevron-down" class="w-5 h-5 text-cyan-400" />
       </button>
       
       <div 
@@ -33,7 +33,7 @@
       >
         <button
           @click="selectSystem('')"
-          class="w-full p-3 text-left hover:bg-gray-800/80 first:rounded-t-lg text-cyan-200"
+          class="w-full p-4 text-left hover:bg-gray-800/80 first:rounded-t-lg text-cyan-200 text-base"
         >
           請選擇類型
         </button>            
@@ -41,26 +41,26 @@
         <button
           v-if="systemData.self"
           @click="selectSystem('self')"
-          class="w-full p-3 text-left hover:bg-gray-800/80 flex items-center text-cyan-200"
+          class="w-full p-4 text-left hover:bg-gray-800/80 flex items-center text-cyan-200 text-base"
         >
-          <Icon name="lucide:user" class="w-5 h-5 mr-2 text-purple-400" />
+          <Icon name="lucide:user" class="w-6 h-6 mr-3 text-purple-400" />
           自我（身份）
         </button>            
 
         <button
           @click="selectSystem('noise')"
-          class="w-full p-3 text-left hover:bg-gray-800/80 flex items-center text-cyan-200"
+          class="w-full p-4 text-left hover:bg-gray-800/80 flex items-center text-cyan-200 text-base"
         >
-          <Icon name="lucide:zap" class="w-5 h-5 mr-2 text-cyan-400" />
+          <Icon name="lucide:zap" class="w-6 h-6 mr-3 text-cyan-400" />
           喧囂（科技）
         </button>
 
         <button
           v-if="systemData.mythos"
           @click="selectSystem('mythos')"
-          class="w-full p-3 text-left hover:bg-gray-800/80 flex items-center last:rounded-b-lg text-cyan-200"
+          class="w-full p-4 text-left hover:bg-gray-800/80 flex items-center last:rounded-b-lg text-cyan-200 text-base"
         >
-          <Icon name="lucide:eye" class="w-5 h-5 mr-2 text-orange-400" />
+          <Icon name="lucide:eye" class="w-6 h-6 mr-3 text-orange-400" />
           神話（超自然）
         </button>
       </div>

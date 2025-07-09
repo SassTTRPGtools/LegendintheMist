@@ -1,24 +1,27 @@
 <template>
-  <div class="px-4 py-6 max-w-md mx-auto">
-    <!-- System Selector -->
-    <SystemSelector
-      :selected-system="selectedSystem"
-      :system-data="systemData"
-      @update:selected-system="selectedSystem = $event"
-      @system-change="onSystemChange" />
+  <div class="px-6 py-8 max-w-7xl mx-auto">
+    <!-- 控制面板區域 -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+      <!-- System Selector -->
+      <SystemSelector
+        :selected-system="selectedSystem"
+        :system-data="systemData"
+        @update:selected-system="selectedSystem = $event"
+        @system-change="onSystemChange" />
 
-    <!-- Theme Type Selector -->
-    <ThemeTypeSelector
-      :selected-system="selectedSystem"
-      :selected-theme="selectedTheme"
-      :available-themes="availableThemes"
-      @update:selected-theme="selectedTheme = $event"
-      @theme-change="onThemeChange" />
+      <!-- Theme Type Selector -->
+      <ThemeTypeSelector
+        :selected-system="selectedSystem"
+        :selected-theme="selectedTheme"
+        :available-themes="availableThemes"
+        @update:selected-theme="selectedTheme = $event"
+        @theme-change="onThemeChange" />
+    </div>
 
     <!-- Debug Info -->
     <div 
       v-if="selectedSystem && availableThemes.length === 0" 
-      class="bg-yellow-900/20 rounded-xl border border-yellow-500/30 p-4 mb-6"
+      class="bg-yellow-900/20 rounded-xl border border-yellow-500/30 p-4 mb-8"
     >
       <p class="text-yellow-300 text-sm">
         調試資訊：已選擇主題風格 "{{ selectedSystem }}"，但沒有找到可用的主題。
@@ -28,38 +31,52 @@
       </p>
     </div>
 
-    <!-- Concept Explanation -->
-    <ConceptExplanation
-      :selected-system="selectedSystem"
-      :selected-theme="selectedTheme"
-      :selected-theme-data="selectedThemeData" />
-
     <!-- Theme Details -->
-    <div v-if="selectedThemeData" class="space-y-6">
-      <!-- Theme Overview -->
-      <ThemeOverview :theme-data="selectedThemeData" />
-      
-      <!-- Concept Options -->
-      <ConceptOptions 
-        :concept-options="selectedThemeData.questions?.concept_options" />
+    <div v-if="selectedThemeData" class="space-y-10 mt-10">
+      <!-- 三欄式內容區域 - 平均分配 -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- 左側欄：主題核心、主題內容、概念問題、背景問題 (1/3) -->
+        <div class="space-y-8">
+          <!-- ✨ 主題核心 -->
+          <ConceptExplanation
+            :selected-system="selectedSystem"
+            :selected-theme="selectedTheme"
+            :selected-theme-data="selectedThemeData" />
 
-      <!-- Background Questions -->
-      <BackgroundQuestions 
-        :background-questions="selectedThemeData.questions?.background" />
+          <!-- 📋 主題內容 -->
+          <ThemeOverview :theme-data="selectedThemeData" />
+          
+          <!-- 💡 概念問題 -->
+          <ConceptOptions 
+            :concept-options="selectedThemeData.questions?.concept_options" />
 
-      <!-- Ability Tags -->
-      <AbilityTags 
-        :ability-tags="selectedThemeData.questions?.ability_tags" />
+          <!-- ❓ 背景問題 -->
+          <BackgroundQuestions 
+            :background-questions="selectedThemeData.questions?.background" />
+        </div>
 
-      <!-- Weakness Tags -->
-      <WeaknessTags 
-        :weakness-tags="selectedThemeData.questions?.weakness_tags" />
+        <!-- 中間欄：能力標籤與弱點標籤 (1/3) -->
+        <div class="space-y-8">
+          <!-- Ability Tags -->
+          <AbilityTags 
+            :ability-tags="selectedThemeData.questions?.ability_tags" />
+          
+          <!-- Weakness Tags -->
+          <WeaknessTags 
+            :weakness-tags="selectedThemeData.questions?.weakness_tags" />
+        </div>
 
-      <!-- Additional Details -->
-      <AdditionalDetails :theme-data="selectedThemeData" />
+        <!-- 右側欄：其他詳細資訊 (1/3) -->
+        <div class="space-y-8">
+          <!-- Additional Details -->
+          <AdditionalDetails :theme-data="selectedThemeData" />
+        </div>
+      </div>
 
-      <!-- Sample Characters -->
-      <SampleCharacters :sample-characters="sampleCharacters" />
+      <!-- 範例角色 - 佔據全寬 -->
+      <div class="w-full mt-12">
+        <SampleCharacters :sample-characters="sampleCharacters" />
+      </div>
     </div>
 
     <!-- Loading State -->

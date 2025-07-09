@@ -1,19 +1,20 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 pb-8">
+  <div class="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">
     <!-- Header -->
-    <div class="bg-black/80 backdrop-blur-sm shadow-xl border-b border-cyan-500/30">
-      <div class="px-4 py-6">
+    <div class="bg-black/80 backdrop-blur-sm shadow-xl border-b border-cyan-500/30 sticky top-0 z-10">
+      <div class="px-4 lg:px-8 py-6 max-w-7xl mx-auto">
         <div class="flex items-center justify-between">
           <NuxtLink to="/MO" class="text-cyan-400 hover:text-cyan-300 transition-colors">
             <Icon name="lucide:arrow-left" class="w-6 h-6" />
           </NuxtLink>
-          <h1 class="text-xl font-bold text-cyan-100 flex items-center">
-            <Icon name="lucide:cpu" class="w-5 h-5 mr-2 text-cyan-400" />
+          <h1 class="text-xl lg:text-2xl font-bold text-cyan-100 flex items-center">
+            <Icon name="lucide:cpu" class="w-6 h-6 mr-3 text-cyan-400" />
             角色創建參考
           </h1>
           <div class="w-6"></div> <!-- Spacer -->
         </div>
-      </div>    </div>
+      </div>
+    </div>
     
     <!-- Main Content -->
     <CharacterReferenceMain 
