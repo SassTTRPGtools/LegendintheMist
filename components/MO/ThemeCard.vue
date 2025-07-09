@@ -40,11 +40,11 @@
           v-if="themeCard.isEditing"
           v-model="themeCard.title"
           type="text" 
-          placeholder="輸入主題標題"
+          placeholder="輸入主題標籤"
           class="w-full text-lg font-bold text-center bg-transparent text-white border-b border-purple-400 focus:outline-none focus:border-purple-300"
         />
         <h3 v-else class="text-lg font-bold text-center">
-          {{ themeCard.title || `標題 ${cardIndex + 1}` }}
+          {{ themeCard.title || `主題標籤 ${cardIndex + 1}` }}
         </h3>
       </div>
 

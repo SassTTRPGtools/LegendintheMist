@@ -21,7 +21,7 @@
       <div class="bg-black/60 rounded-xl shadow-2xl border border-cyan-500/30 p-4 mb-6">
         <label class="block text-sm font-medium text-cyan-300 mb-3 flex items-center">
           <Icon name="lucide:circuit-board" class="w-4 h-4 mr-2" />
-          選擇主題系統
+          選擇主題風格
         </label>
         <div class="relative">          <button 
             @click="showThemeDropdown = !showThemeDropdown"
@@ -40,7 +40,7 @@
                 v-if="selectedSystem === 'mythos'" 
                 name="lucide:eye" class="w-5 h-5 mr-2 text-orange-400"
               />
-              {{ getSystemDisplayName(selectedSystem) || '請選擇主題系統' }}
+              {{ getSystemDisplayName(selectedSystem) || '請選擇主題風格' }}
             </span>
             <Icon name="lucide:chevron-down" class="w-4 h-4 text-cyan-400" />
           </button>
@@ -53,7 +53,7 @@
               @click="selectSystem('')"
               class="w-full p-3 text-left hover:bg-gray-800/80 first:rounded-t-lg text-cyan-200"
             >
-              請選擇主題系統
+              請選擇類型
             </button>            
             
             <button
@@ -62,7 +62,7 @@
               class="w-full p-3 text-left hover:bg-gray-800/80 flex items-center text-cyan-200"
             >
               <Icon name="lucide:user" class="w-5 h-5 mr-2 text-purple-400" />
-              自我主題（身份）
+              自我（身份）
             </button>            
 
             <button
@@ -70,7 +70,7 @@
               class="w-full p-3 text-left hover:bg-gray-800/80 flex items-center text-cyan-200"
             >
               <Icon name="lucide:zap" class="w-5 h-5 mr-2 text-cyan-400" />
-              喧囂主題（科技）
+              喧囂（科技）
             </button>
 
             <button
@@ -79,7 +79,7 @@
               class="w-full p-3 text-left hover:bg-gray-800/80 flex items-center last:rounded-b-lg text-cyan-200"
             >
               <Icon name="lucide:eye" class="w-5 h-5 mr-2 text-orange-400" />
-              神話主題（超自然）
+              神話（超自然）
             </button>
           </div>
         </div>
@@ -87,13 +87,13 @@
       <div v-if="selectedSystem && availableThemes.length > 0" class="bg-black/60 backdrop-blur-sm rounded-xl shadow-2xl border border-cyan-500/30 p-4 mb-6">
         <label class="block text-sm font-medium text-cyan-300 mb-3 flex items-center">
           <Icon name="lucide:microchip" class="w-4 h-4 mr-2" />
-          選擇主題類型 ({{ availableThemes.length }} 個可用)
+          選擇類型 ({{ availableThemes.length }} 個可用)
         </label>        <select 
           v-model="selectedTheme" 
           @change="onThemeChange"
           class="w-full p-3 border border-cyan-500/50 rounded-lg focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 bg-gray-800/80 text-cyan-100"
         >
-          <option value="">請選擇主題類型</option>
+          <option value="">請選擇類型</option>
           <option v-for="theme in availableThemes" :key="theme.key" :value="theme.key">
             {{ theme.theme }} - {{ theme.title }}
           </option>
@@ -101,7 +101,7 @@
       </div>      <!-- Debug Info -->
       <div v-if="selectedSystem && availableThemes.length === 0" class="bg-yellow-900/20 rounded-xl border border-yellow-500/30 p-4 mb-6">
         <p class="text-yellow-300 text-sm">
-          調試資訊：已選擇系統 "{{ selectedSystem }}"，但沒有找到可用的主題。
+          調試資訊：已選擇主題風格 "{{ selectedSystem }}"，但沒有找到可用的主題。
         </p>
         <p class="text-yellow-400 text-xs mt-2">
           系統資料: {{ systemData[selectedSystem] ? '已載入' : '未載入' }}
@@ -413,8 +413,8 @@
       </div>      <!-- Empty State -->
       <div v-if="!selectedSystem" class="text-center py-12">
         <Icon name="lucide:cpu" class="w-16 h-16 text-cyan-500/50 mx-auto mb-4" />
-        <h3 class="text-lg font-medium text-cyan-100 mb-2">選擇主題系統</h3>
-        <p class="text-cyan-300/70">請先選擇一個主題系統來查看角色創建參考資料</p>
+        <h3 class="text-lg font-medium text-cyan-100 mb-2">選擇主題風格</h3>
+        <p class="text-cyan-300/70">請先選擇一個主題風格來查看角色創建參考資料</p>
       </div>
     </div>
   </div>
