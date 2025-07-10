@@ -1,5 +1,18 @@
 <template>
   <div class="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white">
+    <!-- Header -->
+    <div class="w-full bg-black/80 backdrop-blur-sm shadow-xl border-b border-cyan-500/30 sticky top-0 z-10">
+      <div class="px-4 py-6 max-w-2xl mx-auto flex items-center justify-between">
+        <NuxtLink to="/MO" class="text-cyan-300 hover:text-cyan-100 transition-colors">
+          <Icon name="lucide:arrow-left" class="w-6 h-6" />
+        </NuxtLink>
+        <h1 class="text-2xl md:text-3xl font-bold text-cyan-100 flex items-center">
+          <Icon name="lucide:globe" class="w-7 h-7 mr-2 text-cyan-400" />
+          互動式角色建立器
+        </h1>
+        <div class="w-6"></div>
+      </div>
+    </div>
     <!-- 側邊「如何遊玩」書籤 -->
     <HowToPlayPanel 
       :show="showHowToPlay" 

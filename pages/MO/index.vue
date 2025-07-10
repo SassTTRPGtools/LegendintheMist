@@ -180,6 +180,13 @@
             角色創建參考
           </NuxtLink>
           <NuxtLink 
+            to="/MO/megacity-generator"
+            class="bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white font-bold py-3 px-8 rounded-lg transition-all duration-200 shadow-lg hover:shadow-cyan-500/25 inline-block border border-cyan-500/30"
+          >
+            <Icon name="lucide:globe" class="w-5 h-5 mr-2 inline" />
+            巨型都市產生器
+          </NuxtLink>
+          <NuxtLink 
             to="/MO/how-to-play"
             class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold py-3 px-8 rounded-lg transition-all duration-200 shadow-lg hover:shadow-blue-500/25 inline-block border border-blue-500/30"
           >
@@ -236,6 +243,8 @@ useHead({
     { name: 'description', content: '透過標籤與主題系統打造獨特的賽博龐克角色。從賽博義體改造到企業從屬關係，每個標籤都代表你在霓虹都市中的生存技能與身份定位。' }
   ]
 })
+
+import MegacityGenerator from '~/components/MegacityGenerator/MegacityGenerator.vue'
 </script>
 
 <style scoped>
