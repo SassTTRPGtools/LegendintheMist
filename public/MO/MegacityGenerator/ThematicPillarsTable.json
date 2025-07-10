@@ -1,0 +1,50 @@
+[
+  {
+    "codeRange": "11-14",
+    "codeMin": 11,
+    "codeMax": 14,
+    "pillar": "廢墟之城"
+  },
+  {
+    "codeRange": "15-22",
+    "codeMin": 15,
+    "codeMax": 22,
+    "pillar": "幫派、邪教與反文化"
+  },
+  {
+    "codeRange": "23-34",
+    "codeMin": 23,
+    "codeMax": 34,
+    "pillar": "武裝神話"
+  },
+  {
+    "codeRange": "35-42",
+    "codeMin": 35,
+    "codeMax": 42,
+    "pillar": "寡頭腐化"
+  },
+  {
+    "codeRange": "43-46",
+    "codeMin": 43,
+    "codeMax": 46,
+    "pillar": "網路空間蔓延"
+  },
+  {
+    "codeRange": "51-54",
+    "codeMin": 51,
+    "codeMax": 54,
+    "pillar": "黑色科幻"
+  },
+  {
+    "codeRange": "55-62",
+    "codeMin": 55,
+    "codeMax": 62,
+    "pillar": "科技過載"
+  },
+  {
+    "codeRange": "63-66",
+    "codeMin": 63,
+    "codeMax": 66,
+    "pillar": "超人類主義"
+  }
+]
