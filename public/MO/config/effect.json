@@ -1,0 +1,108 @@
+{
+  "effects": [
+    {
+      "category": "對抗對手或目標",
+      "actions": [
+        {
+          "name": "ATTACK",
+          "name_cn": "攻擊",
+          "examples": "揮砍、拳打、射擊、電擊",
+          "description": "給予目標一個有害狀態",
+          "cost": "每層1點力度"
+        },
+        {
+          "name": "DISRUPT",
+          "name_cn": "擾亂",
+          "examples": "致盲、混亂、電擊、絆倒、干擾、打斷",
+          "description": "給予目標一個阻礙標籤或狀態",
+          "cost": "每層1點力度，或每個標籤2點力度"
+        },
+        {
+          "name": "INFLUENCE",
+          "name_cn": "影響",
+          "examples": "說服、威脅、挑釁、駭入、精神控制",
+          "description": "給予目標一個強制性狀態",
+          "cost": "每層1點力度"
+        },
+        {
+          "name": "WEAKEN",
+          "name_cn": "削弱",
+          "examples": "破壞、粉碎、拆除、中和、消除、沉默",
+          "description": "移除目標的一個有用標籤或狀態",
+          "cost": "每層1點力度，或每個標籤2點力度"
+        }
+      ]
+    },
+    {
+      "category": "作用於自己或盟友",
+      "actions": [
+        {
+          "name": "BESTOW",
+          "name_cn": "賦予",
+          "examples": "教導、學習、傳授、賦能、施附魔、配備",
+          "description": "使用標籤讓自己或盟友獲得新能力",
+          "cost": "每個標籤2點力度"
+        },
+        {
+          "name": "CREATE",
+          "name_cn": "創造",
+          "examples": "製作、尋找、購買、掠奪、召喚、建造、集結",
+          "description": "使用標籤創造新物品或召喚生物",
+          "cost": "每個標籤2點力度"
+        },
+        {
+          "name": "ENHANCE",
+          "name_cn": "強化",
+          "examples": "協助、瞄準、增益、充能、掩護、取得優勢",
+          "description": "給予自己或盟友一個有益狀態",
+          "cost": "每層1點力度"
+        },
+        {
+          "name": "RESTORE",
+          "name_cn": "恢復",
+          "examples": "治療、修復、回春、恢復、舒緩、還原",
+          "description": "減少有害狀態或回復燃盡標籤",
+          "cost": "每層1點力度，或每個標籤2點力度"
+        }
+      ]
+    },
+    {
+      "category": "作用於進展",
+      "actions": [
+        {
+          "name": "ADVANCE",
+          "name_cn": "推進",
+          "examples": "取得進展、接近目標、向前推進",
+          "description": "提升一個進度狀態",
+          "cost": "每層1點力度"
+        },
+        {
+          "name": "SET BACK",
+          "name_cn": "延緩",
+          "examples": "延遲、破壞、破壞行動、反轉進度",
+          "description": "降低一個進度狀態",
+          "cost": "每層1點力度"
+        }
+      ]
+    },
+    {
+      "category": "其他效果",
+      "actions": [
+        {
+          "name": "DISCOVER",
+          "name_cn": "發現",
+          "examples": "感知、回憶資訊、調查、對話、揭示",
+          "description": "發現一個有價值的資訊",
+          "cost": "每項細節1點力度"
+        },
+        {
+          "name": "EXTRA FEAT",
+          "name_cn": "額外壯舉",
+          "examples": "無",
+          "description": "每多一個額外特性或小成就，需額外1點力度",
+          "cost": "每項1點力度"
+        }
+      ]
+    }
+  ]
+}

@@ -326,6 +326,27 @@
         </button>
       </div>
     </div>
+
+    <!-- 效果面板與書籤按鈕（一起移動） -->
+    <div class="fixed top-0 left-0 h-full z-40 flex items-center pointer-events-none">
+      <div class="relative h-full flex items-center">
+        <EffectPanel 
+          :show="showEffectPanel" 
+          @close="showEffectPanel = false" 
+          class="transition-all duration-300 pointer-events-auto"
+        />
+        <button
+          v-if="!showEffectPanel"
+          @click="showEffectPanel = true"
+          class="absolute left-0 top-1/2 -translate-y-1/2 flex items-center px-4 py-2 bg-gradient-to-r from-cyan-700 to-purple-700 text-white rounded-r-lg shadow-lg hover:from-cyan-600 hover:to-purple-600 transition-all border-l-4 border-cyan-400 group pointer-events-auto"
+          title="效果一覽"
+          style="z-index:41;"
+        >
+          <Icon name="lucide:sparkles" class="w-5 h-5 mr-2 text-cyan-200" />
+          <span class="font-bold tracking-wide">效果</span>
+        </button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -343,6 +364,7 @@ import EvolutionModal from '~/components/MO/EvolutionModal.vue'
 import HowToPlayPanel from '~/components/MO/HowToPlayPanel.vue'
 import EvolutionHistoryModal from '~/components/MO/EvolutionHistoryModal.vue'
 import LevelUpGameModal from '~/components/MO/LevelUpGameModal.vue'
+import EffectPanel from '~/components/MO/EffectPanel.vue'
 
 
 // 導入類型映射
@@ -544,6 +566,7 @@ const evolutionMoments = {
 // ====================
 const showHowToPlay = ref(false)
 const showFloatingMenu = ref(false) // 懸浮菜單顯示狀態
+const showEffectPanel = ref(false) // 效果面板顯示狀態
 const mythosThemes = ref({})
 const noiseThemes = ref({})
 const selfThemes = ref({})
