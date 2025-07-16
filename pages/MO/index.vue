@@ -136,32 +136,7 @@
             <Icon name="lucide:book-open" class="w-5 h-5 mr-2 inline" />
             角色創建指南
           </NuxtLink>
-        </div>
-        
-        <!-- 工具按鈕 -->
-        <div class="flex flex-col sm:flex-row gap-4 justify-center">
-          <NuxtLink 
-            to="/MO/equipment-viewer"
-            class="bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white font-bold py-3 px-8 rounded-lg transition-all duration-200 shadow-lg hover:shadow-orange-500/25 inline-block border border-orange-500/30"
-          >
-            <Icon name="lucide:package" class="w-5 h-5 mr-2 inline" />
-            裝備資料庫
-          </NuxtLink>
-          <NuxtLink 
-            to="/MO/challenge-database"
-            class="bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-700 hover:to-pink-700 text-white font-bold py-3 px-8 rounded-lg transition-all duration-200 shadow-lg hover:shadow-red-500/25 inline-block border border-red-500/30"
-          >
-            <Icon name="lucide:sword" class="w-5 h-5 mr-2 inline" />
-            挑戰資料庫
-          </NuxtLink>
-          <NuxtLink 
-            to="/MO/action-database"
-            class="bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700 text-white font-bold py-3 px-8 rounded-lg transition-all duration-200 shadow-lg hover:shadow-teal-500/25 inline-block border border-teal-500/30"
-          >
-            <Icon name="lucide:database" class="w-5 h-5 mr-2 inline" />
-            行動資料庫
-          </NuxtLink>
-        </div>
+        </div>      
         
         <!-- 額外工具按鈕 -->
         <div class="flex flex-col sm:flex-row gap-4 justify-center mt-4">
@@ -194,44 +169,32 @@
             如何遊玩
           </NuxtLink>
         </div>
-      </div>      <!-- Quick Navigation -->
-      <div class="max-w-4xl mx-auto px-4 mt-16">
-        <h3 class="text-2xl font-bold text-cyan-100 mb-6 flex items-center justify-center">
-          <Icon name="lucide:zap" class="w-6 h-6 mr-2 text-cyan-400" />
-          快速進入都市異景
-        </h3>
-        <div class="grid sm:grid-cols-2 gap-6">
-          <div class="bg-gradient-to-r from-cyan-900/50 to-blue-900/50 p-6 rounded-xl border border-cyan-500/30 backdrop-blur-sm hover:border-cyan-400/50 transition-all">
-            <h4 class="text-lg font-semibold text-cyan-200 mb-2 flex items-center">
-              <Icon name="lucide:user-plus" class="w-5 h-5 mr-2" />
-              新手駭客
-            </h4>
-            <p class="text-cyan-300 text-sm mb-4">第一次接觸都市異景？從這裡開始你的賽博之旅，學習如何創建角色並融入這個高科技低生活的世界</p>
-            <NuxtLink 
-              to="/MO/character-creation-guide"
-              class="text-cyan-400 hover:text-cyan-200 font-medium text-sm flex items-center"
-            >
-              <Icon name="lucide:arrow-right" class="w-4 h-4 mr-1" />
-              查看創建指南
-            </NuxtLink>
-          </div>
 
-          <div class="bg-gradient-to-r from-purple-900/50 to-pink-900/50 p-6 rounded-xl border border-purple-500/30 backdrop-blur-sm hover:border-purple-400/50 transition-all">
-            <h4 class="text-lg font-semibold text-purple-200 mb-2 flex items-center">
-              <Icon name="lucide:shield-check" class="w-5 h-5 mr-2" />
-              資深特工
-            </h4>
-            <p class="text-purple-300 text-sm mb-4">已經熟悉基本操作？探索完整的系統規則、戰術指南與高級玩法，掌握都市生存技巧</p>
-            <NuxtLink 
-              to="/MO/how-to-play"
-              class="text-purple-400 hover:text-purple-200 font-medium text-sm flex items-center"
-            >
-              <Icon name="lucide:arrow-right" class="w-4 h-4 mr-1" />
-              查看完整規則
-            </NuxtLink>
-          </div>
+        <!-- 工具按鈕 -->
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <NuxtLink 
+            to="/MO/equipment-viewer"
+            class="bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white font-bold py-3 px-8 rounded-lg transition-all duration-200 shadow-lg hover:shadow-orange-500/25 inline-block border border-orange-500/30"
+          >
+            <Icon name="lucide:package" class="w-5 h-5 mr-2 inline" />
+            裝備資料庫
+          </NuxtLink>
+          <NuxtLink 
+            to="/MO/challenge-database"
+            class="bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-700 hover:to-pink-700 text-white font-bold py-3 px-8 rounded-lg transition-all duration-200 shadow-lg hover:shadow-red-500/25 inline-block border border-red-500/30"
+          >
+            <Icon name="lucide:sword" class="w-5 h-5 mr-2 inline" />
+            挑戰資料庫
+          </NuxtLink>
+          <NuxtLink 
+            to="/MO/action-database"
+            class="bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700 text-white font-bold py-3 px-8 rounded-lg transition-all duration-200 shadow-lg hover:shadow-teal-500/25 inline-block border border-teal-500/30"
+          >
+            <Icon name="lucide:database" class="w-5 h-5 mr-2 inline" />
+            行動資料庫
+          </NuxtLink>
         </div>
-      </div>
+      </div>      
     </div>
   </div>
 </template>
