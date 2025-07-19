@@ -1,6 +1,19 @@
 <template>
   <div class="bg-slate-800/80 backdrop-blur rounded-lg p-6 border border-purple-500/30 h-[600px] flex flex-col">
-    <h3 class="text-xl font-bold text-purple-300 mb-4">角色資訊</h3>
+    <div class="flex items-center justify-between mb-4">
+      <h3 class="text-xl font-bold text-purple-300">角色資訊</h3>
+      <button 
+        @click="isEditing = !isEditing"
+        :class="[
+          'px-4 py-1 rounded text-xs transition-colors min-w-[60px] flex items-center justify-center flex-shrink-0',
+          isEditing 
+            ? 'bg-green-600 hover:bg-green-700 text-white' 
+            : 'bg-purple-600 hover:bg-purple-700 text-white'
+        ]"
+      >
+        {{ isEditing ? '完成' : '編輯' }}
+      </button>
+    </div>
     <div class="space-y-4 flex-1 overflow-y-auto custom-scrollbar">
       <!-- 演化軌跡 -->
       <div>
@@ -40,23 +53,47 @@
       <!-- 角色名稱 -->
       <div>
         <label class="block text-sm font-medium text-gray-300 mb-2">角色名稱</label>
-        <input 
-          v-model="character.name" 
-          type="text" 
-          class="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-md text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-          placeholder="輸入角色名稱"
-        />
+        <div v-if="isEditing">
+          <input 
+            v-model="character.name" 
+            type="text" 
+            class="w-full px-2 py-1 bg-slate-700 border border-slate-600 rounded text-white text-sm focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+            placeholder="輸入角色名稱"
+          />
+        </div>
+        <span v-else
+          :class="[
+            'w-full block flex-1 px-2 py-1 text-sm rounded',
+            character.name?.trim()
+              ? 'text-white bg-slate-700/50'
+              : 'text-gray-500 bg-slate-700/30 italic'
+          ]"
+        >
+          {{ character.name?.trim() || '—' }}
+        </span>
       </div>
 
       <!-- 玩家名稱 -->
       <div>
         <label class="block text-sm font-medium text-gray-300 mb-2">玩家名稱</label>
-        <input 
-          v-model="character.playerName" 
-          type="text" 
-          class="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-md text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-          placeholder="輸入玩家名稱"
-        />
+        <div v-if="isEditing">
+          <input 
+            v-model="character.playerName" 
+            type="text" 
+            class="w-full px-2 py-1 bg-slate-700 border border-slate-600 rounded text-white text-sm focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+            placeholder="輸入玩家名稱"
+          />
+        </div>
+        <span v-else
+          :class="[
+            'w-full block flex-1 px-2 py-1 text-sm rounded',
+            character.playerName?.trim()
+              ? 'text-white bg-slate-700/50'
+              : 'text-gray-500 bg-slate-700/30 italic'
+          ]"
+        >
+          {{ character.playerName?.trim() || '—' }}
+        </span>
       </div>
 
       <!-- 團隊關係區塊 -->
@@ -67,29 +104,60 @@
           <div>
             <div class="text-xs text-purple-300 mb-2 font-medium">團隊成員</div>
             <div class="space-y-2">
-              <input 
-                v-for="index in 5" 
-                :key="`member-${index}`"
-                v-model="teamMembers[index - 1]"
-                type="text" 
-                :placeholder="`成員 ${index}`"
-                class="w-full px-2 py-1 bg-slate-700 border border-slate-600 rounded text-white text-sm focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-              />
+              <template v-if="isEditing">
+                <input 
+                  v-for="index in 5" 
+                  :key="`member-${index}`"
+                  v-model="teamMembers[index - 1]"
+                  type="text" 
+                  :placeholder="`成員 ${index}`"
+                  class="w-full px-2 py-1 bg-slate-700 border border-slate-600 rounded text-white text-sm focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                />
+              </template>
+              <template v-else>
+                <span
+                  v-for="index in 5"
+                  :key="`member-${index}`"
+                  :class="[
+                    'w-full flex-1 px-2 py-1 text-sm rounded block',
+                    teamMembers[index - 1]?.trim()
+                      ? 'text-white bg-slate-700/50'
+                      : 'text-gray-500 bg-slate-700/30 italic'
+                  ]"
+                >
+                  {{ teamMembers[index - 1]?.trim() || '—' }}
+                </span>
+              </template>
             </div>
           </div>
-          
           <!-- 關係標籤欄位 -->
           <div>
             <div class="text-xs text-pink-300 mb-2 font-medium">關係標籤</div>
             <div class="space-y-2">
-              <input 
-                v-for="index in 5" 
-                :key="`relationship-${index}`"
-                v-model="relationshipTags[index - 1]"
-                type="text" 
-                :placeholder="`關係 ${index}`"
-                class="w-full px-2 py-1 bg-slate-700 border border-slate-600 rounded text-white text-sm focus:ring-2 focus:ring-pink-500 focus:border-transparent"
-              />
+              <template v-if="isEditing">
+                <input 
+                  v-for="index in 5" 
+                  :key="`relationship-${index}`"
+                  v-model="relationshipTags[index - 1]"
+                  type="text" 
+                  :placeholder="`關係 ${index}`"
+                  class="w-full px-2 py-1 bg-slate-700 border border-slate-600 rounded text-white text-sm focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                />
+              </template>
+              <template v-else>
+                <span
+                  v-for="index in 5"
+                  :key="`relationship-${index}`"
+                  :class="[
+                    'w-full flex-1 px-2 py-1 text-sm rounded block',
+                    relationshipTags[index - 1]?.trim()
+                      ? 'text-white bg-slate-700/50'
+                      : 'text-gray-500 bg-slate-700/30 italic'
+                  ]"
+                >
+                  {{ relationshipTags[index - 1]?.trim() || '—' }}
+                </span>
+              </template>
             </div>
           </div>
         </div>
@@ -152,6 +220,11 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
+
+import { ref } from 'vue'
+
+// 編輯狀態
+const isEditing = ref(false)
 
 // 定義接口
 interface EvolutionRecord {
