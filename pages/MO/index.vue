@@ -1,5 +1,6 @@
 <template>
   <div class="min-h-screen bg-gray-900 relative overflow-hidden">
+
     <!-- 賽博龐克網格背景 -->
     <div class="absolute inset-0 opacity-10">
       <div class="absolute inset-0" style="background-image: linear-gradient(cyan 1px, transparent 1px), linear-gradient(90deg, cyan 1px, transparent 1px); background-size: 20px 20px;"></div>
@@ -200,6 +201,20 @@
 </template>
 
 <script setup>
+import jsPDF from 'jspdf'
+import { notoSansTCBase64 } from '~/utils/pdf-font-noto-sans-tc'
+
+// PDF 匯出測試功能（中文，嵌入思源黑體）
+const exportTestPDF = () => {
+  const pdf = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' })
+  // 註冊字型
+  pdf.addFileToVFS('NotoSansTC-Regular.ttf', notoSansTCBase64)
+  pdf.addFont('NotoSansTC-Regular.ttf', 'NotoSansTC', 'normal')
+  pdf.setFont('NotoSansTC')
+  pdf.setFontSize(24)
+  pdf.text('PDF 中文測試成功！', 40, 100)
+  pdf.save('test.pdf')
+}
 useHead({
   title: '都市異景 - 賽博龐克角色扮演遊戲',
   meta: [
