@@ -683,6 +683,8 @@ const character = ref({
   evolutionHistory: [], // 演化歷史記錄
   veteranSpecialties: [], // 已獲得的老將專長
   levelUpGameImprovements: [], // 改進你的遊戲專長選擇的改進
+  teamMembers: Array(5).fill(''), // 團隊成員
+  relationshipTags: Array(5).fill(''), // 關係標籤
   equipment: createEmptyEquipment(),
   teamThemeCard: createEmptyTeamThemeCard(), // 團隊主題卡
   themeCards: Array(4).fill().map(() => createEmptyThemeCard())
@@ -743,7 +745,7 @@ const loadFromLocalStorage = () => {
     
     // 恢復角色資料
     if (data.character) {
-      character.value = data.character
+      Object.assign(character.value, data.character)
       console.log('角色資料已從本地存儲恢復:', new Date(data.timestamp))
     }
     
