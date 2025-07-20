@@ -124,43 +124,11 @@
         <!-- 主要功能按鈕 -->
         <div class="flex flex-col sm:flex-row gap-4 justify-center mb-6">
           <NuxtLink 
-            to="/MO/character-builder"
-            class="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold py-4 px-10 rounded-lg transition-all duration-200 shadow-lg hover:shadow-purple-500/25 inline-block border border-purple-500/30 text-lg"
-          >
-            <Icon name="lucide:cpu" class="w-6 h-6 mr-2 inline" />
-            互動式角色建立器
-          </NuxtLink>
-          <NuxtLink 
             to="/MO/character-creation-guide"
             class="bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white font-bold py-3 px-8 rounded-lg transition-all duration-200 shadow-lg hover:shadow-cyan-500/25 inline-block border border-cyan-500/30"
           >
             <Icon name="lucide:book-open" class="w-5 h-5 mr-2 inline" />
             角色創建指南
-          </NuxtLink>
-        </div>      
-        
-        <!-- 額外工具按鈕 -->
-        <div class="flex flex-col sm:flex-row gap-4 justify-center mt-4">
-          <NuxtLink 
-            to="/MO/template-creator"
-            class="bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 text-white font-bold py-3 px-8 rounded-lg transition-all duration-200 shadow-lg hover:shadow-emerald-500/25 inline-block border border-emerald-500/30"
-          >
-            <Icon name="lucide:file-plus" class="w-5 h-5 mr-2 inline" />
-            模板創建工具
-          </NuxtLink>
-          <NuxtLink 
-            to="/MO/character-reference"
-            class="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-3 px-8 rounded-lg transition-all duration-200 shadow-lg hover:shadow-purple-500/25 inline-block border border-purple-500/30"
-          >
-            <Icon name="lucide:microchip" class="w-5 h-5 mr-2 inline" />
-            角色創建參考
-          </NuxtLink>
-          <NuxtLink 
-            to="/MO/megacity-generator"
-            class="bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white font-bold py-3 px-8 rounded-lg transition-all duration-200 shadow-lg hover:shadow-cyan-500/25 inline-block border border-cyan-500/30"
-          >
-            <Icon name="lucide:globe" class="w-5 h-5 mr-2 inline" />
-            巨型都市產生器
           </NuxtLink>
           <NuxtLink 
             to="/MO/how-to-play"
@@ -169,10 +137,31 @@
             <Icon name="lucide:terminal" class="w-5 h-5 mr-2 inline" />
             如何遊玩
           </NuxtLink>
-        </div>
-
-        <!-- 工具按鈕 -->
-        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        </div>      
+        
+        <!-- 額外工具按鈕 -->
+        <div class="flex flex-col sm:flex-row gap-4 justify-center mt-4">
+          <NuxtLink 
+            to="/MO/character-builder"
+            class="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold py-3 px-8 rounded-lg transition-all duration-200 shadow-lg hover:shadow-purple-500/25 inline-block border border-purple-500/30 text-lg"
+          >
+            <Icon name="lucide:cpu" class="w-5 h-5 mr-2 inline" />
+            互動式角色卡
+          </NuxtLink>          
+          <NuxtLink 
+            to="/MO/template-creator"
+            class="bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 text-white font-bold py-3 px-8 rounded-lg transition-all duration-200 shadow-lg hover:shadow-emerald-500/25 inline-block border border-emerald-500/30"
+          >
+            <Icon name="lucide:file-plus" class="w-5 h-5 mr-2 inline" />
+            模板創角參考
+          </NuxtLink>
+          <NuxtLink 
+            to="/MO/character-reference"
+            class="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-3 px-8 rounded-lg transition-all duration-200 shadow-lg hover:shadow-purple-500/25 inline-block border border-purple-500/30"
+          >
+            <Icon name="lucide:microchip" class="w-5 h-5 mr-2 inline" />
+            詳細創角參考
+          </NuxtLink>
           <NuxtLink 
             to="/MO/equipment-viewer"
             class="bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white font-bold py-3 px-8 rounded-lg transition-all duration-200 shadow-lg hover:shadow-orange-500/25 inline-block border border-orange-500/30"
@@ -180,6 +169,10 @@
             <Icon name="lucide:package" class="w-5 h-5 mr-2 inline" />
             裝備資料庫
           </NuxtLink>
+        </div>
+
+        <!-- 工具按鈕 -->
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
           <NuxtLink 
             to="/MO/challenge-database"
             class="bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-700 hover:to-pink-700 text-white font-bold py-3 px-8 rounded-lg transition-all duration-200 shadow-lg hover:shadow-red-500/25 inline-block border border-red-500/30"
@@ -194,6 +187,13 @@
             <Icon name="lucide:database" class="w-5 h-5 mr-2 inline" />
             行動資料庫
           </NuxtLink>
+          <NuxtLink 
+            to="/MO/megacity-generator"
+            class="bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white font-bold py-3 px-8 rounded-lg transition-all duration-200 shadow-lg hover:shadow-cyan-500/25 inline-block border border-cyan-500/30"
+          >
+            <Icon name="lucide:globe" class="w-5 h-5 mr-2 inline" />
+            巨型都市產生器
+          </NuxtLink>          
         </div>
       </div>      
     </div>
